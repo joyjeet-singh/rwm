@@ -301,7 +301,7 @@ Equation 2 of the paper shows an observation term and a contact term. The code c
 ### C-04 — The "ensemble of 5" shares both trunks
 Only the output heads are duplicated. Epistemic uncertainty therefore measures head disagreement over identical features, not deep-ensemble diversity.
 **Evidence** `SRC` checkpoint inventory — `state_base` and `auxiliary_base` appear once, heads appear five times; `system_dynamics.py:114`.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Status** CONFIRMED; SUPERSEDED IN PART by `S-23` (its framing as a code-paper discrepancy; the facts stand) · **Relevance** CONTRIB
 
 ### C-05 — Training samples, inference takes the mean
 Training uses a reparameterised sample (`randn_like(mean) * std + mean`, `system_dynamics.py:215`). Inference returns `state_means.mean(0)` and feeds that back. The two paths differ and the paper describes neither.
@@ -369,7 +369,7 @@ falls steadily; `min_logstd` is reachable only through the sigma path in the sta
 whose gradient vanishes as sigma shrinks. So once the interval starts closing, the floor it
 closes onto freezes, and nothing can reopen it.
 **Evidence** `SRC` `system_dynamics.py:301-302`, `mlp.py:91`; `RUN` `step4_3_differential.json`.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Status** CONFIRMED; SUPERSEDED IN PART by `S-24` (its sentence that the floor freezes; the algebra and the measurement stand) · **Relevance** CONTRIB
 
 ### C-12 — The released checkpoint's collapse implies ~155,000 iterations, not 500 or 2500 · **NEW (Step 4)**
 Measured on a fresh model (R-17): `log_delta_logstd` falls at **−9.318e-05 per iteration**,
@@ -6429,7 +6429,7 @@ re-scoping of this verdict.
 The positive branch stays weak, as committed: an adequate oracle-rescaled coverage does not
 show a transferable constant exists, and §6.8 already shows a constant fails across
 horizons where a per-horizon one succeeds.
-**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED; its returned reading SUPERSEDED by `S-22` (see `R-81`) · **Relevance** METHOD
 
 ### M-66 — The Appendix B glob defect survived in a second script, and pinning it improves our own number · **NEW**
 **The disclosure first, because it is the part a reader should weigh hardest.** The fix below
@@ -9646,7 +9646,7 @@ rule's heavy-tail bound and its two counts. Appendix E had printed M-65's first 
 because the returned phrase wraps a line and `scripts/appendix_g_rules.py` did not read past it; it now prints the
 returned reading. Found by F10's read-only review of Appendices A–M and checked against the artifact.
 **Evidence** `RUN` `results/m65_gaussian_nominal.json`; `SRC` `scripts/appendix_g_rules.py`
-**Status** CONFIRMED · **Relevance** METHOD
+**Status** CONFIRMED; SUPERSEDED IN PART by `S-22` (its sentence that M-65's reading stands) · **Relevance** METHOD
 
 ### M-97 — PRE-REGISTERED rule X11a: the ensemble-5 arms' held-out calibration at n = 20, and in-sample against held-out with every episode in both roles · **NEW**
 **Entered before any of its data exists.** No X11 run has been trained: no `results/x3_run_armA_ho*_ens5.json`, no `runs/x3_armA_ho*_ens5`, no single-model seed-3 or seed-4 fold run, and no X11 reading exists. The only training on a new fold so far is GT1's two 20-iteration timing probes on fold {0, 2} (`runs/timing_probe_round5/`: `x3_run_armA_ho02_seed0_ens5.json`, `x3_run_armA_ho02_seed3.json`), which saved no checkpoint and evaluated nothing, and the training-support runs of `docs/presubmission/round5/gt1_fold_support.json`, which trained 50 iterations on fold {1, 8} only. Its frozen files are committed in the same commit as this text, whose subject begins `PRE-REGISTER`; the script refuses to compute the reading unless this entry records the SHA-256 of every one of them (`scripts/x11_common.py` `require_prereg`). Before that commit, on these bytes, each ran only its `--assert-only` mode, which loads fold {1, 8}'s existing weights and computes no reading (it passed, maximum difference 0.0), and a dry run of `reading()` from a harness outside the repository with every fold's weights replaced by fold {1, 8}'s, whose numbers are a code test and are not recorded; the logs naming these SHA-256s are in the session's evidence folder. The ordering can be checked from `git log`. Round 5's rule X11 (PLAN Annex 2; `docs/presubmission/round5/PROTOCOLS.md` §4, which governs where this text is shorter).
@@ -10219,4 +10219,95 @@ interval lies above 1:** even at one step no ensemble here accounts for its own 
 least of it.
 
 **Evidence** `RUN` `results/n14_one_step_accounting.json`; `SRC` `scripts/n14_one_step_accounting.py`, `scripts/x9_per_member_propagation.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### S-22 — M-65's reading "NOT HEAVY-TAILED, in every one of 48 model × horizon cells" · **NEW**
+**Retracts** `M-65`, its returned reading and the conclusions drawn from it; `M-96`, its sentence that M-65's reading stands
+**What is retracted:** M-65's discharge reading "NOT HEAVY-TAILED, in every one of 48 model x horizon cells"; its conclusion that
+"the Gaussian nominal is defensible, and the paper's attribution of the coverage shortfall to scale rather than to distributional
+shape is not an assumption but a measurement"; and its use of the oracle constant's growth with horizon to argue that "no single
+lambda repairs" the penalty. M-96's sentence that "M-65's returned reading stands as it was".
+
+**Why: M-65 read the tails backwards.** Rescaling σ so that mean|error|/σ equals a Gaussian's √(2/π) makes a heavy-tailed (or
+scale-mixture) error over-cover at ±1σ and under-cover at ±2σ. M-65's committed branches read ±1σ only, and named over-coverage
+OVER-DISPERSED; over-coverage at ±1σ is the first half of the heavy-tail signature, not over-dispersion. N8 (`R-81`) reads the
+second half, from the same stored errors: of the 48 cells, 30 are heavy-tailed (±1σ over and ±2σ under),
+18 mixed and 0 near-Gaussian. Every one of the 33 cells M-65 called OVER-DISPERSED over-covers at
+±1σ, and 30 of them under-cover at ±2σ; every one of the 15 it called GAUSSIAN NOMINAL ADEQUATE under-covers at
+±2σ. The λ argument is withdrawn with it, for a separate reason: MOPO's penalty is meant to bound one-step model error at visited
+states, so a constant that grows with horizon on accumulated error does not show that no single λ serves that purpose.
+
+**What is not retracted.** M-65's branch labels as the committed rule returned them (in `results/m65_gaussian_nominal.json`), its
+oracle constants (`R-81` reports them as c beside the coverage-matching multiplier k), and M-96's correction that two in-band cells
+fall below 68.27%.
+
+**What replaces it:** `R-81`. The quantity the paper calls "too small by" is now the coverage-matching multiplier k (DECISIONS Y7):
+on the released checkpoint's epistemic term, all ten episodes, k = 6.6 at h = 1,
+30.8 at h = 100 and 41.7 at h = 368, against the mean-matching
+c = 10.4, 41.9 and 43.2.
+
+**Who found it:** the TMLR review of 19 October 2026 (PLAN round 5, Annex 1 item 24a); measured by N8 in session G4.
+**Evidence** `RUN` `results/n8_tails.json`, `results/m65_gaussian_nominal.json`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### S-23 — The shared state trunk presented as something the follow-up does not state · **NEW**
+**Retracts** — the framing of `C-04`, filed among the `C-` entries ("paper says one thing, code does another") with "ensemble of 5"
+in quotation marks, as if the follow-up's ensemble were described as independent models
+**What is withdrawn:** the presentation, not the fact. RWM-U v1 §4.1 states the construction: "apply bootstrap ensembles to the observation prediction head of the model after a shared recurrent feature extractor"
+(unchanged in v1, v2, v3; `results/version_crosswalk.json`, `rwmu_shared_trunk`).
+So the shared state trunk is documented, and the paper credits it to the follow-up rather than presenting it as a finding.
+**What stands:** C-04's facts (one state trunk, one auxiliary trunk, heads replicated), X-12's topology and parameter counts, and X-12's
+point that the ensemble mean is fed back through one recurrent state, which is also the rollout the follow-up describes. Whether the
+follow-up states the auxiliary trunk's sharing was not checked here.
+**Who found it:** the TMLR review of 19 October 2026; PREMISES P10 (session G1).
+**Evidence** `SRC` `results/version_crosswalk.json`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### S-24 — "The floor it closes onto freezes, and nothing can reopen it" · **NEW**
+**Retracts** — the last sentence of `C-11`: "So once the interval starts closing, the floor it closes onto freezes, and nothing can reopen it."
+**Why:** C-11's own algebra shows that `state_min_logstd` takes no gradient from the bound term, and C-11 itself notes that it is reachable
+through the σ path in the state loss. It is: on Arm A it moves at -1.797e-05 per iteration, 5.2 times
+more slowly than `log_delta_logstd` (`results/step6_3_min_logstd.json`, `armA_rate_min_logstd`, `rate_ratio`), and the released checkpoint's
+floor has travelled -4.81 from its initialisation. "Freezes" overstates it; the correct statement is that the floor
+receives no gradient from the bound term and moves only through the state loss, slowly.
+**What stands:** C-11's algebra and its zero-gradient measurement.
+**Who found it:** the TMLR review of 19 October 2026 (PLAN round 5, Annex 1 item 29).
+**Evidence** `RUN` `results/step6_3_min_logstd.json`; `SRC` `system_dynamics.py:301-302`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### C-17 — C-09 corrected: both papers set the decay factor to 1.0, which is what the code computes · **NEW**
+**Corrects** C-09, whose last sentence says "the paper describes a hyperparameter the code does not have".
+Both originals name α "a decay factor" in the multi-step loss and set it to 1.0 in their training tables: RWM v1 Table S9
+("forecast decay α 1.0"; Table S10 in v5) and RWM-U v1
+Table S8 (Table S10 in v3)
+(`results/version_crosswalk.json`, `rwm_table_decay`, `rwmu_table_decay`). With α = 1.0 every forecast step has equal weight, which is the
+unweighted mean C-09 found in the code. C-09's fact stands, no α parameter exists in the code, but it is a naming difference, a parameter set
+to no decay and not implemented as a parameter, and nothing numerical differs between paper and code.
+**The training length** is in the same tables: 2,500 iterations at learning rate 1e-4 in RWM v1 Table S9
+and RWM-U v1 Table S8 (Table S10 in v3)
+(`rwm_table_iterations`, `rwmu_table_iterations`). A citation of "Table S9" for the training length is right for RWM v1 and wrong for the
+follow-up, whose table is S8 in v1.
+**Evidence** `SRC` `results/version_crosswalk.json`; `docs/presubmission/round5/PREMISES.md` (P13–P15).
+**Status** CONFIRMED · **Relevance** METHOD
+
+### C-18 — "Bootstrap ensembles": per-head resampling is in the online training path and not in the offline one · **NEW**
+RWM-U v1 §4.1 calls the ensemble "bootstrap ensembles". The released code resamples per head in one of its two training paths:
+`rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:129-140` gives `compute_loss` a `bootstrap` flag, default False, under which each head draws its
+own with-replacement resample of the batch (`torch.randint(0, B, (B,))`), and `rsl_rl_rwm/rsl_rl/algorithms/mbpo_ppo.py:213` sets it in the
+MBPO-PPO model update. The offline path, `robotic_world_model_lite/scripts/model_training.py:68,159`, calls `compute_loss` without it, so every
+head sees the same batch and the heads differ only in initialisation. Our arms follow the offline path: `scripts/step5_train.py:259` calls
+our `compute_loss` without `bootstrap`. So "bootstrap" is a gap between the paper and the offline path only. Which path trained the released
+checkpoint is not recorded (`R-86`).
+**Evidence** `SRC` `system_dynamics.py:129-140`, `mbpo_ppo.py:213`, `model_training.py:68,159`, `scripts/step5_train.py:259`; `docs/presubmission/round5/PREMISES.md` (P12).
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-89 — R-75's survey counts, stated without the circular "examined" · **NEW**
+**Corrects** R-75's count sentence, "Of 10 repositories examined on 2026-09-20 under a protocol fixed before the search, 10 carry the
+construction and 1 of those trains it against a sampled squared error". The protocol counts as examined only the repositories that carry
+the construction (`results/q1_search_protocol.md` §3), so "10 examined, 10 carry" is one count stated twice. The three counts, from
+`results/q1_pets_descendants.json` `counts`: **13 repositories looked at** (10 with the construction and
+3 without it, set aside as out of scope); **10 implement the
+construction**; **1 trains it against a sampled squared error, and only optionally** (`nirbhayjm/va_mbpo`, in its value-aware
+mode, not its default). R-75's reading, that the substitution is rare among the descendants examined, stands.
+**Evidence** `RUN` `results/q1_pets_descendants.json`; `SRC` `results/q1_search_protocol.md`.
 **Status** CONFIRMED · **Relevance** CONTRIB

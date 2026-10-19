@@ -251,7 +251,7 @@
       "id": "C-04",
       "claim": "The \"ensemble of 5\" shares both trunks",
       "relevance": "CONTRIB",
-      "status": "CONFIRMED",
+      "status": "CONFIRMED; SUPERSEDED IN PART by `S-23` (its framing as a code-paper discrepancy; the facts stand)",
       "evidence": [
         "SRC"
       ],
@@ -329,7 +329,7 @@
       "id": "C-11",
       "claim": "`state_min_logstd` receives no gradient from the bound loss",
       "relevance": "CONTRIB",
-      "status": "CONFIRMED",
+      "status": "CONFIRMED; SUPERSEDED IN PART by `S-24` (its sentence that the floor freezes; the algebra and the measurement stand)",
       "evidence": [
         "RUN",
         "SRC"
@@ -2995,7 +2995,7 @@
       "id": "M-65",
       "claim": "Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distributi",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED; its returned reading SUPERSEDED by `S-22` (see `R-81`)",
       "evidence": [
         "RUN"
       ],
@@ -3869,7 +3869,7 @@
       "id": "M-96",
       "claim": "Correction to M-65's discharge record: two of its in-band cells fall below the nominal",
       "relevance": "METHOD",
-      "status": "CONFIRMED",
+      "status": "CONFIRMED; SUPERSEDED IN PART by `S-22` (its sentence that M-65's reading stands)",
       "evidence": [
         "RUN",
         "SRC"
@@ -4191,16 +4191,103 @@
         "scripts/x9_per_member_propagation.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "S-22",
+      "claim": "M-65's reading \"NOT HEAVY-TAILED, in every one of 48 model \u00d7 horizon cells\"",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/m65_gaussian_nominal.json",
+        "results/n8_tails.json"
+      ],
+      "retracts": [
+        "M-65",
+        "M-96"
+      ]
+    },
+    {
+      "id": "S-23",
+      "claim": "The shared state trunk presented as something the follow-up does not state",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/version_crosswalk.json"
+      ],
+      "retracts": [
+        "C-04"
+      ]
+    },
+    {
+      "id": "S-24",
+      "claim": "\"The floor it closes onto freezes, and nothing can reopen it\"",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/step6_3_min_logstd.json"
+      ],
+      "retracts": [
+        "C-11"
+      ]
+    },
+    {
+      "id": "C-17",
+      "claim": "C-09 corrected: both papers set the decay factor to 1.0, which is what the code computes",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/version_crosswalk.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "C-18",
+      "claim": "\"Bootstrap ensembles\": per-head resampling is in the online training path and not in the",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "R-89",
+      "claim": "R-75's survey counts, stated without the circular \"examined\"",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/q1_pets_descendants.json",
+        "results/q1_search_protocol.md"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
-    "C": 16,
+    "C": 18,
     "D": 39,
     "M": 103,
     "O": 14,
-    "R": 88,
-    "S": 21,
+    "R": 89,
+    "S": 24,
     "X": 17
   },
   "retraction_classes": {
@@ -4212,6 +4299,7 @@
       "S-13",
       "S-14",
       "S-21",
+      "S-22",
       "S-20"
     ],
     "framing": [
@@ -4220,7 +4308,9 @@
       "S-16",
       "S-17",
       "S-18",
-      "S-19"
+      "S-19",
+      "S-23",
+      "S-24"
     ],
     "early_hypothesis": [
       "S-01",
@@ -4231,7 +4321,7 @@
       "S-06",
       "S-07"
     ],
-    "n_superseded": 21,
+    "n_superseded": 24,
     "reclassified": [
       {
         "target": "S-20",

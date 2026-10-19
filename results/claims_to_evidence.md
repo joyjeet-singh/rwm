@@ -19,13 +19,13 @@ One row per CONTRIB ledger entry.
 | `C-01` | The loss has seven terms, not two | `SRC` | CONFIRMED | — |
 | `C-02` | The mean head is residual | `SRC` | CONFIRMED | — |
 | `C-03` | Two GRU trunks, not one | `SRC` | CONFIRMED | — |
-| `C-04` | The "ensemble of 5" shares both trunks | `SRC` | CONFIRMED | — |
+| `C-04` | The "ensemble of 5" shares both trunks | `SRC` | CONFIRMED; SUPERSEDED IN PART by `S-23`  | — |
 | `C-05` | Training samples, inference takes the mean | `SRC` | CONFIRMED | — |
 | `C-06` | Learnable bounded log-standard-deviation | `SRC` | CONFIRMED | — |
 | `C-07` | Actions are not normalised | `SRC` | CONFIRMED | — |
 | `C-09` | There is no forecast decay factor in the implementation at all | `SRC` | CONFIRMED | — |
 | `C-10` | The aleatoric variance head has collapsed to a constant | `DATA`, `SRC` | CONFIRMED | — |
-| `C-11` | `state_min_logstd` receives no gradient from the bound loss | `RUN`, `SRC` | CONFIRMED | — |
+| `C-11` | `state_min_logstd` receives no gradient from the bound loss | `RUN`, `SRC` | CONFIRMED; SUPERSEDED IN PART by `S-24`  | — |
 | `C-12` | The released checkpoint's collapse implies ~155,000 iterations, not 500 or 2500 | `RUN`, `SRC` | CONFIRMED | — |
 | `C-13` | Three different iteration counts are in play | `DATA`, `EXT`, `SRC` | CONFIRMED | — |
 | `C-14` | The method penalises EPISTEMIC uncertainty; the aleatoric head is discarded before use | `EXT`, `SRC` | CONFIRMED | — |
@@ -119,3 +119,5 @@ One row per CONTRIB ledger entry.
 | `R-86` | N12 (post hoc): the released checkpoint's provenance — what the sources record, and its  | `RUN`, `SRC` | CONFIRMED | `results/alignment_by_horizon.json`, `results/appendix_g_rules.json` |
 | `R-87` | N13 (post hoc): Adam's defaults, the collapse rate against the learning rate, and the va | `RUN`, `SRC` | CONFIRMED | `results/n13_adam.json`, `scripts/n13_adam.py` |
 | `R-88` | N14 (post hoc): how much of the one-step error each ensemble's spread can account for | `RUN`, `SRC` | CONFIRMED | `results/n14_one_step_accounting.json`, `results/r2_independent_ensemble.json` |
+| `C-18` | "Bootstrap ensembles": per-head resampling is in the online training path and not in the | `SRC` | CONFIRMED | — |
+| `R-89` | R-75's survey counts, stated without the circular "examined" | `RUN`, `SRC` | CONFIRMED | `results/q1_pets_descendants.json`, `results/q1_search_protocol.md` |
