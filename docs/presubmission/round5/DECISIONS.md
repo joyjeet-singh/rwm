@@ -90,3 +90,27 @@ by 3.0e-4 (0.002%). N13 now asserts the value read from the checkpoint against l
 precision (|difference| < 5e-4), records the typed-constant defect in its artifact and ledger entry, and logs it in
 OUT_OF_SCOPE. N13's reachability uses the value read from the checkpoint, as PROTOCOLS specified. No N13 reading had been
 written (the `.blocked` record is at `/Users/Shared/rwm_verify/evidence/R5G4/`).
+
+## G8-outline
+
+**Approval needed before G9 starts** (PLAN §1.4). `round5/OUTLINE.md` is the plan G9–G15 build to. Approve it as it
+stands, or name the changes. Four things in it are choices rather than consequences of the rulings:
+
+1. **The plan.** 11.5 pages of main content (half a page of margin under Y1); §5 in G13's order, leading with the
+   one-step gap; three figures and three tables, Figure 1 being two findings (the base claim held out episode by
+   episode; whether the spread accumulates); appendices A–O at about 12,000 words. **No broader-impact statement:**
+   TMLR asks for one only where there is a significant risk of harm, and §10's text moves to the supplement.
+2. **The released checkpoint's scope words.** Rule 11 locks X7 as coverage "on a checkpoint that trained on all ten
+   episodes". N12 found that nothing in the release records which rows trained it. The outline writes "the released
+   checkpoint, on its ten released episodes" and states N12's sentence once in §3.2. The finding is unchanged; only
+   the words "trained on" go. Approving the outline approves this change to the locked wording.
+3. **The title.** Recommended: *Right Ranking, Wrong Scale: Reproducing the Robotic World Model's Dynamics Model and
+   Testing the Uncertainty of Its Follow-up*. The referee read "order" as "order of magnitude". The alternative keeps
+   *Right Order, Wrong Size:* with the same subtitle.
+4. **G9's migration list**, in particular item 13: the "what §x keeps" and "stood there as follows" framings go to
+   BUILD_CHECKS, while the evidence they introduce stays in the appendices for G15.
+
+The abstract draft (210 words, 5 numerals) and the four contributions (at most 45 words each) are in §abstract and
+§contributions; G11 starts from them and rechecks them against the readings (rule 10), including GT2's.
+
+**Status: AWAITING USER.**

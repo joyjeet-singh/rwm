@@ -459,3 +459,49 @@ Body words / main-content pages: unchanged prose; pages 26.88 (the reference lis
 Subagents: rwm-sources ×1 (record identification; read-only)
 Next: G8 (Opus 5.5, high) — outline, page budget and abstract.
 Decisions for user: none
+
+## G8 — 2026-10-19 22:36 — Opus 5.5, high — status: COMPLETE
+Commits: 1dfac17 [G8][1-2] round5/OUTLINE.md, with the rwm-referee read answered
+         (final [G8][close] commit: the approval question, this entry and the checkpoint)
+Review items closed: the decisions for RV01, RV04, RV07, RV14, RV18 and RV37 (OUTLINE §review-items maps all of Annex 1).
+Done:
+- **How this session ran.** In the same conversation as G2–G7, at the user's request ("Start G8"). One `rwm-referee` read.
+- **Item 1, `round5/OUTLINE.md`.**
+  - **The plan:** 11.5 pages and about 5,560 body words, three figures and three tables; §5 in G13's order, leading
+    with the one-step gap.
+  - **The homes:** one home per result (H1–H21), each with its scope sentence, keys and display precision.
+  - **Figures:** Figure 1 is (a) the base claim held out episode by episode and (b) the error-to-spread ratio by
+    horizon under both rollouts.
+  - **Appendices:** A–O at about 12,000 words.
+  - **G9's migration list:** 13 items by exact anchor. Item 13 moves only the drafting-history framings; the evidence
+    they introduce stays.
+  - **Front matter:** the title recommendation, the abstract and four contributions in keys.
+  - **Checks:** the rule-10 table of summary claims against their readings, and how every Annex 1 item lands.
+  - Every key the outline names exists, except `n7_p_min_n4_frac`, which it asks G12 to add (the exact minimum p at
+    n = 4, 0.125, which `s2` would misprint as 0.13).
+- **Item 2, the referee.** Thirteen points; answers in OUTLINE §Referee.
+  - **One found a real scope problem.** At one step X3's episode-level sign agrees on only 6 of 10 episodes
+    (N7, p ≈ 0.2), so "it loses at one step" holds on short windows only. The abstract, contribution 1 and the
+    rule-10 table now say so.
+  - **Abstract.** X3's exact p moved to §4.1, where its exchangeability assumption can be stated; per-member
+    propagation is now given as coverage before and after, against nominal; the rescaling split is named; the
+    zero-variance optimum is explained (squared error on a sampled prediction).
+  - **Title.** "Right Ranking, Wrong Scale" is recommended, since "order" reads as order of magnitude.
+  - **Two points answered rather than taken.** The page budget is checked against G0's measured 662 words a page:
+    8.4 pages of text, about 10.5 with every float added on top. The per-episode figure the referee asked for is
+    already Figure 1a, which it was not shown.
+- The `ids` gate counts "RWM-U" as a verdict label (OUT_OF_SCOPE, owner G16).
+- **Item 3.** The approval question is at `DECISIONS.md#G8-outline`. It covers the plan, the scope wording that
+  replaces the locked "trained on all ten episodes" (N12), the title, and G9's list.
+Build/gates: not run (no text, number or generator changed; OUTLINE.md, OUT_OF_SCOPE.md and DECISIONS.md are records)
+Round-5 gates (report mode until G16): pages 26.88/12, abstract 300/19, ids 93, once 33, sig 510, keys missing 0 (unchanged since G7)
+Paper numbers changed: none
+New keys: none (n7_p_min_n4_frac is G12's)
+Ledger: none
+Re-anchored checks: none
+CPU jobs over 1 min: none
+Queue (Y5): running (1 of 20 done; x11_e5_34_s0 started 20:51); on mains power at 22:54.
+Body words / main-content pages: 17,804 / 26.88 (unchanged)
+Subagents: rwm-referee ×1
+Next: G9 (Sonnet 5.5, medium), only after DECISIONS.md#G8-outline is approved.
+Decisions for user: DECISIONS.md#G8-outline
