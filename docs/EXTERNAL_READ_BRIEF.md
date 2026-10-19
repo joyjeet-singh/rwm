@@ -131,7 +131,7 @@ In rough order:
 2. Anything in the abstract that you would read as a stronger claim than the body supports.
 3. A section you would cut. The paper is long, roughly a fifth of it is about its own process, and
    we would rather hear "§8 is too long" from you than from a reviewer.
-4. Anything that reads as defensive rather than careful. The ledger keeps 20 superseded entries, seven claims withdrawn on evidence and six framings withdrawn among them, and the paper says so repeatedly; we cannot tell any more whether that reads as rigour or as
+4. Anything that reads as defensive rather than careful. The ledger keeps 24 superseded entries, nine claims withdrawn on evidence and eight framings withdrawn among them, and the paper says so repeatedly; we cannot tell any more whether that reads as rigour or as
    anxiety.
 
 **What is not useful:** arithmetic, citation formatting, or anything of the form "this number

@@ -5559,13 +5559,12 @@
     },
     {
       "value": "21",
-      "n_locations": 7,
+      "n_locations": 5,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 7,
+      "n_substituted": 5,
       "sources": [
-        "results/claims_to_evidence.json (scripts/ledger_check.py)",
         "results/step0_regimes.json",
         "results/task1_calibration.json",
         "results/task_d2_recalibration.json"
@@ -5573,16 +5572,9 @@
       "keys": [
         "cal_nll_npos",
         "d10_n_regimes",
-        "d2_epi_cov368_hi",
-        "n_superseded"
+        "d2_epi_cov368_hi"
       ],
       "locations": [
-        {
-          "section": "1. Introduction",
-          "line": 50,
-          "key": "n_superseded",
-          "ctx": " withdrawn findings in the record.** The ledger keeps {{n_superseded}} superseded entries, each beside the evi"
-        },
         {
           "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
           "line": 660,
@@ -5594,12 +5586,6 @@
           "line": 823,
           "key": "d2_epi_cov368_hi",
           "ctx": "target and leaves h = 368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%, and fitted over the whole rollout it "
-        },
-        {
-          "section": "8. Method",
-          "line": 946,
-          "key": "n_superseded",
-          "ctx": "word}} framings withdrawn rather than numbers, out of {{n_superseded}} superseded entries kept in the record ("
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
@@ -5737,12 +5723,13 @@
     },
     {
       "value": "24",
-      "n_locations": 5,
+      "n_locations": 7,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 5,
+      "n_substituted": 7,
       "sources": [
+        "results/claims_to_evidence.json (scripts/ledger_check.py)",
         "results/presubmission_runtime.json",
         "results/task_d3_perhorizon.json",
         "results/task_d3b_ens5_power.json"
@@ -5750,15 +5737,28 @@
       "keys": [
         "d3_ncells_all",
         "e5_power_worst",
+        "n_superseded",
         "rt_r4_x3_runs",
         "rt_sweep_runs"
       ],
       "locations": [
         {
+          "section": "1. Introduction",
+          "line": 50,
+          "key": "n_superseded",
+          "ctx": " withdrawn findings in the record.** The ledger keeps {{n_superseded}} superseded entries, each beside the evi"
+        },
+        {
           "section": "5.2 The configuration claim: history and forecast horizons",
           "line": 414,
           "key": "rt_sweep_runs",
           "ctx": "son`); hours per run, and the {{mn_n_overlapped}} of {{rt_sweep_runs}} sweep runs that overlapped other logged"
+        },
+        {
+          "section": "8. Method",
+          "line": 946,
+          "key": "n_superseded",
+          "ctx": "word}} framings withdrawn rather than numbers, out of {{n_superseded}} superseded entries kept in the record ("
         },
         {
           "section": "Appendix B \u2014 reproducing",

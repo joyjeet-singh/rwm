@@ -59,7 +59,7 @@ nothing about reproduction, and are never folded into the figure; counting them 
 *Formerly the paper's Appendix C, moved here in the referee revision. The text is as it stood
 there; only headings and cross-references that now point the other way were changed.*
 
-**The eight claims withdrawn on evidence, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards; the size of the released evaluation's one-step action misalignment, measured on overlapping windows one of which carried most of the effect, withdrawn when intervals over independent trajectories made it small and its sign reversed across the ten episodes (S-20, reclassified by M-82 as withdrawn on evidence); and the claim that our own checkpoints barely feel that misalignment, computed through a rollout that scored one trajectory's forecast against every trajectory's truth, withdrawn when the corrected measurement showed their error rising with the stale action at long horizons (S-21, withdrawn on evidence). **The six framings withdrawn**, as stated claims rather
+**The nine claims withdrawn on evidence, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards; the size of the released evaluation's one-step action misalignment, measured on overlapping windows one of which carried most of the effect, withdrawn when intervals over independent trajectories made it small and its sign reversed across the ten episodes (S-20, reclassified by M-82 as withdrawn on evidence); the claim that our own checkpoints barely feel that misalignment, computed through a rollout that scored one trajectory's forecast against every trajectory's truth, withdrawn when the corrected measurement showed their error rising with the stale action at long horizons (S-21, withdrawn on evidence); and the reading that the calibration error is not heavy-tailed in any of 48 cells, which read only ±1σ coverage after rescaling and called its over-coverage over-dispersion, withdrawn when ±2σ coverage under the same rescaling showed the heavy-tail signature (S-22, withdrawn on evidence). **The eight framings withdrawn**, as stated claims rather
 than as numbers, and generated from the ledger rather than listed here — a typed
 enumeration beside a generated count is the same defect as a typed count. This one was typed
 with two entries at a time when the ledger held
@@ -68,7 +68,7 @@ replaced it with a generated list in the same commit, so it never actually stood
 appears here as a note rather than above as an entry for that reason, and the reason is luck:
 nothing compared the typed enumeration against the count beside it, and had the two changes
 landed in separate commits the paper would have said six and enumerated
-two. All six, generated:
+two. All eight, generated:
 
 - **Task 3's duplication rule was pre-registered** (`S-12`).
 
@@ -81,6 +81,10 @@ two. All six, generated:
 - **The per-member σ is worse by three orders of magnitude** (`S-18`).
 
 - **The released checkpoint cannot have come from the released recipe** (`S-19`).
+
+- **The shared state trunk presented as something the follow-up does not state** (`S-23`).
+
+- **The floor it closes onto freezes, and nothing can reopen it** (`S-24`).
 
 The second pre-submission review entered four of them, in a
 single commit — which is how that count is established rather than recalled.
@@ -280,9 +284,9 @@ two vocabularies, so a reader comparing them could not tell whether the paper ha
 claims or thirteen.
 
 There is now one vocabulary and one source:
-- **claims withdrawn on evidence** (8);
-- **framings withdrawn** (6);
-- **superseded entries** (21), which also include the early hypotheses closed as
+- **claims withdrawn on evidence** (9);
+- **framings withdrawn** (8);
+- **superseded entries** (24), which also include the early hypotheses closed as
   housekeeping.
 
 `scripts/ledger_check.py` classifies every S- entry into exactly one class and refuses to pass if
