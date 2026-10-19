@@ -82,3 +82,6 @@ results/m63_per_dimension_coverage_report.txt
 results/m65_gaussian_nominal_report.txt
 results/m64_free_gate_report.txt
 results/m64_short_units_report.txt
+
+# round-5: local Claude Code settings (never committed)
+.claude/settings.local.json
