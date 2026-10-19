@@ -36,3 +36,35 @@ Subagents: none
 Next: G1 (`docs/presubmission/round5/go.zsh G1`).
 Decisions for user: none. Notes: (1) the abstract is 300 words/19 numerals vs Y2's 210/5. (2) I counted main-content
   pages as 26.9 (heading position on page 27), PLAN says 26. (3) Several round-4 commits and this round's are local only.
+
+## G1 — 2026-10-19 — Sonnet 5.5, high — status: COMPLETE
+Commits: e2b0e89 [G1][2-3] Version crosswalk: script, artifact (25 claims, RWM v1-v5, RWM-U v1-v3), FILE_MAP row
+         7fcf186 [G1][1,4] Premises P1-P40, crosswalk summary with upstream-code section, six out-of-scope lines
+         (final [G1][5] commit: this entry and the checkpoint)
+Review items closed: evidence gathered for RV09–RV13, RV31, RV39 (`PREMISES.md`, `CROSSWALK.md`); no review item is fixed (no paper edits).
+Done: Start gate passed (G0 COMPLETE). Read the review. `PREMISES.md`: 40 premises — TRUE 27, PARTLY 11 (P2, P3, P6, P12, P22, P23, P28, P40, and
+  P20, P15, P39 with a qualification), FALSE 0 — plus three findings the review did not raise (B1–B3). Downloaded RWM v1–v5 and RWM-U v1–v3 (PDF,
+  HTML, abstract page) to `docs/presubmission/sources/g1/` (gitignored; SHA-256 in the artifact). **OpenReview forums `u76d3gBWCX` and `mcwLgO93ym`
+  could not be fetched** (browser challenge, HTTP 403; not bypassed), so no workshop text exists locally. `scripts/version_crosswalk.py` →
+  `results/version_crosswalk.json` (25 claims; no 12, moved 7, reworded 3, new 3, removed 0; deterministic on re-run). Upstream: cloned both to
+  `/Users/Shared/rwm_verify/upstream_latest/`; **0 commits since either pin**, clones equal the pinned copies.
+Findings that matter downstream:
+  1. RWM v1 has no 6M-against-250M table; it is Table 1 in v2+. The paper and `results/original_paper_figures.json` call it v1's "Table I" (B1).
+  2. The released imagination env feeds back one random member per environment; the paper (and X9's baseline) describe only the ensemble-mean path (B2). X9 in G2/G3 must say which it contrasts.
+  3. `rsl_rl_rwm` does per-head bootstrap resampling in the MBPO-PPO update (`bootstrap=True`); the offline `robotic_world_model_lite` path does not (P12).
+  4. Both papers set forecast decay α = 1.0; C-09 is a naming difference, not a gap (P14–P15). v3 of RWM-U changed no rollout text; it added the "effectively propagated" claim (P8).
+  5. Both follow-ups are workshop posters on the venue pages, archival status unstated (P6; the venue pages were read through a summarising fetch, so quotations are as returned).
+  6. The claim that the released checkpoint trained on exactly our ten episodes is an assumption (`scripts/insample_framing.py:37`) (P20).
+  7. P22: 25 CPU-h needs one ensemble-5 seed per fold; stored ensemble-5 runs cost 4.0–4.4 h each, so three seeds is about 50 h. GT1 must project from probes.
+Build/gates: pass (fast build, ledger_check PASS, self-test, typed_numeral_audit, restatement_index, horizon_sweep, xref_sweep, check_scope_audit, pdf_render_check all exit 0); no tracked paper file changed; `PAPER.pdf` (date only) restored with `git restore`. Second build not needed: nothing changed.
+Round-5 gates (report mode until G16): not available until G6
+Paper numbers changed: none
+New keys: none
+Ledger: none
+Re-anchored checks: none
+CPU jobs over 1 min: none (the crosswalk check takes about 1 min including PDF text extraction; no training)
+Queue (Y5): not launched
+Body words / main-content pages: unchanged (17,804 / 26.9)
+Subagents: rwm-sources × 2 (venue pages and OpenReview; TMLR and MLRC policy pages). Both read through a summarising fetch tool; the results are recorded in `PREMISES.md` as such.
+Next: G2 (Opus 5.5, high) — analysis protocols committed before any data. Read PREMISES B2 and P12 before specifying X9.
+Decisions for user: none required. Optional: the venue question in P6 (what the paper may call the two follow-ups) can wait for G7/G14.
