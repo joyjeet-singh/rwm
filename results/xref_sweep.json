@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 112,
-  "n_ok": 112,
+  "n_pointers": 111,
+  "n_ok": 111,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -23,13 +23,6 @@
       "ok": true,
       "detail": "target 9; nouns ['lessons', 'form', 'practitioner', 'without', 'reading', 'rest']; absent []",
       "context": "\u00a79 gives the lessons in a form\na practitioner can use without reading the rest"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix I gives the rest of this section in full",
-      "ok": true,
-      "detail": "target Appendix I; nouns ['rest', 'section', 'full']; absent ['section']",
-      "context": "Appendix I\ngives the rest of this section in full"
     },
     {
       "class": "semantic",

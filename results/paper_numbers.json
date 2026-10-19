@@ -1941,7 +1941,7 @@
   },
   "cc_pass": {
     "source": "results/comparative_claims.json",
-    "value": 66
+    "value": 68
   },
   "cc_selfdefect_list": {
     "source": "results/comparative_claims.json",

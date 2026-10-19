@@ -97,7 +97,7 @@ a practitioner can use without reading the rest.
 
 This paper asks whether an ensemble-disagreement penalty is calibrated, and separates its use as a
 *ranking* from its use as a *scale*. Both questions have a literature, and one paper asked almost
-exactly ours four years earlier; below we say which parts of what follows are new. Appendix I
+exactly ours four years earlier; below we say which parts of what follows are new. Supplementary S4
 gives the rest of this section in full.
 
 **The direct precedent.** Lu, Ball, Parker-Holder, Osborne and Roberts (*Revisiting Design Choices
@@ -1523,67 +1523,6 @@ is never consumed.
 ---
 
 ## Appendix I — related work in full, the PETS lineage of the bounded σ head, and how often its descendants substitute the objective
-
-**Related work in full (§2).** §2 keeps the direct precedent, what is new here, and the PETS lineage in
-two sentences, with one line for each of the rest. Those lines stood in §2 as follows; the lineage
-follows in full after them.
-
-**The method's family.** MOPO (Yu, Thomas, Yu, Ermon, Zou, Levine, Finn and Ma, NeurIPS 2020)
-penalises the reward by an ensemble uncertainty estimate to solve a pessimistic MDP; MOReL
-(Kidambi, Rajeswaran, Netrapalli and Joachims, NeurIPS 2020) builds an unknown-state detector from
-pairwise ensemble disagreement instead; and both branch short model rollouts from real states in
-the manner of MBPO (Janner, Fu, Zhang and Levine, NeurIPS 2019). The follow-up we reproduce adapts
-MOPO's penalty into MBPO's loop, which is what "MOPO-PPO" names, and its 100-step imagination
-horizon sits inside MBPO's trade between rollout length and model error (§6.2).
-
-**What "ensemble" is supposed to mean.** Deep ensembles (Lakshminarayanan, Pritzel and Blundell,
-NeurIPS 2017) are several networks trained from *different random initialisations and different
-data orderings*, and their spread is the uncertainty estimate. The released checkpoint's five
-members share one GRU trunk, one recurrent hidden state, and 89.15% of each member's
-state-prediction parameters, so whatever their spread measures, it is not what a deep ensemble
-measures (§6.4).
-
-**Three sources of uncertainty, and the one nobody here estimates.** Abbas, Sokota, Talvitie and
-White (ICML 2020) separate predictive uncertainty in model-based RL into aleatoric noise,
-parameter uncertainty, and **model inadequacy**, and observe that selective-planning work attends
-almost entirely to the second. The checkpoint we measure emits an aleatoric term and a
-parameter-uncertainty term, discards the first before use (§6.1), and has no estimate of the third,
-which is precisely the component that compounds with rollout depth: the shape §6.5 reports.
-
-**Why miscalibration is the expected finding.** Modern networks are systematically miscalibrated
-(Guo, Pleiss, Sun and Weinberger, ICML 2017), and calibration degrades further under covariate
-shift, worsening with distance from the training distribution (Ovadia, Fertig, Ren, Nado, Sculley,
-Nowozin, Dillon, Lakshminarayanan and Snoek, NeurIPS 2019). An autoregressive rollout manufactures
-its own covariate shift, increasing with depth, so horizon-dependent calibration failure is what
-one should expect; our contribution on this axis is the *magnitude* and the *mechanism*, not the
-direction. §6.7's per-horizon multiplier is a coarse instance of calibrated regression (Kuleshov,
-Fenner and Ermon, ICML 2018), a post-hoc map fitted on one episode and scored on another, applied
-to a horizon index; we do not present it as a new idea.
-
-**The closest published work to our one constructive result.** Malik, Kuleshov, Song, Nemer,
-Seymour and Ermon (ICML 2019) recalibrate a dynamics model's uncertainty inside model-based RL,
-and argue that "good uncertainties must be calibrated" rather than merely well ranked, the
-distinction §6.2 and §6.6 draw. §6.7 is a horizon-indexed instance: a single global multiplier
-**fails**, its fitted value varying across horizons, where a per-horizon one puts every
-released-checkpoint estimate within its tolerance band, though those cells are unseen by the
-multiplier but not by the model and no single cell is resolvable (§6.7). An open-loop rollout's
-error accumulates with depth, so a horizon-blind recalibration cannot follow it.
-
-**§6.4's mechanism is known, and we say so.** That heads sharing a trunk under-report disagreement
-relative to independently initialised networks is established: Lee, Purushwalkam, Cogswell,
-Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to engineer rather than
-assume; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that independent initialisation buys
-a decorrelation subspace methods do not match; and BatchEnsemble (Wen, Tran and Ba, ICLR 2020) and
-MIMO (Havasi, Jenatton, Fort, Liu, Snoek, Lakshminarayanan, Dai and Tran, ICLR 2021) share
-deliberately and state what they trade away. **What is ours is finding it in a released robotics
-checkpoint, with the sharing quantified at 89.15% of each member and its cost bounded by the 2.03× an independent ensemble gains (§6.8).** The problem is not sharing; it is sharing and then reading the
-spread as though the members were independent.
-
-**And the objective in §6.3 has a neighbour.** Seitzer, Tavakoli, Antic and Martius (ICLR 2022)
-identify failure modes of heteroscedastic σ heads trained by maximising log-likelihood. The
-released model's state loss is not a log-likelihood at all (a *sample* enters a squared error), so
-the failure §6.3 derives is more basic than theirs and does not depend on the optimiser. §6.3
-derives it and demonstrates it against known noise.
 
 **Where the parameterisation comes from.** The bounded log-σ head that §6.3 shows has its optimum
 at σ = 0 is largely not this codebase's invention: its clamp is inherited, line for line, from the
