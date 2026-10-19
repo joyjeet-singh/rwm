@@ -510,6 +510,8 @@ stage 20w9 "N9 — the per-horizon recalibration scored on +-2 sigma, CRPS, NLL 
       results/n9_recalibration_scores.json $PY scripts/n9_recalibration_scores.py
 stage 20w10 "N10 — floors that use no model: hold-last, training mean, seasonal-naive (post hoc, R-84)" "10 s" \
       results/n10_floors.json $PY scripts/n10_floors.py
+stage 20w11 "N11 — Spearman and Kendall beside every Pearson ranking statistic (post hoc, R-85)" "40 min" \
+      results/n11_rank_correlations.json NEEDS_WEIGHTS $PY scripts/n11_rank_correlations.py
 
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them

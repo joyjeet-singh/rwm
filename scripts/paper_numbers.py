@@ -4088,6 +4088,45 @@ def main():
                 put(f"n10_{_p}_nrmse_{_ar}_h{_h}", f'{_c["nrmse_pooled"]:.3f}', _n10s)
                 put(f"n10_{_p}_nrmse_pt_{_ar}_h{_h}", f'{_c["nrmse_per_traj"]:.3f}', _n10s)
 
+    # Round 5, G4: N11 (ledger R-85, post hoc). NEEDS_WEIGHTS for U2 (the ensemble-5 arms).
+    N11 = J("n11_rank_correlations.json")
+    _n11s = "results/n11_rank_correlations.json"
+    assert N11["post_hoc"] and N11["self_test"]["pass"] and all(v["pass"] for v in N11["assertions"].values())
+    _ci11 = lambda c: f"[{c[0]:+.3f}, {c[1]:+.3f}]"
+    for _h, _r in N11["U1_d2_forecast_index"].items():
+        _k = _h if _h == "all" else f"h{_h}"
+        for _t in ("idx", "epi", "par", "diff"):
+            if _r.get(f"sp_{_t}") is not None:
+                put(f"n11_d2_sp_{_t}_{_k}", f'{_r[f"sp_{_t}"]:+.3f}', _n11s)
+                put(f"n11_d2_sp_{_t}_{_k}_ci", _ci11(_r[f"sp_{_t}_ci"]), _n11s)
+        for _t in ("idx", "epi", "par"):
+            if _r.get(f"kt_{_t}") is not None:
+                put(f"n11_d2_kt_{_t}_{_k}", f'{_r[f"kt_{_t}"]:+.3f}', _n11s)
+    for _key, _r in N11["U2_m43_ens5"].items():
+        if _r.get("sp_diff") is not None:
+            put(f"n11_e5_sp_diff_{_key}", f'{_r["sp_diff"]:+.3f}', _n11s)
+            put(f"n11_e5_sp_diff_{_key}_ci", _ci11(_r["sp_diff_ci"]), _n11s)
+    for _h, _r in N11["U3_a2_rdd"].items():
+        _k = "" if _h == "all" else f"_h{_h}"
+        put(f"n11_a2_sp_rdd{_k}", f'{_r["sp_rdd"]:+.3f}', _n11s)
+        put(f"n11_a2_sp_rdd{_k}_ci", _ci11(_r["sp_rdd_ci"]), _n11s)
+    for _b, _t in (("step-size", "step"), ("entry-res", "entry"), ("forecast-index", "index")):
+        _r = N11["U4_e7_free_baselines"][_b]
+        put(f"n11_e7_sp_{_t}_r", f'{_r["sp_r"]:+.3f}', _n11s)
+        put(f"n11_e7_sp_{_t}_margin", f'{_r["sp_margin"]:+.3f}', _n11s)
+        put(f"n11_e7_sp_{_t}_margin_ci", _ci11(_r["sp_margin_ci"]), _n11s)
+        put(f"n11_e7_sp_{_t}_partial", f'{_r["sp_partial"]:+.3f}', _n11s)
+        put(f"n11_e7_sp_{_t}_partial_ci", _ci11(_r["sp_partial_ci"]), _n11s)
+    put("n11_e7_sp_r_dis", f'{N11["U4_e7_free_baselines"]["step-size"]["sp_r_dis"]:+.3f}', _n11s)
+    for _h, _r in N11["U5_x6_short_units"].items():
+        put(f"n11_x6_sp_margin_h{_h}", f'{_r["sp_margin"]:+.3f}', _n11s)
+        put(f"n11_x6_sp_margin_h{_h}_ci", _ci11(_r["sp_margin_ci"]), _n11s)
+        put(f"n11_x6_sp_partial_h{_h}", f'{_r["sp_partial"]:+.3f}', _n11s)
+    put("n11_x6_sp_margin", N["n11_x6_sp_margin_h100"]["value"], _n11s)
+    put("n11_x6_sp_margin_ci", N["n11_x6_sp_margin_h100_ci"]["value"], _n11s)
+    put("n11_npos_sp_rel_epi_h368", N11["U6_npos"]["rel_epistemic_h368"]["spearman_n_positive"], _n11s)
+    put("n11_npos_sp_e5s0_epi_h368", N11["U6_npos"]["e5_seed0_h368"]["spearman_n_positive"], _n11s)
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

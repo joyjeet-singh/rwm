@@ -4106,6 +4106,24 @@
         "src/rwm_metrics.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-85",
+      "claim": "N11 (post hoc): Spearman and Kendall beside every Pearson ranking statistic \u2014 from h = 8",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/n11_rank_correlations.json",
+        "scripts/e7_free_baselines.py",
+        "scripts/n11_rank_correlations.py",
+        "scripts/task_d_nind20.py",
+        "scripts/x6_stepsize_short_units.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -4114,7 +4132,7 @@
     "D": 39,
     "M": 103,
     "O": 14,
-    "R": 84,
+    "R": 85,
     "S": 21,
     "X": 17
   },

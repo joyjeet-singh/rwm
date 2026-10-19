@@ -10112,3 +10112,32 @@ the artifact.
 
 **Evidence** `RUN` `results/n10_floors.json`; `SRC` `scripts/n10_floors.py`, `scripts/mn_sweep_eval.py`, `src/rwm_metrics.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-85 — N11 (post hoc): Spearman and Kendall beside every Pearson ranking statistic — from h = 8 on, the ranking findings are stronger under ranks · **NEW**
+**Post hoc.** Computed after every Pearson ranking statistic existed (round 5, PLAN Annex 2 N11; specification
+`docs/presubmission/round5/PROTOCOLS.md` §5 N11, committed in `2d71330`). It re-opens no rule and changes no verdict: by
+DECISIONS Y8 every pre-registered verdict (M-43, M-45, M-51, X6) keeps the Pearson statistic it was committed with.
+
+**Method.** Spearman's ρ (the Pearson correlation of average ranks of the same finite pairs, re-ranked inside every bootstrap
+draw) beside each Pearson value, with the same draws: each original script's own generator and loop, recorded and reused.
+Kendall's τ_b, exact, as point estimates (self-tested against a brute-force loop, difference 0.0e+00).
+**Assertion:** every Pearson value and interval of the six units, recomputed here, equals its stored artifact (maximum difference
+0.0e+00).
+
+**§6.6's table, released checkpoint, all ten episodes (20 trajectories), Pearson → Spearman [95% interval]:** h = 8: index +0.181 → +0.398, disagreement +0.738 → +0.866, paired difference +0.556 → +0.468 [+0.212, +0.651]; h = 32: index +0.174 → +0.331, disagreement +0.735 → +0.823, paired difference +0.561 → +0.492 [+0.257, +0.627]; h = 100: index +0.490 → +0.613, disagreement +0.628 → +0.898, paired difference +0.138 → +0.284 [+0.124, +0.410]; h = 128: index +0.526 → +0.626, disagreement +0.671 → +0.915, paired difference +0.145 → +0.289 [+0.151, +0.408]; h = 368: index +0.269 → +0.326, disagreement +0.605 → +0.910, paired difference +0.337 → +0.585 [+0.431, +0.724]. Kendall's
+τ_b: h = 8: index +0.288, disagreement +0.680, partial +0.675; h = 100: index +0.442, disagreement +0.721, partial +0.687; h = 368: index +0.221, disagreement +0.734, partial +0.726. **Under ranks, disagreement ranks error more strongly at every horizon from h = 8 on, and its lead over the forecast
+index is resolved at each of them. At h = 1 (one forecast step) the Pearson correlation is the higher,
++0.994 against Spearman's +0.829.**
+
+**The within-rollout statistic** (a2, double-demeaned): Pearson +0.419 → Spearman +0.589 [+0.411, +0.752].
+**The free baselines** (e7, all ten episodes): step-size: margin +0.136 → +0.312 [+0.240, +0.396], partial +0.543 → +0.856; entry-res: margin +0.458 → +0.632 [+0.391, +0.947], partial +0.595 → +0.902; forecast-index: margin +0.337 → +0.585 [+0.430, +0.724], partial +0.596 → +0.906. **On X6's short units:** h = 32: margin +0.239 → +0.091 [+0.051, +0.135]; h = 100: margin +0.282 → +0.263 [+0.222, +0.310]. So the step-size margin that fell below M-51's
+minimum detectable effect under Pearson on the 20 whole trajectories has an interval above zero under ranks; M-51's verdict stands
+as committed.
+
+**M-43 on the ensemble-5 arms (held-out pair, n = 4), the Spearman paired difference and interval:** h = 8: seed 0 +0.119 [-1.513, +0.353], seed 1 +0.165 [-1.508, +0.327], seed 2 +0.080 [-1.395, +0.324]; h = 368: seed 0 +0.269 [-0.005, +0.473], seed 1 +0.111 [-0.212, +0.461], seed 2 +0.078 [-0.173, +0.311]. **Per-dimension
+counts at h = 368:** released checkpoint, epistemic, 45 of 45 positive under Pearson,
+45 under Spearman; ensemble-5 seed 0, 41 and
+37. Every unit, horizon, seed and interval is in the artifact.
+
+**Evidence** `RUN` `results/n11_rank_correlations.json`; `SRC` `scripts/n11_rank_correlations.py`, `scripts/task_d_nind20.py`, `scripts/e7_free_baselines.py`, `scripts/x6_stepsize_short_units.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
