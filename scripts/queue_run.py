@@ -79,6 +79,20 @@ def x3(arm, fold):
     return trainer
 
 
+def x11_ens5(fold):
+    """Round 5, rule X11: Arm A at ensemble size 5, 2,500 iterations, with an X3 fold held out."""
+    def trainer(run_id, m, n, seed, iters):
+        assert (m, n) == (32, 8), "X11 changes the held-out episodes and the ensemble size only"
+        cmd = [sys.executable, os.path.join(ROOT, "scripts", "step5_train.py"), "--arm", "A",
+               "--seed", str(seed), "--iters", str(iters), "--holdout", ",".join(fold), "--ensemble", "5"]
+        artifact = os.path.join(ROOT, "results", f"x3_run_armA_ho{''.join(fold)}_seed{seed}_ens5.json")
+        weights = os.path.join(ROOT, "runs", f"x3_armA_ho{''.join(fold)}_seed{seed}_ens5", f"weights_{iters}.pt")
+        expect = {"iterations": iters, "seed": seed, "rnn_hidden_size (width)": 256,
+                  "holdout_episodes": sorted(int(e) for e in fold), "arm": "A", "ensemble": 5}
+        return cmd, artifact, weights, expect
+    return trainer
+
+
 TRAINERS = {"rwm": rwm}
 # Round 4, rule X3: 'x3-A-02' is Arm A with episodes 0 and 2 held out (four folds, two arms).
 for _arm in ("A", "B"):
@@ -91,6 +105,10 @@ for _a in ("mlp", "rssm", "transformer"):
 # Round 2, rule X1 Part C (ledger M-80): the Table S7 RSSM with one setting changed, teacher-forced.
 for _s in ("x1v1", "x1v2"):
     TRAINERS[f"rssm-tf-{_s}"] = baseline("rssm", "tf", _s)
+# Round 5, rule X11: 'x11-e5-02' is the ensemble-5 Arm A with episodes 0 and 2 held out. X11's single-model
+# runs (seeds 3 and 4) use the X3 trainers above, 'x3-A-<fold>', which take any seed.
+for _fold in (("0", "2"), ("3", "4"), ("5", "6"), ("7", "9")):
+    TRAINERS[f"x11-e5-{''.join(_fold)}"] = x11_ens5(_fold)
 
 FIELDS = {"iterations": lambda a, hp: hp.get("iterations"),
           "history_horizon (M)": lambda a, hp: hp.get("history_horizon"),
@@ -100,7 +118,8 @@ FIELDS = {"iterations": lambda a, hp: hp.get("iterations"),
           "rnn_hidden_size (width)": lambda a, hp: hp.get("rnn_hidden_size"),
           "n_params (width)": lambda a, hp: hp.get("n_params"),
           "holdout_episodes": lambda a, hp: hp.get("holdout_episodes"),
-          "arm": lambda a, hp: a.get("arm")}
+          "arm": lambda a, hp: a.get("arm"),
+          "ensemble": lambda a, hp: hp.get("ensemble")}
 
 
 def check(artifact, weights, expect):

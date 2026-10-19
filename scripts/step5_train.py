@@ -160,8 +160,8 @@ def main():
     if args.holdout is not None:
         holdout = sorted(int(x) for x in args.holdout.split(","))
         assert not (args.sweep or args.contaminated or args.duplicated or args.tag
-                    or args.hidden is not None or args.loss_type != "mse" or args.ensemble != 1), \
-            "X3 changes the held-out episodes only: Arm A or B, faithful MSE, ensemble 1, released width, no tag"
+                    or args.hidden is not None or args.loss_type != "mse" or args.ensemble not in (1, 5) or (args.ensemble == 5 and args.arm != "A")), \
+            "X3 changes the held-out episodes only: Arm A or B, faithful MSE, ensemble 1 (or 5 for Arm A, rule X11), released width, no tag"
     if args.sweep or args.history is not None or args.forecast is not None:
         assert args.sweep and args.history and args.forecast, \
             "--history and --forecast go together, and only with --sweep"
@@ -194,7 +194,7 @@ def main():
 
     fold = "".join(map(str, holdout)) if holdout is not None else None
     run = (f"mn_M{args.history}_N{args.forecast}_seed{args.seed}" if args.sweep
-           else f"x3_arm{args.arm}_ho{fold}_seed{args.seed}" if holdout is not None
+           else f"x3_arm{args.arm}_ho{fold}_seed{args.seed}{'_ens5' if args.ensemble == 5 else ''}" if holdout is not None
            else f"arm{args.arm}_seed{args.seed}{args.tag}")
     rundir = os.path.join(args.out_dir or os.path.join(R.REPO_ROOT, "runs"), run)
     os.makedirs(rundir, exist_ok=True)
@@ -395,11 +395,11 @@ def main():
                                        "window": window,
                                        "n_train_windows_expected": n_expected})
     if holdout is not None:
-        out["rule"] = "X3"
+        out["rule"] = "X11" if (args.ensemble == 5 or args.seed > 2) else "X3"
         out["hyperparameters"]["holdout_fold"] = holdout
     jp = os.path.join(args.out_dir or R.RESULTS,
                       (f"mn_sweep_run_M{args.history}_N{args.forecast}_seed{args.seed}.json"
-                       if args.sweep else f"x3_run_arm{args.arm}_ho{fold}_seed{args.seed}.json"
+                       if args.sweep else f"x3_run_arm{args.arm}_ho{fold}_seed{args.seed}{'_ens5' if args.ensemble == 5 else ''}.json"
                        if holdout is not None else f"step5_{run}.json"))
     with open(jp, "w") as f:
         json.dump(out, f, indent=2)
