@@ -244,3 +244,27 @@ identify failure modes of heteroscedastic σ heads trained by maximising log-lik
 released model's state loss is not a log-likelihood at all (a *sample* enters a squared error), so
 the failure §6.3 derives is more basic than theirs and does not depend on the optimiser. §6.3
 derives it and demonstrates it against known noise.
+
+## S5 The penalised quantity and the discarded term, from the first author
+
+*Was the closing part of the paper's Appendix H, "findings not in the main text"; moved here to meet the length limit.*
+
+**§6.1 in full: the penalised quantity and the discarded term, from the first author.** §6.1 keeps two sentences of this passage.
+
+Eq. 4 specifies a **variance** while `system_dynamics.py:126` computes a **standard deviation**,
+which with $\lambda = 1$ differ by a square. We asked, and the first author confirms the code is
+operative: the penalty is applied to the standard deviation as intended, and Eq. 4 is "more of a
+high-level explanation" (personal communication, 21 August 2026, quoted with the first author's
+permission; the exchange is reproduced, anonymised, in the supplementary
+`SUPPLEMENTARY_CORRESPONDENCE.md`, and see Data and code). We measure the code's quantity
+throughout, which is the intended one.
+
+The same correspondence confirms the discard directly: "the aleatoric term is not used in
+downstream training. It is reported in Fig. 3 (right) as an analysis of the model behavior."
+(The figure number follows arXiv:2504.16680**v1**; in the current v3 it is Fig. 4, and
+the crosswalk is in `results/original_paper_figures.json`.) So the discard is the intended design,
+not an implementation slip: the aleatoric head, the one the state loss and the bound loss shape
+and §6.3 explains, is computed on every imagination step to shape training and be inspected, and
+is never consumed.
+
+---

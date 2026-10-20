@@ -536,7 +536,7 @@ predicted variance enters the training objective and nothing downstream.
 Eq. 4 specifies a **variance** where `system_dynamics.py:126` computes a **standard deviation**,
 which with $\lambda = 1$ differ by a square. The first author confirms that the code's quantity is the
 intended one, and that the aleatoric term is reported for analysis and never used downstream
-(personal communication, quoted with the first author's permission; Appendix H gives the exchange).
+(personal communication, quoted with the first author's permission; supplementary S5 gives the exchange).
 We measure the code's quantity throughout. So the discard is the intended design, not an
 implementation slip. We report both quantities below. Our own arms are ensemble size 1, where the
 epistemic term is identically zero by construction, so the epistemic measurement is possible only
@@ -1372,26 +1372,6 @@ the artifact named. Measurements are at {{iters_main}} training iterations unles
 | Over {{r46_n_ck_word}} checkpoints up to {{iters_long}} iterations, the absolute A/B gap at h = {{v2_diag_h}} narrows as both arms improve (held-out pair, n_independent = {{r46_o_nind}} 400-step trajectories, {{r46_o_gap0}} to {{r46_o_gap1}}; in-sample, n_independent = {{r46_i_nind}}, {{r46_i_gap0}} to {{r46_i_gap1}}), while the ratio does not shrink ({{r46_o_ratio0}}× to {{r46_o_ratio1}}×, in-sample {{r46_i_ratio0}}× to {{r46_i_ratio1}}×). The held-out values are not monotone: both peak at the {{r46_pk_ord}} checkpoint ({{r46_o_gap_pk}}, {{r46_o_ratio_pk}}×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at {{iters_long}} iterations; one seed (seed {{r45_seed}}, supplementary S2) |
 | Our trained models respond to the action they are given: fed another trajectory's actions, Arm A's error at h = 8 on its in-sample arena's {{x2_n_ins}} trajectories rises by {{x2_E_swap_2500}}% at {{iters_main}} iterations and {{x2_E_swap_10k}}% at {{iters_long}} (rule X2, pre-registered: {{x2_reading}}) | M-84, M-85; `results/action_sensitivity.json` | A world model must respond to actions before it can serve policy optimisation; ours do on this test, though every action in the data comes from one policy and no policy is trained here (§7.2, Appendix V) |
 
-
-**§6.1 in full: the penalised quantity and the discarded term, from the first author.** §6.1 keeps two sentences of this passage.
-
-Eq. 4 specifies a **variance** while `system_dynamics.py:126` computes a **standard deviation**,
-which with $\lambda = 1$ differ by a square. We asked, and the first author confirms the code is
-operative: the penalty is applied to the standard deviation as intended, and Eq. 4 is "more of a
-high-level explanation" (personal communication, 21 August 2026, quoted with the first author's
-permission; the exchange is reproduced, anonymised, in the supplementary
-`SUPPLEMENTARY_CORRESPONDENCE.md`, and see Data and code). We measure the code's quantity
-throughout, which is the intended one.
-
-The same correspondence confirms the discard directly: "the aleatoric term is not used in
-downstream training. It is reported in Fig. 3 (right) as an analysis of the model behavior."
-(The figure number follows arXiv:2504.16680**v1**; in the current {{v4_current}} it is Fig. 4, and
-the crosswalk is in `results/original_paper_figures.json`.) So the discard is the intended design,
-not an implementation slip: the aleatoric head, the one the state loss and the bound loss shape
-and §6.3 explains, is computed on every imagination step to shape training and be inspected, and
-is never consumed.
-
----
 
 ## Appendix I — related work in full, the PETS lineage of the bounded σ head, and how often its descendants substitute the objective
 

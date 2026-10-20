@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 111,
-  "n_ok": 111,
+  "n_pointers": 110,
+  "n_ok": 110,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -65,13 +65,6 @@
       "ok": true,
       "detail": "target Appendix U; nouns ['reading']; absent []",
       "context": "Appendix U gives every reading)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix H gives the exchange)",
-      "ok": true,
-      "detail": "target Appendix H; nouns ['exchange']; absent []",
-      "context": "Appendix H gives the exchange)"
     },
     {
       "class": "semantic",

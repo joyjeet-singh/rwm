@@ -72,7 +72,7 @@ PASSAGES = [
     # record fell to 3 quotations. This entry scans the moved passage. It keeps §6.1's label because
     # the passage is §6.1's text, and the transcript and the letter name the quotations by it.
     ("6.1", "**§6.1 in full: the penalised quantity and the discarded term, from the first author.**",
-     "not an implementation slip: the aleatoric head", TEMPLATE),
+     "not an implementation slip: the aleatoric head", os.path.join("docs", "SUPPLEMENT.template.md")),  # G9: moved to S5
     ("8", "**What the author says.**", "That last point reframes this section.",
      os.path.join("docs", "APPENDIX_G_VARIANCE_ARITHMETIC.template.md")),
 ]
