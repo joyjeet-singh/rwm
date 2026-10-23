@@ -421,3 +421,314 @@ over all ten episodes this raises the checkpoint's short-horizon relative-L1 err
 what the uncertainty reports, not its cost.
 
 ---
+
+---
+
+## S14 The earlier introduction and contributions
+
+*Was the paper's section 1 before the rewrite for the review of 19 October, with the Figure 1 sentence the figures session added; moved here whole. Section numbers in this passage are the earlier paper's.*
+
+**Introduction (was §1)**
+
+A world model that reports its own uncertainty is more useful than one that does not, and the
+uncertainty-aware Robotic World Model reports one. This paper asks what that number means,
+and the title gives the answer: it gets the order of the model's errors right and their size
+wrong.
+
+Figure 1 shows one finding about each original paper. Panel (a) is the base paper's claim that training on rollouts beats teacher forcing, measured on episodes the models never saw: the gap at h = 368, one interval per fold and one point per held-out episode. Panel (b) asks whether the uncertainty-aware follow-up's spread grows with the horizon as the error does, under the released rollout and under a per-member rollout that is not the released method.
+
+We set out to reproduce the base paper: rebuild the proprioceptive dynamics model from scratch,
+check it against the released implementation, and test the central training claim, which holds at long horizons.
+The rebuild made a second question cheap to ask: *is the predicted σ calibrated?* Neither of the
+two the checkpoint emits is. On data it trained on, the per-member σ is too small by
+1,827× at h = 1 to 20,669× at h = 368, by construction
+(§6.3), and the ensemble disagreement the method uses by 8.3× to
+34.4×. The disagreement still ranks realised error, the use the method makes of it
+(§6.6).
+
+This is a reproduction in the stronger sense: the contribution is not that the numbers came out
+the same, but what re-measuring the method reveals about where it is robust and where it is not.
+Three things distinguish it from a re-run of the authors' code. **We rebuilt rather than
+imported**, and matched the rebuild to the reference before any training (Appendix A), so a later
+discrepancy belongs to the method, not to our wiring. **Decision rules were committed to git
+before the data**, with timestamps a reader can check (§8, Figure 3); several returned verdicts against the original or could not settle the question, and we report each (Appendix E). **We keep our withdrawn findings in the record.** The ledger keeps
+24 superseded entries, each beside the evidence that withdrew it:
+nine claims withdrawn on evidence, eight framings withdrawn,
+and the rest early hypotheses closed as housekeeping (§8 and the supplementary
+`docs/BUILD_CHECKS.md`; every pre-registered rule, with its lead time and verdict, is in Appendix E). §9 gives the lessons in a form
+a practitioner can use without reading the rest.
+
+**Contributions.**
+
+- **The uncertainty gets the order right and the size wrong, in the first calibration
+  measurement we are aware of for this released checkpoint** (Lu et al. (2022) measure this family
+  of penalties on models they train themselves; §2). Ensemble disagreement ranks realised error,
+  correlating +0.419 with it with rollout and forecast depth held fixed, yet on data the
+  checkpoint trained on it is 8.3× smaller than that error at h = 1 and
+  33.4× at h = 100 (§6.2, §6.6). It beats 1 of the
+  2 free baselines added here; the model's own predicted step size ranks error at +0.4697 against its +0.6053 over the 20 whole trajectories, a margin they cannot resolve at h = 368, while on 70 shorter units at h = 100 a rule committed before its reading finds disagreement ahead, +0.2816 [+0.1978, +0.3896] (rule X6: **DISAGREEMENT BEATS STEP SIZE**; §6.6, §11).
+- **The base paper's central training claim reproduces, and reverses at one step.** A rule committed before the runs, run on seed 1 of each arm, found autoregressive training ahead by 4.43× at h = 368; 3 seeds at 10,000 iterations extend it: the factor is 4.61×, and 2.58× at h = 100, on the held-out pair's 4 independent 400-step trajectories (§5); retrained on fixed folds with each of the ten episodes held out once, the direction replicates, +2.2275 [+1.3683, +3.5053] at h = 368 over 20 trajectories at 2,500 iterations, not 10,000 (rule X3: **REPLICATES ACROSS FOLDS**). At one step a second pre-registered rule, on 60 independent
+  33-row units, finds a gap of -0.0194 [-0.0310, -0.0093] in favour of **teacher forcing** (§5).
+- **Two more of the base paper's claims, tested under rules committed before the runs.** RWM is
+  ahead at h = 368 of MLP, RSSM and transformer baselines built to our reading of its
+  specification and trained with RWM's settings, whether teacher-forced as the original trains them or autoregressively, on the held-out pair's 4 independent trajectories at 2,500 iterations, though every baseline is worse there than predicting no change; matched to RWM's parameter count, the MLP stays behind and the transformer cannot be told apart (rule X4: **PARTIAL**; size is one axis), and neither reading our RSSM's forecast from its prior's expected or sampled latent nor retraining it with two other settings on one seed removes its open-loop collapse (rule X1, exploratory: **NOT RESCUED BY THE SETTINGS TRIED**; §5.3). On accuracy alone at our budget, four of the eight one-factor neighbours of the original's (M, N) = (32, 8) beat it, two shorter histories at under half its cost per iteration and both longer training forecasts at more (no reading the rule reports puts the centre ahead of any of them), but trained longer the centre passes each of them on at least one reading (post hoc), so the ranking depends on the training budget; the original chose the centre as a trade-off with training time, which its own printed hours are consistent with and we do not test (§5.2).
+- **The σ = 0 optimum of the implemented objective.** The implemented state loss is minimised at
+  σ = 0, so the per-member σ the method discards collapses by construction: derived, and
+  demonstrated against known noise (§6.3).
+- **Trunk-sharing, tested.** The five members share one trunk, one recurrent state and
+  89.15% of each member's parameters, so their spread can express only uncertainty the
+  trunk already carries (§6.4). Under a rule committed before the runs, on the held-out pair's 4 independent trajectories, 5 independently initialised full models are 2.03× better calibrated than the shared-trunk arms, against a pre-registered minimum detectable effect of 1.45×, and still 5.2× overconfident at h = 100; they also differ in capacity and data order, so this bounds the sharing effect rather than isolating it (§6.8).
+- **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one
+  episode and scored on the other, brings every released-checkpoint coverage estimate near nominal
+  where a global one does not, though no single cell is resolvable and the cells are unseen only by
+  the multiplier, since the checkpoint trained on both episodes (§6.7); on Arm A, which never saw them, its own multipliers manage
+  17 of 36 disagreement cells. Fitted on nine episodes and scored on the tenth, the disagreement's coverage over all 20 trajectories is within the band at every horizon (rule X7: **WITHIN BAND AT 6 OF 6 HORIZONS**), again on episodes the checkpoint trained on.
+- **The released evaluation is misaligned by one step; over all ten episodes it raises the checkpoint's relative-L1 error up to h = 32, and from h = 100 the change is not resolved.** Evaluation feeds the action from *t−1* where training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On all ten episodes' 20 independent trajectories, all of them training data for this checkpoint, the stale action raises its relative-L1 error by 55.0% [26.3, 92.7] at h = 1 and 37.4% [21.3, 65.4] at h = 32, and changes it by 8.2% [-10.4, 24.9] at h = 100 and -4.6% [-13.4, 3.2] at h = 368; on the held-out pair's 4 it raises it at every horizon reported, by 7.9% [3.1, 13.0] at h = 368 (§7.2).
+- **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
+  module bitwise, and losses and gradients match to 0.000e+00 across 7 loss
+  terms and 106 parameter tensors, before any training (Appendix A).
+
+---
+
+---
+
+## S15 The earlier related work
+
+*Was the paper's section 2 before the rewrite for the review of 19 October; moved here whole. S4 holds the rest of that section. Section numbers in this passage are the earlier paper's.*
+
+**Related work (was §2)**
+
+This paper asks whether an ensemble-disagreement penalty is calibrated, and separates its use as a
+*ranking* from its use as a *scale*. Both questions have a literature, and one paper asked almost
+exactly ours four years earlier; below we say which parts of what follows are new. Supplementary S4
+gives the rest of this section in full.
+
+**The direct precedent.** Lu, Ball, Parker-Holder, Osborne and Roberts (*Revisiting Design Choices
+in Offline Model-Based Reinforcement Learning*, ICLR 2022) compare uncertainty heuristics in
+offline model-based RL under protocols built, in their words, to "capture the specific covariate
+shift induced by model-based RL", in order to assess calibration. They report Spearman rank and
+Pearson bivariate correlation against true model error **separately**, and observe that "despite
+the similar rank correlations $\rho$, the bivariate correlations $r$ can vary considerably": a
+configuration can keep the ordering while the penalty's size relative to the error changes. That
+is our ranking-versus-scale distinction, on the same family of penalties. They also find the
+ensemble standard deviation, the exact quantity `system_dynamics.py:126` computes and
+`envs/base.py:166` applies, to track model error *better* than the penalties of MOPO and MOReL,
+being "strikingly similar" to the latter but better behaved; §6.6 finds the same quantity a usable
+ranking signal.
+
+**What is new here is four things.** Lu et al. measure models they train themselves, on simulated
+benchmarks, and their statistics describe ordering and shape, not coverage. We measure a
+**released checkpoint** from a pipeline its authors deployed on hardware, where reading the penalty
+as an interval has consequences. We measure **coverage** against a nominal. We verify our
+reimplementation against the reference at the gradient level before any training (Appendix A). And
+§6.3 derives the σ = 0 optimum for the objective the released code *substitutes*, squared error on
+a reparameterised sample, rather than for the likelihood the parameterisation was built around.
+
+**Where the parameterisation comes from.** The clamp of the bounded log-σ head whose optimum §6.3
+shows is σ = 0 is inherited, line for line, from the probabilistic ensembles of Chua, Calandra, McAllister
+and Levine (PETS, NeurIPS 2018), but the objective is not: the released code replaces PETS's
+likelihood with squared error on a sampled prediction and ties the upper bound to the floor. So
+**a descendant of this lineage that made the same substitution, and left nothing pushing its
+variance floor back up, would inherit the same optimum**, a hypothesis about mechanism untested in
+any other descendant (§11). Of 13 public repositories the survey looked at, 10 carry the construction, the ones its protocol counts as examined, and 1 of those trains it against a sampled squared error, only in
+an optional mode, so on this sample of convenience the substitution is rare (Appendix I).
+
+**The method's family.** MOPO (Yu et al., NeurIPS 2020) penalises the reward by an ensemble
+uncertainty estimate and MOReL (Kidambi et al., NeurIPS 2020) detects unknown states by pairwise
+ensemble disagreement, both branching short model rollouts from real states as MBPO (Janner et al.,
+NeurIPS 2019) does. The follow-up we reproduce puts MOPO's penalty into MBPO's loop, which is what
+"MOPO-PPO" names.
+
+**What "ensemble" is supposed to mean.** Deep ensembles (Lakshminarayanan, Pritzel and Blundell,
+NeurIPS 2017) are networks trained from *different random initialisations and different data
+orderings*, whereas the released checkpoint's five members share one GRU trunk, one recurrent hidden
+state and 89.15% of each member's state-prediction parameters (§6.4).
+
+**Three sources of uncertainty, and the one nobody here estimates.** Abbas, Sokota, Talvitie and
+White (ICML 2020) separate aleatoric noise, parameter uncertainty and **model inadequacy**; the
+checkpoint we measure has no estimate of the third, the component that compounds with rollout depth
+(§6.5).
+
+**Why miscalibration is the expected finding.** Networks are miscalibrated (Guo et al., ICML 2017),
+more so under covariate shift (Ovadia et al., NeurIPS 2019), and a rollout manufactures its own
+shift, increasing with depth, so our contribution on this axis is the *magnitude* and the
+*mechanism*, not the direction.
+
+**Recalibration.** §6.7's per-horizon multiplier is a coarse instance of calibrated regression
+(Kuleshov, Fenner and Ermon, ICML 2018), and Malik et al. (ICML 2019) recalibrate a dynamics model's
+uncertainty inside model-based RL, arguing that "good uncertainties must be calibrated"; what §6.7
+adds is the horizon index, and the finding that a single global multiplier **fails**.
+
+**§6.4's mechanism is known, and we say so.** That heads sharing a trunk under-report disagreement
+is established (Lee et al., arXiv:1511.06314; Fort, Hu and Lakshminarayanan, arXiv:1912.02757;
+BatchEnsemble, ICLR 2020; MIMO, ICLR 2021). **What is ours is finding it in a released robotics
+checkpoint, with the sharing quantified at 89.15% of each member and its cost bounded by the 2.03× an independent ensemble gains (§6.8).**
+
+**And the objective in §6.3 has a neighbour.** Seitzer, Tavakoli, Antic and Martius (ICLR 2022)
+identify failure modes of σ heads trained by maximising log-likelihood; the released state loss is
+not a log-likelihood at all, so the failure §6.3 derives is more basic than theirs.
+
+
+
+---
+
+---
+
+## S16 The earlier setup
+
+*Was the paper's section 3 (data, evaluation, effective sample size, metrics, horizons and what each claim rests on) before the rewrite for the review of 19 October; moved here whole. Section numbers in this passage are the earlier paper's.*
+
+**Setup (was §3)**
+
+**Data.** The released dataset is 10,000 rows of ANYmal D proprioceptive state and policy
+actions at 50 Hz: ten concatenated 20-second episodes, with a termination column that is
+identically zero, so nothing in the file marks the boundaries.
+
+**The segments are not all the same length.** The first episode is 999 rows and the other
+nine are 1,000 each, with a reset at rows 999,
+1,999 … 9,999 and 1 orphan row at the end of the file
+that begins an eleventh episode and ends immediately: 999 + 9 × 1,000 + 1. We recover the boundaries
+from the data: at every reset row the twelve joint velocities, the four HAA joint positions and all
+twelve actions are exactly zero, and no other row has that fingerprint. Ten equal segments of
+1,000 would give one fewer crossing window and one more usable one, so the counts below
+differ by one from that reading; `results/step0_regimes.json` re-derives the crossing count from the
+segment lengths alone, and the two agree.
+
+A window is 40 rows, 32 of history and 8 of forecast, and the
+reference window builder marks all 9,961 windows valid, including 352 that splice
+one episode's end onto the next one's start. The usable, episode-respecting count is
+9,609: 10,000 rows, less 39 that cannot start a full window, less
+352 that cross a boundary. The contamination rate is 3.53%.
+
+**Model.** A GRU-based ensemble predicting the next proprioceptive state, with a mean head and a
+bounded log-σ head, plus auxiliary heads for contact and termination. The paper describes two loss
+terms; the implementation has 7. Before any training, our rebuild's outputs match the
+released module's bitwise, and its losses and gradients match to 0.000e+00 across those
+7 terms and 106 parameter tensors (Appendix A).
+
+**Evaluation.** Two arenas, kept separate throughout: *out-of-sample*, the two episodes withheld
+from training, and *in-sample*, the eight used for it. The released evaluation draws its
+trajectories from training data, and the original does not distinguish the two. **The released
+checkpoint trained on all ten episodes, so it has no held-out arena in this dataset**, and every
+figure for it is in-sample; later sections refer back to this as the in-sample caveat of §3. More
+data cannot be generated from either repository this reproduction pins (supplementary S1).
+
+**Effective sample size.** Trajectory count is not sample size. Two 400-step trajectories whose
+spans overlap are not independent evidence, and the out-of-sample arena contains only
+4 mutually non-overlapping 400-step trajectories. A bootstrap over whole trajectories at
+that size has 256 distinct resamples, so its intervals are quantised at that
+resolution. Every long-horizon verdict in this paper is computed with a bootstrap over independent trajectories, every table reports that count, and §8 reports both resampling units where they
+differ. Later sections refer back to this as the n = 4 caveat of §3. One trajectory can carry
+much of a long-horizon effect: a one-step shift of the action moves the released checkpoint's
+368-step relative-L1 error on single trajectories of its own training episodes by anywhere from
+-47.4% to +35.2% (§7.2), which illustrates why 4 trajectories bound every
+long-horizon claim.
+
+**Metrics (was §3.1)**
+
+Each metric is stated as implemented, because a reader who cannot see the denominator cannot check the headline. Appendix G gives each metric's formula and
+the check on the coverage nominal.
+
+**Relative-L1** is the reference's own metric, reproduced in behaviour (`model_training.py:203`) so
+that our numbers are comparable to the upstream's printed one. At each forecast step it is the summed
+absolute error over the state dimensions divided by the summed absolute true state, on
+config-normalised states, averaged flat over trajectories and over the steps after the first
+32, which are teacher-forced. The denominator, a 45-term sum in normalised space, is
+recomputed at every step, so it can pass through zero, which is why this metric goes non-finite on
+low-dimensional state groups and why a second one exists.
+
+**Normalised RMSE** fixes the denominator once: the root of the squared error pooled over the state
+dimensions, divided by the dimensions' mean standard deviation over the training episodes only, a
+constant stored in `results/step4_0a_results.json` and never recomputed per step or derived from
+held-out data. A value of 1.0 means no better than predicting the training mean. **The aggregation
+is form 1**, a ratio of means; a mean of per-dimension ratios would give whichever dimension has the
+smallest scale unbounded leverage (Appendix G).
+
+**Coverage at ±kσ** is the fraction of (trajectory, forecast step, state dimension) triples, pooled
+with equal weight, whose absolute error falls within k times the σ predicted for that triple. It is
+two-sided, so its calibrated targets are **68.27%** at ±1σ and
+**95.45%** at ±2σ.
+
+**The overconfidence factor** $\rho$ is the mean absolute error over the mean predicted σ, a ratio
+of means. $\rho = 1$ is *not* calibration, since a calibrated Gaussian has $\rho = \sqrt{2/\pi}$ =
+0.7979, so $\rho$ is reported as a magnitude of miscalibration and coverage as the
+calibrated reading.
+
+**Which metric each headline uses.** The A/B training claim (§5) is relative-L1, because the claim
+is about reproducing the upstream's comparison and that is the upstream's metric. The calibration
+claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ.
+The ranking claims (§6.6) are Pearson correlations between the applied scalar penalty and total
+absolute error, because a ranking claim is about order rather than scale. Every headline number in
+the abstract names its metric. §7.2's alignment defect is given in both metrics, over all ten episodes and on the held-out pair. Over all ten episodes the two metrics agree that the stale action raises error at h = 8 and 32 and that from h = 100 the change is not resolved, and they differ at h = 1, where relative-L1 resolves the rise and nRMSE does not.
+
+**Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,100,\,128,\,368\}$.
+Every horizon-indexed quantity is cumulative over steps 1..h, not the value at step h. Two of those are load-bearing and the rest are landmarks. **h = 100** is the method's
+own imagination rollout length, the horizon over which the uncertainty-penalised policy loop
+actually runs this model (arXiv:2504.16680 Table S9 in v1 and Table S11 in v3, with the same
+value). **h = 368** is the upstream's open-loop diagnostic length: `len_eval_trajectory` =
+400 minus the 32-step teacher-forced prefix, the curve the follow-up plots
+as its uncertainty figure. It is 3.68× the method's own rollout length and is not a
+deployment horizon. Every table keeps both: h = 368 makes our numbers comparable to the
+original's *figure*, and h = 100 to its *method*.
+
+**What each claim rests on (was §3.2)**
+
+Every headline claim in this paper is measured on the out-of-sample or in-sample arena above, or on all ten episodes together, at a stated number of independent units (400-step trajectories unless the row says otherwise). Each is also at a stated checkpoint: the released one, or ours at a stated
+number of training iterations. Appendix D's second table, "What each tested claim rests on", gives each claim's arena, sample size, checkpoint and verdict. It is generated from the artifacts each claim is computed from, so no arena label, sample size or checkpoint in it is typed by hand.
+
+---
+
+---
+
+## S17 The earlier method section
+
+*Was the paper's section 8 (the ledger, the one failed pre-registration, the withdrawal counts and the resampling-unit correction) before the rewrite for the review of 19 October; moved here whole. Section 3.4 of the paper keeps what the paper needs. Section numbers in this passage are the earlier paper's.*
+
+**Method (was §8)**
+
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (309 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 3 and Appendix E give the lead time for each of the 28 whose data exist; 27 are positive and 1 is not. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn. A discipline that is only checked when it succeeds is not a discipline.
+
+**Nine claims withdrawn on evidence**, and eight framings withdrawn rather than numbers, out of 24 superseded entries kept in the record (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framings withdrawn is the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.5). Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called its strongest result.
+
+**A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42× and changes 1 of 16 verdicts, in the out-of-sample h = 8 cell at 200-step trajectories and 2,500 iterations, already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
+
+
+
+---
+
+---
+
+## S18 The earlier data and code section
+
+*Was the paper's closing section 'Data and code' before the rewrite for the review of 19 October; its history and anonymity paragraphs are S8 and S9, and the rest is moved here whole. Section numbers in this passage are the earlier paper's.*
+
+**Data and code**
+
+The full repository — code, every artifact under `results/`, and `FINDINGS_LEDGER.md` with the
+complete claim record including the retractions — accompanies this submission as anonymised
+supplementary material, and will be released under a permanent archival identifier on
+acceptance. Neither upstream repository is redistributed; `setup.sh` fetches both at pinned
+commits and verifies two SHA-256 hashes.
+
+
+
+The pre-registration argument in §8 rests on commit timestamps, and those are
+author-settable via `git commit --date`. That matters, because §8 is load-bearing. Two
+things address it. The
+supplementary material includes an anonymised `git log` covering every commit cited here, so the
+ordering in Figure 3 is checkable at review time. In the submitted paper and bundle, commit identifiers are replaced by stable
+anonymous labels, with ordering, timestamps and subjects unchanged, and the map from label to
+identifier is disclosed on acceptance. And **the repository was archived by a
+third-party archive before submission**, under a permanent identifier whose visit timestamp is
+not author-controllable. Neither the identifier nor the date of that visit appears here: both
+resolve to a named repository, and a date is a one-field lookup away from an origin. They are
+disclosed on acceptance.
+
+What that archive establishes should be stated precisely, because it is easy to overclaim. It
+does **not** prove any individual commit date is genuine. It proves that the repository, with the
+whole pre-registration history in the form this paper cites, existed no later than that archival
+moment, as recorded by a third party with no interest in the claim — so nothing in the record can
+have been back-dated afterwards. That bounds §8 rather than proving it, and a reviewer should
+read it as such.

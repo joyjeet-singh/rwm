@@ -562,3 +562,30 @@ Body words / main-content pages: 17698 / 24.0
 Subagents: none
 Next: G11 (Opus 5.5, high). GT2 runs after G12 (PLAN §0.4); the queue already shows 20 of 20.
 Decisions for user: none
+
+## G11 — 2026-10-23 17:30 — Opus 5.5, high (a Sonnet 5.5 session ran it) — status: COMPLETE
+Commits:
+86633cd [G11][1] Title and abstract
+(one more commit, [G11][2-6], follows this entry: §1, §2, §3, the reproducibility statement and the closing record)
+Review items closed: RV02, RV28 (rationale), RV30 (abstract), RV32–RV36 (citations, §2), RV37, RV38, RV41; contributes to RV01, RV03–RV05
+Done:
+- **Title and abstract** from OUTLINE (item 1): "Right Ranking, Wrong Scale: …"; 207 words, 5 numerals, no capitalised verdict labels. Two wording changes from the OUTLINE draft, both forced by checks: the Spearman figure no longer says "at 100 steps" (that would be a sixth numeral) and the coverage sentence says "at {{v2_deploy_h}} steps" (the horizon sweep requires a calibration figure to name its horizon). Rechecked against READINGS (rule 10): every clause agrees with its readings; X11 slots untouched.
+- **§1** (item 2, 730 words, outline 680): the question, the findings in plain words with direction only, Figure 1, four contributions (bullets from OUTLINE, no priority claim), a one-line map. RWM-U's shared trunk is credited to its authors (S-23).
+- **§2** (item 3, 525 words): RWM and RWM-U with MOPO's penalty read as a one-step bound at visited states; multi-step training (the prior for §4, stated only as what those methods aim at); shared-trunk ensembles; Lu et al. as the closest precedent; calibration and conformal prediction (resemblance only, no guarantee claimed); evaluation statistics; the PETS lineage in one sentence. Every attribution rests on a fragment already verified in G7's record or on the record's own `establishes` line; the fifteen G7 entries that carry no fragment are cited by topic only.
+- **§3** (item 4, 1,063 words with the table, outline 760): 3.1 the rebuild; 3.2 data, Table 1 (arenas, the held-out pair's four trajectories coming from two episodes) and N12's provenance sentence; 3.3 metrics with nRMSE's floor corrected (a value of one is not the training-mean floor), ρ beside 0.80, "too small by" as Y7 defines it, Spearman's rationale as Y8 sets it, horizons; 3.4 the statistical protocol, exact tests and why n = 4 cannot go below p = 0.125, Holm, permutation nulls, pre-registration with the two workshops cited, the one rule that failed it, and the ledger's three withdrawal counts.
+- **Reproducibility and data** (item 5, 85 words): a clean clone reproduces every scientific value; the 3 values that differ are the supplementary archive's own size and commit count, all from keys.
+- **Moves, verbatim, to supplementary S13–S18:** the earlier title and abstract, §1, §2, §3, §8 (Method) and the rest of Data and code. Headings became bold run-ins carrying "was §N", so xref_sweep's section map cannot collide with the paper's. Pointers to the old §8 now read §3.4 (the paper's appendices and two figure captions).
+- **Departures, for you to see:** (a) Table 1 is the arenas table (PLAN item 4), not OUTLINE's claim-to-verdict table; that one needs the final verdicts and is G14's (OUT_OF_SCOPE). (b) §1, §3 run over their word budgets; G14 trims. (c) Pointers into §4.x–§7 and Appendices C, J, L, O use OUTLINE's numbering and resolve only after G12–G15.
+- **Bundles:** `build_supplementary.py` (597 files scanned, git log clean, zip 26.8 MB) and `make_anon_bundle.py` (zero identifying strings) both pass; `docs/SUPPLEMENT.md` is under `docs/`, which both include; `f5_pdf_channels.py` clean on all three channels.
+Build/gates: pass (fast build → gates → fast build; the last two builds byte-identical); `xref_sweep` 0 suspect; `keys` 0 missing. Stage 1 was one build and one commit; items 2–5 went in one build and one commit, as G9's items 8–11 did, because the withdrawal-count gate needed §3.4 to exist before it could pass.
+Round-5 gates (report mode until G16): pages 21.92/12, abstract 207/5, ids 86, once 19, sig 461, keys missing 0
+Paper numbers changed: none
+New keys: none
+Ledger: none
+Re-anchored checks (rule 8): C9.1, C26.1, C27.1, C28.3 (old abstract and contributions → supplement S13, S14, through `surface`); C7.1, C7.2, C7.5, C10.5 (old §1 and §8 → S14, S17); C24.1 (old §3.2 → S16); C28.3's region end marker (`## Data and code` → `## Reproducibility and data`); `check_retraction_counts` in `build_paper.py` (the introduction's and §8's statements → §3.4, its self-test input likewise); two figure captions' "§8" → "§3.4". Expectations unchanged. **Tightened:** C12.1's caps from 320 words and 26 numerals to Y2's 210 and 5, anchored to the new abstract. **Added** to `typed_numeral_audit.py`: a `table-ref` class for "Table N" as an address, like `figure-ref`.
+CPU jobs over 1 min: the two bundle builds, about 6 min each (X11 queue finished; no contention)
+Queue (Y5): done (20 of 20, none failed, as the runner's files showed at the start of the session); GT2 follows G12
+Body words / main-content pages: 15,975 / 21.92 (LENGTH_LOG)
+Subagents: none (PLAN's G11 names none)
+Next: G12 (Opus 5.5, high).
+Decisions for user: none

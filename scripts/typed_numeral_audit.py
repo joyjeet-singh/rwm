@@ -68,6 +68,8 @@ CLASSES = [
      "a ledger entry identifier"),
     ("figure-ref", r"(Fig\.?|Figure)\s*\d+\w?",
      "a figure number in this paper or an original"),
+    ("table-ref", r"\bTable\s*\d+",
+     "a table number in this paper (G11: Table 1 lists the arenas; the other tables are numbered by their sections)"),
     ("equation-ref", r"Eq\.?\s*\d+(–\d+)?",
      "an equation number in an original"),
     ("table-ref", r"Table\s+[IVX]+|Appendix\s+A\.\d+(\.\d+)*",

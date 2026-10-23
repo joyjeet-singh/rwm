@@ -9,27 +9,56 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 110,
-  "n_ok": 110,
+  "n_pointers": 114,
+  "n_ok": 112,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
-  "n_bad": 0,
-  "bad": [],
-  "pointers": [
+  "n_bad": 2,
+  "bad": [
     {
       "class": "semantic",
-      "pointer": "\u00a79 gives the lessons in a form\na practitioner can use without reading",
-      "ok": true,
-      "detail": "target 9; nouns ['lessons', 'form', 'practitioner', 'without', 'reading', 'rest']; absent []",
-      "context": "\u00a79 gives the lessons in a form\na practitioner can use without reading the rest"
+      "pointer": "\u00a73 sets out the data, metrics and statistics",
+      "ok": false,
+      "detail": "target 3; nouns ['data', 'metrics', 'statistics']; absent ['data', 'metrics', 'statistics']",
+      "context": "\u00a73 sets out the data, metrics and statistics"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix G gives each metric's formula and\nthe check on the coverage nominal",
+      "pointer": "\u00a77 gives lessons and limitations",
+      "ok": false,
+      "detail": "target 7; nouns ['lessons', 'limitations']; absent ['lessons', 'limitations']",
+      "context": "\u00a77 gives lessons and limitations"
+    }
+  ],
+  "pointers": [
+    {
+      "class": "semantic",
+      "pointer": "\u00a73 sets out the data, metrics and statistics",
+      "ok": false,
+      "detail": "target 3; nouns ['data', 'metrics', 'statistics']; absent ['data', 'metrics', 'statistics']",
+      "context": "\u00a73 sets out the data, metrics and statistics"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a77 gives lessons and limitations",
+      "ok": false,
+      "detail": "target 7; nouns ['lessons', 'limitations']; absent ['lessons', 'limitations']",
+      "context": "\u00a77 gives lessons and limitations"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix L gives Kendall's)",
       "ok": true,
-      "detail": "target Appendix G; nouns ['metric', 'formula', 'check', 'coverage', 'nominal']; absent []",
-      "context": "Appendix G gives each metric's formula and\nthe check on the coverage nominal"
+      "detail": "target Appendix L; nouns ['kendall']; absent ['kendall']",
+      "context": "Appendix L gives Kendall's)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix E gives each rule, its lead time and its verdict verbatim",
+      "ok": true,
+      "detail": "target Appendix E; nouns ['rule', 'lead', 'time', 'verdict', 'verbatim']; absent ['verbatim']",
+      "context": "Appendix E gives each rule, its lead time and its verdict verbatim"
     },
     {
       "class": "semantic",
@@ -254,6 +283,20 @@
       "ok": true,
       "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
       "context": "Appendix E gives its lead time) and is\ndischarged in M-93"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a79 gives the lessons in a form\na practitioner can use without reading",
+      "ok": true,
+      "detail": "target 9; nouns ['lessons', 'form', 'practitioner', 'without', 'reading', 'rest']; absent []",
+      "context": "\u00a79 gives the lessons in a form\na practitioner can use without reading the rest"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix G gives each metric's formula and\nthe check on the coverage nominal",
+      "ok": true,
+      "detail": "target Appendix G; nouns ['metric', 'formula', 'check', 'coverage', 'nominal']; absent []",
+      "context": "Appendix G gives each metric's formula and\nthe check on the coverage nominal"
     },
     {
       "class": "artifact",

@@ -1,13 +1,13 @@
 {
  "mode": "report",
- "summary": "pages 24.0/12, abstract 207/5, ids 90, once 32, sig 499, keys missing 0",
+ "summary": "pages 21.92/12, abstract 207/5, ids 86, once 19, sig 461, keys missing 0",
  "gates": {
   "pages": {
    "pass": false,
-   "value": 24.0,
+   "value": 21.92,
    "max": 12.0,
-   "references_page": 25,
-   "references_y": 700.176
+   "references_page": 22,
+   "references_y": 122.90099999999978
   },
   "abstract": {
    "pass": true,
@@ -25,12 +25,12 @@
   },
   "ids": {
    "pass": false,
-   "n": 90,
+   "n": 86,
    "by_kind": {
     "ledger_id": 23,
-    "rule_id": 25,
+    "rule_id": 20,
     "commit_label": 0,
-    "verdict_label": 34,
+    "verdict_label": 35,
     "code_label": 8
    },
    "distinct": {
@@ -187,13 +187,13 @@
   },
   "once": {
    "pass": false,
-   "n": 32,
+   "n": 19,
    "violations": [
     {
      "key": "a2_rdd",
      "interval": false,
      "abstract": 0,
-     "prose": 4,
+     "prose": 3,
      "table_caption": 0
     },
     {
@@ -204,45 +204,10 @@
      "table_caption": 0
     },
     {
-     "key": "ad20_rel_ci",
-     "interval": true,
-     "abstract": 0,
-     "prose": 2,
-     "table_caption": 0
-    },
-    {
-     "key": "ad_rel_ci",
-     "interval": true,
-     "abstract": 0,
-     "prose": 2,
-     "table_caption": 0
-    },
-    {
-     "key": "adh20_rel_ci_h1",
-     "interval": true,
-     "abstract": 0,
-     "prose": 2,
-     "table_caption": 0
-    },
-    {
-     "key": "adh20_rel_ci_h100",
-     "interval": true,
-     "abstract": 0,
-     "prose": 2,
-     "table_caption": 0
-    },
-    {
-     "key": "adh20_rel_ci_h32",
-     "interval": true,
-     "abstract": 0,
-     "prose": 2,
-     "table_caption": 0
-    },
-    {
      "key": "c2_pct",
      "interval": false,
      "abstract": 0,
-     "prose": 3,
+     "prose": 4,
      "table_caption": 0
     },
     {
@@ -256,22 +221,15 @@
      "key": "d1n_epi_ratio_h1",
      "interval": false,
      "abstract": 0,
-     "prose": 5,
+     "prose": 3,
      "table_caption": 1
     },
     {
      "key": "d1n_epi_ratio_h100",
      "interval": false,
      "abstract": 0,
-     "prose": 6,
+     "prose": 5,
      "table_caption": 1
-    },
-    {
-     "key": "d1n_epi_ratio_h368",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
     },
     {
      "key": "d3_epi_cells",
@@ -291,14 +249,14 @@
      "key": "d3x_own_epi_cells",
      "interval": false,
      "abstract": 0,
-     "prose": 4,
+     "prose": 3,
      "table_caption": 0
     },
     {
      "key": "d3x_own_epi_ok",
      "interval": false,
      "abstract": 0,
-     "prose": 4,
+     "prose": 3,
      "table_caption": 0
     },
     {
@@ -319,7 +277,7 @@
      "key": "diff_terms",
      "interval": false,
      "abstract": 0,
-     "prose": 4,
+     "prose": 3,
      "table_caption": 0
     },
     {
@@ -333,15 +291,8 @@
      "key": "e7_r_dis",
      "interval": false,
      "abstract": 0,
-     "prose": 4,
-     "table_caption": 0
-    },
-    {
-     "key": "e7_step_r",
-     "interval": false,
-     "abstract": 0,
      "prose": 3,
-     "table_caption": 1
+     "table_caption": 0
     },
     {
      "key": "h2h_unit",
@@ -351,66 +302,24 @@
      "table_caption": 0
     },
     {
-     "key": "m44_ratio_gain",
-     "interval": false,
-     "abstract": 0,
-     "prose": 4,
-     "table_caption": 0
-    },
-    {
-     "key": "m64_h1_ci",
-     "interval": true,
-     "abstract": 0,
-     "prose": 2,
-     "table_caption": 0
-    },
-    {
-     "key": "v1_shared_pct",
-     "interval": false,
-     "abstract": 0,
-     "prose": 5,
-     "table_caption": 0
-    },
-    {
      "key": "v3_cov_nominal1",
      "interval": false,
      "abstract": 1,
-     "prose": 6,
-     "table_caption": 0
-    },
-    {
-     "key": "win_fore",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
-    {
-     "key": "x3_ci",
-     "interval": true,
-     "abstract": 0,
-     "prose": 2,
+     "prose": 7,
      "table_caption": 0
     },
     {
      "key": "x6_ci",
      "interval": true,
      "abstract": 0,
-     "prose": 5,
+     "prose": 4,
      "table_caption": 0
     },
     {
      "key": "x6_margin",
      "interval": false,
      "abstract": 0,
-     "prose": 5,
-     "table_caption": 0
-    },
-    {
-     "key": "x7_summary",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
+     "prose": 4,
      "table_caption": 0
     }
    ],
@@ -423,10 +332,8 @@
     "iters_long",
     "iters_main",
     "m23_nind",
-    "m23_seed",
     "mn_nind",
     "nind_oos_400",
-    "r2_n_indep",
     "v2_deploy_h",
     "v2_diag_h",
     "x3_n",
@@ -436,34 +343,34 @@
   },
   "sig": {
    "pass": false,
-   "n": 499,
-   "n_decimals": 609,
+   "n": 461,
+   "n_decimals": 569,
    "examples": [
     "0.7979",
-    "34.4",
-    "0.419",
-    "33.4",
-    "0.4697",
-    "0.6053",
-    "0.2816",
-    "0.1978",
-    "0.3896",
+    "3.68",
+    "0.125",
+    "0.3509",
+    "1.5540",
     "4.43",
+    "2.05",
+    "0.3582",
+    "0.0283",
+    "1.6497",
+    "0.2858",
     "4.61",
     "2.58",
-    "2.2275",
-    "1.3683",
-    "3.5053",
-    "0.0194",
-    "0.0310",
-    "89.15",
-    "2.03",
-    "1.45",
-    "55.0",
-    "26.3",
-    "92.7",
-    "37.4",
-    "21.3"
+    "0.1447",
+    "0.1319",
+    "0.0172",
+    "0.0128",
+    "0.0329",
+    "0.0796",
+    "1.82",
+    "1.66",
+    "0.3087",
+    "0.0318",
+    "0.3572",
+    "1.16"
    ],
    "exceptions": [
     "arXiv-style identifier",

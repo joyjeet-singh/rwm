@@ -189,10 +189,11 @@ def _key_family(k):
 
 
 def check_retraction_counts(template):
-    """The introduction and section 8 each state all three withdrawal counts, each phrase
-    directly after the key that counts it, and neither uses the old total."""
-    secs = {"introduction": re.search(r"\n## 1\. (.*?)\n## 2\. ", template, re.S),
-            "section 8": re.search(r"\n## 8\. (.*?)\n## 9\. ", template, re.S)}
+    """Section 3.4 states all three withdrawal counts, each phrase directly after the key that
+    counts it, and does not use the old total. (G11 re-anchor, rule 8: the introduction's and section
+    8's statements moved to 3.4, their one home in OUTLINE.md H19; the earlier text, with its counts
+    in the same vocabulary, is supplementary S14 and S17.)"""
+    secs = {"section 3.4": re.search(r"\n### 3\.4 (.*?)\n## 4\. ", template, re.S)}
     bad, found = [], {}
     for name, m in secs.items():
         if not m:
@@ -239,8 +240,7 @@ def selftest_gates():
     _v = ("{{n_superseded}} superseded entries, {{n_retractions_word}} claims withdrawn on "
           "evidence and {{n_retract_framing_word}} framings withdrawn")
     caught += bool(check_retraction_counts(
-        "x\n## 1. I\n" + _v.replace("n_retractions_word", "n_retract_total") + "\n## 2. R\n"
-        + "y\n## 8. M\n" + _v + "\n## 9. L\n"))
+        "x\n### 3.4 I\n" + _v.replace("n_retractions_word", "n_retract_total") + "\n## 4. R\n"))
     return caught
 
 
@@ -337,7 +337,7 @@ def main():
     assert not _cap, ("a table with an arm row names no training iterations in its caption -- "
                       "bind one, e.g. {{iters_main}} (S3 item 2):\n  " + "\n  ".join(_cap[:8]))
     _rc = check_retraction_counts(text)
-    assert not _rc, ("the introduction and section 8 must state the ledger's three withdrawal "
+    assert not _rc, ("section 3.4 must state the ledger's three withdrawal "
                      "counts in one vocabulary, from ledger_check.py (S5 item 8):\n  "
                      + "\n  ".join(_rc[:6]))
     _gate_caught = selftest_gates()
@@ -422,7 +422,7 @@ def main():
             "Positive is a rule committed before the data that tested it existed; negative is a "
             "rule written afterwards. A lead of a few minutes means the rule was committed just before "
             "its runs were launched or its readings computed. The one negative bar, labelled the Task 3 "
-            "duplication rule, is §7.4's duplication control, withdrawn as a pre-registration in this paper (§8).",
+            "duplication rule, is §7.4's duplication control, withdrawn as a pre-registration in this paper (§3.4).",
         "paper_fig6_ab_by_horizon.png":
             "The autoregressive-versus-teacher-forcing advantage as a function of forecast "
             "horizon, out-of-sample over three seeds at " + str(N["iters_long"]["value"])
@@ -441,7 +441,7 @@ def main():
             "bootstrap on the left of each position and cluster bootstrap on the right; the "
             "duplication control is inert. (b) a different family, the " + str(N["bu_cells"]["value"])
             + " cells of \\S5's A/B gap at the " + str(N["bu_ckpts"]["value"])
-            + "-iteration checkpoints (\\S8): distribution of the ratio of cluster to naive "
+            + "-iteration checkpoints (\\S3.4): distribution of the ratio of cluster to naive "
             "confidence-interval width, with the mean marked. Resampling pooled seed × trajectory "
             "values rather than whole trajectories narrows " + str(N["bu_n_narrowed"]["value"])
             + " of the " + str(N["bu_cells"]["value"]) + " intervals.",

@@ -1,30 +1,31 @@
 {
   "template": "PAPER.template.md",
-  "n_typed": 973,
+  "n_typed": 952,
   "by_class": {
-    "markdown-heading": 24,
-    "figure-ref": 28,
-    "exception": 301,
-    "section-ref": 337,
-    "citation-year": 19,
-    "code-location": 55,
-    "arxiv-id": 11,
-    "math-mode": 14,
+    "markdown-heading": 25,
+    "citation-year": 32,
+    "section-ref": 328,
+    "figure-ref": 25,
+    "exception": 288,
+    "table-ref": 2,
     "ledger-id": 124,
+    "code-location": 52,
+    "math-mode": 8,
     "table-row-label": 42,
+    "arxiv-id": 8,
     "equation-ref": 7,
     "subsection-heading": 5,
     "table-denominator": 6
   },
   "supplement": {
     "file": "docs/SUPPLEMENT.template.md",
-    "n_typed": 162,
+    "n_typed": 279,
     "n_unclassified": 0,
     "unclassified": []
   },
   "n_unclassified": 0,
   "unclassified": [],
-  "n_classes": 18,
+  "n_classes": 19,
   "n_exceptions": 23,
   "classes": [
     {
@@ -54,6 +55,10 @@
     {
       "name": "figure-ref",
       "why": "a figure number in this paper or an original"
+    },
+    {
+      "name": "table-ref",
+      "why": "a table number in this paper (G11: Table 1 lists the arenas; the other tables are numbered by their sections)"
     },
     {
       "name": "equation-ref",

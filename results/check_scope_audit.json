@@ -114,7 +114,9 @@
       "input_selection": "named-region",
       "reason": "reads the evidence table (Appendix D's second, which section 3.2 points to; round 3, R6) and each section it names; a missing section fails the check",
       "files_named_by_claims": [],
-      "surface_named_by_claims": []
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ]
     },
     {
       "kind": "arithmetic",
@@ -187,7 +189,8 @@
         "docs/SUPPLEMENT.md"
       ],
       "surface_named_by_claims": [
-        "docs/BUILD_CHECKS.md"
+        "docs/BUILD_CHECKS.md",
+        "docs/SUPPLEMENT.md"
       ],
       "tier": "built",
       "requires": [
@@ -363,7 +366,9 @@
         "docs/SUPPLEMENT.md",
         "docs/SUPPLEMENT.template.md"
       ],
-      "surface_named_by_claims": [],
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ],
       "tier": "built",
       "requires": [
         "docs/BUILD_CHECKS.md",

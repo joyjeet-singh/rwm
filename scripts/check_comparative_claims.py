@@ -264,8 +264,8 @@ CLAIMS = [
     # kind is unchanged and so is what it asserts; only the list of places the
     # count must agree in has moved, and it has to move with the prose or it
     # guards nothing.
-    {"id": "C7.1", "kind": "count-consistency", "where": "8 / BUILD_CHECKS",
-     "surface": ["docs/BUILD_CHECKS.md"],
+    {"id": "C7.1", "kind": "count-consistency", "where": "8 -> supplementary S17 (G11) / BUILD_CHECKS",
+     "surface": ["docs/BUILD_CHECKS.md", "docs/SUPPLEMENT.md"],
      # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
      # and the supplement now share one vocabulary -- claims withdrawn on evidence,
      # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
@@ -280,8 +280,8 @@ CLAIMS = [
      # the count went from seven to eight, and nothing would have caught its absence. The enumeration's
      # length is now checked too: its items, separated by semicolons, must number the count.
      "list": {"after": "claims withdrawn on evidence, in order.** In order:", "end": " **The"}},
-    {"id": "C7.2", "kind": "count-consistency", "where": "8 / BUILD_CHECKS",
-     "surface": ["docs/BUILD_CHECKS.md"],
+    {"id": "C7.2", "kind": "count-consistency", "where": "8 -> supplementary S17 (G11) / BUILD_CHECKS",
+     "surface": ["docs/BUILD_CHECKS.md", "docs/SUPPLEMENT.md"],
      # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
      # and the supplement now share one vocabulary -- claims withdrawn on evidence,
      # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
@@ -297,7 +297,7 @@ CLAIMS = [
     # The count is stated ONCE in §1 now -- in the contributions list. §1's prose
     # paragraph said it too, which is the duplication D2 was meant to remove and
     # did not: it compressed the paragraph and left the number in both places.
-    {"id": "C7.5", "kind": "count-consistency", "where": "1 / 8",
+    {"id": "C7.5", "kind": "count-consistency", "where": "1 / 8 -> supplementary S14, S17 (G11); stated in 3.4", "surface": ["docs/SUPPLEMENT.md"],
      # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
      # and the supplement now share one vocabulary -- claims withdrawn on evidence,
      # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
@@ -410,7 +410,7 @@ CLAIMS = [
     # generated from the ledger and does not exist in the source.
     # B4: the generated enumeration left PAPER.md for docs/BUILD_CHECKS.md, and with
     # only the template listed this claim fell from 19 namings to 9 while passing.
-    {"id": "C10.5", "kind": "retraction_class_consistency", "where": "8 / BUILD_CHECKS",
+    {"id": "C10.5", "kind": "retraction_class_consistency", "where": "8 -> supplementary S17 (G11) / BUILD_CHECKS", "surface": ["docs/SUPPLEMENT.md"],
      # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
      # and the supplement now share one vocabulary -- claims withdrawn on evidence,
      # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
@@ -529,7 +529,9 @@ CLAIMS = [
     # two above that rather than at a round number, so the next addition fails the
     # build and has to be argued for as these were.
     {"id": "C12.1", "kind": "abstract-budget", "where": "abstract",
-     "says": "The base paper's central training claim reproduces",
+     # G11 (ruling Y2), a tightening: the abstract was rewritten to the outline's 207 words and 5 numerals,
+     # and the caps are now Y2's own, 210 and 5 (round5_gates.py reads the same two).
+     "says": "We reimplement the dynamics model of the Robotic World Model (RWM)",
      # +4 words, +1 numeral, and this raise is a CORRECTNESS fix rather than added
      # content. The abstract quoted §7.2's alignment defect as "overstating the
      # checkpoint's own error by 75%", naming neither the metric nor the horizon.
@@ -562,7 +564,7 @@ CLAIMS = [
      # limit, 330, is tighter and the abstract meets it.
      # Round 4, F6 (ruling W7): the abstract was rewritten once to at most 300 words, and the word cap is tightened from
      # 370 to 320, as W7 directs. The numeral cap is left at 26: W7 does not tighten it.
-     "max_words": 320, "max_numerals": 26},
+     "max_words": 210, "max_numerals": 5},
 
     # ---- C13 interval-required -------------------------------------------
     # 6.2's ratios and coverages were bare point estimates in a paper whose
@@ -791,7 +793,7 @@ CLAIMS = [
     # counted as passing.
     # Round 3, R6 (ruling V5): the table moved to Appendix D as its second table; §3.2 keeps the
     # paragraph that points to it, and the anchor sentence with it. Label "3.2" -> "3.2 / Appendix D".
-    {"id": "C24.1", "kind": "arena_consistency", "where": "3.2 / Appendix D",
+    {"id": "C24.1", "kind": "arena_consistency", "where": "3.2 -> supplementary S16 (G11) / Appendix D", "surface": ["docs/SUPPLEMENT.md"],
      # S10 re-anchor (user ruling D2 added the checkpoint column and reworded this sentence)
      "says": "so no arena label, sample size or checkpoint in it is typed by hand"},
 
@@ -1683,7 +1685,7 @@ def evaluate(c, paper, override=None):
                          r"|history and forecast lengths)|\(\d+,\s*\d+\)")
         # the front matter and the other summaries rule 11 names for this claim: the abstract and section 1, section
         # 12, Appendix D's first table (and the generator of its second), and the README
-        REG = (("## Abstract", "\n## 2. "), ("## 12. Conclusion", "\n## Data and code"), ("## Appendix D ", "\n## Appendix E "))
+        REG = (("## Abstract", "\n## 2. "), ("## 12. Conclusion", "\n## Reproducibility and data"), ("## Appendix D ", "\n## Appendix E "))
         for f in exp["files"]:
             txt = open(f).read()
             if f == "PAPER.template.md":
