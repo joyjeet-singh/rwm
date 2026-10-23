@@ -1,13 +1,13 @@
 {
  "mode": "report",
- "summary": "pages 18.25/12, abstract 207/5, ids 58, once 17, sig 265, keys missing 0",
+ "summary": "pages 13.1/12, abstract 207/5, ids 35, once 6, sig 87, keys missing 0",
  "gates": {
   "pages": {
    "pass": false,
-   "value": 18.25,
+   "value": 13.1,
    "max": 12.0,
-   "references_page": 19,
-   "references_y": 546.0389999999999
+   "references_page": 14,
+   "references_y": 635.751
   },
   "abstract": {
    "pass": true,
@@ -25,27 +25,16 @@
   },
   "ids": {
    "pass": false,
-   "n": 58,
+   "n": 35,
    "by_kind": {
-    "ledger_id": 12,
-    "rule_id": 13,
+    "ledger_id": 1,
+    "rule_id": 12,
     "commit_label": 0,
-    "verdict_label": 25,
-    "code_label": 8
+    "verdict_label": 22,
+    "code_label": 0
    },
    "distinct": {
     "ledger_id": [
-     "M-43",
-     "M-44",
-     "M-45",
-     "M-49",
-     "M-50",
-     "M-51",
-     "M-52",
-     "M-62",
-     "M-63",
-     "M-68",
-     "M-69",
      "M-70"
     ],
     "rule_id": [
@@ -59,25 +48,16 @@
     ],
     "commit_label": [],
     "verdict_label": [
-     "COMBINATION IMPROVES CALIBRATION",
      "DISAGREEMENT BEATS STEP SIZE",
-     "DOES NOT GENERALISE",
      "DOES NOT REORDER",
-     "MECHANISM SUPPORTED",
-     "MOVE",
-     "OBJECTIVE-DRIVEN",
      "PARTIAL",
+     "PER-MEMBER",
      "REPLICATES ACROSS FOLDS",
      "RWM-U",
      "SURVIVES",
-     "UNDER-POWERED",
-     "UNIFORM",
      "WITHIN BAND AT"
     ],
-    "code_label": [
-     "entry-res",
-     "step-size"
-    ]
+    "code_label": []
    },
    "verdict_vocabulary": [
     "ACROSS",
@@ -175,80 +155,17 @@
   },
   "once": {
    "pass": false,
-   "n": 17,
+   "n": 6,
    "violations": [
     {
-     "key": "a2_rdd",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
-    {
      "key": "a2_rdd_ci",
-     "interval": true,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
-    {
-     "key": "d1n_epi_ratio_ci_h100",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 1
-    },
-    {
-     "key": "d1n_epi_ratio_h1",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 1
-    },
-    {
-     "key": "d1n_epi_ratio_h100",
-     "interval": false,
-     "abstract": 0,
-     "prose": 5,
-     "table_caption": 1
-    },
-    {
-     "key": "d3_epi_cells",
-     "interval": false,
-     "abstract": 0,
-     "prose": 5,
-     "table_caption": 0
-    },
-    {
-     "key": "d3_tol",
-     "interval": false,
-     "abstract": 0,
-     "prose": 4,
-     "table_caption": 0
-    },
-    {
-     "key": "d3x_own_epi_cells",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
-    {
-     "key": "d3x_own_epi_ok",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
-    {
-     "key": "d4_ci",
      "interval": true,
      "abstract": 0,
      "prose": 2,
      "table_caption": 0
     },
     {
-     "key": "d4_r",
+     "key": "d1n_epi_ratio_h100",
      "interval": false,
      "abstract": 0,
      "prose": 3,
@@ -262,24 +179,10 @@
      "table_caption": 0
     },
     {
-     "key": "e7_mde_margin",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
-    {
-     "key": "e7_r_dis",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
-    {
      "key": "v3_cov_nominal1",
      "interval": false,
      "abstract": 1,
-     "prose": 7,
+     "prose": 4,
      "table_caption": 0
     },
     {
@@ -298,8 +201,6 @@
     }
    ],
    "exempt_setting_keys_applied": [
-    "d1n_nind",
-    "d3_nind_fit",
     "e7_nind",
     "iters_long",
     "iters_main",
@@ -314,34 +215,34 @@
   },
   "sig": {
    "pass": false,
-   "n": 265,
-   "n_decimals": 365,
+   "n": 87,
+   "n_decimals": 220,
    "examples": [
     "0.7979",
     "3.68",
     "0.125",
     "0.125",
-    "68.27",
-    "16.22",
-    "13.44",
-    "18.89",
-    "30.11",
-    "33.4",
-    "28.7",
-    "39.0",
-    "4.61",
-    "4.12",
-    "5.09",
-    "9.27",
-    "0.2769",
-    "16.22",
-    "13.44",
-    "18.89",
-    "68.27",
-    "33.4",
-    "28.7",
-    "39.0",
-    "4.61"
+    "0.125",
+    "0.125",
+    "55.0",
+    "26.3",
+    "92.7",
+    "54.4",
+    "37.5",
+    "82.3",
+    "37.4",
+    "21.3",
+    "65.4",
+    "10.4",
+    "24.9",
+    "13.4",
+    "47.4",
+    "35.2",
+    "31.5",
+    "24.7",
+    "68.2",
+    "17.4",
+    "47.4"
    ],
    "exceptions": [
     "arXiv-style identifier",

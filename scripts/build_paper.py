@@ -117,11 +117,13 @@ _ARM_HEADER = re.compile(r"\b(autoregressive|teacher forcing|independent|shared-
 
 
 def check_h8_gap_labels(template):
-    """Every §5 sentence that prints an h = 8 gap figure either uses the table's own key
-    ({{a1_gap_h8}}) or names its checkpoint with a bound iteration or checkpoint key."""
-    m = re.search(r"\n## 5\.(.*?)\n## 6\.", template, re.S)
+    """Every §4 sentence that prints an h = 8 gap figure either uses the table's own key
+    ({{a1_gap_h8}}) or names its checkpoint with a bound iteration or checkpoint key.
+    (G13 re-anchor, rule 8: the base paper's claims are section 4 since G12; the check read the
+    old section 5, which G12 moved to supplementary S19.)"""
+    m = re.search(r"\n## 4\.(.*?)\n## 5\.", template, re.S)
     if not m:
-        return ["§5 not found"]
+        return ["§4 not found"]
     prose = " ".join(ln for ln in m.group(1).split("\n") if not ln.startswith("|"))
     bad = []
     for sent in re.split(r"(?<=[.!?])\s+(?=[A-Z*(])", prose):
@@ -497,7 +499,7 @@ def main():
     # renames the appendices and moves these with them.
     ANCHOR = {
         "paper_fig7_findings.png": "## 1. Introduction",
-        "paper_fig8_sigma_adam.png": "### 6.3 ",
+        "paper_fig8_sigma_adam.png": "### 5.5 ",
         "paper_fig4_prereg_timeline.png": "## Appendix E ",
         "paper_fig3_collapse.png": "## Appendix J ",
         "paper_fig2_sigma_profile.png": "## Appendix K ",

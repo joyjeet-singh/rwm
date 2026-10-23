@@ -663,7 +663,10 @@ def main():
     _rows = "".join(
         "| `{id}` | {title} | {commit} | {lead} | {tested} | {verdict} |\n".format(
             id=r["id"], title=r["title"].replace("|", "/"),
-            commit=(f'`{r["rule_commit"]}` {r["commit_subject"]}'
+            # G13: a commit subject names the section numbers of the draft it was written against, which the
+            # rewrite renumbered; "§" becomes "section" so the PDF's cross-reference check does not read a
+            # historical subject as a pointer into this paper. The words of the subject are unchanged.
+            commit=(f'`{r["rule_commit"]}` {r["commit_subject"].replace("§", "section ")}'
                     if r["rule_commit"] else "—"),
             lead=_lead(r), tested=r["tested_by"] or "—",
             verdict=r["verdict"].replace("|", "/"))

@@ -643,3 +643,33 @@ Body words / main-content pages: unchanged (see LENGTH_LOG)
 Subagents: none
 Next: G13 (Opus 5.5, high).
 Decisions for user: none
+
+## G13 — 2026-10-23 23:30 — Opus 5.5, high (a Sonnet 5.5 session ran it) — status: COMPLETE
+Commits:
+(one commit, [G13][1-8], follows this entry)
+Review items closed: RV11, RV12, RV14, RV15–RV17 (text), RV19 and RV23 (this section), RV24–RV26, RV28 (this section), RV29–RV31, RV33 (framing), RV42, RV43 (this section)
+Done:
+- **New §5 in OUTLINE's order** (2,366 words; outline 1,700), replacing G12's interim heading and the old §6:
+  - **5.1** quotes what RWM-U claims (aleatoric "captures … effectively", the trend, "effectively propagated over long horizons") and what the code computes (the discard; Eq. 4's variance against the code's standard deviation); credits the shared trunk to the original; names MOPO's one-step job and the three gaps.
+  - **5.2 (the lead)** Table 3: R, k at h = 1 and 100 and per-member coverage for five ensembles, "not measured" where an artifact holds nothing; the folds' one-step ρ; X11a read as MIXED at h = 1 and flattering at h = 100, with X10's earlier worse-at-h = 1 reading beside it.
+  - **5.3** Abbas et al. on model inadequacy; the shared trunk measured; independent members at n = 4 and n = 20 as a bound, not an isolation; Osband et al.; the "bootstrap" paper–code difference.
+  - **5.4** the trend claim tested against accumulated error and why that is not a calibration failure; X9 and X11e, scope sentence once.
+  - **5.5** the σ = 0 optimum (per step, second pathway not isolated, the bound term gives the floor no gradient), the synthetic test, Adam's step (Kingma and Ba), PETS and the survey counts; Figure 2.
+  - **5.6** Spearman as headline, Pearson verdicts named as pre-registered, X6 with its scope, M-43 inconclusive at n = 4 beside X11b resolved at n = 20.
+  - **5.7** per-horizon rescaling as split conformal with the exchangeability condition and the nine-episode requirement; X7's units' scope; ±2σ and CRPS from N9; M-65's withdrawn reading; X11c's two faces together.
+- **rwm-checker (one read):** no numeric mismatch; Table 3 matches row by row. It reported four wording problems and one minor; I checked each against its artifact and fixed all five: (1) "the shared-trunk ensembles account for the least" was wrong for the released checkpoint (R = 174), now "the independently trained members come closest"; (2) "the constant that calibrates" used the mean-matching constant (10.4, 43.2), whose coverage is 81% and 69%; it now gives Y7's coverage-matching k (6.6, 42); (3) "own training episodes" contradicted §3.2's provenance statement, now "ten released episodes"; (4) the 30-of-48 count covers all cells of the tails analysis, not only the released checkpoint's, and says so; (5) the synthetic ratio 0.98 is a mean over seeds of per-seed medians, and says "averaged over seeds".
+- **Moves, verbatim:** the old §6 to supplementary S20–S27, one section per old subsection (so the restatement check keeps its per-section scope).
+- **Pointers:** 111 references to the old §6.x in the rest of the template now read §5.x; `evidence_summary.py`'s section fields, the model card builder and one `a1_consent_letter.py` passage follow. §1's pointers to the defects section use words, since no section 6 exists until G14.
+- **Departures to see:** (a) §5 is 2,366 words, over the outline's 1,700 (G14 trims). (b) **Figure 3 (σ-coverage by horizon, OUTLINE §figures) is not drawn**: neither G10's nor G13's items name it, and drawing it renumbers every appendix figure again; the figure has no home until you or G14 decide. (c) The floor's "5.2× slower" drift is not stated because no key holds it. (d) The App. E commit-subject column now prints "section" for "§", so quoted subjects do not read as pointers into this paper.
+Build/gates: pass (fast build → gates → fast build; last two byte-identical); `xref_sweep` 0 suspect; `keys` 0 missing; both bundles pass the deny-list scan; PDF channels clean.
+Round-5 gates (report mode until G16): pages 13.1/12, abstract 207/5, ids 35, once 6, sig 87, keys missing 0
+Paper numbers changed: none
+New keys: none
+Ledger: none
+Re-anchored checks (rule 8): C1.1, C2.2, C2.4, C3.1, C3.2, C4.1, C7.4, C8.1, C18.2 (old §6.2, §6.6 sentences → supplement, through `surface`); C24.1 via `evidence_summary.py`; the h = 8 gap-label gate in `build_paper.py` (read the old §5, now §4); the figure anchor for Figure 2 (§5.5); `a1_consent_letter.py`'s first passage (→ the supplement). Expectations unchanged.
+CPU jobs over 1 min: the two bundle builds, about 6 min each
+Queue (Y5): done and discharged (GT2)
+Body words / main-content pages: 8,919 / 13.1
+Subagents: rwm-checker ×1
+Next: G14 (Opus 5.5, medium).
+Decisions for user: Figure 3 (see above): draw it in G14, or drop it from OUTLINE.

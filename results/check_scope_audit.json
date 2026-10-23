@@ -222,7 +222,9 @@
       "input_selection": "whole-file",
       "reason": "searches PAPER.md for the sentence naming an extremum",
       "files_named_by_claims": [],
-      "surface_named_by_claims": []
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ]
     },
     {
       "kind": "figure_reference",
@@ -236,7 +238,9 @@
       "input_selection": "whole-file",
       "reason": "searches PAPER.md for the frequency wording -- 'every', 'none', 'all'",
       "files_named_by_claims": [],
-      "surface_named_by_claims": []
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ]
     },
     {
       "kind": "horizon-consistency",
@@ -259,7 +263,9 @@
       "input_selection": "whole-file",
       "reason": "searches PAPER.md for a figure's horizon label",
       "files_named_by_claims": [],
-      "surface_named_by_claims": []
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ]
     },
     {
       "kind": "interval-required",
@@ -282,14 +288,18 @@
       "input_selection": "whole-file",
       "reason": "searches PAPER.md for the order-of-magnitude phrasing",
       "files_named_by_claims": [],
-      "surface_named_by_claims": []
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ]
     },
     {
       "kind": "overlap",
       "input_selection": "artifact-only",
       "reason": "compares two intervals from results/*.json",
       "files_named_by_claims": [],
-      "surface_named_by_claims": []
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ]
     },
     {
       "kind": "overstat-reversal",
@@ -410,7 +420,9 @@
       "input_selection": "whole-file",
       "reason": "searches PAPER.md for the sentence stating a direction",
       "files_named_by_claims": [],
-      "surface_named_by_claims": []
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ]
     },
     {
       "kind": "stale-interval",

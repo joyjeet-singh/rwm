@@ -10,11 +10,11 @@
     "new-docs"
   ],
   "n_pointers": 116,
-  "n_ok": 113,
+  "n_ok": 112,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
-  "n_bad": 3,
+  "n_bad": 4,
   "bad": [
     {
       "class": "semantic",
@@ -25,17 +25,22 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a77 gives lessons and limitations",
-      "ok": false,
-      "detail": "target 7; nouns ['lessons', 'limitations']; absent ['lessons', 'limitations']",
-      "context": "\u00a77 gives lessons and limitations"
-    },
-    {
-      "class": "semantic",
       "pointer": "\u00a74.3 gives the two readings of its rules that differ)",
       "ok": false,
       "detail": "target 4.3; nouns ['readings', 'rules', 'differ']; absent ['rules', 'differ']",
       "context": "\u00a74.3 gives the two readings of its rules that differ)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.6 gives",
+      "ok": false,
+      "detail": "target 6.6 not found"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.3 explains",
+      "ok": false,
+      "detail": "target 6.3 not found"
     }
   ],
   "pointers": [
@@ -45,13 +50,6 @@
       "ok": false,
       "detail": "target 3; nouns ['data', 'metrics', 'statistics']; absent ['data', 'metrics', 'statistics']",
       "context": "\u00a73 sets out the data, metrics and statistics"
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a77 gives lessons and limitations",
-      "ok": false,
-      "detail": "target 7; nouns ['lessons', 'limitations']; absent ['lessons', 'limitations']",
-      "context": "\u00a77 gives lessons and limitations"
     },
     {
       "class": "semantic",
@@ -83,90 +81,6 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix M gives the four models' table)",
-      "ok": true,
-      "detail": "target Appendix M; nouns ['models', 'table']; absent []",
-      "context": "Appendix M gives the four models' table)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix M gives every horizon",
-      "ok": true,
-      "detail": "target Appendix M; nouns ['horizon']; absent []",
-      "context": "Appendix M gives every horizon"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix M gives the arms' table at every horizon",
-      "ok": true,
-      "detail": "target Appendix M; nouns ['arms', 'table', 'horizon']; absent []",
-      "context": "Appendix M gives the arms' table at every horizon"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix J lists the runs and which the rate is fitted on)",
-      "ok": true,
-      "detail": "target Appendix J; nouns ['runs', 'rate', 'fitted']; absent []",
-      "context": "Appendix J lists the runs and which the rate is fitted on)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a76.3 explains the aleatoric column and leaves the epistemic one open",
-      "ok": true,
-      "detail": "target 6.3; nouns ['aleatoric', 'column', 'leaves', 'epistemic', 'open']; absent []",
-      "context": "\u00a76.3 explains the aleatoric column and leaves the epistemic one open"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix J gives the lines)",
-      "ok": true,
-      "detail": "target Appendix J; nouns ['lines']; absent []",
-      "context": "Appendix J gives the lines)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix K gives the four models' table, its arenas and a candidate mechanism",
-      "ok": true,
-      "detail": "target Appendix K; nouns ['models', 'table', 'arenas', 'candidate', 'mechanism']; absent []",
-      "context": "Appendix K gives the four models' table, its arenas and a candidate mechanism"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0",
-      "ok": true,
-      "detail": "target Appendix K; nouns ['models', 'faithful', 'declines']; absent []",
-      "context": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix N gives its table)",
-      "ok": true,
-      "detail": "target Appendix N; nouns ['table']; absent []",
-      "context": "Appendix N gives its table)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix N gives what each costs)",
-      "ok": true,
-      "detail": "target Appendix N; nouns ['costs']; absent []",
-      "context": "Appendix N gives what each costs)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix T gives the table and every deviation)",
-      "ok": true,
-      "detail": "target Appendix T; nouns ['table', 'deviation']; absent []",
-      "context": "Appendix T gives the table and every deviation)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix Y gives the aleatoric term and the constant multiplier alongside",
-      "ok": true,
-      "detail": "target Appendix Y; nouns ['aleatoric', 'term', 'constant', 'multiplier', 'alongside']; absent []",
-      "context": "Appendix Y gives the aleatoric term and the constant multiplier alongside"
-    },
-    {
-      "class": "semantic",
       "pointer": "Appendix H lists the ledger's other confirmed contributions that the body doe",
       "ok": true,
       "detail": "target Appendix H; nouns ['ledger', 'confirmed', 'contributions', 'body', 'does', 'state', 'among', 'them', 'defects', 'released', 'data', 'pipeline', 'departures', 'releas']; absent ['among', 'departures']",
@@ -195,17 +109,17 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.3 quotes (Appendix B)",
+      "pointer": "\u00a75.5 quotes (Appendix B)",
       "ok": true,
-      "detail": "target 6.3; nouns ['appendix']; absent []",
-      "context": "\u00a76.3 quotes (Appendix B)"
+      "detail": "target 5.5; nouns ['appendix']; absent []",
+      "context": "\u00a75.5 quotes (Appendix B)"
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.2 quotes 34",
+      "pointer": "\u00a75.2 quotes 34",
       "ok": true,
-      "detail": "target 6.2; nouns []; absent []",
-      "context": "\u00a76.2 quotes 34"
+      "detail": "target 5.2; nouns []; absent []",
+      "context": "\u00a75.2 quotes 34"
     },
     {
       "class": "semantic",
@@ -293,10 +207,9 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.6 gives the expectation we held about the\ncounter-baseline, and noth",
-      "ok": true,
-      "detail": "target 6.6; nouns ['expectation', 'held', 'about', 'counter-baseline', 'nothing', 'table', 'discharges', 're-opens', 'rule']; absent ['nothing', 'discharges', 're-opens']",
-      "context": "\u00a76.6 gives the expectation we held about the\ncounter-baseline, and nothing in the table discharges or re-opens the rule"
+      "pointer": "\u00a76.6 gives",
+      "ok": false,
+      "detail": "target 6.6 not found"
     },
     {
       "class": "semantic",
@@ -318,6 +231,89 @@
       "ok": true,
       "detail": "target Appendix U; nouns ['reading']; absent []",
       "context": "Appendix U gives every reading)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix M gives the four models' table)",
+      "ok": true,
+      "detail": "target Appendix M; nouns ['models', 'table']; absent []",
+      "context": "Appendix M gives the four models' table)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix M gives every horizon",
+      "ok": true,
+      "detail": "target Appendix M; nouns ['horizon']; absent []",
+      "context": "Appendix M gives every horizon"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix M gives the arms' table at every horizon",
+      "ok": true,
+      "detail": "target Appendix M; nouns ['arms', 'table', 'horizon']; absent []",
+      "context": "Appendix M gives the arms' table at every horizon"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix J lists the runs and which the rate is fitted on)",
+      "ok": true,
+      "detail": "target Appendix J; nouns ['runs', 'rate', 'fitted']; absent []",
+      "context": "Appendix J lists the runs and which the rate is fitted on)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.3 explains",
+      "ok": false,
+      "detail": "target 6.3 not found"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix J gives the lines)",
+      "ok": true,
+      "detail": "target Appendix J; nouns ['lines']; absent []",
+      "context": "Appendix J gives the lines)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix K gives the four models' table, its arenas and a candidate mechanism",
+      "ok": true,
+      "detail": "target Appendix K; nouns ['models', 'table', 'arenas', 'candidate', 'mechanism']; absent []",
+      "context": "Appendix K gives the four models' table, its arenas and a candidate mechanism"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0",
+      "ok": true,
+      "detail": "target Appendix K; nouns ['models', 'faithful', 'declines']; absent []",
+      "context": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix N gives its table)",
+      "ok": true,
+      "detail": "target Appendix N; nouns ['table']; absent []",
+      "context": "Appendix N gives its table)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix N gives what each costs)",
+      "ok": true,
+      "detail": "target Appendix N; nouns ['costs']; absent []",
+      "context": "Appendix N gives what each costs)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix T gives the table and every deviation)",
+      "ok": true,
+      "detail": "target Appendix T; nouns ['table', 'deviation']; absent []",
+      "context": "Appendix T gives the table and every deviation)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix Y gives the aleatoric term and the constant multiplier alongside",
+      "ok": true,
+      "detail": "target Appendix Y; nouns ['aleatoric', 'term', 'constant', 'multiplier', 'alongside']; absent []",
+      "context": "Appendix Y gives the aleatoric term and the constant multiplier alongside"
     },
     {
       "class": "artifact",
@@ -646,6 +642,12 @@
     {
       "class": "upstream",
       "pointer": "base.py:142",
+      "ok": true,
+      "detail": "../robotic_world_model_lite/scripts/envs/base.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "base.py:158",
       "ok": true,
       "detail": "../robotic_world_model_lite/scripts/envs/base.py has the line"
     },

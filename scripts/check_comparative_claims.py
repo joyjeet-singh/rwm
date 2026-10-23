@@ -151,7 +151,7 @@ CHECKER_DEFECTS = [
 # ---------------------------------------------------------------- the claims
 CLAIMS = [
     # ---- C1 overlap (A2) -------------------------------------------------
-    {"id": "C1.1", "kind": "overlap", "where": "6.6",
+    {"id": "C1.1", "kind": "overlap", "where": "6.6 -> supplementary S20.. (G13)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "the marginal intervals *do* overlap",
      "a": ("task_d_nind20.json", "d2_forecast_index.128.ci.index"),
      "b": ("task_d_nind20.json", "d2_forecast_index.128.ci.epistemic"),
@@ -167,18 +167,18 @@ CLAIMS = [
      "family": ("task_d3_perhorizon.json", "d3_cells"),
      "named": {"quantity": "aleatoric", "h": 100, "fit_episode": 8},
      "expect": "max"},
-    {"id": "C2.2", "kind": "extremum", "where": "6.6",
+    {"id": "C2.2", "kind": "extremum", "where": "6.6 -> supplementary S20.. (G13)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "is the smallest lower bound in the table",
      "family": ("task_d_nind20.json", "d2_paired_lo"),
      "named": {"h": "128"},
      "expect": "min"},
     # ---- C3 sign (A3) ----------------------------------------------------
-    {"id": "C3.1", "kind": "sign", "where": "6.6",
+    {"id": "C3.1", "kind": "sign", "where": "6.6 -> supplementary S20.. (G13)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "*lowers* disagreement's correlation by",
      "a": ("task_d2b_robustness.json", "raw.r_disagreement_error"),
      "b": ("task_d2b_robustness.json", "controls.linear.r_disagreement_given_index"),
      "expect": "fall"},
-    {"id": "C3.2", "kind": "sign", "where": "6.6",
+    {"id": "C3.2", "kind": "sign", "where": "6.6 -> supplementary S20.. (G13)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "*lowers* disagreement's correlation by",
      "a": ("task_d2b_robustness.json", "raw.r_disagreement_error"),
      "b": ("task_d2b_robustness.json", "controls.linear.r_disagreement_given_index"),
@@ -189,7 +189,7 @@ CLAIMS = [
      "b": ("task_d2b_robustness.json", "controls.within_step.r_disagreement_given_index"),
      "expect": "rise", "optional": True},
     # ---- C4 orders of magnitude (A5) -------------------------------------
-    {"id": "C4.1", "kind": "orders", "where": "6.2",
+    {"id": "C4.1", "kind": "orders", "where": "6.2 -> supplementary S20.. (G13)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "× better than aleatoric and still wrong by",
      "num": ("task_d_nind20.json", "d1_by_horizon.100.aleatoric.ratio_err_over_sigma"),
      "den": ("task_d_nind20.json", "d1_by_horizon.100.epistemic.ratio_err_over_sigma"),
@@ -234,7 +234,7 @@ CLAIMS = [
      "says": "it has the largest mean correlation of the four",
      "family": ("task1_calibration.json", "cal_mean_r"),
      "named": {"label": "teacher-forced armB"}, "expect": "max"},
-    {"id": "C2.4", "kind": "extremum", "where": "6.6",
+    {"id": "C2.4", "kind": "extremum", "where": "6.6 -> supplementary S20.. (G13)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "it is the largest anywhere in this work",
      "family": ("task_d_nind20.json", "d2_epistemic_r"),
      "named": {"h": "1"}, "expect": "max"},
@@ -328,7 +328,7 @@ CLAIMS = [
     # abstract. h=368 is the upstream's open-loop DIAGNOSTIC length; the method's
     # own imagination rollouts run to 100 (X-13). A prose phrase that names a
     # horizon must resolve to the horizon the artifact says it is.
-    {"id": "C8.1", "kind": "horizon-label", "where": "6.2",
+    {"id": "C8.1", "kind": "horizon-label", "where": "6.2 -> supplementary S20.. (G13)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "the method's own imagination rollout length, epistemic is",
      "horizon": ("v2_deployment_horizon.json", "verdict.deployment_horizon_is"),
      "must_quote": ("task_d_nind20.json",
@@ -604,7 +604,7 @@ CLAIMS = [
      "sites": [], "forbid_variants": ["68.3%", "68.3\\%", "68.3 %"],
      "files": ["PAPER.md", "PAPER.tex", "docs/BUILD_CHECKS.md", "docs/SUPPLEMENT.md",
                "README.md", "MODEL_CARD.md"]},
-    {"id": "C7.4", "kind": "count-consistency", "where": "6.6 / 10",
+    {"id": "C7.4", "kind": "count-consistency", "where": "6.6 / 10 -> supplementary S20.. (G13)", "surface": ["docs/SUPPLEMENT.md"],
      "label": "the h=1 disagreement interval",
      "says": "it is the largest anywhere in this work",
      "value": ("paper_numbers.json", "d2_epi_ci_h1.value"),
@@ -705,7 +705,7 @@ CLAIMS = [
      "count": ("paper_numbers.json", "d2p_n_separating.value"),
      "total": ("paper_numbers.json", "d2p_n_horizons.value"),
      "expect": "all", "span": 220},
-    {"id": "C18.2", "kind": "frequency-consistency", "where": "6.6",
+    {"id": "C18.2", "kind": "frequency-consistency", "where": "6.6 -> supplementary S20.. (G13)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "Disagreement wins at every horizon tested",
      "count": ("paper_numbers.json", "d2b_n_index_wins.value"),
      "total": ("paper_numbers.json", "d2b_n_horizons_tested.value"),

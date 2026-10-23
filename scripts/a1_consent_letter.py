@@ -65,7 +65,9 @@ PASSAGES = [
     # Re-anchored in pre-submission S7: §6.1 was shortened and its "So the aleatoric head"
     # paragraph merged into the one before. The passage still ends right after the
     # correspondence quotations and before §6.1's quotations of the arXiv paper itself.
-    ("6.1", "Eq. 4 specifies a", "So the discard is the intended design", TEMPLATE),
+    # G13 re-anchor (rule 8): section 6.1 moved whole to supplementary S20 when section 5 was rewritten; the
+    # passage and its quotations are unchanged and are scanned there.
+    ("6.1", "Eq. 4 specifies a", "So the discard is the intended design", os.path.join("docs", "SUPPLEMENT.template.md")),
     # Added in round 4, F11 (PLAN §1.2 rule 9, a re-anchor after a legitimate move): F8 moved §6.1's
     # two correspondence quotations into Appendix H's "§6.1 in full" passage. The entry above still
     # matches the shortened §6.1, which no longer quotes, so the two went unguarded and the transcript

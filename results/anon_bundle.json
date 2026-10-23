@@ -1,6 +1,6 @@
 {
   "cited_files_absent": [],
-  "cited_files_checked": 38,
+  "cited_files_checked": 29,
   "excluded_as_identifying": [
     "docs/ARCHIVAL_IDENTIFIERS.md"
   ],
@@ -10,8 +10,8 @@
     "NOTICE"
   ],
   "n_detection_patterns": 11,
-  "n_files_content_scrubbed": 63,
-  "n_files_staged": 625,
+  "n_files_content_scrubbed": 68,
+  "n_files_staged": 630,
   "n_paths_scrubbed": 1,
   "n_residual_hits": 0,
   "n_substitution_rules": 17,

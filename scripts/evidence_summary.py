@@ -373,7 +373,7 @@ def build_rows():
                  "smaller than realised error")
         rows.append({
             "claim": f"{claim}, at h = {h}",
-            "section": "6.2",
+            "section": "5.2",
             "arena": d20_arena,
             "n_independent": D20["design"]["n_independent"],
             "in_sample": in_sample(d20_model, d20_arena),
@@ -388,7 +388,7 @@ def build_rows():
     rows.append({
         "claim": (f'Disagreement ranks realised error better than the forecast '
                   f'step index, at h = {idx["horizon"]}'),
-        "section": "6.6",
+        "section": "5.6",
         "arena": d20_arena,
         "n_independent": idx["n_independent"],
         "in_sample": in_sample(d20_model, d20_arena),
@@ -406,7 +406,7 @@ def build_rows():
     rows.append({
         "claim": (f"Disagreement ranks realised error better than the model's own predicted step size, over whole "
                   f"400-step trajectories at h = {diag}"),
-        "section": "6.6",
+        "section": "5.6",
         "arena": e7_arena,
         "n_independent": E7["design"]["n_independent"],
         "in_sample": in_sample(e7_model, e7_arena),
@@ -428,7 +428,7 @@ def build_rows():
     _r6 = X6["reading"]
     rows.append({
         "claim": (f"The same comparison on shorter units, at h = {_r6['h']} (rule X6)"),
-        "section": "6.6",
+        "section": "5.6",
         "arena": "all ten episodes",
         "n_independent": _r6["n_units"],
         "in_sample": in_sample("released checkpoint", "all ten episodes"),
@@ -445,7 +445,7 @@ def build_rows():
     rows.append({
         "claim": ("With both the rollout and the depth held constant, disagreement "
                   "still tracks error"),
-        "section": "6.6",
+        "section": "5.6",
         "arena": a2_arena,
         "n_independent": A2["design"]["n_independent"],
         "in_sample": in_sample(a2_model, a2_arena),
@@ -472,7 +472,7 @@ def build_rows():
               for v in q.values()]
     rows.append({
         "claim": "A per-horizon multiplier brings coverage near nominal where a constant one does not",
-        "section": "6.7",
+        "section": "5.7",
         "arena": d3_arena,
         "n_independent": sum(D3["design"]["trajectories_per_episode"].values()),
         "in_sample": in_sample(d3_model, d3_arena),
@@ -496,7 +496,7 @@ def build_rows():
     assert X7["rule"] == "X7" and all(v["pass"] for v in X7["assertions"].values())
     rows.append({
         "claim": "A per-horizon multiplier fitted on nine episodes and scored on the tenth (rule X7)",
-        "section": "6.7",
+        "section": "5.7",
         "arena": "all ten episodes",
         "n_independent": X7["design"]["n_trajectories"],
         "in_sample": in_sample("released checkpoint", "all ten episodes"),
@@ -520,7 +520,7 @@ def build_rows():
             "claim": claim,
             # the matched-capacity result was reported in §11 (S10); round 4's F8 moved §11's paragraph to
             # Appendix R, and its verdict now stands in §6.8 beside the contrast it bounds (F10)
-            "section": "6.8",
+            "section": "5.3",
             "arena": arena,
             "n_independent": art["design"]["n_independent"],
             "in_sample": in_sample(model, arena),
@@ -542,7 +542,7 @@ def build_rows():
     rows.append({
         "claim": "Independence and the corrected objective together improve on the "
                  "released topology",
-        "section": "6.8",
+        "section": "5.3",
         "arena": _c68arena,
         "n_independent": C68["design"]["n_independent"],
         "in_sample": in_sample(measured_model(T("r2_combined_arm_report.txt")), _c68arena),
