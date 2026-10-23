@@ -12301,11 +12301,11 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "2,694,869"
+    "value": "2,694,947"
   },
   "ver_book_named": {
     "source": "results/verify_reproduction.json",
-    "value": "1 in `results/pdf_channels.json` (the amount of PDF text the anonymity scan read); 1 in `results/pdf_channels.json` (the page count of this document's PDF); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`)"
+    "value": "1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`)"
   },
   "ver_claim_pct": {
     "source": "results/verify_reproduction.json",
@@ -12317,19 +12317,19 @@
   },
   "ver_copied": {
     "source": "results/verify_reproduction.json",
-    "value": "2,676,570"
+    "value": "2,676,648"
   },
   "ver_diff_by_file": {
     "source": "results/verify_reproduction.json",
-    "value": "`results/supplementary_manifest.json` (3), `results/pdf_channels.json` (2)"
+    "value": "`results/supplementary_manifest.json` (3)"
   },
   "ver_diff_nfiles": {
     "source": "results/verify_reproduction.json",
-    "value": 2
+    "value": 1
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 5
+    "value": 3
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
@@ -12341,7 +12341,7 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "18,294"
+    "value": "18,296"
   },
   "ver_keys_lost": {
     "source": "results/verify_reproduction.json",
@@ -12373,7 +12373,7 @@
   },
   "ver_part_else": {
     "source": "results/verify_reproduction.json",
-    "value": 5
+    "value": 3
   },
   "ver_part_index": {
     "source": "results/verify_reproduction.json",
@@ -12385,7 +12385,7 @@
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "99.97"
+    "value": "99.98"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",

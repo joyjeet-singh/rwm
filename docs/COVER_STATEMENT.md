@@ -42,8 +42,8 @@ file on disk. Concretely:
 - **Fourteen withdrawals kept in the record** — eight claims withdrawn on evidence and six framings withdrawn — with the evidence that withdrew each, including one wrong by about a factor of 10¹³ and one withdrawal of the paper's own claim to have pre-registered a rule it had not.
 
 - **A build gate published as failing.** The clean-clone check requires that no regenerated value
-  differ; 5 of 18,299 do, so it fails, it says where, and it is reported as failing. It was not
-  given a tolerance, and none of the 5 is a measurement, a statistic or the verdict of a test. The
+  differ; 3 of 18,299 do, so it fails, it says where, and it is reported as failing. It was not
+  given a tolerance, and none of the 3 is a measurement, a statistic or the verdict of a test. The
   reproducibility figure is stated over the 0.68% of the numeric values under `results/` that a
   clean clone regenerates and the comparison counts, rather than over the whole directory: counting
   the values a clone merely carries in would overstate it about 147-fold, and an earlier version of

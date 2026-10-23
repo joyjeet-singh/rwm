@@ -631,7 +631,8 @@ C1 — RESTATEMENT INDEX
          26.62  keys ['e5_cov2_h8', 'm68_shared_cov2_h8']
                 §Appendix I — Calibration in detail L740   e5_cov2_h8                 ...cov1_ci_h8}}] | {{e5_cov2_h8}}% | {{e5_npos_h8}}/45 | | 32 | {{e5_rati
                 §Appendix K — The shared trunk and  L1086  m68_shared_cov2_h8         ...h8}}% | {{m68_shared_cov2_h8}}% | | 32 | {{m68_indep_ratio_h32}}× | {{
-             3  keys ['None', 'a1_sign_pos_h1', 'd1_seeds', 'd3x_n_in', 'd3x_nseeds', 'e5_seeds', 'e5s_seeds', 'h2h_nseeds', 'm68_n_shared', 'q1_n_absent', 'r2_from_acc_h8', 'r2_n_shared', 't1_first_entry_n', 't1_n_frag_oneword', 'v1_n_arms_checked']
+             3  keys ['None', 'a1_sign_pos_h1', 'd1_seeds', 'd3x_n_in', 'd3x_nseeds', 'e5_seeds', 'e5s_seeds', 'h2h_nseeds', 'm68_n_shared', 'q1_n_absent', 'r2_from_acc_h8', 'r2_n_shared', 't1_first_entry_n', 't1_n_frag_oneword', 'v1_n_arms_checked', 'ver_differing']
+                §Reproducibility and data           L242   ver_differing              ...cal, and the {{ver_differing}} that differ are bookkeeping about the s
                 §References                         L260   t1_first_entry_n           ... *Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are generated from 
                 §References                         L260   t1_n_frag_oneword          ...agments, {{t1_n_frag_oneword}} of them single common words whose match
                 §Appendix G — Rollout training agai L539   d1_seeds                   ... training and all {{d1_seeds}} seeds. §4.1's by-horizon table, at {{it
@@ -658,6 +659,7 @@ C1 — RESTATEMENT INDEX
                 §Appendix M — Per-horizon recalibra L1361  d3x_n_in                   ...outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} str
                 §Appendix M — Per-horizon recalibra L1363  d3x_nseeds                 ...dent tests, the {{d3x_nseeds}} Arm A seeds share their training data a
                 §S2 The limitations in full         L1589  e5_seeds                   ...kpoint alone. The {{e5_seeds}} ensemble-5 Arm A arms (§6.6) reproduce 
+                §S11 Reproducibility accounting and L1879  ver_differing              ...ffer at all; {{ver_differing}} do, so it fails and is published as fai
                 §S13 The earlier title and abstract L1907  d1_seeds                   ...m23_seed}}): over {{d1_seeds}} seeds, training on the model's own roll
                 §S14 The earlier introduction and c L1970  d1_seeds                   ... = {{v2_diag_h}}; {{d1_seeds}} seeds at {{iters_long}} iterations exte
                 §S19 The earlier sections on the or L2290  a1_sign_pos_h1             ...h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, the same story the
@@ -953,8 +955,7 @@ C1 — RESTATEMENT INDEX
                 §S29 The earlier lessons section    L2970  TYPED                      ...endent 400-step trajectories however many windows are drawn from it, a
                 §S30 The earlier limitations sectio L3005  TYPED                      ...endent 400-step trajectories (the n = ␀ caveat of §3); the direction i
                 §S30 The earlier limitations sectio L3010  TYPED                      ...endent 400-step trajectories, a required-sample-size estimate under an
-             5  keys ['None', 'a1_n_excl', 'b2_members', 'bound_both_train', 'd2b_n_horizons_tested', 'd2p_n_horizons', 'd2p_n_separating', 'd2r_ncontrols', 'd3x_ens', 'e2_nll_runs', 'e4_n_inert', 'm49_n_conditions_met', 'm63_quant', 'm68_n_conditions', 'm68_n_conditions_met', 'm68_n_indep', 'n_runs_offwidth', 'r2_n_indep', 'rt_runs_m49', 'ver_differing']
-                §Reproducibility and data           L242   ver_differing              ...cal, and the {{ver_differing}} that differ are bookkeeping about the s
+             5  keys ['None', 'a1_n_excl', 'b2_members', 'bound_both_train', 'd2b_n_horizons_tested', 'd2p_n_horizons', 'd2p_n_separating', 'd2r_ncontrols', 'd3x_ens', 'e2_nll_runs', 'e4_n_inert', 'm49_n_conditions_met', 'm63_quant', 'm68_n_conditions', 'm68_n_conditions_met', 'm68_n_indep', 'n_runs_offwidth', 'r2_n_indep', 'rt_runs_m49']
                 §Appendix D — Claims of the origina L332   d2r_ncontrols              ...and survives {{d2r_ncontrols}} controls on forecast depth — the linear
                 §Appendix I — Calibration in detail L750   m63_quant                  ...overage moves in {{m63_quant}}-point steps, a limit the rule fixed bef
                 §Appendix J — Why the per-member σ  L887   e4_n_inert                 ...ts on the other {{e4_n_inert}} being inert with respect to σ, so each 
@@ -974,7 +975,6 @@ C1 — RESTATEMENT INDEX
                 §S2 The limitations in full         L1646  r2_n_indep                 ...existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size
                 §S2 The limitations in full         L1648  m49_n_conditions_met       ...}}**: {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions 
                 §S7 Compute: runtimes, the queues a L1809  rt_runs_m49                ...n estimated. **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m
-                §S11 Reproducibility accounting and L1879  ver_differing              ...ffer at all; {{ver_differing}} do, so it fails and is published as fai
                 §S14 The earlier introduction and c L1980  r2_n_indep                 ...t trajectories, {{r2_n_indep}} independently initialised full models a
                 §S19 The earlier sections on the or L2319  a1_n_excl                  ...excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans
                 §S21 The earlier section 6.2        L2551  b2_members                 ...on the released {{b2_members}}-member checkpoint over all {{d1n_eps}} 
