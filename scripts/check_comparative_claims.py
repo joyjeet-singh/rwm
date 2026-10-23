@@ -196,7 +196,7 @@ CLAIMS = [
      "stated_orders": None},
     # The same ratio in 13, where the sentence is scoped to the deployment
     # horizon and used to quote the h=368 figure beside an h=100 one.
-    {"id": "C4.3", "kind": "orders", "where": "12",
+    {"id": "C4.3", "kind": "orders", "where": "12 -> supplementary S28-S31 (G14)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "penalises with is better by a factor of",
      "num": ("task_d_nind20.json", "d1_by_horizon.100.aleatoric.ratio_err_over_sigma"),
      "den": ("task_d_nind20.json", "d1_by_horizon.100.epistemic.ratio_err_over_sigma"),
@@ -253,7 +253,7 @@ CLAIMS = [
      "a": ("task_b_permutation.json", "arenas.out-of-sample.p_floor"),
      "b": ("task_b_permutation.json", "arenas.out-of-sample.holm.smallest_threshold"),
      "expect": "gt"},
-    {"id": "C3.6", "kind": "compare", "where": "9",
+    {"id": "C3.6", "kind": "compare", "where": "9 -> supplementary S28-S31 (G14)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "ranks whole rollouts almost perfectly",
      "a": ("task_d_nind20.json", "d2_forecast_index.1.r_epistemic"),
      "b": ("task_d_nind20.json", "d2_forecast_index.368.r_epistemic"),
@@ -360,7 +360,7 @@ CLAIMS = [
      # Round 4, F7 re-anchor (the abstract's optional "released", W8 review): "A per-horizon rescaling brings the
      # checkpoint's coverage within" -> the phrase below, the clause's word count unchanged. The scan is unchanged.
      "says": "Per-horizon rescaling brings the released checkpoint's coverage within",
-     "sections": ["Abstract", "9. Actionable lessons", "12. Conclusion"]},
+     "sections": ["Abstract", "7. Lessons and limitations", "8. Conclusion"]},  # G14: sections 9 and 12 became 7 and 8
 
     # ---- C10 retraction-consistency --------------------------------------
     # docs/BUILD_CHECKS.template.md joined this list in Session 5a. It did not
@@ -700,7 +700,7 @@ CLAIMS = [
     # previous version of the same error. count-consistency compares a count
     # against the ledger; this compares a WORD against a relation recomputed
     # from the artifacts.
-    {"id": "C18.1", "kind": "frequency-consistency", "where": "9",
+    {"id": "C18.1", "kind": "frequency-consistency", "where": "9 -> supplementary S28-S31 (G14)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "on a paired test that excludes zero at",
      "count": ("paper_numbers.json", "d2p_n_separating.value"),
      "total": ("paper_numbers.json", "d2p_n_horizons.value"),
@@ -819,7 +819,7 @@ CLAIMS = [
     # error" -> new anchor "What the stale pairing costs depends on the horizon", the paragraph the check guards. The
     # files and the rule are unchanged, and figure_regex now also covers the new all-ten keys (adh20_*), so a sentence
     # pairing "overstat" with one of them is caught too: coverage grows, it does not shrink.
-    {"id": "C25.2", "kind": "overstat-reversal", "where": "7.2 / abstract / contributions",
+    {"id": "C25.2", "kind": "overstat-reversal", "where": "7.2 / abstract / contributions -> supplementary S28-S31 (G14)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "What the stale pairing costs depends on the horizon",
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md", "README.template.md"],
      "figure_regex": r"ad(?:20|h20|h)?_[A-Za-z0-9_]+|stale_[A-Za-z0-9_]+",
@@ -859,7 +859,7 @@ CLAIMS = [
     # Round 4, F4 re-anchor (item 1): section 7.2's "They respond to the action" became "Our models do use the action",
     # and the Arm A figures it guards moved from stale_armA_* to N5's n5_ins_* / n5_ho_* keys, which the check now also
     # matches (wider, never narrower: every stale_armA_* paragraph is still matched).
-    {"id": "C27.2", "kind": "action-response", "where": "7.2 / model card",
+    {"id": "C27.2", "kind": "action-response", "where": "7.2 / model card -> supplementary S28-S31 (G14)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "Our models do use the action",
      "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md", "scripts/build_model_card.py"]},
     # Round 4, F4 item 8. G7: our models' stale-timing change is printed only with its interval. Any sentence that prints
@@ -891,7 +891,7 @@ def _front_matter_regions(paper):
     i = paper.index("**Contributions.**")
     m = re.search(r"\n\n(?![-\s])", paper[i:])
     out["contributions"] = paper[i:i + m.start()]
-    for name, head in (("appendix_d", "## Appendix D"), ("conclusion", "## 12. Conclusion")):
+    for name, head in (("appendix_d", "## Appendix D"), ("conclusion", "## 8. Conclusion")):
         j = paper.index(head)
         k = paper.find("\n## ", j + len(head))
         out[name] = paper[j:k if k > 0 else len(paper)]
@@ -1685,7 +1685,7 @@ def evaluate(c, paper, override=None):
                          r"|history and forecast lengths)|\(\d+,\s*\d+\)")
         # the front matter and the other summaries rule 11 names for this claim: the abstract and section 1, section
         # 12, Appendix D's first table (and the generator of its second), and the README
-        REG = (("## Abstract", "\n## 2. "), ("## 12. Conclusion", "\n## Reproducibility and data"), ("## Appendix D ", "\n## Appendix E "))
+        REG = (("## Abstract", "\n## 2. "), ("## 8. Conclusion", "\n## Reproducibility and data"), ("## Appendix D ", "\n## Appendix E "))
         for f in exp["files"]:
             txt = open(f).read()
             if f == "PAPER.template.md":

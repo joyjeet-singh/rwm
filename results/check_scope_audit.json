@@ -81,7 +81,9 @@
         "docs/BUILD_CHECKS.template.md",
         "docs/SUPPLEMENT.template.md"
       ],
-      "surface_named_by_claims": [],
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ],
       "tier": "template",
       "requires": [
         "docs/BUILD_CHECKS.template.md",
@@ -141,7 +143,9 @@
       "input_selection": "artifact-only",
       "reason": "compares two artifact values",
       "files_named_by_claims": [],
-      "surface_named_by_claims": []
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ]
     },
     {
       "kind": "compute-claim",
@@ -311,7 +315,9 @@
         "docs/BUILD_CHECKS.template.md",
         "docs/SUPPLEMENT.template.md"
       ],
-      "surface_named_by_claims": [],
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ],
       "tier": "template",
       "requires": [
         "docs/BUILD_CHECKS.template.md",

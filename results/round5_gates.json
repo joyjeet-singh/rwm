@@ -1,13 +1,13 @@
 {
  "mode": "report",
- "summary": "pages 13.1/12, abstract 207/5, ids 35, once 6, sig 87, keys missing 0",
+ "summary": "pages 11.25/12, abstract 207/5, ids 21, once 1, sig 6, keys missing 0",
  "gates": {
   "pages": {
-   "pass": false,
-   "value": 13.1,
+   "pass": true,
+   "value": 11.25,
    "max": 12.0,
-   "references_page": 14,
-   "references_y": 635.751
+   "references_page": 12,
+   "references_y": 546.0389999999999
   },
   "abstract": {
    "pass": true,
@@ -25,37 +25,23 @@
   },
   "ids": {
    "pass": false,
-   "n": 35,
+   "n": 21,
    "by_kind": {
-    "ledger_id": 1,
-    "rule_id": 12,
+    "ledger_id": 0,
+    "rule_id": 1,
     "commit_label": 0,
-    "verdict_label": 22,
+    "verdict_label": 20,
     "code_label": 0
    },
    "distinct": {
-    "ledger_id": [
-     "M-70"
-    ],
+    "ledger_id": [],
     "rule_id": [
-     "X2",
-     "X3",
-     "X4",
-     "X5",
-     "X6",
-     "X7",
-     "X8"
+     "X7"
     ],
     "commit_label": [],
     "verdict_label": [
-     "DISAGREEMENT BEATS STEP SIZE",
-     "DOES NOT REORDER",
-     "PARTIAL",
      "PER-MEMBER",
-     "REPLICATES ACROSS FOLDS",
-     "RWM-U",
-     "SURVIVES",
-     "WITHIN BAND AT"
+     "RWM-U"
     ],
     "code_label": []
    },
@@ -155,94 +141,37 @@
   },
   "once": {
    "pass": false,
-   "n": 6,
+   "n": 1,
    "violations": [
-    {
-     "key": "a2_rdd_ci",
-     "interval": true,
-     "abstract": 0,
-     "prose": 2,
-     "table_caption": 0
-    },
-    {
-     "key": "d1n_epi_ratio_h100",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
-    {
-     "key": "diff_terms",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
     {
      "key": "v3_cov_nominal1",
      "interval": false,
      "abstract": 1,
      "prose": 4,
      "table_caption": 0
-    },
-    {
-     "key": "x6_ci",
-     "interval": true,
-     "abstract": 0,
-     "prose": 4,
-     "table_caption": 0
-    },
-    {
-     "key": "x6_margin",
-     "interval": false,
-     "abstract": 0,
-     "prose": 4,
-     "table_caption": 0
     }
    ],
    "exempt_setting_keys_applied": [
     "e7_nind",
-    "iters_long",
     "iters_main",
     "m23_nind",
     "mn_nind",
     "v2_deploy_h",
     "v2_diag_h",
-    "x3_n",
-    "x6_n_units",
-    "x7_n_traj"
+    "x3_n"
    ]
   },
   "sig": {
    "pass": false,
-   "n": 87,
-   "n_decimals": 220,
+   "n": 6,
+   "n_decimals": 119,
    "examples": [
     "0.7979",
     "3.68",
     "0.125",
     "0.125",
     "0.125",
-    "0.125",
-    "55.0",
-    "26.3",
-    "92.7",
-    "54.4",
-    "37.5",
-    "82.3",
-    "37.4",
-    "21.3",
-    "65.4",
-    "10.4",
-    "24.9",
-    "13.4",
-    "47.4",
-    "35.2",
-    "31.5",
-    "24.7",
-    "68.2",
-    "17.4",
-    "47.4"
+    "0.125"
    ],
    "exceptions": [
     "arXiv-style identifier",

@@ -576,7 +576,7 @@ def build_rows():
              if len(_rise) < len(_hs) else "raises error at every horizon on relative-L1")
     rows.append({
         "claim": "The released evaluation pairs states and actions one step stale",
-        "section": "7.2",
+        "section": "6",
         "arena": s4_arena,
         "n_independent": ARENA[s4_arena]["n_independent"],
         "in_sample": in_sample(s4_model, s4_arena),

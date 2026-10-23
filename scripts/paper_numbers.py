@@ -1322,9 +1322,12 @@ def main():
     # silently returned the METHOD section instead and put its bold-lead count in
     # the lessons sentence. It was caught by the same comment n_defects carries,
     # which is the argument for writing such comments down.
-    _lsec = re.search(r"^## (\d+)\. Actionable lessons\s*$", TPL, re.M)
-    assert _lsec, "no section titled 'Actionable lessons'"
-    _s9 = TPL[_lsec.end():]
+    # G14 re-anchor (rule 8): the lessons moved whole to supplementary S29 when section 7 was rewritten; the
+    # count is of the moved section's bold-led lessons, bound to its title.
+    _SUPT = open("docs/SUPPLEMENT.template.md").read()
+    _lsec = re.search(r"^## S\d+ The earlier lessons section\s*$", _SUPT, re.M)
+    assert _lsec, "no supplementary section titled 'The earlier lessons section'"
+    _s9 = _SUPT[_lsec.end():]
     _s9 = _s9[:_s9.find("\n## ")] if "\n## " in _s9 else _s9
     _n9 = len(re.findall(r"^\*\*[A-Z]", _s9, re.M))
     assert _n9 > 0, "the lessons section has no bold-led lessons"
@@ -2025,8 +2028,11 @@ def main():
     _dnum = _dsec.group(1)
     _dbody = _tpl[_dsec.end():]
     _dbody = _dbody[:_dbody.find("\n## ")] if "\n## " in _dbody else _dbody
-    _n = len(re.findall(r"^\*\*" + _dnum + r"\.\d+ ", _dbody, re.M))
-    assert _n > 0, f"section {_dnum} has no bold-numbered defect subsections"
+    # G14 re-anchor (rule 8): the rewritten section opens each defect with a bold lead and no number, so the
+    # count is of bold-led paragraphs of the section (four: boundaries, the stale action, evaluation on
+    # training data, the variance state); the earlier five numbered ones are supplementary S28.
+    _n = len(re.findall(r"^\*\*[A-Z]", _dbody, re.M))
+    assert _n > 0, f"section {_dnum} has no bold-led defect paragraphs"
     WORD = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
     put("n_defects", WORD.get(_n, str(_n)),
         f"PAPER.template.md section {_dnum} subsections")

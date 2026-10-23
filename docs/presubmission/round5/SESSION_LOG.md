@@ -673,3 +673,37 @@ Body words / main-content pages: 8,919 / 13.1
 Subagents: rwm-checker ×1
 Next: G14 (Opus 5.5, medium).
 Decisions for user: Figure 3 (see above): draw it in G14, or drop it from OUTLINE.
+
+## G14 — 2026-10-24 01:00 — Opus 5.5, medium (a Sonnet 5.5 session ran it) — status: COMPLETE
+Commits:
+(one commit, [G14][1-5], follows this entry)
+Review items closed: RV01 (the budget: main content 11.25 pages against Y1's 12), RV25 (the variance state as Adam's bound), RV40 (the upstream report's status), RV43; the summaries for everything
+Done:
+- **§6 Defects** (four bold-led paragraphs): unmarked boundaries with the spliced windows' cost in one sentence; the stale action with its line-level fix and its cost at h = 1, 32 and 100 on all ten released episodes (`adh20_*` keys) and the held-out pair; evaluation on training data; the variance state as Adam's per-step bound with N13's worst case, plus the first author's account.
+- **§7 Lessons and limitations**: seven lessons, each in words with a section pointer (no numbers: each result is stated once, in its home); limitations updated for this round (one robot, gait, terrain and dataset; no policy, with the reason the one-step shortfall bears on MOPO's penalty; X5 not run and why; the two-episode held-out pair; unrecorded provenance; untuned baselines; no cross-rule correction; PETS descendants).
+- **§8 Conclusion** with **Table 4**, the claim-to-verdict table the referee asked for (six tested claims, evidence, plain-words standing, section); it replaces the table OUTLINE had put in §3.2 (which G11 made the arenas table).
+- **Upstream report (Y10):** `docs/presubmission/AUTHOR_QUERY_ALIGNMENT.md` is still marked DRAFT, NOT SENT and no reply exists, so §6 says "We have not reported this to the authors before submission." **If you send it before submission, §6 and the reply must be updated.**
+- **Moves, verbatim:** the old §7, §9, §11, §12 to supplementary S28–S31 (one section each).
+- **Pointers:** 22 references in the appendices to the old §7.x, §9, §11, §12 now read §6, §7, §8; `evidence_summary.py`'s defect row points at §6; §1's pointers to §6–§8 are numbers again.
+- **Rule-10 audit of every summary site** (against READINGS' addendum, OUTLINE's table and ledger M-104):
+  - *Abstract:* every clause agrees with every reading it covers. Rescaling is stated for the released checkpoint only, which X7 supports; X11c's cell-level reading on unseen episodes splits, and the abstract does not claim for those. No sentence says in-sample is better or worse.
+  - *Contribution 4:* **changed**: it said rescaling fixes one-sigma coverage; it now says "on the released checkpoint" and that on unseen episodes the evidence is mixed.
+  - *§1 findings:* **changed** likewise (the mixed clause added).
+  - *Contribution 2 and the abstract's "in every ensemble measured … even at one step":* agree (N14 for three ensembles; the folds' ρ is above its calibrated value).
+  - *Contribution 1:* "on every episode" holds at h = 368 only (h = 8 is 8 of 10) and says so by naming the horizon; the one-step loss is "on short windows".
+  - *§7 lessons:* in-sample reads neither-flatters-nor-worsens at one step (X11a MIXED) and flatters at long horizons; X9 and X11e agree; ranking claims name Spearman and the step-size caveat; rescaling says mixed on unseen episodes.
+  - *§7 limitations, §8 and Table 4:* agree; X5 stays "not run"; X6 is the shorter-unit h = 100 result; X7 is the released checkpoint's ten released episodes.
+- **Checks re-anchored (rule 8):** C4.3, C3.6, C18.1, C25.2, C27.2 (old §9, §12, §7.2 sentences → supplement); C9.1's section list (old §9 and §12 → the new §7 and §8); C26.1's front-matter region marker; `typed_numeral_audit.py`'s self-test plant (now before "Lessons and limitations"); `paper_numbers.py`'s `n_lessons` (counts S29's bold leads) and `n_defects` (counts §6's bold leads); the model-card builder was not touched. Expectations unchanged.
+- **Not done, for you:** Figure 3 (σ-coverage by horizon, OUTLINE §figures) is still undrawn. It would add a figure and renumber the appendix figures once more; with 0.75 page spare it would fit.
+Build/gates: pass (fast build → gates → fast build; last two byte-identical); `xref_sweep` 0 suspect; `keys` 0 missing; both bundles pass; PDF channels clean.
+Round-5 gates (report mode until G16): pages 11.25/12, abstract 207/5, ids 21, once 1, sig 6, keys missing 0
+Paper numbers changed: none
+New keys: none
+Ledger: none
+Re-anchored checks: see above
+CPU jobs over 1 min: the two bundle builds, about 6 min each
+Queue (Y5): done and discharged (GT2)
+Body words / main-content pages: 7,295 / 11.25
+Subagents: none (PLAN names none for G14)
+Next: G15 (Opus 5.5, medium).
+Decisions for user: Y10 (send the alignment query before submission or accept the "not reported" sentence); Figure 3.

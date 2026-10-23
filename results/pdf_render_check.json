@@ -2,8 +2,8 @@
   "check": "rendered-PDF pass (Session 8 addendum A)",
   "one_time": "not registered as a check kind. It exists because text moved through a transformation layer in Sessions 5a and 6; the moves are done.",
   "pdf": "PAPER.pdf",
-  "pages": 57,
-  "chars_extracted": 208593,
+  "pages": 55,
+  "chars_extracted": 198590,
   "cannot_detect": "extracted PDF text loses layout. This sees that a table's header cells are present and that references resolve; it cannot see a column rendered too narrow or a float landing pages from its reference. Those need a reader, which \u00a7F.2 asks for.",
   "n_checks": 5,
   "n_pass": 5,
@@ -11,7 +11,7 @@
     {
       "check": "1. appendix letters resolve",
       "pass": true,
-      "detail": "source headings ABCDEFGHIJKLMNOPQRSTUVWXYZ; contiguous from A: True; in-text references ABEFGHIJKLNOQTUVWXZ; dangling none"
+      "detail": "source headings ABCDEFGHIJKLMNOPQRSTUVWXYZ; contiguous from A: True; in-text references ABEFGHJKLNOTUVWXZ; dangling none"
     },
     {
       "check": "2. figure numbers match their references",
@@ -21,17 +21,17 @@
     {
       "check": "3. table headers survive rendering",
       "pass": true,
-      "detail": "36 tables checked cell by cell; every header cell present, in the PDF text"
+      "detail": "37 tables checked cell by cell; every header cell present, in the PDF text"
     },
     {
       "check": "4. every numeral the source states survives into the PDF",
       "pass": true,
-      "detail": "1644 distinct numerals in the source, 1639 tokenised in the PDF; lost in rendering none. The converse -- that the PDF invents none -- is not measurable from extracted text, which concatenates across table cells"
+      "detail": "1639 distinct numerals in the source, 1633 tokenised in the PDF; lost in rendering none. The converse -- that the PDF invents none -- is not measurable from extracted text, which concatenates across table cells"
     },
     {
       "check": "5. section cross-references resolve in the PDF",
       "pass": true,
-      "detail": "26 distinct section references in the PDF against 23 headings; unresolved none"
+      "detail": "22 distinct section references in the PDF against 22 headings; unresolved none"
     }
   ],
   "verdict": "PASS"

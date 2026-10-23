@@ -274,7 +274,7 @@ def _self_test_passes():
     when asked is a self-test that stops running.
     """
     text = open(TEMPLATE).read()
-    m = re.search(r"^## \d+\. Limitations", text, re.M)
+    m = re.search(r"^## \d+\. Lessons and limitations", text, re.M)
     if not m:
         return False, "no '## N. Limitations' heading to plant before"
     planted = (text[:m.start()]
@@ -311,7 +311,7 @@ def main():
         # became 8-12, and nothing noticed because nothing ran the self-test.
         # A self-test that cannot run is worse than none: it reports coverage
         # that does not exist.
-        m = re.search(r"^## \d+\. Limitations", text, re.M)
+        m = re.search(r"^## \d+\. Lessons and limitations", text, re.M)
         assert m, ("no anchor for the self-test plant: no '## N. Limitations' "
                    "heading in the template")
         text = (text[:m.start()]

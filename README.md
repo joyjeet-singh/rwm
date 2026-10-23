@@ -16,7 +16,7 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-57 pages, 0 overfull boxes, 0 LaTeX warnings
+55 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
 **Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 310 entries, each
@@ -79,7 +79,7 @@ split reverses at the 368-step diagnostic horizon. The rule (M-44) returns
 **MECHANISM SUPPORTED**. It is still 5.2× overconfident: building the ensemble
 properly is worth doing and is not sufficient (§6.8). The independent models also differ in capacity and data order, so this bounds the sharing effect rather than isolating it; at matched capacity the gain is 1.79×, below its minimum detectable effect of 2.00× (rule M-49, §6.8).
 
-**And five defects in the released pipeline**, plus evidence that the released
+**And four defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count
 its author recalls — which the first author attributes to the repository having moved on between
 training and release. **The released artifacts do not reproduce the released checkpoint's

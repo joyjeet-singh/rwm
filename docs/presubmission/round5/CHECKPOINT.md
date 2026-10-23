@@ -1,13 +1,13 @@
-# Round-5 checkpoint — after G13 (2026-10-23)
+# Round-5 checkpoint — after G14 (2026-10-24)
 
-**State.** Branch `presubmission5`. Last log entry: **G13 — COMPLETE**. Nothing pushed. **Pages 13.1/12**, abstract 207/5, 8,919 body words.
+**State.** Branch `presubmission5`. Last log entry: **G14 — COMPLETE**. Nothing pushed. **Main content 11.25 pages (limit 12)**, abstract 207/5.
 
-**Next action.** `docs/presubmission/round5/go.zsh G14` (Opus 5.5, medium): defects, lessons, limitations, conclusion and statements; reach 12 pages. The current §7 (defects), §9 (lessons), §11 (limitations), §12 (conclusion) are still the earlier text and are numbered as before; G14 rewrites them into §6–§8 and cuts the remaining ~1.1 pages (§1, §3, §4, §5 are over their budgets by about 400, 300, 135 and 660 words).
+**Next action.** `docs/presubmission/round5/go.zsh G15` (Opus 5.5, medium): the appendices, standalone A–O. Appendices are still the earlier A–Z (letters, titles and contents unchanged except pointers); G15 re-letters them to OUTLINE's A–O, writes each opener, folds in the "stood there as follows" evidence, and moves G10's figure anchors with the appendices.
 
-**G13 did.** New §5 (5.1–5.7) in OUTLINE's order; old §6 is supplementary S20–S27. X11's readings are in 5.2 (MIXED at h = 1), 5.3 (independent members at n = 20), 5.4 (X11e), 5.6 (X11b) and 5.7 (X11c, both faces). The checker found no numeric mismatch.
+**G14 did.** New §6 (defects), §7 (lessons and limitations), §8 (conclusion, with Table 4, the claim table); old §7, §9, §11, §12 are supplementary S28–S31. The body is now §1–§8 plus "Reproducibility and data". Rule-10 audit of every summary site is in the log; contribution 4 and §1 now scope the rescaling claim.
 
-**What G14 must handle.** (1) Rule 10 on summaries: the abstract and contribution 4 say "rescaling restores one-sigma coverage on the released checkpoint" (true) but X11c's cell-level reading on the folds says no; §7 lessons and limitations must say both. In-sample: no summary may say in-sample is worse at h = 1. (2) The old §7–§12 numbers: §1's pointers to the defects section and the limitations are words; restore numbers when the sections exist. (3) The claim-to-verdict table (OUTLINE §Referee 13) and the old §4's tested/untested counts (supplementary S19). (4) **Figure 3 is undrawn** (see session log); decide. (5) The README template still points at old section numbers.
+**For the user.** (1) Y10: the alignment query is still an unsent draft, so §6 says it was not reported before submission; send it before submission and the sentence changes. (2) Figure 3 (σ-coverage by horizon) is undrawn; room exists (0.75 page).
 
-**Carried facts.** The withdrawal-count gate reads §3.4. Figure anchors use today's appendix letters. `typed_numeral_audit`: cite "Name (year)", `$\rho$`, no bare numerals in prose, "§6" must have a heading. `{{key|s2}}` on a text key fails. `pdf_render_check` needs a heading for every top-level section number the text points at. `pdftoppm` is absent: G16 must open the figure pages by eye. A key that leaves the paper on purpose goes into `round5/RETIRED_KEYS.md`. `scripts/a1_consent_letter.py`'s fallback rewrites no longer match (OUT_OF_SCOPE, G15).
+**What G15–G17 must know.** The body's pointers use final numbering (§1–§8); appendix pointers use OUTLINE's letters (A–O) and today's letters coexist until G15 re-letters, so `pdf_render_check` check 1 only sees today's letters. The README template still points at the old section numbers (G17). `scripts/a1_consent_letter.py`'s fallback rewrites no longer match (G15, OUT_OF_SCOPE). Keys that leave the paper on purpose go into `RETIRED_KEYS.md`. `typed_numeral_audit`: cite "Name (year)", `$\rho$`, no bare numerals; `{{key|s2}}` on a text key fails. `pdftoppm` is absent: G16 must open the figure pages by eye. Table numbers: 1 arenas, 2 baselines, 3 ensembles, 4 claims.
 
 **Blockers.** None.
