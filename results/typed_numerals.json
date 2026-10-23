@@ -1,16 +1,16 @@
 {
   "template": "PAPER.template.md",
-  "n_typed": 997,
+  "n_typed": 994,
   "by_class": {
     "arxiv-id": 13,
     "markdown-heading": 24,
     "exception": 303,
-    "section-ref": 358,
+    "section-ref": 357,
     "figure-ref": 24,
     "citation-year": 19,
     "code-location": 55,
     "math-mode": 14,
-    "ledger-id": 127,
+    "ledger-id": 125,
     "table-row-label": 42,
     "equation-ref": 7,
     "subsection-heading": 5,
@@ -18,7 +18,7 @@
   },
   "supplement": {
     "file": "docs/SUPPLEMENT.template.md",
-    "n_typed": 156,
+    "n_typed": 159,
     "n_unclassified": 0,
     "unclassified": []
   },

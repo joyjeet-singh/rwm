@@ -379,4 +379,16 @@ themselves a measurement, a statistic or the verdict of a test is 0.** The clean
 none differ at all; 3 do, so it fails and is published as failing. The supplementary
 `docs/BUILD_CHECKS.md` gives the accounting and the checks the build runs on this paper's own prose.
 
+## S12 Why X5 could not be run
+
+*Was the body of the paper's Appendix W, whose heading stays for the rewrite; moved here to meet the length limit.*
+
+Rule X5 would have tested what the miscalibration costs without training a policy. On windows of the method's imagination
+length it would have compared the penalty the follow-up applies, summed along the forecast, with the model's error in
+the return it forecasts over the same steps. It was to run only if every term of a reward subset that includes the two
+command-tracking terms could be computed both from the recorded data and from the model's forecast. They cannot: both
+score the base velocity against the velocity *command*, which the released data do not record and the model does not
+output (the plateaus of achieved velocity in Appendix H are not the command; ledger D-38). Rule X5 was therefore neither
+pre-registered nor run, and §11's policy caveat stands as written. The commit that pre-registered rules X6 to X8 names X5 in its subject; no X5 rule was entered (ledger D-38).
+
 ---

@@ -2259,15 +2259,8 @@ the action's mean), and the swap by {{x2_ctx_ins_swap}}, {{x2_ctx_ho_swap}} and 
 
 ## Appendix W — rule X5, which could not be run: the penalty against the model's error in predicted return
 
-Rule X5 would have tested what the miscalibration costs without training a policy. On windows of the method's imagination
-length it would have compared the penalty the follow-up applies, summed along the forecast, with the model's error in
-the return it forecasts over the same steps. It was to run only if every term of a reward subset that includes the two
-command-tracking terms could be computed both from the recorded data and from the model's forecast. They cannot: both
-score the base velocity against the velocity *command*, which the released data do not record and the model does not
-output (the plateaus of achieved velocity in Appendix H are not the command; ledger D-38). Rule X5 was therefore neither
-pre-registered nor run, and §11's policy caveat stands as written. The commit that pre-registered rules X6 to X8 names X5 in its subject; no X5 rule was entered (ledger D-38).
+The reason is in supplementary S12.
 
----
 
 ## Appendix X — rule X6: disagreement against predicted step size on shorter units
 
