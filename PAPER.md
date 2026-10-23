@@ -33,7 +33,7 @@ Figure 1 shows one finding about each original paper. Panel (a) is the base pape
 - **Why the discarded per-member variance collapses.** The implemented loss is squared error on a sampled prediction, not the Gaussian likelihood, so its optimum is σ = 0: derived, shown against known synthetic noise, and approached at an ordinary Adam step per iteration (§5.5).
 - **What the spread is still good for.** It ranks error better than the forecast step (Spearman). Exploratory ranks also put it ahead of the model's step size, which the pre-registered linear test could not resolve (§5.6). On the released checkpoint, per-horizon rescaling fixes one-sigma coverage, not the tails; on episodes a model never saw the evidence is mixed (§5.7).
 
-§2 places the work; §3 sets out the data, metrics and statistics; §4 and §5 test the two papers; §6 describes the pipeline defects; §7 gives lessons and limitations; §8 concludes and states what reproduces.
+§2 places the work; §3 covers the data, metrics and statistics; §4 and §5 test the two papers; §6 describes the pipeline defects; §7 gives lessons and limitations; §8 concludes and states what reproduces.
 
 ---
 
@@ -420,7 +420,7 @@ or an instruction to open a 738 KB ledger, so here is the table. It is generated
 it tested, never by a stored hash: the first rules' commits are found by *subject*, because the history was rewritten once and two of the commits Figure 3 cites changed hash (Data and code), and the later rules' by the commit that introduced their ledger heading. Positive means the rule was in git before the data
 existed. This is the same computation Figure 3 plots. A rule whose data do not exist yet has neither a lead time nor a verdict, and Figure 3 leaves it out until they do.
 
-![Pre-registration lead time for every pre-registered rule whose data exist (Appendix E), with M-16's annotation beside its rule, from git commit timestamps on a symmetric-logarithmic axis. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. A lead of a few minutes means the rule was committed just before its runs were launched or its readings computed. The one negative bar, labelled the Task 3 duplication rule, is §7.4's duplication control, withdrawn as a pre-registration in this paper (§3.4).](figures/paper_fig4_prereg_timeline.png)
+![Pre-registration lead time for every pre-registered rule whose data exist (Appendix E), with M-16's annotation beside its rule, from git commit timestamps on a symmetric-logarithmic axis. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. A lead of a few minutes means the rule was committed just before its runs were launched or its readings computed. The one negative bar, labelled the Task 3 duplication rule, is the duplication control of Appendix N, withdrawn as a pre-registration in this paper (§3.4).](figures/paper_fig4_prereg_timeline.png)
 
 | rule | what it governs | commit | lead time | tested by | verdict |
 |---|---|---|---|---|---|
@@ -859,7 +859,7 @@ sentence of each.
 
 The rules' evaluator averaged nRMSE per trajectory, where §3.1 pools it. The nRMSE readings quoted
 alongside the rules here and in §4.3 are pooled, recomputed afterwards (post hoc,
-`results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (§4.3 gives the two readings of its rules that differ).
+`results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (Appendix E gives the two readings of its rules that differ).
 
 All 48 runs at 2,500 iterations,
 the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes

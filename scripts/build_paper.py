@@ -424,7 +424,7 @@ def main():
             "Positive is a rule committed before the data that tested it existed; negative is a "
             "rule written afterwards. A lead of a few minutes means the rule was committed just before "
             "its runs were launched or its readings computed. The one negative bar, labelled the Task 3 "
-            "duplication rule, is §7.4's duplication control, withdrawn as a pre-registration in this paper (§3.4).",
+            "duplication rule, is the duplication control of Appendix N, withdrawn as a pre-registration in this paper (§3.4).",
         "paper_fig6_ab_by_horizon.png":
             "The autoregressive-versus-teacher-forcing advantage as a function of forecast "
             "horizon, out-of-sample over three seeds at " + str(N["iters_long"]["value"])

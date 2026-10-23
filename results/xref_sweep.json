@@ -9,91 +9,79 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 119,
-  "n_ok": 108,
-  "n_reviewed_correct": 0,
-  "reviewed": [],
-  "n_unverified": 0,
-  "n_bad": 11,
-  "bad": [
-    {
-      "class": "semantic",
-      "pointer": "\u00a73 sets out the data, metrics and statistics",
-      "ok": false,
-      "detail": "target 3; nouns ['data', 'metrics', 'statistics']; absent ['data', 'metrics', 'statistics']",
-      "context": "\u00a73 sets out the data, metrics and statistics"
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a74.3 gives the two readings of its rules that differ)",
-      "ok": false,
-      "detail": "target 4.3; nouns ['readings', 'rules', 'differ']; absent ['rules', 'differ']",
-      "context": "\u00a74.3 gives the two readings of its rules that differ)"
-    },
+  "n_pointers": 118,
+  "n_ok": 109,
+  "n_reviewed_correct": 9,
+  "reviewed": [
     {
       "class": "semantic",
       "pointer": "\u00a79 gives",
-      "ok": false,
-      "detail": "target 9 not found"
+      "ok": "reviewed-correct",
+      "detail": "target 9 not found",
+      "reviewed": "CORRECT: earlier paper's \u00a79 (lessons), moved whole to supplementary S29."
     },
     {
       "class": "semantic",
       "pointer": "\u00a76.6 gives",
-      "ok": false,
-      "detail": "target 6.6 not found"
+      "ok": "reviewed-correct",
+      "detail": "target 6.6 not found",
+      "reviewed": "CORRECT: earlier paper's \u00a76.6, moved whole to supplementary S25."
     },
     {
       "class": "semantic",
       "pointer": "Appendix U gives",
-      "ok": false,
-      "detail": "target Appendix U not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix U not found",
+      "reviewed": "CORRECT: earlier paper's Appendix U (the settings sweep), now Appendix H."
     },
     {
       "class": "semantic",
       "pointer": "\u00a76.3 explains",
-      "ok": false,
-      "detail": "target 6.3 not found"
+      "ok": "reviewed-correct",
+      "detail": "target 6.3 not found",
+      "reviewed": "CORRECT: earlier paper's \u00a76.3, moved whole to supplementary S22."
     },
     {
       "class": "semantic",
       "pointer": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0",
-      "ok": false,
+      "ok": "reviewed-correct",
       "detail": "target Appendix K; nouns ['models', 'faithful', 'declines']; absent ['faithful', 'declines']",
-      "context": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0"
+      "context": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0",
+      "reviewed": "CORRECT: earlier paper's Appendix K (the four models' tables), now Appendix I."
     },
     {
       "class": "semantic",
       "pointer": "Appendix T gives",
-      "ok": false,
-      "detail": "target Appendix T not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix T not found",
+      "reviewed": "CORRECT: earlier paper's Appendix T (recalibration), now Appendix M."
     },
     {
       "class": "semantic",
       "pointer": "Appendix Y gives",
-      "ok": false,
-      "detail": "target Appendix Y not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix Y not found",
+      "reviewed": "CORRECT: earlier paper's Appendix Y (rule X7), now Appendix M."
     },
     {
       "class": "semantic",
       "pointer": "Appendix V gives",
-      "ok": false,
-      "detail": "target Appendix V not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix V not found",
+      "reviewed": "CORRECT: earlier paper's Appendix V (rule X2 and the stale action), now Appendix N."
     },
     {
       "class": "semantic",
       "pointer": "Appendix V gives",
-      "ok": false,
-      "detail": "target Appendix V not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix V not found",
+      "reviewed": "CORRECT: earlier paper's Appendix V (rule X2 and the stale action), now Appendix N."
     }
   ],
+  "n_unverified": 0,
+  "n_bad": 0,
+  "bad": [],
   "pointers": [
-    {
-      "class": "semantic",
-      "pointer": "\u00a73 sets out the data, metrics and statistics",
-      "ok": false,
-      "detail": "target 3; nouns ['data', 'metrics', 'statistics']; absent ['data', 'metrics', 'statistics']",
-      "context": "\u00a73 sets out the data, metrics and statistics"
-    },
     {
       "class": "semantic",
       "pointer": "\u00a77 gives lessons and limitations",
@@ -159,10 +147,10 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a74.3 gives the two readings of its rules that differ)",
-      "ok": false,
-      "detail": "target 4.3; nouns ['readings', 'rules', 'differ']; absent ['rules', 'differ']",
-      "context": "\u00a74.3 gives the two readings of its rules that differ)"
+      "pointer": "Appendix E gives the two readings of its rules that differ)",
+      "ok": true,
+      "detail": "target Appendix E; nouns ['readings', 'rules', 'differ']; absent []",
+      "context": "Appendix E gives the two readings of its rules that differ)"
     },
     {
       "class": "semantic",
@@ -223,8 +211,9 @@
     {
       "class": "semantic",
       "pointer": "\u00a79 gives",
-      "ok": false,
-      "detail": "target 9 not found"
+      "ok": "reviewed-correct",
+      "detail": "target 9 not found",
+      "reviewed": "CORRECT: earlier paper's \u00a79 (lessons), moved whole to supplementary S29."
     },
     {
       "class": "semantic",
@@ -243,8 +232,9 @@
     {
       "class": "semantic",
       "pointer": "\u00a76.6 gives",
-      "ok": false,
-      "detail": "target 6.6 not found"
+      "ok": "reviewed-correct",
+      "detail": "target 6.6 not found",
+      "reviewed": "CORRECT: earlier paper's \u00a76.6, moved whole to supplementary S25."
     },
     {
       "class": "semantic",
@@ -263,8 +253,9 @@
     {
       "class": "semantic",
       "pointer": "Appendix U gives",
-      "ok": false,
-      "detail": "target Appendix U not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix U not found",
+      "reviewed": "CORRECT: earlier paper's Appendix U (the settings sweep), now Appendix H."
     },
     {
       "class": "semantic",
@@ -297,8 +288,9 @@
     {
       "class": "semantic",
       "pointer": "\u00a76.3 explains",
-      "ok": false,
-      "detail": "target 6.3 not found"
+      "ok": "reviewed-correct",
+      "detail": "target 6.3 not found",
+      "reviewed": "CORRECT: earlier paper's \u00a76.3, moved whole to supplementary S22."
     },
     {
       "class": "semantic",
@@ -317,9 +309,10 @@
     {
       "class": "semantic",
       "pointer": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0",
-      "ok": false,
+      "ok": "reviewed-correct",
       "detail": "target Appendix K; nouns ['models', 'faithful', 'declines']; absent ['faithful', 'declines']",
-      "context": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0"
+      "context": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0",
+      "reviewed": "CORRECT: earlier paper's Appendix K (the four models' tables), now Appendix I."
     },
     {
       "class": "semantic",
@@ -338,14 +331,16 @@
     {
       "class": "semantic",
       "pointer": "Appendix T gives",
-      "ok": false,
-      "detail": "target Appendix T not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix T not found",
+      "reviewed": "CORRECT: earlier paper's Appendix T (recalibration), now Appendix M."
     },
     {
       "class": "semantic",
       "pointer": "Appendix Y gives",
-      "ok": false,
-      "detail": "target Appendix Y not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix Y not found",
+      "reviewed": "CORRECT: earlier paper's Appendix Y (rule X7), now Appendix M."
     },
     {
       "class": "semantic",
@@ -357,14 +352,16 @@
     {
       "class": "semantic",
       "pointer": "Appendix V gives",
-      "ok": false,
-      "detail": "target Appendix V not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix V not found",
+      "reviewed": "CORRECT: earlier paper's Appendix V (rule X2 and the stale action), now Appendix N."
     },
     {
       "class": "semantic",
       "pointer": "Appendix V gives",
-      "ok": false,
-      "detail": "target Appendix V not found"
+      "ok": "reviewed-correct",
+      "detail": "target Appendix V not found",
+      "reviewed": "CORRECT: earlier paper's Appendix V (rule X2 and the stale action), now Appendix N."
     },
     {
       "class": "semantic",

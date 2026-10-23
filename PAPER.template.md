@@ -25,7 +25,7 @@ Figure 1 shows one finding about each original paper. Panel (a) is the base pape
 - **Why the discarded per-member variance collapses.** The implemented loss is squared error on a sampled prediction, not the Gaussian likelihood, so its optimum is σ = 0: derived, shown against known synthetic noise, and approached at an ordinary Adam step per iteration (§5.5).
 - **What the spread is still good for.** It ranks error better than the forecast step (Spearman). Exploratory ranks also put it ahead of the model's step size, which the pre-registered linear test could not resolve (§5.6). On the released checkpoint, per-horizon rescaling fixes one-sigma coverage, not the tails; on episodes a model never saw the evidence is mixed (§5.7).
 
-§2 places the work; §3 sets out the data, metrics and statistics; §4 and §5 test the two papers; §6 describes the pipeline defects; §7 gives lessons and limitations; §8 concludes and states what reproduces.
+§2 places the work; §3 covers the data, metrics and statistics; §4 and §5 test the two papers; §6 describes the pipeline defects; §7 gives lessons and limitations; §8 concludes and states what reproduces.
 
 ---
 
@@ -671,7 +671,7 @@ sentence of each.
 
 The rules' evaluator averaged nRMSE per trajectory, where §3.1 pools it. The nRMSE readings quoted
 alongside the rules here and in §4.3 are pooled, recomputed afterwards (post hoc,
-`results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (§4.3 gives the {{n2_n_changed_word}} readings of its rules that differ).
+`results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (Appendix E gives the {{n2_n_changed_word}} readings of its rules that differ).
 
 All {{tail_n}} runs at {{iters_main}} iterations,
 the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes

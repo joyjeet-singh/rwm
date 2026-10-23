@@ -58,6 +58,18 @@ STOP = set("the a an of and or to in for on at is are was were that which this t
 # §6.3 explains -- is computed on every imagination step and discarded" reads to the
 # matcher as a claim that §6.3 explains the discarding. The pointer is correct.
 REVIEWED = {
+    # G17: passages moved whole to the supplement (S1-S32) keep the earlier paper's section numbers and appendix
+    # letters, which the supplement's own notes say. Each key names a pointer whose target is the earlier paper's;
+    # none can be a live pointer in the rewritten paper (sections 1-8, appendices A-O).
+    "§9 gives": "CORRECT: earlier paper's §9 (lessons), moved whole to supplementary S29.",
+    "§6.6 gives": "CORRECT: earlier paper's §6.6, moved whole to supplementary S25.",
+    "§6.3 explains": "CORRECT: earlier paper's §6.3, moved whole to supplementary S22.",
+    "Appendix U gives": "CORRECT: earlier paper's Appendix U (the settings sweep), now Appendix H.",
+    "Appendix T gives": "CORRECT: earlier paper's Appendix T (recalibration), now Appendix M.",
+    "Appendix Y gives": "CORRECT: earlier paper's Appendix Y (rule X7), now Appendix M.",
+    "Appendix V gives": "CORRECT: earlier paper's Appendix V (rule X2 and the stale action), now Appendix N.",
+    "Appendix K gives all four": "CORRECT: earlier paper's Appendix K (the four models' tables), now Appendix I.",
+
     "§6.3 explains — is computed on every imagination step and discarded": (
         "CORRECT — appositive. The sentence is 'the aleatoric head ... the one §6.3 "
         "explains'; §6.3 is titled 'Why the aleatoric head collapses'. The text the "
