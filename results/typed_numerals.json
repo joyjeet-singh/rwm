@@ -1,14 +1,14 @@
 {
   "template": "PAPER.template.md",
-  "n_typed": 975,
+  "n_typed": 973,
   "by_class": {
-    "arxiv-id": 13,
     "markdown-heading": 24,
     "figure-ref": 28,
     "exception": 301,
     "section-ref": 337,
     "citation-year": 19,
     "code-location": 55,
+    "arxiv-id": 11,
     "math-mode": 14,
     "ledger-id": 124,
     "table-row-label": 42,
@@ -18,7 +18,7 @@
   },
   "supplement": {
     "file": "docs/SUPPLEMENT.template.md",
-    "n_typed": 159,
+    "n_typed": 162,
     "n_unclassified": 0,
     "unclassified": []
   },

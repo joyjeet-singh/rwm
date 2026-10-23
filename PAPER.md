@@ -2,32 +2,15 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1348 values substituted from 102 artifacts. -->
+     1351 values substituted from 104 artifacts. -->
 
-# Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
+# Right Ranking, Wrong Scale: Reproducing the Robotic World Model's Dynamics Model and Testing the Uncertainty of Its Follow-up
 
 ---
 
 ## Abstract
 
-We rebuild the *Robotic World Model* (RWM; arXiv:2501.10100v1) and its uncertainty-aware follow-up
-(arXiv:2504.16680v1), matching the released code's outputs, losses and gradients.
-The base paper's central training claim reproduces under a rule committed in advance (seed 1): over
-3 seeds, training on the model's own rollouts beats teacher forcing 4.61× at 368 steps,
-though not at one step on short windows. Retrained on fixed folds holding out each episode once (2,500 iterations, not 10,000), its direction **REPLICATES ACROSS FOLDS** (20 trajectories).
-At 368 steps RWM beats MLP, RSSM and transformer baselines built to our reading, all worse than predicting
-no change; matched only in size, the transformer is unresolved (PARTIAL).
-On accuracy alone, two shorter histories and both longer training forecasts beat the original's setting at our budget, no reading favouring it; trained
-longer, it passes each on some reading (post hoc): the ranking depends on training budget. Magnitudes rest on
-4 held-out trajectories, 0.133% of the reference's data, one robot, gait and terrain.
-The follow-up's uncertainty gets the order right and the size wrong: ensemble disagreement correlates +0.605 with error but is 33.4× too small at 100 steps on training data.
-Predicted step size ranks error nearly as well over whole trajectories, worse on shorter units at 100 steps. Members share 89.15% of parameters; independent models are
-2.03× better calibrated, still overconfident. The implemented loss provably drives the discarded
-per-member σ to zero. Per-horizon rescaling brings the released checkpoint's coverage within 10 points of nominal
-for disagreement at every horizon on training episodes left out of each fit; on episodes our ensembles never saw,
-only 17 of 36 cells. The released evaluation is one step stale;
-over all ten episodes this raises the checkpoint's short-horizon relative-L1 error. We train no policy: we bound
-what the uncertainty reports, not its cost.
+We reimplement the dynamics model of the Robotic World Model (RWM) and test the uncertainty its follow-up, RWM-U, uses as a reward penalty in offline policy optimisation. Our rebuild matches the release's gradients. RWM's claim that training on its own rollouts, not one-step targets, lowers long-horizon error holds on held-out data: holding each of ten episodes out once, at the original's training length, it wins on every one at the pre-registered horizon; on short windows at one step it loses. RWM-U's ensemble disagreement ranks errors right but sizes them wrong: it ranks them better than the forecast step does (Spearman +0.90), yet in every ensemble measured, error exceeds what the spread implies even at one step. The release feeds every member the ensemble mean, so spread does not track accumulated error: at 100 steps on the released checkpoint one-sigma coverage is 4.6% against 68%, and rolling each member on its own predictions raises it to 33%. Each member's variance collapses: the implemented loss, squared error on a sampled prediction, is minimised at zero. Rescaling the released checkpoint's spread per horizon (fitted on nine episodes, scored on the tenth) restores one-sigma coverage, not two-sigma. We fix two pipeline defects. One robot, gait and dataset; no policy is trained.
 
 ---
 

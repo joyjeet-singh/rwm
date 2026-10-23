@@ -374,3 +374,32 @@ output (the plateaus of achieved velocity in Appendix H are not the command; led
 pre-registered nor run, and §11's policy caveat stands as written. The commit that pre-registered rules X6 to X8 names X5 in its subject; no X5 rule was entered (ledger D-38).
 
 ---
+
+---
+
+## S13 The earlier title and abstract
+
+*Was the paper's title and abstract before the rewrite for the review of 19 October (the title was "Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports"); moved here whole. Section numbers in this passage are the earlier paper's.*
+
+**Abstract**
+
+We rebuild the *Robotic World Model* (RWM; arXiv:2501.10100v1) and its uncertainty-aware follow-up
+(arXiv:2504.16680v1), matching the released code's outputs, losses and gradients.
+The base paper's central training claim reproduces under a rule committed in advance (seed {{m23_seed}}): over
+{{d1_seeds}} seeds, training on the model's own rollouts beats teacher forcing {{d1_ratio}}× at {{v2_diag_h}} steps,
+though not at one step on short windows. Retrained on fixed folds holding out each episode once ({{iters_main}} iterations, not {{iters_long}}), its direction **{{x3_reading}}** ({{x3_n}} trajectories).
+At {{v2_diag_h}} steps RWM beats MLP, RSSM and transformer baselines built to our reading, all worse than predicting
+no change; matched only in size, the transformer is unresolved ({{x4_reading}}).
+On accuracy alone, {{mn_better_kinds}} beat the original's setting at our budget, no reading favouring it; trained
+longer, it passes each on some reading (post hoc): the ranking depends on training budget. Magnitudes rest on
+{{nind_oos_400}} held-out trajectories, {{c2_pct}}% of the reference's data, one robot, gait and terrain.
+The follow-up's uncertainty gets the order right and the size wrong: ensemble disagreement correlates {{d4_r}} with error but is {{d1n_epi_ratio_h100}}× too small at {{v2_deploy_h}} steps on training data.
+Predicted step size ranks error nearly as well over whole trajectories, worse on shorter units at {{v2_deploy_h}} steps. Members share {{v1_shared_pct}}% of parameters; independent models are
+{{m44_ratio_gain}}× better calibrated, still overconfident. The implemented loss provably drives the discarded
+per-member σ to zero. Per-horizon rescaling brings the released checkpoint's coverage within {{d3_tol}} points of nominal
+for disagreement at every horizon on training episodes left out of each fit; on episodes our ensembles never saw,
+only {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} cells. The released evaluation is one step stale;
+over all ten episodes this raises the checkpoint's short-horizon relative-L1 error. We train no policy: we bound
+what the uncertainty reports, not its cost.
+
+---

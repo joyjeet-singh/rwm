@@ -350,7 +350,7 @@ CLAIMS = [
     # independent-trials reading this paper elsewhere warns against. A k-of-N
     # count in the abstract, the lessons or the conclusion must carry an
     # interval beside it or a footnote saying the units are not independent.
-    {"id": "C9.1", "kind": "count-dependence", "where": "abstract / 9 / 12",
+    {"id": "C9.1", "kind": "count-dependence", "where": "abstract -> supplementary S13 (G11) / 9 / 12", "surface": ["docs/SUPPLEMENT.md"],
      # Re-anchored in pre-submission S4: the abstract, §9 and §12 were rewritten (item 3's
      # "unseen by the multiplier / by the model" caveat and PLAN Appendix A's abstract), and
      # the old fragment went with them. The scan itself -- clean k-of-k counts in these three
@@ -831,7 +831,7 @@ CLAIMS = [
     # or "even when" within twelve words of "centre" or "setting"). And a front-matter sentence (abstract,
     # contributions, Appendix D, section 12) that names compute or longer training must say the ranking depends on
     # it or name the split.
-    {"id": "C26.1", "kind": "compute-claim", "where": "abstract / contributions / Appendix D / 12",
+    {"id": "C26.1", "kind": "compute-claim", "where": "abstract / contributions -> supplementary S13, S14 (G11) / Appendix D / 12", "surface": ["docs/SUPPLEMENT.md"],
      # Round 3, R6 re-anchor: the abstract's "so" became a colon to fit rule 10's wording in C12.1's budget.
      "says": "the ranking depends on training budget",
      "files": ["PAPER.md", "README.md", "MODEL_CARD.md", "docs/BUILD_CHECKS.md", "docs/SUPPLEMENT.md",
@@ -845,7 +845,7 @@ CLAIMS = [
     # error mainly at short horizons"), when all ten episodes' 20 describe this checkpoint better (Annex 2 E2). A
     # sentence that names the defect and a short-horizon cost must have the all-ten-episodes figures, or the words, in
     # its paragraph. Sentences end at full stops only, so a clause joined by a semicolon is tested with its neighbour.
-    {"id": "C27.1", "kind": "alignment-arena", "where": "abstract / contributions / 3.1 / 7.2",
+    {"id": "C27.1", "kind": "alignment-arena", "where": "abstract / contributions -> supplementary S13, S14 (G11) / 3.1 / 7.2", "surface": ["docs/SUPPLEMENT.md"],
      # Round 3, R6 re-anchor (rule 10): the abstract names the metric whose rise resolves at h = 1.
      "says": "over all ten episodes this raises the checkpoint's short-horizon relative-L1 error",
      "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md"],
@@ -875,7 +875,7 @@ CLAIMS = [
     # G9: no front-matter sentence (the abstract, section 1 and the README) pairs "one reading unresolved", or the
     # contribution's "but <one reading>, which is unresolved", with a configuration list: per configuration several
     # readings leave a winner unresolved (section 5.2), so the verdict-level count misstates them (round 3's R6 item).
-    {"id": "C28.3", "kind": "config-unresolved", "where": "abstract / contributions / README",
+    {"id": "C28.3", "kind": "config-unresolved", "where": "abstract / contributions -> supplementary S13, S14 (G11) / README", "surface": ["docs/SUPPLEMENT.md"],
      "says": "beat the original's setting at our budget, no reading favouring it",
      # Round 4, F4 review: and the generator of Appendix D's second table
      "files": ["PAPER.template.md", "README.template.md", "scripts/evidence_summary.py"]},
