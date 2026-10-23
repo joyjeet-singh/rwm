@@ -201,7 +201,7 @@ def build_rows():
     rows.append({
         "claim": (f'Autoregressive training beats teacher forcing at '
                   f'h = {g368["horizon"]}'),
-        "section": "5",
+        "section": "4.1",
         "arena": a1_arena,
         "n_independent": g368["n_independent"],
         "in_sample": in_sample(a1_model, a1_arena),
@@ -221,7 +221,7 @@ def build_rows():
     m64h1 = m64c[m64_arena_key][str(one)]
     rows.append({
         "claim": f"The same comparison reverses at h = {one}, at the short unit M-64 built",
-        "section": "5",
+        "section": "4.1",
         "arena": arena_of_text(m64_arena_key),
         "n_independent": m64h1["n_independent_unit_level"],
         "in_sample": in_sample(a1_model, arena_of_text(m64_arena_key)),
@@ -243,7 +243,7 @@ def build_rows():
     rows.append({
         "claim": (f"The same comparison at h = {_r3['h']}, retrained on fixed folds with each episode held out once, at "
                   f"{X3['design']['iterations']:,} iterations (rule X3)"),
-        "section": "5",
+        "section": "4.1",
         "arena": "all ten episodes",
         "n_independent": X3["design"]["n_independent"],
         "in_sample": "no",
@@ -283,7 +283,7 @@ def build_rows():
     assert all(MV["per_episode_sign"][w]["negative"] > MV["per_episode_sign"][w]["positive"] for w in _better)
     rows.append({
         "claim": "(M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off)",
-        "section": "5.2",
+        "section": "4.2",
         "arena": mn_arena,
         "n_independent": ME["arenas"]["held_out"]["n_independent"],
         "in_sample": in_sample("our arms", mn_arena),
@@ -324,7 +324,7 @@ def build_rows():
         rows.append({
             "claim": f"RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = {diag} "
                      f"({_how}; the RSSM comparison uninformative, rule X1)",
-            "section": "5.3",
+            "section": "4.3",
             "arena": mn_arena,
             "n_independent": ME["arenas"]["held_out"]["n_independent"],
             "in_sample": in_sample("our arms", mn_arena),
@@ -342,7 +342,7 @@ def build_rows():
     rows.append({
         "claim": (f"RWM beats MLP and transformer baselines matched to its parameter count, at h = {_r4['h']} "
                   f"(rule X4; size is one axis)"),
-        "section": "5.3",
+        "section": "4.3",
         "arena": mn_arena,
         "n_independent": X4["design"]["n_independent"],
         "in_sample": in_sample("our arms", mn_arena),
@@ -358,7 +358,7 @@ def build_rows():
     assert X8["rule"] == "X8" and {v["reading"] for v in X8["readings"].values()} == {"SAME VERDICT"}
     _x8 = f" (under the released evaluation's timing, rule X8: {X8['readings']['M-74']['reading']})"
     for _r in rows:
-        if _r["section"] in ("5", "5.2", "5.3") and "rule X3" not in _r["claim"] and "rule X4" not in _r["claim"] \
+        if _r["section"] in ("4.1", "4.2", "4.3") and "rule X3" not in _r["claim"] and "rule X4" not in _r["claim"] \
                 and "short unit" not in _r["claim"]:
             _r["verdict"] += _x8
 

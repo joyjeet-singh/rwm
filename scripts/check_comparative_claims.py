@@ -395,7 +395,7 @@ CLAIMS = [
      "retracted": "deviations are both at h=100 on the aleatoric term, in opposite directions",
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md"]},
-    {"id": "C10.4", "kind": "retraction-consistency", "where": "4",
+    {"id": "C10.4", "kind": "retraction-consistency", "where": "4 -> supplementary S19 (G12)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "are claims about policy learning or hardware",
      "retracted": "without exception",
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md",
@@ -647,10 +647,10 @@ CLAIMS = [
     {"id": "C15.2", "kind": "arithmetic", "where": "Appendix B -> supplementary S7 (G9)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "runs at 10,000 iterations and",
      "total": "rt_runs", "parts": ["rt_runs_10k", "rt_runs_short"], "tol": 0},
-    {"id": "C15.3", "kind": "arithmetic", "where": "4 / Appendix D",
+    {"id": "C15.3", "kind": "arithmetic", "where": "4 / Appendix D -> supplementary S19 (G12)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "claims we tested, the original reports no quantitative",
      "total": "appF_n_claims", "parts": ["orig_n_tested", "n_untested"], "tol": 0},
-    {"id": "C15.4", "kind": "arithmetic", "where": "4 / Appendix C",
+    {"id": "C15.4", "kind": "arithmetic", "where": "4 / Appendix C -> supplementary S19 (G12)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "are claims about policy learning or hardware",
      "total": "n_untested", "parts": ["appE_n_sim", "appE_n_cpu"], "tol": 0},
     # Appendix B's CPU budget carried a third figure -- the capacity-matched arm's
@@ -728,12 +728,12 @@ CLAIMS = [
     {"id": "C19.1", "kind": "restatement", "where": "whole paper",
      "says": "Curves are reported at"},
 
-    {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix C",
+    {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix C -> supplementary S19 (G12)", "surface": ["docs/SUPPLEMENT.md"],
      # S9 re-anchor: the two claims this sentence called within CPU reach were run (§5.2, §5.3),
      # and §4 now says every untested claim needs a simulator or hardware. paper_numbers.py asserts that
      # no untested Appendix D row is tagged `cpu`, which is what makes that universal true.
      "says": "we did not test needs a simulator or hardware we do not have",
-     "section": "4. What the original papers claim, and which claims we test",
+     "section": "S19 The earlier sections on the original papers' claims",
      "forbid": ["without exception", "in all cases", "in every case",
                 "all eight", "none of the eight", "each of the eight"]},
 
@@ -802,7 +802,7 @@ CLAIMS = [
     # table cells extend it and carry none of its weight (Annex 2, E4). A sentence quoting them within
     # two lines of "rule" or "pre-register" must therefore name the seed or the three-seed extension, in
     # its own paragraph or the next one (a table's caption sentence follows the table).
-    {"id": "C25.1", "kind": "rule-seed-scope", "where": "abstract / contributions / 5 / 11",
+    {"id": "C25.1", "kind": "rule-seed-scope", "where": "abstract / contributions / 5 / 11 -> supplementary S19 (G12)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "the rule's horizon",
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md", "README.template.md"],
      "keys_regex": r"d1_ratio|a1_[A-Za-z_]*h368", "trigger_regex": r"\brules?\b|pre-regist",

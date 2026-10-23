@@ -4093,6 +4093,21 @@ def main():
     assert len(_al7) == 1
     put("n7_align_p_rel_l1", f'{_al7[0]["p"]:.3f}', _n7s)
     put("n7_align_k_rel_l1", _al7[0]["k"], _n7s)
+    # G12: Table 2 and 4.3 print each baseline's exact test at h = 368 on nRMSE (k of 4 trajectories and its exact p).
+    for _rule in ("M-75", "M-76"):
+        for _b in ("mlp", "rssm", "transformer"):
+            _r = [r for r in N7["rows"] if r["source"] == "results/baselines_verdict.json"
+                  and r["path"] == f"rules/{_rule}/alongside/nrmse_h368/per_baseline/{_b}"]
+            assert len(_r) == 1
+            _tag = "tf" if _rule == "M-75" else "ar"
+            put(f"n7_bl_{_b}_{_tag}_nrmse_h368_k", _r[0]["k"], _n7s)
+            put(f"n7_bl_{_b}_{_tag}_nrmse_h368_p", f'{_r[0]["p"]:.3f}', _n7s)
+    for _b in ("mlp", "transformer"):
+        _r = [r for r in N7["rows"] if r["source"] == "results/x4_matched_baselines.json"
+              and r["path"] == f"reading/per_baseline/{_b}"]
+        assert len(_r) == 1
+        put(f"n7_x4_{_b}_k", _r[0]["k"], _n7s)
+        put(f"n7_x4_{_b}_p", f'{_r[0]["p"]:.3f}', _n7s)
 
     # Round 5, G4: N9 (ledger R-83, post hoc). The released checkpoint only, so not NEEDS_WEIGHTS.
     N9 = J("n9_recalibration_scores.json")

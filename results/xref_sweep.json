@@ -9,12 +9,12 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 114,
-  "n_ok": 112,
+  "n_pointers": 116,
+  "n_ok": 113,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
-  "n_bad": 2,
+  "n_bad": 3,
   "bad": [
     {
       "class": "semantic",
@@ -29,6 +29,13 @@
       "ok": false,
       "detail": "target 7; nouns ['lessons', 'limitations']; absent ['lessons', 'limitations']",
       "context": "\u00a77 gives lessons and limitations"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a74.3 gives the two readings of its rules that differ)",
+      "ok": false,
+      "detail": "target 4.3; nouns ['readings', 'rules', 'differ']; absent ['rules', 'differ']",
+      "context": "\u00a74.3 gives the two readings of its rules that differ)"
     }
   ],
   "pointers": [
@@ -62,38 +69,17 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix E gives its commit and lead time), naming conditions rather\nthan out",
+      "pointer": "\u00a72 gives the prior: a long-horizon advantage is what multi-step train",
       "ok": true,
-      "detail": "target Appendix E; nouns ['commit', 'lead', 'time', 'naming', 'conditions', 'rather', 'outcomes']; absent ['naming', 'outcomes']",
-      "context": "Appendix E gives its commit and lead time), naming conditions rather\nthan outcomes"
+      "detail": "target 2; nouns ['prior', 'long-horizon', 'advantage', 'multi-step', 'training', 'aims', 'question', 'whether', 'holds', 'episodes', 'models', 'never']; absent ['question', 'never']",
+      "context": "\u00a72 gives the prior: a long-horizon advantage is what multi-step training aims at, so the question is whether it holds on episodes the models never saw, and wha"
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.6 gives the expectation we held about the\ncounter-baseline, and noth",
+      "pointer": "Appendix G gives every horizon)",
       "ok": true,
-      "detail": "target 6.6; nouns ['expectation', 'held', 'about', 'counter-baseline', 'nothing', 'table', 'discharges', 're-opens', 'rule']; absent ['nothing', 'discharges', 're-opens']",
-      "context": "\u00a76.6 gives the expectation we held about the\ncounter-baseline, and nothing in the table discharges or re-opens the rule"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix L gives the seed spread and the four\nper-trajectory gaps, 4 of 4 pos",
-      "ok": true,
-      "detail": "target Appendix L; nouns ['seed', 'spread', 'per-trajectory', 'gaps', 'positive']; absent []",
-      "context": "Appendix L gives the seed spread and the four\nper-trajectory gaps, 4 of 4 positive"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix L gives the count and its three limits, the first being that this is",
-      "ok": true,
-      "detail": "target Appendix L; nouns ['count', 'limits', 'first', 'being', 'policy-learning', 'comparison']; absent ['policy-learning']",
-      "context": "Appendix L gives the count and its three limits, the first being that this is not the\npolicy-learning comparison"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix U gives every reading)",
-      "ok": true,
-      "detail": "target Appendix U; nouns ['reading']; absent []",
-      "context": "Appendix U gives every reading)"
+      "detail": "target Appendix G; nouns ['horizon']; absent []",
+      "context": "Appendix G gives every horizon)"
     },
     {
       "class": "semantic",
@@ -237,17 +223,17 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix B gives for the 33 runs of \u00a75\u2013\u00a77 it times (\u00a75",
+      "pointer": "Appendix B gives for the 33 runs of \u00a74",
       "ok": true,
-      "detail": "target Appendix B; nouns ['runs', 'times']; absent []",
-      "context": "Appendix B gives for the 33 runs of \u00a75\u2013\u00a77 it times (\u00a75"
+      "detail": "target Appendix B; nouns ['runs']; absent []",
+      "context": "Appendix B gives for the 33 runs of \u00a74"
     },
     {
       "class": "semantic",
-      "pointer": "\u00a75.3 gives the two readings of its rules that differ)",
-      "ok": true,
-      "detail": "target 5.3; nouns ['readings', 'rules', 'differ']; absent []",
-      "context": "\u00a75.3 gives the two readings of its rules that differ)"
+      "pointer": "\u00a74.3 gives the two readings of its rules that differ)",
+      "ok": false,
+      "detail": "target 4.3; nouns ['readings', 'rules', 'differ']; absent ['rules', 'differ']",
+      "context": "\u00a74.3 gives the two readings of its rules that differ)"
     },
     {
       "class": "semantic",
@@ -297,6 +283,41 @@
       "ok": true,
       "detail": "target Appendix G; nouns ['metric', 'formula', 'check', 'coverage', 'nominal']; absent []",
       "context": "Appendix G gives each metric's formula and\nthe check on the coverage nominal"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix E gives its commit and lead time), naming conditions rather\nthan out",
+      "ok": true,
+      "detail": "target Appendix E; nouns ['commit', 'lead', 'time', 'naming', 'conditions', 'rather', 'outcomes']; absent ['naming', 'outcomes']",
+      "context": "Appendix E gives its commit and lead time), naming conditions rather\nthan outcomes"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.6 gives the expectation we held about the\ncounter-baseline, and noth",
+      "ok": true,
+      "detail": "target 6.6; nouns ['expectation', 'held', 'about', 'counter-baseline', 'nothing', 'table', 'discharges', 're-opens', 'rule']; absent ['nothing', 'discharges', 're-opens']",
+      "context": "\u00a76.6 gives the expectation we held about the\ncounter-baseline, and nothing in the table discharges or re-opens the rule"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix L gives the seed spread and the four\nper-trajectory gaps, 4 of 4 pos",
+      "ok": true,
+      "detail": "target Appendix L; nouns ['seed', 'spread', 'per-trajectory', 'gaps', 'positive']; absent []",
+      "context": "Appendix L gives the seed spread and the four\nper-trajectory gaps, 4 of 4 positive"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix L gives the count and its three limits, the first being that this is",
+      "ok": true,
+      "detail": "target Appendix L; nouns ['count', 'limits', 'first', 'being', 'policy-learning', 'comparison']; absent ['policy-learning']",
+      "context": "Appendix L gives the count and its three limits, the first being that this is not the\npolicy-learning comparison"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix U gives every reading)",
+      "ok": true,
+      "detail": "target Appendix U; nouns ['reading']; absent []",
+      "context": "Appendix U gives every reading)"
     },
     {
       "class": "artifact",

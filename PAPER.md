@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1345 values substituted from 107 artifacts. -->
+     1222 values substituted from 99 artifacts. -->
 
 # Right Ranking, Wrong Scale: Reproducing the Robotic World Model's Dynamics Model and Testing the Uncertainty of Its Follow-up
 
@@ -92,270 +92,48 @@ Decision rules were committed to git before the data that tested them, with time
 
 ---
 
-## 4. What the original papers claim, and which claims we test
+## 4. The base paper's claims
 
-A reproduction that does not say what it left alone invites the reader to assume it tested
-everything. It did not.
+### 4.1 Training on rollouts against teacher forcing
 
-**We tested six claims and left six untested.** The six are the base paper's
-autoregressive-versus-teacher-forcing comparison and its claim that teacher forcing generalises
-poorly (§5), its configuration claim (§5.2) and its claim against MLP, RSSM and transformer
-baselines (§5.3), and the follow-up's two claims about what its uncertainty outputs report (§6).
-**Every one of the six we did not test needs a simulator or hardware we do not have**: zero-shot transfer, the sample-efficiency result, the comparisons against SHAC and Dreamer, generality across robot morphologies, offline MBRL on real robots and the core claim that penalising rewards by disagreement improves the learned policy.
-**Five of them are claims about policy learning or hardware** — every one but
-generality across robot morphologies, which needs a simulator and recorded data from other robots but is a claim
-about the model rather than about a policy. This work trains no policy and runs on two CPU cores.
-The counts and lists are generated from the classification tags in the verdict column of Appendix D's first table, so none of them is typed. §11 states what the untested claims bound, and supplementary S1 what testing them
-would take.
+RWM's central claim is that training the dynamics model on its own autoregressive rollouts beats training it on one-step targets (teacher forcing) at long forecast horizons. §2 gives the prior: a long-horizon advantage is what multi-step training aims at, so the question is whether it holds on episodes the models never saw, and what happens at one step.
 
-**For four of the six claims we tested, the original reports no quantitative
-figure.** Each is asserted qualitatively and shown in a plot, with no number in text, caption or
-table; §6.6's coefficient is the first figure attached to the follow-up's "strong correlation"
-between disagreement and error. The exceptions are the configuration claim and the teacher-forcing
-claim, whose values one heatmap prints in every cell (§5.2). Appendix L sets its teacher-forcing cell beside
-ours, which uses a different definition of teacher forcing. Where a magnitude is legible only from a plotted curve we say so rather
-than estimating it from the axis.
+**Every episode held out once.** We trained both arms on five folds, fixed in advance, each holding out two episodes so that each of the ten episodes is held out exactly once (2,500 iterations, three seeds per arm per fold). Over the 20 independent out-of-sample trajectories of all ten episodes, teacher forcing's relative-L1 error at h = 368 exceeds rollout training's by +2.2 [+1.4, +3.5], a factor of 5.9: the direction replicates across folds. All 10 of the 10 episodes favour rollout training (two-sided sign-flip test over the episodes, p = 0.002), and each fold's own gap, from +0.66 to +4.0, has an interval above zero (Figure 1a). That test treats the ten episodes as exchangeable, although the models of different folds share most of their training episodes, so it is a statement about these ten episodes and this dataset.
 
-**Appendix D's first table gives it in full**, claim by claim, with what the original states, where it
-states it, and our verdict.
+**At one step the order reverses, on short windows.** On 300 non-overlapping 33-row units, the same arms differ by -0.0090 [-0.013, -0.0053] at h = 1, in favour of teacher forcing, which is unsurprising because it trains on exactly that target. At the episode level the sign agrees on only 6 of ten episodes (p = 0.20), so the reversal is a short-window result and is not resolved episode by episode. A rule committed before its runs, on the held-out pair's 60 independent 33-row units, finds the same sign, -0.019 [-0.031, -0.0093] (Appendix G).
+
+**Supporting evidence from longer training.** On the held-out pair, 4 trajectories from two episodes, three seeds trained for 10,000 iterations give a factor of 4.6 at h = 368, with an interval of [+0.70, +2.3] on the gap; all 4 trajectories agree in sign, and the exact p of 0.125 is the smallest attainable at four. A rule committed before those runs, on one seed per arm, found the advantage at h = 368; the three-seed extension was computed afterwards and carries none of its weight. The advantage grows with depth and is weakest inside the eight steps the model is trained on (Appendix G gives every horizon).
+
+### 4.2 The configuration claim
+
+The original varies the history length M and the forecast length N and says moderate values trade accuracy against training time, with (M, N) = (32, 8) as its instance. We tested only the accuracy half, one factor at a time, at 2,500 iterations on the held-out pair. At that budget two shorter histories and both longer training forecasts beat the centre, but with 4 trajectories no comparison can be significant after exact tests, and trained longer the centre passes each of them on some reading, so which setting is most accurate depends on the budget. The original's trade-off with training time is not tested, and neither claim nor counter-claim follows (Appendix H).
+
+### 4.3 The architecture claim: consistent, but a weak test
+
+The original says RWM beats an MLP, a recurrent state-space model (RSSM) and a transformer. We built all three to our reading of the original's table of shapes, gave them RWM's settings, and trained each both teacher-forced, as the original does, and autoregressively. Table 2 gives nRMSE at h = 368. Every baseline is worse than RWM on all four trajectories, but that is the smallest p the sample allows, and no baseline beats even the training mean, which is the stronger of the three floors here. The result is consistent with the claim and a weak test of it: the baselines are untuned, their sizes and settings are our reading, and four trajectories cannot reject anything.
+
+| Model | nRMSE, h = 368 | worse than RWM on | exact p |
+|---|---|---|---|
+| RWM (our rollout-trained arm) | 0.54 | | |
+| MLP, teacher-forced † | 110 | 4 of 4 | 0.13 |
+| MLP, rollout-trained | 1.4 | 4 of 4 | 0.13 |
+| Transformer, teacher-forced † | 13 | 4 of 4 | 0.13 |
+| Transformer, rollout-trained | 2.0 | 4 of 4 | 0.13 |
+| RSSM, teacher-forced | 5.4 | 4 of 4 | 0.13 |
+| RSSM, rollout-trained † | 9.3 | 4 of 4 | 0.13 |
+| Floor: predict the training mean | 0.94 | | not tested |
+| Floor: hold the last state | 1.1 | | not tested |
+| Floor: repeat a seasonal pattern | 1.1 | | not tested |
+
+*Table 2: nRMSE at h = 368 on the held-out pair (4 independent 400-step trajectories from two episodes); our models at 2,500 iterations, every model with RWM's settings. † a diverged row, whose size is not meaningful; only its sign is. A value below the training-mean floor beats predicting the average.*
+
+Matched to RWM's parameter count instead, the rollout-trained MLP is worse than RWM on 4 of 4 trajectories and the transformer on 2 of 4 (exact p 0.88), so the transformer cannot be told apart from RWM; that tests parameter count and nothing else. Our RSSM collapses when rolled out and is not an informative comparison; the failure may be ours rather than the architecture's.
 
 ---
 
-## 5. The base paper's central claim reproduces
+## 5. The follow-up's uncertainty
 
-**Claim under test.** Training the dynamics model on its own autoregressive rollouts beats training it with teacher forcing, at long forecast horizons.
-
-**Rule, committed in advance** (rule M-23; Appendix E gives its commit and lead time), naming conditions rather
-than outcomes. Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
-under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500. The rule was run on
-seed 1 of each arm: autoregressive 0.3509 against teacher forcing 1.5540 at
-h = 368, 4.43×, gap interval [0.56, 2.05]. The 10,000-iteration runs of seeds
-0 and 2 were trained after the verdict (the ledger records them on 2026-08-22), so the three-seed
-figures below extend it
-and carry none of its weight. The rule is anchored at
-h = 368, the upstream's **open-loop diagnostic** length and not a deployment horizon
-(§3.1), and its verdict is returned there; we do not re-anchor a discharged rule. The method's own
-horizon is h = 100, so the comparison is reported there too, and the two differ in size.
-
-**Result.** Every condition holds. We give the evidence in order of how little it depends
-on the small held-out sample.
-
-*The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **10 of 10** episodes, an exact two-sided binomial test with p = **0.0020**. At h = 100 it is **10 of 10**, p = **0.0020**, and at h = 1 it is 3 of 10, the same story the interval tells. It uses no bootstrap or multiplicity correction, and episodes, unlike §6's state dimensions, are separable units, so a binomial null is admissible. **Its scope is narrower than the arena labels suggest**: 8 of the 10 episodes are training data for *both* arms. The test is a valid **paired** comparison, since both arms saw identical data and an episode-level difference is due to the training rule rather than to memorisation, but it is not ten out-of-sample episodes and does not measure generalisation. The out-of-sample effect size below carries that burden, on 4 independent trajectories.
-
-*The in-sample arena, where the sample is larger.* The same comparison on the eight training
-episodes has 16 independent 400-step trajectories against the held-out arena's
-4, 4× more. It gives the same direction at every horizon and checkpoint
-but one: at h = 8 after 500 iterations teacher forcing leads in-sample, with an interval that
-excludes zero at both trajectory lengths (`results/review_bootstrap_unit.json`).
-
-*The out-of-sample effect size, at every horizon.* At h = 368, the rule's horizon, the
-three-seed extension puts autoregressive training at **0.3582 ± 0.0283** against teacher forcing's
-**1.6497 ± 0.2858** (standard deviation over seeds, `ddof=1`), a factor of **4.61×**. Arm B predicts each of the window's 8 forecast targets from
-true inputs, where the original's teacher forcing is $N = 1$, and the direction holds under both
-definitions (Appendix L).
-At h = 100, the method's own imagination rollout length and the
-horizon everything in §6 is anchored to, the same three seeds give **2.58×**.
-Quoting one and not the other would be a choice, so we report the curve (Figure 6, Appendix L): same rollouts,
-same 3 seeds at 10,000 training iterations, same held-out arena,
-n_independent = 4, with a cluster bootstrap over whole trajectories. The two floor columns are each arm's error divided by the hold-last floor's, so a value below one beats the floor:
-
-| h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A ÷ floor | B ÷ floor | episodes A leads |
-|---|---|---|---|---|---|---|---|---|---|
-| 1 | 0.1447 ± 0.0023 | 0.1319 ± 0.0172 | 0.91× | -0.0128 [-0.0329, +0.0013] | **no** | 0.0796 | 1.82× | 1.66× | 3/10 |
-| 8 | 0.3087 ± 0.0318 | 0.3572 ± 0.0088 | 1.16× | +0.0485 [+0.0271, +0.0844] | yes | 0.3298 | 0.94× | 1.08× | 10/10 |
-| 32 | 0.3415 ± 0.0491 | 0.6555 ± 0.0699 | 1.92× | +0.3140 [+0.1233, +0.5047] | yes | 0.5950 | 0.57× | 1.10× | 10/10 |
-| **100** | **0.3700 ± 0.0290** | **0.9561 ± 0.0211** | **2.58×** | **+0.5861 [+0.2174, +0.9547]** | **yes** | 0.7558 | **0.49×** | **1.27×** | **10/10** |
-| 128 | 0.3558 ± 0.0231 | 0.9881 ± 0.0376 | 2.78× | +0.6324 [+0.2716, +0.9931] | yes | 0.7999 | 0.44× | 1.24× | 10/10 |
-| **368** *(the rule's horizon)* | **0.3582 ± 0.0283** | **1.6497 ± 0.2858** | **4.61×** | **+1.2915 [+0.7004, +2.3390]** | **yes** | 0.9930 | **0.36×** | **1.66×** | **10/10** |
-
-**The advantage does grow monotonically with forecast depth.** Over 400-step
-trajectories the gap excludes zero at 5 of 6 horizons and
-spans it at h=1. So h = 368 is the end of a trend rather than a point we
-picked, h = 100 sits partway along it, and the claim is weakest inside the horizon the model is trained on. **Only the h = 368 row is the rule's horizon, and the rule ran on seed 1 alone.** Every
-value in the table is a three-seed mean computed after the data existed, so by this paper's own standard (§3.4)
-none carries a pre-registration's weight. That is the same treatment §6.6 gives the expectation we held about the
-counter-baseline, and nothing in the table discharges or re-opens the rule. Teacher forcing is more than
-twice as variable across seeds as autoregressive training at h = 368, so a single-seed
-comparison of these two arms is unreliable; Appendix L gives the seed spread and the four
-per-trajectory gaps, 4 of 4 positive.
-
-**At h = 1 the table understates the evidence, and the correction runs against us.** The row
-rests on 4 independent 400-step trajectories, a unit only the longest horizon needs.
-Under a rule committed before the index was built (rule M-64, Appendix E), we rebuilt it at
-33 rows, 32 of history and one forecast step, non-overlapping within an episode:
-60 units on the same two episodes. The gap is -0.0194
-[-0.0310, -0.0093]: it **excludes zero, in favour of teacher forcing** (0.85×). Both
-readings are reported: the rule above was discharged on the 400-step unit, and the short unit resolves the sign. At one step **autoregressive
-training is worse**, the direction the sign test and, on the 400-step unit, the hold-last floor already pointed.
-
-*Against a baseline, because neither number means anything without one.* The hold-last floor,
-predicting that nothing changes, scores **0.9930** at h = 368, where
-autoregressive training beats it by **2.8×** (2.0× at
-h = 100) and **teacher forcing is 1.66× worse than assuming nothing
-changes at all** (1.27× at h = 100). Those are 400-step units, on
-which the floor beats teacher forcing at every horizon and the autoregressive arm at
-h=1. On M-64's shorter units teacher forcing beats the floor at
-h = 1, 8, 32 and 100, and both arms beat it at h = 1 (Appendix L).
-
-**What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the
-advantage is small: the table's 10,000-iteration gap there excludes zero only with all
-3 seeds pooled. At the 500 and 2,500-iteration checkpoints the out-of-sample gap excludes zero in **0 of 4** h = 8
-cells, and an earlier rule anchored there (rule M-16)
-returned **CANNOT BE SETTLED AT THIS BUDGET**. **The advantage is small at the training horizon and large beyond
-it**: at long horizons the out-of-sample gap excludes zero in **4 of 4** cells at those checkpoints, each
-still excluding it after correction for the family of 8 comparisons. Appendix L sets
-these cells and our arms beside the released checkpoint they reimplement.
-
-**Held out in turn, every episode tests the claim out of sample once.** The 4 trajectories above are one fold. Both arms were trained on four more such splits, fixed in advance, so that each episode is held out in exactly one of five (rule X3, committed before the runs; 2,500 iterations, 3 seeds). Over the 20 independent out-of-sample trajectories of all ten episodes, the gap at h = 368 is +2.2275 [+1.3683, +3.5053], favouring autoregressive training: **REPLICATES ACROSS FOLDS**. All 10 of the 10 episodes favour it (P = 0.002), and every fold's own interval excludes zero, its gap running from +0.6554 to +3.9828 (Appendix L). At one step teacher forcing still leads on short units, -0.0090 [-0.0126, -0.0053] over 300 33-row units. These are 2,500-iteration models, not the 10,000-iteration ones behind the factor above, which X3 does not re-read; its interval resamples trajectories, carrying every seed, and its folds pair episodes in index order rather than by speed. The 4 trajectories of §5's arena are no longer the only out-of-sample evidence.
-
-### 5.1 The data budget, which is the one part of the sample-efficiency claim we can measure
-
-The base paper's headline is a sample-efficiency result about policy learning and hardware, which
-we cannot test, but its *world-model* half is a quantity we can count exactly: **our arms consume
-7,991 distinct state transitions, 751× less data than the reference's 6,000,000,
-0.133% of its world-model budget**. On that budget the training result above still
-reproduces. Appendix L gives the count and its three limits, the first being that this is not the
-policy-learning comparison.
-
-### 5.2 The configuration claim: history and forecast horizons
-
-**Claim under test.** The model reads a history of M past steps and, in training, forecasts the
-next N steps from its own predictions. The base paper sweeps both and says that moderate values give
-an optimal trade-off between accuracy and training time, with (M, N) = (32, 8) as the instance
-(§IV-C). Its heatmap prints the error of every cell, and the centre's is the tied-lowest, level with
-its longest-forecast neighbour (`docs/presubmission/ORIGINAL_SPECS.md` a.5). Its second heatmap prints training hours: 1.07 for the centre and 2.27 for (32, 32), 2.12×, so on the original's own figures the centre matches that neighbour's printed error, 0.47, in under half the time. Our measured cost per iteration for the same pair is 1.81× (the table's last column).
-
-**Rule, committed in advance** (rule M-74, Appendix E). It tests the accuracy half only: whether the centre has the lowest error among its eight one-factor neighbours in the original's
-grid, M of 1, 2, 8 and 16 at the centre's N and N of 1, 2, 16 and 32 at its M. Each is trained as Arm A
-is, for 2,500 iterations on three seeds. The statistic is a configuration's
-relative-L1 at h = 368 minus the centre's, averaged over trajectories and tested by an exact
-bootstrap over trajectories, with Holm's correction holding the chance of any false "better" in the
-family at α = 0.05. Training time is reported and governs nothing: hours on
-two CPU cores are not what the original timed on a GPU.
-
-| (M, N) | relative-L1, h = 100 | relative-L1, h = 368 | difference from the centre [95% interval] | result | cost per iteration, relative to the centre |
-|---|---|---|---|---|---|
-| **(32, 8)**, the centre | 0.4798 | **0.5856** | — | — | 1.00 |
-| (1, 8) | 0.3796 | 0.5340 | -0.0516 [-0.1835, +0.0400] | not resolved | 0.23 |
-| (2, 8) | 0.3524 | 0.4717 | -0.1139 [-0.2988, -0.0088] | **configuration better** | 0.26 |
-| (8, 8) | 0.4043 | 0.4852 | -0.1004 [-0.2449, -0.0167] | **configuration better** | 0.40 |
-| (16, 8) | 0.4467 | 0.6161 | +0.0305 [-0.0008, +0.0720] | not resolved | 0.60 |
-| (32, 1) | 1.0903 | 3.7198 | +3.1342 [+1.3012, +6.5096] | centre better | 0.81 |
-| (32, 2) | 0.8886 | 2.0374 | +1.4518 [+0.6250, +2.6933] | centre better | 0.95 |
-| (32, 16) | 0.3544 | 0.3347 | -0.2509 [-0.5218, -0.0956] | **configuration better** | 1.35 |
-| (32, 32) | 0.3348 | 0.2987 | -0.2869 [-0.5951, -0.1005] | **configuration better** | 1.81 |
-
-**Arena: out-of-sample held-out pair, episodes 1 and 8, 4 non-overlapping 400-step trajectories, n_independent = 4.** Each row is the
-mean over three seeds at 2,500 iterations (`results/mn_sweep_eval.json`). A
-difference is positive when the centre is better, and "result" is after Holm
-(`results/mn_sweep_verdict.json`). The last column is a configuration's steady training time per
-iteration over the centre's, timed without contention (`results/mn_compute_matched.json`); hours per
-run, and the 8 of 24 sweep runs that overlapped other logged CPU work,
-are in Appendix B. The hold-last floor is 0.7558 at h = 100 and 0.9930 at h = 368.
-The nRMSE readings quoted alongside the rules here and in §5.3 are pooled as §3.1 defines it,
-recomputed afterwards (post hoc; Appendix U).
-
-**Result: NOT OPTIMAL AT OUR BUDGET.** (32, 32), (32, 16), (8, 8) and (2, 8) beat the centre (two shorter histories and both longer training forecasts), (32, 2) and (32, 1) are worse, and
-(1, 8) and (16, 8) cannot be told apart from it. At h = 368 the lowest error is (32, 32)'s,
-0.2987 against the centre's 0.5856, a difference of -0.2869
-[-0.5951, -0.1005]. The verdict does not rest on the anchor: on the in-sample arena's 16 independent 400-step trajectories, all four readings there return the same verdict, and among the held-out readings the rule
-reports alongside, every one agrees except nRMSE at h = 1, which returns CANNOT BE DISTINGUISHED. Per configuration, no reading puts the centre ahead of any of the four winners, though several leave a winner unresolved: all four at h = 1 on the held-out pair in both metrics, the two longer forecasts also at h = 8, and (2, 8) on held-out nRMSE at h = 368, (8, 8) on in-sample relative-L1 at h = 368 and (32, 32) on in-sample nRMSE at h = 100. Per episode, the centre is ahead of (2, 8) on 1 and of (8, 8) on 2 of the ten, and of neither other winner on any.
-
-**At our budget, shorter histories win.** The original's error falls steeply
-from M = 1 to M = 8 and then flattens (`ORIGINAL_SPECS.md` a.5). On the governing reading ours does
-not fall steeply: (2, 8) and (8, 8), histories shorter than the centre's, beat it, and no
-shorter history is resolvably worse. Other readings the rule reports, though, put shorter histories
-behind it: (1, 8) on in-sample relative-L1 and nRMSE at h = 368, and (16, 8) on held-out nRMSE at h = 368. That is a statement about learning speed at this budget, not about converged accuracy: trained four times as long, the centre passes both winning shorter histories on three of the four readings (Appendix U). So it does not contradict the original's steep fall to M = 8, whose training budget the original does not state. The original's direction on N holds: the shortest forecasts
-are far worse, which is §5's teacher-forcing result again, and the longest are better, so the
-centre's tie with its longest-forecast neighbour becomes a loss.
-
-**Accuracy at equal compute (post hoc).** The shorter histories that win cost less per iteration
-than the centre, 0.40× for (8, 8) and 0.26× for
-(2, 8), so their wins at 2,500 iterations need no compute correction. The
-longer forecasts' wins do. Trained to 5,000 iterations, 1.11× the computation of
-(32, 32), the centre splits the readings with it; trained to 10,000,
-2.21× its computation, it is ahead on both in-sample readings and neither held-out
-difference is resolved. Which setting is most accurate therefore depends on how long each is
-trained (Appendix U gives every reading); none of this re-opens rule M-74.
-
-**Limits.** One factor is varied at a time, so no interaction between M and N is tested. Our data
-budget is 0.133% of the reference's (§5.1), and the original states neither the ablation's
-budget, its evaluation data nor the horizon behind its error, so the verdict holds at our budget and
-no further: a larger one may favour a longer history. All 48 runs at 2,500 iterations are still lowering their training loss at the end
-(post hoc; Appendix U), so the ranking is at this budget, not at convergence, and it changes with
-training length. With 4 independent trajectories, the rule's minimum detectable effect at h = 368,
-the difference its first Holm step would usually detect, is about 14.5% of the centre's
-error.
-
-### 5.3 The architecture claim: MLP, RSSM and transformer baselines
-
-**Claim under test.** The base paper compares RWM with three **architecture baselines**: other network designs trained on the same data to make the same predictions. They are a multilayer
-perceptron (MLP) over a flattened window of history; a recurrent state-space model (RSSM; Hafner et al., ICML 2019), in the form DreamerV2 refined (Hafner et al., ICLR 2021); and a decoder-only transformer. It says RWM
-"consistently achieves the lowest prediction errors across all environments" (§IV-D), gives no number (Fig. 7), and trains the baselines teacher-forced.
-
-**What we built.** The pinned upstream code has an MLP but no RSSM or transformer, so all three are ours, the MLP following the upstream one. They follow the shapes in the original's Table
-S7 as we read it, with 610,484 (MLP), 3,180,468 (RSSM) and 132,148 (transformer) parameters against RWM's
-714,164. Where the table is silent they take RWM's data, windows, objective, optimiser,
-iterations and seeds, and the RSSM takes its latent, activation and KL settings from DreamerV2. Each choice is a row of
-`docs/presubmission/BASELINE_SPECS.md`. Only the predicted state is compared.
-
-**Two rules, committed in advance** (M-75 and M-76, Appendix E). M-75 trains the baselines
-teacher-forced, as the original does. M-76 trains them autoregressively, as RWM is, so that training rule and architecture are not confounded. Both take Arm A at 2,500 iterations
-as RWM and test each baseline's relative-L1 at h = 368 against it, on §5.2's arena with
-§5.2's bootstrap and Holm correction.
-
-| model | parameters | relative-L1, h = 100 | relative-L1, h = 368 | difference from RWM [95% interval] | result | cost per iteration, relative to RWM |
-|---|---|---|---|---|---|---|
-| **RWM** (Arm A, autoregressive) | 714,164 | 0.4798 | **0.5856** | — | — | 1.00 |
-| MLP, teacher-forced † | 610,484 | 1.2057 | 145.1650 | +144.5794 [+14.8420, +373.9553] | RWM better | 0.07 |
-| RSSM, teacher-forced | 3,180,468 | 2.2128 | 6.3718 | +5.7862 [+2.6251, +10.8616] | RWM better | 2.37 |
-| transformer, teacher-forced † | 132,148 | 2.0607 | 15.1548 | +14.5692 [+8.7931, +24.0102] | RWM better | 0.91 |
-| MLP, autoregressive | 610,484 | 0.5400 | 1.4628 | +0.8772 [+0.4248, +1.5662] | RWM better | 0.08 |
-| RSSM, autoregressive † | 3,180,468 | 3.2660 | 10.6405 | +10.0549 [+5.7436, +18.1659] | RWM better | 1.99 |
-| transformer, autoregressive | 132,148 | 0.5821 | 1.8771 | +1.2915 [+0.7258, +1.8079] | RWM better | 0.97 |
-| MLP, autoregressive, size-matched (X4) | 713,171 | 0.5893 | 1.4696 | +0.8840 [+0.2036, +1.6334] | RWM better | — |
-| transformer, autoregressive, size-matched (X4) | 686,196 | 0.5846 | 0.7911 | +0.2055 [-0.0969, +0.7399] | CANNOT BE SETTLED | — |
-
-**Arena as in §5.2: out-of-sample held-out pair, 4 non-overlapping 400-step trajectories, n_independent = 4.** Each row is the mean over
-three seeds at 2,500 iterations (`results/baselines_eval.json`). A difference is
-positive when RWM is better, and "result" is after Holm (`results/baselines_verdict.json`). The last
-column is timed beside RWM in one sitting (`results/mn_compute_matched.json`); hours per run are in
-Appendix B. † marks a diverged row, whose mean run-away rollouts dominate; no verdict depends on that
-magnitude, only on the sign, which favours RWM on every trajectory (Appendix L). The two size-matched rows (rule X4) are trained autoregressively for 2,500 iterations on three seeds and scored on the same arena (`results/x4_matched_baselines.json`); they were not timed in that sitting, so their last cell is empty.
-
-**Result: REPRODUCES with the baselines teacher-forced, and RWM AHEAD OF ALL THREE with them
-trained autoregressively.** RWM is ahead of baselines built to our reading of Table S7 and trained
-with RWM's settings for 2,500 iterations: all six comparisons favour it, with
-intervals that exclude zero. That says less than it seems at h = 368, where every baseline
-row, in both regimes, is above the hold-last floor and RWM is below it: no baseline beats predicting
-no change. The second verdict compares architectures at one training regime and is not a verdict on
-the original's claim, which the first carries. The lead is a long-horizon one, and the rules'
-relative-L1 readings at other horizons on the held-out pair say where it starts. Teacher-forced, the baselines fall
-resolvably behind from h = 32 (the transformer from h = 8).
-Trained autoregressively, the RSSM falls behind from h = 8, but the MLP and the transformer only from h = 100, the method's own horizon, where they trail by
-0.060 [0.024, 0.096], about 12.5% of RWM's
-0.4798, and 0.102 [0.034, 0.185]. Before those horizons, on the held-out pair, a baseline
-cannot be told apart from RWM: at h = 1 both rules return CANNOT BE SETTLED, and at h = 8 both return
-PARTIAL. Post hoc, with nRMSE pooled as §3.1 defines it, two in-sample readings differ
-from the per-trajectory average the rules' evaluator used. Teacher-forced, all three baselines lead
-RWM at h = 1 (M-75's reading there becomes DOES NOT REPRODUCE, from CANNOT BE SETTLED), the same
-one-step lead for teacher forcing as §5's. Trained autoregressively, the MLP's deficit at
-h = 100 is no longer resolved (PARTIAL, from RWM AHEAD OF ALL THREE; Appendix L).
-Neither changes a verdict; both rules govern at h = 368 on relative-L1.
-
-**Our RSSM is not an informative comparison.** Teacher-forced, it has collapsed open-loop by h = 32
-(1.0182 against the floor's 0.5950), and trained autoregressively it does not
-perform comparably to RWM, as the original says an RSSM does (10.6405 against
-0.5856 at h = 368). A diagnostic committed before its readings existed (rule
-X1, exploratory; it re-opens neither rule) returns **NOT EVALUATION-LIMITED** for its Part A, which reads
-the forecast from other latents, and **NOT RESCUED BY THE SETTINGS TRIED** for its Part C, which retrains the
-model. The failure may still be our RSSM rather than the architecture (Appendix L), so the
-architecture claim rests on the MLP and the transformer.
-
-**Limits.** One robot on flat ground; the original has several environments. The baselines
-are our reading of a table that fixes their shapes and nothing else. Their loss, optimiser and
-budget are RWM's, not tuned for them. Their sizes are Table S7's. Matched to RWM's parameter count instead (rule X4, committed before the runs; the table's last two rows), the autoregressive MLP and transformer return **PARTIAL**. At h = 368 the MLP trails RWM by 0.884 [0.204, 1.633] (RWM BETTER), and the transformer's 0.206 [-0.097, 0.740] cannot be settled (p = 0.625; CANNOT BE SETTLED), as at h = 100 and h = 32, which return PARTIAL too. Matching the parameter count is one axis; the shapes and settings stay our reading of Table S7, and the size-matched RSSM was not run. With 4 independent trajectories, the minimum detectable effect at h = 368 is
-about 12.0% of RWM's error, well below every difference here.
+*Interim: session G13 writes this section. Until then the section below, still numbered six, carries the earlier text.*
 
 ---
 
@@ -389,7 +167,7 @@ epistemic term is identically zero by construction, so the epistemic measurement
 on the released checkpoint.
 
 **What the follow-up does and does not claim.** It does not claim its uncertainty is a calibrated
-interval. Its §5.1 claims the epistemic term "closely follows the trend of the prediction error"
+interval. Its §3.2 claims the epistemic term "closely follows the trend of the prediction error"
 and that this "justifies its role as a trust metric", and of the aleatoric term it observes only
 that it "remains low, reflecting small stochasticity in the environment". Our measurement **supports the first claim**: the epistemic ordering is real (§6.6), though weaker per dimension than it looks (§6.5). What follows is therefore
 not a refutation of a calibration claim nobody made, but three things the papers do not address:
@@ -489,7 +267,7 @@ the true noise and does not track it at all**, while under the authors' unused l
 recovers the true level to a median ratio of 0.9779, seed-variably. The rule returns
 **OBJECTIVE-DRIVEN**, which establishes the contrast and not the size of the recovery (Appendix J).
 
-We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside §5.2's sweep the log-σ range moves linearly in iteration count, falling under sampled MSE and rising under the corrected one (Figure 4a; Appendix J lists the runs and which the rate is fitted on). Figure 2 shows the same runs through σ itself: panel (a) draws the two bounds σ can take, and panel (b) divides the change in log Δ per iteration by the learning rate, which is where the Adam optimiser's step size shows.
+We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside §4.2's sweep the log-σ range moves linearly in iteration count, falling under sampled MSE and rising under the corrected one (Figure 4a; Appendix J lists the runs and which the rate is fitted on). Figure 2 shows the same runs through σ itself: panel (a) draws the two bounds σ can take, and panel (b) divides the change in log Δ per iteration by the learning rate, which is where the Adam optimiser's step size shows.
 
 ![The 75 collapse-record runs of 2,500 iterations. (a) The lower (solid) and upper (dashed) bound of $\sigma$ per logged iteration; 342 saved checkpoints reproduce them. (b) Change in $\log\Delta$ per iteration over the learning rate, with Adam's typical and worst-case bounds; the corrected objective flips the sign.](figures/paper_fig8_sigma_adam.png)
 
@@ -551,7 +329,7 @@ about the released artifact; the mechanism is a hypothesis about that fact.
 
 ### 6.5 The failure is one of magnitude; the ordering is weaker than it looks
 
-Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms at 2,500 training iterations; the released checkpoint as released). Arm B's σ is 15.6× more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = 0.257). It is still 315× overconfident. So σ *collapsing in magnitude* is objective-driven, and σ *becoming input-independent* is not: the teacher-forced arm collapses in magnitude exactly like the autoregressive ones, same objective and same rate, while keeping that variation across inputs. Appendix K gives the four models' table, its arenas and a candidate mechanism.
+Adding the teacher-forced arm, trained for §4.1, sharpens the finding (our arms at 2,500 training iterations; the released checkpoint as released). Arm B's σ is 15.6× more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = 0.257). It is still 315× overconfident. So σ *collapsing in magnitude* is objective-driven, and σ *becoming input-independent* is not: the teacher-forced arm collapses in magnitude exactly like the autoregressive ones, same objective and same rate, while keeping that variation across inputs. Appendix K gives the four models' table, its arenas and a candidate mechanism.
 
 **The same pattern holds for the quantity the method uses.** On the held-out pair (n_independent = 4 400-step trajectories, in-sample for the checkpoint), the epistemic term correlates positively with realised error on **45 of 45** dimensions at h = 368 while being 39.7× overconfident there, and its σ grows 1.59× from h = 1 to h = 368 while its error grows 13.33×. Under a permutation null that keeps the coupling between dimensions, nothing in this family survives Holm–Bonferroni in any of the three arenas, and out of sample at the 400-step unit nothing could, since its smallest attainable P already exceeds the smallest Holm threshold: at h = 368 the tests are underpowered at every sample size we can reach (Appendix K).
 
@@ -798,7 +576,7 @@ Six things a practitioner can apply without reading the rest of this paper.
 **Count independent trajectories, not trajectories.** Two 400-step windows that overlap at all
 are one piece of evidence, not two. The held-out arena here contains 4 independent
 400-step trajectories however many windows are drawn from it, and that number bounds every
-long-horizon magnitude (§3), though §5's direction is re-tested on all ten episodes, each held out once on fixed folds (rule X3: **REPLICATES ACROSS FOLDS**, 20 trajectories at 2,500 iterations, not 10,000). Reporting an interval beside a trajectory count rather than an
+long-horizon magnitude (§3), though §4.1's direction is re-tested on all ten episodes, each held out once on fixed folds (rule X3: **REPLICATES ACROSS FOLDS**, 20 trajectories at 2,500 iterations, not 10,000). Reporting an interval beside a trajectory count rather than an
 independent-trajectory count overstates precision. Resampling pooled seed × trajectory values instead of trajectories narrows
 intervals by a further 1.42× (§3.4).
 
@@ -817,7 +595,7 @@ result that would otherwise have looked like a training bug.
 ## 11. Limitations
 
 Limits that belong to one result are stated beside it: the budget and our reading of Table S7
-(§5.2, §5.3), the mechanism of §6.4 as a hypothesis, the per-dimension tests' power (§6.5, Appendix K), the
+(§4.2, §4.3), the mechanism of §6.4 as a hypothesis, the per-dimension tests' power (§6.5, Appendix K), the
 ensemble-5 replication (§6.6), the recalibration's two episodes (§6.7), which its nine-episode fit widens to all ten for the released checkpoint,
 and what the independent ensemble bounds (§6.8). supplementary S2 gives each of those, and every limitation below, in full.
 
@@ -825,11 +603,11 @@ and what the independent ensemble bounds (§6.8). supplementary S2 gives each of
 command drawn from one bounded box, so "generalisation" here means across velocity commands only. No
 policy is trained: no policy-learning result of either paper is reproduced or tested, the
 sample-efficiency comparison included, and nothing here uses a GPU. Our arms use 0.133% of the
-reference's world-model data (§5.1). And the released checkpoint trained on all ten episodes, so it
+reference's world-model data (§3.2). And the released checkpoint trained on all ten episodes, so it
 has no held-out arena, and neither pinned repository can generate the data that would give it one
 (supplementary S1). None of this can be lifted on CPU, and nothing in this paper claims otherwise.
 
-**Effective sample size bounds the long-horizon magnitudes.** The headline magnitudes rest on the held-out pair, 4 independent 400-step trajectories (the n = 4 caveat of §3); the direction is re-tested on all ten episodes, each out of sample once on fixed folds (rule X3: **REPLICATES ACROSS FOLDS**, 20 trajectories at 2,500 iterations, not 10,000; §5). A larger dataset cannot be generated here (supplementary S1), so the released checkpoint's lack of a held-out arena is a constraint, not a choice.
+**Effective sample size bounds the long-horizon magnitudes.** The headline magnitudes rest on the held-out pair, 4 independent 400-step trajectories (the n = 4 caveat of §3); the direction is re-tested on all ten episodes, each out of sample once on fixed folds (rule X3: **REPLICATES ACROSS FOLDS**, 20 trajectories at 2,500 iterations, not 10,000; §4.1). A larger dataset cannot be generated here (supplementary S1), so the released checkpoint's lack of a held-out arena is a constraint, not a choice.
 
 **On whole trajectories, the ranking claim is not established as needing an ensemble.** The model's
 own predicted step size ranks error nearly as well, by a margin those 20 trajectories cannot
@@ -861,7 +639,7 @@ pushing its floor back up, and is untested for any (§2, Appendix I).
 
 The Robotic World Model's central training claim reproduces at long horizons, and the margin is
 large there, though teacher forcing leads at one step on the short windows built for it. RWM is
-ahead at h = 368 of the baselines we built to our reading of it and trained with its settings, though there none of them beats predicting no change. Matched to RWM's parameter count, size being one axis, the transformer cannot be told apart from it (rule X4: PARTIAL). On accuracy alone, four other history and forecast lengths beat its chosen ones at our budget, no reading the rule reports putting the chosen ones ahead of any of them, in a ranking that changes when the chosen setting trains longer; it chose them as a trade-off with training time (§5.2, §5.3). Neither
+ahead at h = 368 of the baselines we built to our reading of it and trained with its settings, though there none of them beats predicting no change. Matched to RWM's parameter count, size being one axis, the transformer cannot be told apart from it (rule X4: PARTIAL). On accuracy alone, four other history and forecast lengths beat its chosen ones at our budget, no reading the rule reports putting the chosen ones ahead of any of them, in a ranking that changes when the chosen setting trains longer; it chose them as a trade-off with training time (§4.2, §4.3). Neither
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
 At h = 100, the horizon the method's own imagination rollouts run to, the aleatoric σ is 11,683× smaller than its own error, because the objective's optimum is σ = 0 and the term that should prevent this cancels out of the gradient. The epistemic term the method actually penalises with is better by a factor of 349 and still 33.4× [28.7, 39.0] overconfident, both figures at h = 100 on the 20 trajectories of the checkpoint's own training episodes.
 
@@ -879,7 +657,7 @@ validation on the deployment distribution (supplementary S3).
 its bounds are built*, such as §6.3's σ = 0 optimum, are the ones to expect elsewhere, and only where both are present together, a hypothesis §2 states and leaves untested outside this codebase. *Properties of this released artifact*, its one-step misalignment, its
 shared trunk and its specific overconfidence factors, should be checked rather than assumed in any
 other. *Properties of this dataset and its arenas* are limits on what could be resolved, not
-findings in either direction (supplementary S3 gives all three, and why §5.2's verdict should not travel either).
+findings in either direction (supplementary S3 gives all three, and why §4.2's verdict should not travel either).
 
 ---
 
@@ -895,7 +673,7 @@ A clean clone reproduces every scientific value: of 16,405 regenerated values, 1
    renumbered to Arabic and moved IV-C into Appendix A.4.1.*
 2. C. Li, A. Krause, M. Hutter. *Offline Robotic World Model: Learning Robotic Policies without a Physics Simulator.* arXiv:2504.16680**v1**, 23 April 2025; current version v3, 8 January 2026, retitled *Uncertainty-Aware Robotic World Model Makes Offline Model-Based Reinforcement Learning Work on Real Robots.*
    Presented as a workshop poster at ICLR 2026 (*The 2nd Workshop on World Models: Understanding, Modelling and Scaling*); the venue's page does not say whether the workshop is archival.
-   *Read at v1. §5.1 and Eq. 4–5
+   *Read at v1. §3.2 and Eq. 4–5
 keep their numbers there; every figure and appendix table has moved, and the model is
 renamed RWM-O to RWM-U — the same model, with the letter re-expanded from
 "Offline Robotic World Model" to "Uncertainty-Aware Robotic World Model". The two names never co-occur: v1 uses
@@ -975,7 +753,7 @@ and because "no quantitative figure" is itself a finding that deserves to be che
 *Section references follow arXiv:2501.10100**v1**, which uses Roman-numeral sectioning. v2
 renumbered to Arabic and moved IV-C's material into Appendix A.4.1. References to
 arXiv:2504.16680 follow **v1**, which is the version we read; it is now at
-v3 (8 Jan 2026), where §5.1 and Eq. 4–5 keep their numbers but every figure
+v3 (8 Jan 2026), where §3.2 and Eq. 4–5 keep their numbers but every figure
 and appendix table has moved — Figure 2 (right) became Figure 3 (right), and the model was renamed RWM-O to
 RWM-U, which is a re-expansion of the letter ("Offline Robotic World Model" to
 "Uncertainty-Aware Robotic World Model") rather than a second variant: no version of the paper contains both
@@ -984,30 +762,30 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 | claim, and where | tested | what the original reports | verdict |
 |---|---|---|---|
-| RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 7 and stated nowhere in text, caption or table | **reproduces** at long horizon (§5); retrained on fixed folds with each episode held out once it replicates, +2.2275 [+1.3683, +3.5053] at h = 368 over all ten episodes' 20 trajectories at 2,500 iterations, not 10,000 (rule X3: **REPLICATES ACROSS FOLDS**, §5, Appendix L), and scored with the released evaluation's timing rule M-23's verdict stands (rule X8: **SAME VERDICT**, Appendix Z) |
-| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **quantitative**: Fig. 6 prints e for the teacher-forced N=1 row, 3.99 at (32, 1) against 0.47 at the centre, on unstated data and horizon; the passage itself gives no number | reproduces, and more strongly: on the 400-step unit Arm B is worse than the hold-last floor at every horizon (on M-64's shorter units only at the longest they reach), and §5.2's (32, 1) is 6.35× the centre's error at h = 368 |
-| M=32, N=8 gives the optimal trade-off between accuracy and training time (§IV-C) | **yes** | **quantitative**: Fig. 6 prints the error and the training hours of every cell of its grid, and the centre's error is the tied-lowest (`docs/presubmission/ORIGINAL_SPECS.md` a.5) | **NOT OPTIMAL AT OUR BUDGET** on accuracy alone (§5.2): (32, 32), (32, 16), (8, 8) and (2, 8) beat it at our budget (no reading its rule reports puts the centre ahead of any of them), but the ranking depends on training length: trained longer, the centre passes each of them on at least one reading (post hoc, §5.2, Appendix U). The trade-off with training time is not tested; the original's printed hours are consistent with it. Under the released evaluation's timing the rule keeps its verdict (rule X8: **SAME VERDICT**, Appendix Z) |
-| Beats MLP, RSSM and transformer baselines (§IV-D) | **yes** | **no quantitative figure.** "consistently achieves the lowest prediction errors across all environments"; plotted in Fig. 7, with no number in text, caption or table | **REPRODUCES** with the baselines teacher-forced, as the original trains them, and **RWM AHEAD OF ALL THREE** with them trained autoregressively, which compares architectures at one training regime rather than testing this claim (§5.3). Both are the rules' verdicts at h = 368; from h = 32 and h = 128 respectively, every reading the rules report gives them, and at shorter horizons they split. The baselines are built to our reading of Table S7 and trained with RWM's settings; at h = 368 every one is worse than predicting no change, and rule X1's other read-outs and retraining variants did not rescue our RSSM (**NOT RESCUED BY THE SETTINGS TRIED**), so the RSSM comparison stays uninformative and the claim rests on the MLP and the transformer. Matched to RWM's parameter count, they return **PARTIAL** (rule X4): the MLP is behind (RWM BETTER) and the transformer cannot be settled (CANNOT BE SETTLED), matching size being one axis only (§5.3). Under the released evaluation's timing both rules keep their verdicts (rule X8: **SAME VERDICT**, Appendix Z). One robot where the original has several |
+| RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 7 and stated nowhere in text, caption or table | **reproduces** at long horizon (§4.1); retrained on fixed folds with each episode held out once it replicates, +2.2275 [+1.3683, +3.5053] at h = 368 over all ten episodes' 20 trajectories at 2,500 iterations, not 10,000 (rule X3: **REPLICATES ACROSS FOLDS**, §4.1, Appendix L), and scored with the released evaluation's timing rule M-23's verdict stands (rule X8: **SAME VERDICT**, Appendix Z) |
+| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **quantitative**: Fig. 6 prints e for the teacher-forced N=1 row, 3.99 at (32, 1) against 0.47 at the centre, on unstated data and horizon; the passage itself gives no number | reproduces, and more strongly: on the 400-step unit Arm B is worse than the hold-last floor at every horizon (on M-64's shorter units only at the longest they reach), and §4.2's (32, 1) is 6.35× the centre's error at h = 368 |
+| M=32, N=8 gives the optimal trade-off between accuracy and training time (§IV-C) | **yes** | **quantitative**: Fig. 6 prints the error and the training hours of every cell of its grid, and the centre's error is the tied-lowest (`docs/presubmission/ORIGINAL_SPECS.md` a.5) | **NOT OPTIMAL AT OUR BUDGET** on accuracy alone (§4.2): (32, 32), (32, 16), (8, 8) and (2, 8) beat it at our budget (no reading its rule reports puts the centre ahead of any of them), but the ranking depends on training length: trained longer, the centre passes each of them on at least one reading (post hoc, §4.2, Appendix U). The trade-off with training time is not tested; the original's printed hours are consistent with it. Under the released evaluation's timing the rule keeps its verdict (rule X8: **SAME VERDICT**, Appendix Z) |
+| Beats MLP, RSSM and transformer baselines (§IV-D) | **yes** | **no quantitative figure.** "consistently achieves the lowest prediction errors across all environments"; plotted in Fig. 7, with no number in text, caption or table | **REPRODUCES** with the baselines teacher-forced, as the original trains them, and **RWM AHEAD OF ALL THREE** with them trained autoregressively, which compares architectures at one training regime rather than testing this claim (§4.3). Both are the rules' verdicts at h = 368; from h = 32 and h = 128 respectively, every reading the rules report gives them, and at shorter horizons they split. The baselines are built to our reading of Table S7 and trained with RWM's settings; at h = 368 every one is worse than predicting no change, and rule X1's other read-outs and retraining variants did not rescue our RSSM (**NOT RESCUED BY THE SETTINGS TRIED**), so the RSSM comparison stays uninformative and the claim rests on the MLP and the transformer. Matched to RWM's parameter count, they return **PARTIAL** (rule X4): the MLP is behind (RWM BETTER) and the transformer cannot be settled (CANNOT BE SETTLED), matching size being one axis only (§4.3). Under the released evaluation's timing both rules keep their verdicts (rule X8: **SAME VERDICT**, Appendix Z). One robot where the original has several |
 | Zero-shot hardware transfer (§IV-E) | no | — | `[hardware: zero-shot transfer]` no hardware; this is a dynamics-model reproduction |
 | Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **6M against 250M state transitions** at equal real tracking reward (0.90 +- 0.04 against 0.90 +- 0.03), Table I — the only table of numbers in either paper | `[policy, hardware: the sample-efficiency result]` **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | — | `[policy: the comparisons against SHAC and Dreamer]` no policy learning reproduced |
 | Generality across quadruped, humanoid, manipulation (§IV-D) | no | plotted in Fig. 7; no numbers in text | `[model: generality across robot morphologies]` one released dataset, ANYmal D flat |
-| Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** A "strong correlation" is asserted with no coefficient, interval or sample size; plotted in Fig. 2 (right) | **supported as a scalar ranking, against a real baseline** — the applied scalar correlates +0.605 [+0.545, +0.694] with realised error at n_independent = 20, beats the forecast-index counter at every horizon — though **not** the free `step-size` counter over whole trajectories at h = 368, +0.4697 against +0.6053, a margin below the 0.2891 minimum detectable effect (SURVIVES entry-res ONLY: disagreement beats the one-step error before the window, but not the model's predicted step size), which on 70 shorter units at h = 100 it does beat, +0.2816 [+0.1978, +0.3896] (rule X6: **DISAGREEMENT BEATS STEP SIZE**, Appendix X) — and survives 5 controls on forecast depth — the linear partial that keeps +0.596, and four harder ones — plus a sixth on trajectory difficulty — the last giving +0.419 [+0.318, +0.576] with both the rollout and the depth held constant (§6.6, M-45). **Weaker per-dimension**: at h = 368 the 45-of-45 sign count gives a permutation P of 0.0435 (out-of-sample) and 0.0775 (in-sample), and no cell survives multiplicity correction (§6.5). **Not supported as a scale**: 33.4× overconfident at h = 100, the method's own rollout length, and 34.4× at the h = 368 diagnostic horizon; a per-horizon rescaling brings the released checkpoint near nominal, but on a model that has not seen the test episodes it does so in only 17 of 36 cells (§6.7) |
-| Aleatoric "remains low, reflecting small stochasticity" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** "Low" is relative to the epistemic curve on the same axes of Fig. 2 (right); no absolute value, and no comparison against realised error | the observation holds; the explanation does not (§6.3) |
+| Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680v1 §3.2) | **yes** | **no quantitative figure.** A "strong correlation" is asserted with no coefficient, interval or sample size; plotted in Fig. 2 (right) | **supported as a scalar ranking, against a real baseline** — the applied scalar correlates +0.605 [+0.545, +0.694] with realised error at n_independent = 20, beats the forecast-index counter at every horizon — though **not** the free `step-size` counter over whole trajectories at h = 368, +0.4697 against +0.6053, a margin below the 0.2891 minimum detectable effect (SURVIVES entry-res ONLY: disagreement beats the one-step error before the window, but not the model's predicted step size), which on 70 shorter units at h = 100 it does beat, +0.2816 [+0.1978, +0.3896] (rule X6: **DISAGREEMENT BEATS STEP SIZE**, Appendix X) — and survives 5 controls on forecast depth — the linear partial that keeps +0.596, and four harder ones — plus a sixth on trajectory difficulty — the last giving +0.419 [+0.318, +0.576] with both the rollout and the depth held constant (§6.6, M-45). **Weaker per-dimension**: at h = 368 the 45-of-45 sign count gives a permutation P of 0.0435 (out-of-sample) and 0.0775 (in-sample), and no cell survives multiplicity correction (§6.5). **Not supported as a scale**: 33.4× overconfident at h = 100, the method's own rollout length, and 34.4× at the h = 368 diagnostic horizon; a per-horizon rescaling brings the released checkpoint near nominal, but on a model that has not seen the test episodes it does so in only 17 of 36 cells (§6.7) |
+| Aleatoric "remains low, reflecting small stochasticity" (2504.16680v1 §3.2) | **yes** | **no quantitative figure.** "Low" is relative to the epistemic curve on the same axes of Fig. 2 (right); no absolute value, and no comparison against realised error | the observation holds; the explanation does not (§6.3) |
 | Offline MBRL on real robots (2504.16680v1) | no | — | `[policy, hardware: offline MBRL on real robots]` not tested |
-| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | `[policy: the core claim that penalising rewards by disagreement improves the learned policy]` **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.6), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11); a test of the cost needing no policy, rule X5, could not be run (Appendix W) |
+| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §4.1) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | `[policy: the core claim that penalising rewards by disagreement improves the learned policy]` **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.6), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11); a test of the cost needing no policy, rule X5, could not be run (Appendix W) |
 
 **What each tested claim rests on.** The second table is §3.2's: one row per headline claim of this paper, with the section that owns it. Each row gives its own arena and number of independent units, its checkpoint, whether that arena is in-sample for the model measured, the verdict as its rule or analysis returned it, and whether it survives multiplicity correction. It is generated from the artifacts each claim is computed from (`results/evidence_summary.json`).
 
 | claim (§) | arena (n_independent) | checkpoint | in-sample for the model measured? | verdict | survives multiplicity correction? |
 |---|---|---|---|---|---|
-| Autoregressive training beats teacher forcing at h = 368 (§5) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training (under the released evaluation's timing, rule X8: SAME VERDICT) | not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L) |
-| The same comparison reverses at h = 1, at the short unit M-64 built (§5) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |
-| The same comparison at h = 368, retrained on fixed folds with each episode held out once, at 2,500 iterations (rule X3) (§5) | all ten episodes (20) | 2,500 iterations | no | REPLICATES ACROSS FOLDS: gap +2.2275 [+1.3683, +3.5053]; 10 of 10 episodes positive | not applicable |
-| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (§5.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre, and no reading the rule reports puts the centre ahead of any of them; the ranking depends on training length (Appendix U) (under the released evaluation's timing, rule X8: SAME VERDICT) | yes |
-| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (§5.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; every reading the rule reports returns it from h = 32, and below that the readings split; at h = 368 every baseline is worse than predicting no change (under the released evaluation's timing, rule X8: SAME VERDICT) | yes |
-| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (§5.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; every reading the rule reports returns it from h = 128, and below that the readings split; at h = 368 every baseline is worse than predicting no change (under the released evaluation's timing, rule X8: SAME VERDICT) | yes |
-| RWM beats MLP and transformer baselines matched to its parameter count, at h = 368 (rule X4; size is one axis) (§5.3) | out-of-sample (4) | 2,500 iterations | no | PARTIAL: MLP RWM BETTER, transformer CANNOT BE SETTLED | yes |
+| Autoregressive training beats teacher forcing at h = 368 (§4.1) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training (under the released evaluation's timing, rule X8: SAME VERDICT) | not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L) |
+| The same comparison reverses at h = 1, at the short unit M-64 built (§4.1) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |
+| The same comparison at h = 368, retrained on fixed folds with each episode held out once, at 2,500 iterations (rule X3) (§4.1) | all ten episodes (20) | 2,500 iterations | no | REPLICATES ACROSS FOLDS: gap +2.2275 [+1.3683, +3.5053]; 10 of 10 episodes positive | not applicable |
+| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (§4.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre, and no reading the rule reports puts the centre ahead of any of them; the ranking depends on training length (Appendix U) (under the released evaluation's timing, rule X8: SAME VERDICT) | yes |
+| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (§4.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; every reading the rule reports returns it from h = 32, and below that the readings split; at h = 368 every baseline is worse than predicting no change (under the released evaluation's timing, rule X8: SAME VERDICT) | yes |
+| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (§4.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; every reading the rule reports returns it from h = 128, and below that the readings split; at h = 368 every baseline is worse than predicting no change (under the released evaluation's timing, rule X8: SAME VERDICT) | yes |
+| RWM beats MLP and transformer baselines matched to its parameter count, at h = 368 (rule X4; size is one axis) (§4.3) | out-of-sample (4) | 2,500 iterations | no | PARTIAL: MLP RWM BETTER, transformer CANNOT BE SETTLED | yes |
 | Ensemble disagreement is smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
 | Ensemble disagreement is smaller than realised error, at h = 100 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
 | The aleatoric σ head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
@@ -1175,7 +953,7 @@ in the record (`FINDINGS_LEDGER.md`). Form 2 figures appear nowhere in the body;
 in `results/step4_0a_results.json` for continuity with figures this project published before the
 inversion was found. This appendix gives the two definitions and the inversion rather than those figures, so continuity rests on that committed file and not on a deleted number.
 
-The definition in force throughout the paper is the one §3.1 gives. Nothing in §5, §6 or §7 uses
+The definition in force throughout the paper is the one §3.1 gives. Nothing in §4.1, §6 or §7 uses
 form 2.
 
 ---
@@ -1191,7 +969,7 @@ the artifact named. Measurements are at 2,500 training iterations unless a row s
 |---|---|---|
 | ***Paper-versus-code gaps*** | | |
 | No forecast decay factor exists: the training loss averages every forecast step with equal weight, though the paper describes a decay | C-09; `system_dynamics.py:186-231` and both config files | Our training does the same, so the loss is undecayed in the released code and in ours |
-| The auxiliary heads (contact and termination) are trained on true next states, the state head on its own samples | M-13; `system_dynamics.py:217, 261` | In a rollout the auxiliary heads read predicted states they never trained on; this paper compares states only (§5.3) and does not measure them |
+| The auxiliary heads (contact and termination) are trained on true next states, the state head on its own samples | M-13; `system_dynamics.py:217, 261` | In a rollout the auxiliary heads read predicted states they never trained on; this paper compares states only (§4.3) and does not measure them |
 | Training feeds back a reparameterised sample, inference the mean | C-05; `system_dynamics.py:115, 217` | Our arms train and roll out the same way; for the released checkpoint, whose per-member σ has collapsed (§6.3), the sample is numerically the mean |
 | Actions enter the network raw (the config's action mean and standard deviation are zeros and ones), and no action scale is recorded in either repository; measured against joint motion, they are not joint targets in radians | C-07, D-07; `anymal_d_flat_cfg.py` | A perturbation of one size means different things for actions and for states; no reported result perturbs either |
 | The release's configuration, the paper (Table S9, 2,500) and the checkpoint's own tag state three different training lengths; the first author believes the configuration's is a typo | C-13; `base_cfg.py:97`, the checkpoint's `iter` field | §7.5: none of them reaches the released variance state at a constant rate |
@@ -1259,7 +1037,7 @@ back-propagated alone on one real batch, confirms it: 4 are live under the relea
 configuration, exactly 2 reach σ (`state` and `bound`), and the other 5 give a
 gradient of exactly zero (`results/e4_sigma_gradients.json`, Appendix J).
 
-**§6.3's run-count summary.** We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside §5.2's sweep the log-σ range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
+**§6.3's run-count summary.** We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside §4.2's sweep the log-σ range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
 every rate, and the 22 the rate is fitted on.
 
 ![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for each of the 28 runs of the collapse family, which is every run of §5–§7 at the released width outside §5.2's sweep (Appendix J). The runs are drawn individually but are visually coincident within each objective, so the 28 read as two lines, one falling and one rising -- which is the point: the trajectory does not vary visibly from run to run. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
@@ -1361,7 +1139,7 @@ produce a gradient of exactly zero, not merely a term the code suggests is irrel
 (`results/e4_sigma_gradients.json`).
 
 We predicted the collapse from §6.3's algebra before training, then observed it. Three run counts
-appear below and they are not the same set. This project trained 33 runs for §5–§7, besides the 42 of §5.2 and §5.3
+appear below and they are not the same set. This project trained 33 runs for §4.1–§7, besides the 42 of §4.2 and §4.3
 (Appendix B), of
 which 28 are at the released `rnn_hidden_size` of 256 and form the collapse
 family; the remaining 5 are the capacity-matched arm of rule M-49 (Appendix E) at
@@ -1389,7 +1167,7 @@ capacity-matched arm:
 
 ## Appendix K — section 6.5's two tables, and the per-dimension permutation tests behind them
 
-Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms at 2,500 training iterations; the released checkpoint as released):
+Adding the teacher-forced arm, trained for §4.1, sharpens the finding (our arms at 2,500 training iterations; the released checkpoint as released):
 
 | model | σ variation across inputs (CoV) | dims with r(σ, error) > 0 at h=368, held-out pair | perm P at h=368, held-out pair | perm P at h=368, training episodes |
 |---|---|---|---|---|
@@ -1458,13 +1236,13 @@ The null means explain why, and the explanation is the one that motivates §6.6.
 
 ---
 
-## Appendix L — section 5 in detail: the floor, seeds and short horizon, the data budget, the baselines' pooled readings and the RSSM, the long-horizon cells and multiplicity, and the reimplementation beside the released checkpoint
+## Appendix L — section 4.1 in detail: the floor, seeds and short horizon, the data budget, the baselines' pooled readings and the RSSM, the long-horizon cells and multiplicity, and the reimplementation beside the released checkpoint
 
-Figure 6 shows the autoregressive-versus-teacher-forcing advantage by forecast horizon, the curve §5 refers to.
+Figure 6 shows the autoregressive-versus-teacher-forcing advantage by forecast horizon, the curve §4.1 refers to.
 
 ![The autoregressive-versus-teacher-forcing advantage as a function of forecast horizon, out-of-sample over three seeds at 10,000 training iterations, on the held-out pair's 4 independent 400-step trajectories. (a) the ratio, which grows monotonically with depth: h = 368 is the end of a trend rather than a selected point, and the method's own rollout length of h = 100 sits partway along it. (b) the same comparison as a gap with its 95\% cluster-bootstrap interval over whole trajectories; the interval spans zero only at h = 1, where teacher forcing is ahead -- a lead a shorter evaluation unit resolves as real, not nominal (\S5, M-64). Rule M-23 was run at h = 368 on seed 1 of each arm; these three-seed values, and every other horizon, were computed afterwards.](figures/paper_fig6_ab_by_horizon.png)
 
-**Three passages of §5 in full.**
+**Three passages of §4.1 in full.**
 
 *Against a baseline, because neither number means anything without one.* The hold-last
 floor, predicting that nothing changes, scores **0.9930** in the h = 368
@@ -1484,14 +1262,14 @@ seeds as autoregressive training at this horizon, so a single-seed comparison of
 unreliable. For a single seed the bootstrap over trajectories gives the 95% interval
 [0.56, 2.05] on n = 4 independent trajectories; by the n = 4
 caveat of §3 its tails move in steps of 0.39%, so it corroborates the sign test rather
-than being the primary evidence. The four per-trajectory gaps behind §5's three-seed table (Arm B minus Arm A, three seeds pooled, at h = 368) are **+2.8705, +0.8949, +0.7445, +0.6562**. All
+than being the primary evidence. The four per-trajectory gaps behind §4.1's three-seed table (Arm B minus Arm A, three seeds pooled, at h = 368) are **+2.8705, +0.8949, +0.7445, +0.6562**. All
 4 of 4 are positive, the direction of the sign test's 10 of 10 episodes,
 but one trajectory carries +2.8705 against a smallest of
 +0.6562, which no interval on four units shows. At h = 100 the four
 are +1.0925, +0.8170, +0.2800, +0.1549; this appendix notes where other sections store theirs.
 
 **What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the
-advantage is small, and it resolves only with the longer training and all 3 seeds. §5's by-horizon table, at 10,000 iterations with 3 seeds pooled, gives an h = 8 gap of +0.0485
+advantage is small, and it resolves only with the longer training and all 3 seeds. §4.1's by-horizon table, at 10,000 iterations with 3 seeds pooled, gives an h = 8 gap of +0.0485
 [+0.0271, +0.0844], which excludes zero, a factor of 1.16×. The single seed the rule was
 run on (seed 1) gives an h = 8 gap of 0.008 at the same 10,000-iteration checkpoint,
 and its interval includes zero. At the 500 and 2,500-iteration checkpoints, with all 3 seeds
@@ -1500,7 +1278,7 @@ trajectory lengths crossed with both checkpoints). An earlier rule of ours, anch
 evaluated at those same checkpoints (rule M-16, Appendix E), returned **CANNOT BE SETTLED AT THIS BUDGET**.
 **The advantage is small at the training horizon and large beyond it.**
 
-**The data budget (§5.1).** §5.1 keeps two sentences of the following.
+**The data budget (§3.2).** §3.2 keeps two sentences of the following.
 
 The base paper's headline is a sample-efficiency result: policies transfer to hardware from 6,000,000 state transitions of world-model pretraining against ~250M for the model-free baseline (Table I). That is a claim about policy learning and hardware, which we cannot test, but its *world-model* half is a quantity we can count exactly.
 
@@ -1510,9 +1288,9 @@ A dynamics model trained on 0.133% of the reference's data still reproduces the 
 
 **Three limits.** It is not a reproduction of the 6,000,000-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's 6,000,000 transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
 
-**Two passages of §5.3 in full.**
+**Two passages of §4.3 in full.**
 
-On the in-sample arena's 16 trajectories, with nRMSE pooled as §3.1 defines it (computed afterwards, post hoc; ledger R-77), two readings differ from the per-trajectory average the rules' evaluator used. Teacher-forced, at h = 1 all three baselines are ahead of RWM: D, signed as the rules sign it (positive favours RWM), is -0.160 [-0.286, -0.002] for the MLP, -0.186 [-0.328, -0.013] for the RSSM and -0.052 [-0.089, -0.005] for the transformer, so M-75's reading there is DOES NOT REPRODUCE where the average gave CANNOT BE SETTLED: the same one-step lead for teacher forcing as §5's. Trained autoregressively, the MLP's deficit at h = 100 is no longer resolved (+0.017 [-0.017, +0.044]), so M-76's reading there is PARTIAL where the average gave RWM AHEAD OF ALL THREE. Neither changes a verdict; both rules govern at h = 368 on relative-L1.
+On the in-sample arena's 16 trajectories, with nRMSE pooled as §3.1 defines it (computed afterwards, post hoc; ledger R-77), two readings differ from the per-trajectory average the rules' evaluator used. Teacher-forced, at h = 1 all three baselines are ahead of RWM: D, signed as the rules sign it (positive favours RWM), is -0.160 [-0.286, -0.002] for the MLP, -0.186 [-0.328, -0.013] for the RSSM and -0.052 [-0.089, -0.005] for the transformer, so M-75's reading there is DOES NOT REPRODUCE where the average gave CANNOT BE SETTLED: the same one-step lead for teacher forcing as §4.1's. Trained autoregressively, the MLP's deficit at h = 100 is no longer resolved (+0.017 [-0.017, +0.044]), so M-76's reading there is PARTIAL where the average gave RWM AHEAD OF ALL THREE. Neither changes a verdict; both rules govern at h = 368 on relative-L1.
 
 **Our RSSM is not an informative comparison.** Teacher-forced, it is the most accurate of this section's models one
 step ahead, 0.0761 against RWM's 0.1232 and the floor's 0.0796,
@@ -1530,7 +1308,7 @@ recurrent state (the autoregressive one's at most 1.02×), with 16.4 to
 still be our RSSM rather than the architecture: Table S7's latent is ambiguous, we read it in
 DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the two settings above, on one seed, neither of them PlaNet's latent overshooting (Hafner et al., ICML 2019), which trains the prior's multi-step predictions in latent space and which PlaNet's own final RSSM agent did not need. So the architecture claim rests on the MLP and the transformer.
 
-**Teacher forcing's two definitions (§4, §5).** §4 and §5 each keep a sentence of the following.
+**Teacher forcing's two definitions (§4, §4.1).** §4 and §4.1 each keep a sentence of the following.
 
 From §4, on the original's heatmap: For the teacher-forced (32, 1)
 it prints 3.99 against 0.47 at the centre, 8.5× worse, on
@@ -1538,31 +1316,31 @@ evaluation data and at a horizon it does not state; our sweep's (32, 1) is
 6.35× worse on relative-L1 at h = 368 and 2,500 iterations. Our 4.61×, at 10,000, uses a different definition of teacher forcing
 (`docs/presubmission/ORIGINAL_SPECS.md` §2); the next paragraph relates the two.
 
-From §5: Arm B predicts each of the window's 8 forecast targets from
+From §4.1: Arm B predicts each of the window's 8 forecast targets from
 true inputs, where the original's teacher forcing is N = 1; the sweep's (32, 1), trained that way, is
-6.35× worse than the centre at h = 368 at 2,500 iterations (§5.2), so the direction
+6.35× worse than the centre at h = 368 at 2,500 iterations (§4.2), so the direction
 holds under both definitions.
 
-**The diverged baseline rows (§5.3).** † marks a diverged row, one where any seed's mean relative-L1 at h = 368 exceeds
+**The diverged baseline rows (§4.3).** † marks a diverged row, one where any seed's mean relative-L1 at h = 368 exceeds
 10 times the hold-last floor's (`results/pooled_nrmse_rescore.json`, post hoc). Run-away
 rollouts dominate those three rows' means; per seed they are MLP, teacher-forced: 182, 16.0 and 238; transformer, teacher-forced: 11.2, 10.4 and 23.9; RSSM, autoregressive: 9.87, 10.8 and 11.3. No verdict
 depends on that magnitude, only on the sign: each such row's 4 per-trajectory differences from
 RWM are all positive, so every bootstrap resample favours RWM whatever their size.
 
-**The long-horizon cells.** At long horizons §5's pattern is consistent across the design. Under the cluster bootstrap, the
+**The long-horizon cells.** At long horizons §4.1's pattern is consistent across the design. Under the cluster bootstrap, the
 out-of-sample gap excludes zero in **4 of 4** long-horizon cells,
 both trajectory lengths crossed with the 500 and 2,500-iteration checkpoints. These figures are
 relative-L1; the nRMSE aggregation is reported separately and does not change the direction.
 
 **Multiplicity.** Those 4 cells sit in a family of 8 out-of-sample
 comparisons. All 4 of 4 still exclude zero at a Bonferroni level of
-0.05/8, and Holm–Bonferroni rejects **4 of 4**. §5's sign
+0.05/8, and Holm–Bonferroni rejects **4 of 4**. §4.1's sign
 test is unaffected either way.
 
 **How good the reimplementation is as a model, next to the artifact it reimplements.**
-§5's tables compare two training rules with each other and §6.2's compares calibration, so
+§4.1's tables compare two training rules with each other and §6.2's compares calibration, so
 neither puts the released checkpoint and our arms side by side on absolute accuracy. Both
-aggregations, for these models and for §5.3's architecture baselines, on one arena:
+aggregations, for these models and for §4.3's architecture baselines, on one arena:
 
 | model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = 100 | rel-L1 h = 100 | nRMSE h = 368 | rel-L1 h = 368 |
 |---|---|---|---|---|---|---|---|---|
@@ -1583,10 +1361,10 @@ aggregations, for these models and for §5.3's architecture baselines, on one ar
 Arm rows are the mean over 3 seeds at 2,500 training iterations (the `weights_2500.pt` checkpoint), with
 per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1), and both metrics
 are cumulative over forecast steps 1..h. Every RWM row is read from the stored rollouts behind §6.2's
-calibration tables, so no model is run to build it. The architecture-baseline rows (§5.3) come from
+calibration tables, so no model is run to build it. The architecture-baseline rows (§4.3) come from
 their own evaluator on the same four trajectories, whose relative-L1 reproduces the Arm A row
 exactly; their nRMSE is pooled as §3.1 defines it, recomputed afterwards with the same evaluator
-(post hoc, `results/pooled_nrmse_rescore.json`), and † marks a diverged row (§5.3). **This table is at 2,500 iterations and §5's by-horizon table at 10,000**, which is why Arm A's relative-L1 at h = 368 reads 0.5856 here and 0.3582 there: the same arm, trained longer.
+(post hoc, `results/pooled_nrmse_rescore.json`), and † marks a diverged row (§4.3). **This table is at 2,500 iterations and §4.1's by-horizon table at 10,000**, which is why Arm A's relative-L1 at h = 368 reads 0.5856 here and 0.3582 there: the same arm, trained longer.
 
 Both metrics put the released checkpoint first at h = 1 and h = 8, they name
 different leaders at h = 100, and at h = 368 both put an Arm A variant
@@ -1595,13 +1373,13 @@ ahead of it at the longest horizon we measure. That reading flatters the release
 out-of-sample for our arms and in-sample for it, which trained on all
 ten episodes (the in-sample caveat of §3).
 
-*Stored per-trajectory values elsewhere.* §6.8's and supplementary S2's paired contrasts at §5's n = 4 store their four
+*Stored per-trajectory values elsewhere.* §6.8's and supplementary S2's paired contrasts at §4.1's n = 4 store their four
 per-trajectory values in `results/r2_independent_ensemble.json` and
 `results/m49_capacity_matched.json`; §6.2's two held-out tables, at n_independent = 4,
 give intervals only, coarse for the same reason (the n = 4 caveat of §3).
 
 
-**Rule X3, fold by fold (§5).** Rule X3 was committed and pushed before any of its runs existed (ledger M-86; Appendix E gives its lead time) and is discharged in M-94. It is exploratory and re-opens no rule: rule M-23 stands. The gap is Arm B's seed-mean relative-L1 minus Arm A's at h = 368. Each fold's interval is exact over all 256 ordered resamples of its trajectories; the pooled one is M-23's three-seed bootstrap, 20,000 draws (seed 0), whole trajectories, every seed carried.
+**Rule X3, fold by fold (§4.1).** Rule X3 was committed and pushed before any of its runs existed (ledger M-86; Appendix E gives its lead time) and is discharged in M-94. It is exploratory and re-opens no rule: rule M-23 stands. The gap is Arm B's seed-mean relative-L1 minus Arm A's at h = 368. Each fold's interval is exact over all 256 ordered resamples of its trajectories; the pooled one is M-23's three-seed bootstrap, 20,000 draws (seed 0), whole trajectories, every seed carried.
 
 | fold (episodes held out) | trajectories | gap at h = 368 [95% interval] | each episode's mean gap |
 |---|---|---|---|
@@ -1612,7 +1390,7 @@ give intervals only, coarse for the same reason (the n = 4 caveat of §3).
 | {7, 9} | 4 | +3.3743 [+3.1063, +3.5926] | 7: +3.1561, 9: +3.5926 |
 | all five, pooled | 20 | **+2.2275 [+1.3683, +3.5053]** | 10 of 10 positive, P = 0.002 |
 
-**Arena: each fold's held-out pair, out-of-sample for both arms, 4 non-overlapping 400-step trajectories per fold and 20 pooled (n_independent = 20). Checkpoints: Arm A and Arm B at 2,500 iterations, 3 seeds per arm per fold.** Bold, the reading, **REPLICATES ACROSS FOLDS**. The per-episode sign test is part of the rule and carries no verdict of its own: 10 of 10 episodes positive, exact two-sided P = 0.002. Alongside: at h = 100 the pooled gap is +0.3573 [+0.2624, +0.4678], and Arm B's mean error is 5.85× Arm A's at h = 368. The folds are fixed, not drawn: two of the new ones hold both their episodes from the same speed half, unlike §5's stratified fold.
+**Arena: each fold's held-out pair, out-of-sample for both arms, 4 non-overlapping 400-step trajectories per fold and 20 pooled (n_independent = 20). Checkpoints: Arm A and Arm B at 2,500 iterations, 3 seeds per arm per fold.** Bold, the reading, **REPLICATES ACROSS FOLDS**. The per-episode sign test is part of the rule and carries no verdict of its own: 10 of 10 episodes positive, exact two-sided P = 0.002. Alongside: at h = 100 the pooled gap is +0.3573 [+0.2624, +0.4678], and Arm B's mean error is 5.85× Arm A's at h = 368. The folds are fixed, not drawn: two of the new ones hold both their episodes from the same speed half, unlike §4.1's stratified fold.
 
 ---
 
@@ -1819,7 +1597,7 @@ face.
 
 **The contrast, and why it is affordable.** Training 5 genuinely independent models
 from scratch costs about 4.8 h of wall clock on two cores at these runs' iteration
-count, against the 49.8 h Appendix B gives for the 33 runs of §5–§7 it times (§5.2's sweep and §5.3's baselines are counted apart). Arm A at ensemble size 1 already
+count, against the 49.8 h Appendix B gives for the 33 runs of §4.1–§7 it times (§4.2's sweep and §4.3's baselines are counted apart). Arm A at ensemble size 1 already
 existed at seeds 0, 1 and 2; we added two more at about 0.9 h each,
 1.7 h in total, and scored the 5 together as an ensemble **at
 evaluation time**. There is no new training code and no new architecture, and the disagreement
@@ -2061,27 +1839,27 @@ test, unpowered for the reason above, so it is reported and cannot move that ver
 ## Appendix U — the settings sweep at equal training compute
 
 Post hoc (ledger R-78; `results/mn_compute_matched.json`); it re-opens no rule, and rule M-74's verdict,
-NOT OPTIMAL AT OUR BUDGET, stands as a statement about the 2,500-iteration budget (§5.2). Each row sets one of the
+NOT OPTIMAL AT OUR BUDGET, stands as a statement about the 2,500-iteration budget (§4.2). Each row sets one of the
 four configurations that beat the centre at 2,500 iterations against the centre trained to
 2,500, 5,000 or 10,000 iterations: twelve rows of four
 readings each. A longer forecast costs more per iteration than the centre, a shorter history less, so the centre's
 longer runs ask whether a configuration's win survives giving the centre at least as much training computation.
 
-**How §5.2's alongside readings were computed, and how far its runs had trained.** §5.2 keeps a
+**How §4.2's alongside readings were computed, and how far its runs had trained.** §4.2 keeps a
 sentence of each.
 
 The rules' evaluator averaged nRMSE per trajectory, where §3.1 pools it. The nRMSE readings quoted
-alongside the rules here and in §5.3 are pooled, recomputed afterwards (post hoc,
-`results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (§5.3 gives the two readings of its rules that differ).
+alongside the rules here and in §4.3 are pooled, recomputed afterwards (post hoc,
+`results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (§4.3 gives the two readings of its rules that differ).
 
 All 48 runs at 2,500 iterations,
 the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes
 from -1.99 to -0.09 per thousand iterations (`results/training_tail_slopes.json`,
 post hoc), so the ranking is at this budget, not at convergence, and it changes with training length (Appendix U).
 
-**§5.2's reading, in full.** §5.2 keeps three sentences of it.
+**§4.2's reading, in full.** §4.2 keeps three sentences of it.
 
-**Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per iteration, 1.35× the centre's for (32, 16) and 1.81× for (32, 32); the shorter histories that win cost less, 0.40× for (8, 8) and 0.26× for (2, 8) (`results/mn_compute_matched.json`; the table below gives every reading, signed as in §5.2's table). The shorter histories win on all four readings at 2,500 iterations while using well under half the centre's computation, so that part of the verdict needs no compute correction. The longer forecasts' wins do. Trained to 5,000 iterations, the centre has had 1.11× the computation of (32, 32), and the readings split: (32, 32) is still ahead on the held-out pair at h = 368 (-0.2031 [-0.5033, -0.0275]), the centre is ahead on the in-sample arena at h = 100 (+0.0454 [+0.0356, +0.0563]), and the other two are not resolved. At 10,000 iterations, 2.21× the computation, the centre is ahead on both in-sample readings and neither held-out difference is resolved. Trained that long, it also passes both shorter histories on three of the four readings: on the held-out pair at h = 368, (2, 8) by +0.1135 [+0.0983, +0.1357] and (8, 8) by +0.1270 [+0.0987, +0.1589], with 15× and 10× their computation, and on both in-sample readings; on the held-out pair at h = 100 neither difference is resolved. Which setting is most accurate therefore depends on how long each is trained. None of this re-opens rule M-74.
+**Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per iteration, 1.35× the centre's for (32, 16) and 1.81× for (32, 32); the shorter histories that win cost less, 0.40× for (8, 8) and 0.26× for (2, 8) (`results/mn_compute_matched.json`; the table below gives every reading, signed as in §4.2's table). The shorter histories win on all four readings at 2,500 iterations while using well under half the centre's computation, so that part of the verdict needs no compute correction. The longer forecasts' wins do. Trained to 5,000 iterations, the centre has had 1.11× the computation of (32, 32), and the readings split: (32, 32) is still ahead on the held-out pair at h = 368 (-0.2031 [-0.5033, -0.0275]), the centre is ahead on the in-sample arena at h = 100 (+0.0454 [+0.0356, +0.0563]), and the other two are not resolved. At 10,000 iterations, 2.21× the computation, the centre is ahead on both in-sample readings and neither held-out difference is resolved. Trained that long, it also passes both shorter histories on three of the four readings: on the held-out pair at h = 368, (2, 8) by +0.1135 [+0.0983, +0.1357] and (8, 8) by +0.1270 [+0.0987, +0.1589], with 15× and 10× their computation, and on both in-sample readings; on the held-out pair at h = 100 neither difference is resolved. Which setting is most accurate therefore depends on how long each is trained. None of this re-opens rule M-74.
 
 | configuration (cost per iteration ÷ the centre's) | centre trained to (iterations) | compute ratio (centre's total ÷ configuration's) | h = 100, held-out pair (4) | h = 100, in-sample (16) | h = 368, held-out pair (4) | h = 368, in-sample (16) |
 |---|---|---|---|---|---|---|
@@ -2104,7 +1882,7 @@ n_independent = 4) and the in-sample arena (the training episodes' 16 non-overla
 iterations, the centre at the iterations in the second column; three seeds each.** Each cell is D, the configuration's
 relative-L1 minus the centre's, the mean over trajectories of the three-seed means, with its 95% interval: exact over
 all 256 ordered resamples on the held-out pair, 20,000 Monte Carlo resamples (seed 0) in-sample. Negative favours the
-configuration, so every reading here is signed as in §5.2's table; bold where the interval excludes zero. Cost per
+configuration, so every reading here is signed as in §4.2's table; bold where the interval excludes zero. Cost per
 iteration is steady training time per iteration, timed
 without contention; the compute ratio is the centre's total training computation over the configuration's.
 

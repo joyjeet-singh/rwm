@@ -1,13 +1,13 @@
 {
  "mode": "report",
- "summary": "pages 21.92/12, abstract 207/5, ids 86, once 19, sig 461, keys missing 0",
+ "summary": "pages 18.25/12, abstract 207/5, ids 58, once 17, sig 265, keys missing 0",
  "gates": {
   "pages": {
    "pass": false,
-   "value": 21.92,
+   "value": 18.25,
    "max": 12.0,
-   "references_page": 22,
-   "references_y": 122.90099999999978
+   "references_page": 19,
+   "references_y": 546.0389999999999
   },
   "abstract": {
    "pass": true,
@@ -25,18 +25,16 @@
   },
   "ids": {
    "pass": false,
-   "n": 86,
+   "n": 58,
    "by_kind": {
-    "ledger_id": 23,
-    "rule_id": 20,
+    "ledger_id": 12,
+    "rule_id": 13,
     "commit_label": 0,
-    "verdict_label": 35,
+    "verdict_label": 25,
     "code_label": 8
    },
    "distinct": {
     "ledger_id": [
-     "M-16",
-     "M-23",
      "M-43",
      "M-44",
      "M-45",
@@ -46,16 +44,11 @@
      "M-52",
      "M-62",
      "M-63",
-     "M-64",
      "M-68",
      "M-69",
-     "M-70",
-     "M-74",
-     "M-75",
-     "M-76"
+     "M-70"
     ],
     "rule_id": [
-     "X1",
      "X2",
      "X3",
      "X4",
@@ -66,20 +59,15 @@
     ],
     "commit_label": [],
     "verdict_label": [
-     "BETTER",
      "COMBINATION IMPROVES CALIBRATION",
      "DISAGREEMENT BEATS STEP SIZE",
      "DOES NOT GENERALISE",
      "DOES NOT REORDER",
-     "DOES NOT REPRODUCE",
-     "EVALUATION-LIMITED",
      "MECHANISM SUPPORTED",
      "MOVE",
      "OBJECTIVE-DRIVEN",
      "PARTIAL",
      "REPLICATES ACROSS FOLDS",
-     "REPRODUCES",
-     "RESCUED BY THE SETTINGS TRIED",
      "RWM-U",
      "SURVIVES",
      "UNDER-POWERED",
@@ -187,7 +175,7 @@
   },
   "once": {
    "pass": false,
-   "n": 19,
+   "n": 17,
    "violations": [
     {
      "key": "a2_rdd",
@@ -201,13 +189,6 @@
      "interval": true,
      "abstract": 0,
      "prose": 3,
-     "table_caption": 0
-    },
-    {
-     "key": "c2_pct",
-     "interval": false,
-     "abstract": 0,
-     "prose": 4,
      "table_caption": 0
     },
     {
@@ -295,13 +276,6 @@
      "table_caption": 0
     },
     {
-     "key": "h2h_unit",
-     "interval": false,
-     "abstract": 0,
-     "prose": 3,
-     "table_caption": 0
-    },
-    {
      "key": "v3_cov_nominal1",
      "interval": false,
      "abstract": 1,
@@ -324,8 +298,6 @@
     }
    ],
    "exempt_setting_keys_applied": [
-    "a1_nind",
-    "d1_seeds",
     "d1n_nind",
     "d3_nind_fit",
     "e7_nind",
@@ -333,7 +305,6 @@
     "iters_main",
     "m23_nind",
     "mn_nind",
-    "nind_oos_400",
     "v2_deploy_h",
     "v2_diag_h",
     "x3_n",
@@ -343,34 +314,34 @@
   },
   "sig": {
    "pass": false,
-   "n": 461,
-   "n_decimals": 569,
+   "n": 265,
+   "n_decimals": 365,
    "examples": [
     "0.7979",
     "3.68",
     "0.125",
-    "0.3509",
-    "1.5540",
-    "4.43",
-    "2.05",
-    "0.3582",
-    "0.0283",
-    "1.6497",
-    "0.2858",
+    "0.125",
+    "68.27",
+    "16.22",
+    "13.44",
+    "18.89",
+    "30.11",
+    "33.4",
+    "28.7",
+    "39.0",
     "4.61",
-    "2.58",
-    "0.1447",
-    "0.1319",
-    "0.0172",
-    "0.0128",
-    "0.0329",
-    "0.0796",
-    "1.82",
-    "1.66",
-    "0.3087",
-    "0.0318",
-    "0.3572",
-    "1.16"
+    "4.12",
+    "5.09",
+    "9.27",
+    "0.2769",
+    "16.22",
+    "13.44",
+    "18.89",
+    "68.27",
+    "33.4",
+    "28.7",
+    "39.0",
+    "4.61"
    ],
    "exceptions": [
     "arXiv-style identifier",

@@ -589,3 +589,28 @@ Body words / main-content pages: 15,975 / 21.92 (LENGTH_LOG)
 Subagents: none (PLAN's G11 names none)
 Next: G12 (Opus 5.5, high).
 Decisions for user: none
+
+## G12 — 2026-10-23 20:30 — Opus 5.5, high (a Sonnet 5.5 session ran it) — status: COMPLETE
+Commits:
+(one commit, [G12][1-4], follows this entry)
+Review items closed: RV18, RV19 (this section), RV21, RV22, RV23 (this section), RV27 (this section)
+Done:
+- **§4.1** leads with the fold replication: every episode held out once, the direction in all ten episodes with its exact p, the fold range, and the exchangeability caveat from OUTLINE §Referee 2; then the one-step reversal on short windows (unsurprising, since teacher forcing trains that target; unresolved episode by episode), with the pre-registered 60-unit reading beside it; then the 10,000-iteration held-out factor as supporting evidence with its exact p printed as stored (0.125: `s2` would print 0.13) and the two-episode caveat.
+- **§4.2** one paragraph (Y6): the accuracy half only, no comparison can be significant at four trajectories, the ranking depends on the training budget, the training-time trade-off is untested.
+- **§4.3** "consistent, but a weak test": Table 2 (nRMSE at h = 368 for RWM and six baselines, with k of 4 and the exact p, beside the three floors); no baseline beats even the training mean; the size-matched baselines as a parameter-count test only; the RSSM in two sentences.
+- **Plain words:** no rule or ledger IDs; rules are "a rule committed before its runs".
+- **Moves, verbatim:** the old §4 (what we tested and left untested) and old §5 (with 5.1–5.3) to supplementary S19. Nothing that left carries a result the paper no longer shows: every key is in the supplement.
+- **Pointers:** 66 references to the old §5, §5.1–5.3 in the rest of the template now read §4.1, §3.2 (the data budget, H18), §4.2, §4.3; `evidence_summary.py`'s section fields likewise. The uncertainty section (old §6) is still numbered 6 and now sits under an interim **"## 5."** heading that G13 replaces; without it `pdf_render_check` fails on §5 pointers from §1–§3.
+- **Departures to see:** (a) §4 is 915 words, over the outline's 780 (G14 trims). (b) Table 2 has no size-matched rows because the X4 artifact holds no nRMSE: those are in the text. (c) The old §4's claim-count paragraph (tested n, left untested) is not in §4; the claim table (G14) and §7 limitations take it.
+Build/gates: pass (fast build → gates → fast build; last two builds byte-identical); `xref_sweep` 0 suspect; `keys` 0 missing.
+Round-5 gates (report mode until G16): pages 18.25/12, abstract 207/5, ids 58, once 17, sig 264, keys missing 0
+Paper numbers changed: none
+New keys: n7_bl_{mlp,rssm,transformer}_{tf,ar}_nrmse_h368_{k,p} (12), n7_x4_{mlp,transformer}_{k,p} (4), all from results/n7_exact_tests.json
+Ledger: none
+Re-anchored checks (rule 8): C10.4, C15.3, C15.4, C17.1, C25.1 (old §4 and §5 → supplement S19, through `surface`; C17.1's section anchor now the supplement's S19 heading); C24.1 via `evidence_summary.py`'s section fields; expectations unchanged.
+CPU jobs over 1 min: none
+Queue (Y5): done (20 of 20); GT2 is next
+Body words / main-content pages: see LENGTH_LOG
+Subagents: none
+Next: GT2 (Sonnet 5.5, medium), then G13.
+Decisions for user: none
