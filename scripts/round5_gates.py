@@ -102,7 +102,8 @@ ID_PATTERNS = {
     "rule_id": r"\b(?:X(?:[1-9]|1[0-2])[a-e]?|N(?:[1-9]|1[0-4])|[WY](?:[1-9]|1[0-3]))\b",
     "commit_label": r"\b(?=[0-9a-f]*[a-f])(?=[0-9a-f]*\d)[0-9a-f]{7,40}\b",
 }
-ACRONYMS = {"RWM", "RWMU", "MOPO", "PETS", "GRU", "MLP", "RSSM", "CRPS", "NLL", "TMLR", "CPU", "GPU", "PPO", "MBPO", "CSV",
+ACRONYMS = {"RWM", "RWMU", "RWM-U",  # G16: "RWM-U" is the follow-up's name, a false positive logged in OUT_OF_SCOPE since G8
+             "MOPO", "PETS", "GRU", "MLP", "RSSM", "CRPS", "NLL", "TMLR", "CPU", "GPU", "PPO", "MBPO", "CSV",
             "PDF", "MSE", "RMS", "RMSE", "ID", "IDS", "AR", "TF", "NB", "URL", "SHA", "API", "README", "MDE", "OOD", "II",
             "III", "IV", "VI", "MLRC", "NEURIPS", "ICLR", "ETH", "NVIDIA", "BSD", "RL", "MPC", "DAD", "TS", "GPS", "CI",
             "IMU", "DOF", "PD", "LSTM", "RNN", "VAE", "KL", "NOT", "AND", "OR", "THE", "BY", "OF", "AT", "IN"}

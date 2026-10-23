@@ -46,11 +46,10 @@ $PY scripts/ledger_check.py && $PY scripts/check_comparative_claims.py --self-te
 **Round-5 gates and the supplement's self-test** (G6), run after the prose checks:
 
 ```
-$PY scripts/round5_gates.py --report && $PY scripts/supplement_selftest.py && $PY scripts/placeholders.py
+$PY scripts/round5_gates.py && $PY scripts/supplement_selftest.py && $PY scripts/placeholders.py
 ```
 
-`round5_gates.py` writes `results/round5_gates.json` (pages, abstract, ids, once, sig, keys; `--report` until G16
-makes it blocking, `--self-test` for the corrupt-and-catch tests alone). `supplement_selftest.py` plants a violation in
+`round5_gates.py` writes `results/round5_gates.json` (pages, abstract, ids, once, sig, keys; blocking since G16 (`--report` prints without failing), `--self-test` for the corrupt-and-catch tests alone). `supplement_selftest.py` plants a violation in
 `docs/SUPPLEMENT` for each prose check and requires each to catch it, restoring every file it touches.
 `placeholders.py` holds the one placeholder definition (`{{key}}` and `{{key|sN}}`) and its unit test.
 `docs/SUPPLEMENT.template.md` → `docs/SUPPLEMENT.md` is rendered by `build_paper.py` beside `BUILD_CHECKS`.

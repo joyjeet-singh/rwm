@@ -1,17 +1,17 @@
 {
- "mode": "report",
- "summary": "pages 11.25/12, abstract 207/5, ids 21, once 1, sig 6, keys missing 0",
+ "mode": "blocking",
+ "summary": "pages 11.67/12, abstract 209/5, ids 0, once 0, sig 0, keys missing 0",
  "gates": {
   "pages": {
    "pass": true,
-   "value": 11.25,
+   "value": 11.67,
    "max": 12.0,
    "references_page": 12,
-   "references_y": 546.0389999999999
+   "references_y": 277.8980000000001
   },
   "abstract": {
    "pass": true,
-   "words": 207,
+   "words": 209,
    "max_words": 210,
    "numerals": 5,
    "max_numerals": 5,
@@ -24,25 +24,20 @@
    ]
   },
   "ids": {
-   "pass": false,
-   "n": 21,
+   "pass": true,
+   "n": 0,
    "by_kind": {
     "ledger_id": 0,
-    "rule_id": 1,
+    "rule_id": 0,
     "commit_label": 0,
-    "verdict_label": 20,
+    "verdict_label": 0,
     "code_label": 0
    },
    "distinct": {
     "ledger_id": [],
-    "rule_id": [
-     "X7"
-    ],
+    "rule_id": [],
     "commit_label": [],
-    "verdict_label": [
-     "PER-MEMBER",
-     "RWM-U"
-    ],
+    "verdict_label": [],
     "code_label": []
    },
    "verdict_vocabulary": [
@@ -118,7 +113,6 @@
     "RESTORE",
     "RESTORES",
     "REVERSES",
-    "RWM-U",
     "SCALAR",
     "SETTINGS",
     "SETTLED",
@@ -140,17 +134,9 @@
    ]
   },
   "once": {
-   "pass": false,
-   "n": 1,
-   "violations": [
-    {
-     "key": "v3_cov_nominal1",
-     "interval": false,
-     "abstract": 1,
-     "prose": 4,
-     "table_caption": 0
-    }
-   ],
+   "pass": true,
+   "n": 0,
+   "violations": [],
    "exempt_setting_keys_applied": [
     "e7_nind",
     "iters_main",
@@ -162,17 +148,10 @@
    ]
   },
   "sig": {
-   "pass": false,
-   "n": 6,
-   "n_decimals": 119,
-   "examples": [
-    "0.7979",
-    "3.68",
-    "0.125",
-    "0.125",
-    "0.125",
-    "0.125"
-   ],
+   "pass": true,
+   "n": 0,
+   "n_decimals": 111,
+   "examples": [],
    "exceptions": [
     "arXiv-style identifier",
     "version number",

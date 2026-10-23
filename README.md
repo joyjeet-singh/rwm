@@ -2,7 +2,7 @@
      Every number below is a placeholder substituted from results/paper_numbers.json
      by scripts/build_readme.py, the same machinery that builds the paper. The README
      drifted materially behind the paper once — a retracted claim stood here for weeks
-     after §7.5 withdrew it — and this is the fix. -->
+     after §6 withdrew it — and this is the fix. -->
 
 # RWM reproduction — proprioceptive dynamics model
 
@@ -16,7 +16,7 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-55 pages, 0 overfull boxes, 0 LaTeX warnings
+56 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
 **Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 310 entries, each
@@ -27,7 +27,7 @@ withdrawn on evidence this project produced; eight framings withdrawn are
 sentences the paper asserted that turned out to be false, rather than numbers that turned out to be
 wrong; the rest close early hypotheses. The counts are separate and the paper keeps them separate;
 four of the framings withdrawn were entered by the second pre-submission
-review, and one of those is the record of a claim §7.5 had
+review, and one of those is the record of a claim §6 had
 already narrowed in the paper while the ledger and this README went on asserting it.
 
 ## What this found
@@ -55,18 +55,18 @@ implemented objective is squared error on a sampled prediction, whose optimum is
 **3 — As a ranking it survives adversarial testing.** Ensemble disagreement beats the forecast
 step index — a free counter neither original paper compared against — at every horizon. With both
 the rollout and the forecast depth held constant it still correlates **+0.419
-[+0.318, +0.576]** with realised error, so it is not merely reporting which episode is hard. But the model's own predicted step size, which needs no ensemble, ranks error nearly as well (+0.4697 against +0.6053), by a margin the 20 whole trajectories cannot resolve at h = 368. On 70 shorter units of the same episodes, which are the checkpoint's training data, a rule committed before its reading finds disagreement ahead at h = 100, +0.2816 [+0.1978, +0.3896] (rule X6: **DISAGREEMENT BEATS STEP SIZE**; §6.6).
+[+0.318, +0.576]** with realised error, so it is not merely reporting which episode is hard. But the model's own predicted step size, which needs no ensemble, ranks error nearly as well (+0.4697 against +0.6053), by a margin the 20 whole trajectories cannot resolve at h = 368. On 70 shorter units of the same episodes, which are the checkpoint's training data, a rule committed before its reading finds disagreement ahead at h = 100, +0.2816 [+0.1978, +0.3896] (rule X6: **DISAGREEMENT BEATS STEP SIZE**; §5.6).
 
 **4 — The interval may be repairable per horizon, with mixed evidence.** On the released
 checkpoint, one multiplier per forecast horizon, fitted on one held-out episode and scored on the
 other, brings every cell within 10 points of nominal, though at two episodes no single cell is
 resolvable, where a single global multiplier manages 2 of the 12 epistemic ones. But that checkpoint trained on both episodes, so those cells are unseen
 by the multiplier only; on Arm A, whose model never saw them, its own multipliers manage
-17 of 36 epistemic cells. Fitted on nine episodes and scored on the tenth, the released checkpoint's epistemic coverage over all 20 trajectories is within the band at every horizon (rule X7: **WITHIN BAND AT 6 OF 6 HORIZONS**), again on episodes it trained on (§6.7).
+17 of 36 epistemic cells. Fitted on nine episodes and scored on the tenth, the released checkpoint's epistemic coverage over all 20 trajectories is within the band at every horizon (rule X7: **WITHIN BAND AT 6 OF 6 HORIZONS**), again on episodes it trained on (§5.7).
 
 **5 — The released five-member ensemble is not five models.** One GRU trunk, one recurrent hidden
 state, and 89.15% of each member's state-prediction parameters numerically identical
-across members — measured from the checkpoint's own tensors and from source (§6.4). Members that
+across members — measured from the checkpoint's own tensors and from source (§5.3). Members that
 share a feature extractor have correlated errors by construction, so their spread is a lower bound
 on epistemic uncertainty by design rather than by accident.
 
@@ -77,7 +77,7 @@ against a minimum detectable effect of 1.45× fixed before the runs existed. σ 
 larger by 1.65×, which is 71% of the improvement there, and the
 split reverses at the 368-step diagnostic horizon. The rule (M-44) returns
 **MECHANISM SUPPORTED**. It is still 5.2× overconfident: building the ensemble
-properly is worth doing and is not sufficient (§6.8). The independent models also differ in capacity and data order, so this bounds the sharing effect rather than isolating it; at matched capacity the gain is 1.79×, below its minimum detectable effect of 2.00× (rule M-49, §6.8).
+properly is worth doing and is not sufficient (§5.3). The independent models also differ in capacity and data order, so this bounds the sharing effect rather than isolating it; at matched capacity the gain is 1.79×, below its minimum detectable effect of 2.00× (rule M-49, §5.3).
 
 **And four defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count
@@ -91,7 +91,7 @@ README made.
 This reproduces the **dynamics model** only. The hardware-transfer, sample-efficiency and
 policy-learning results of both papers are **not tested**: they need a simulator, an RL loop and
 an ANYmal, none of which this reproduction has. No policy is trained anywhere in this work. The
-paper's §4 and Appendix D give the claim-by-claim breakdown.
+paper's §4, Table 4 and Appendix D give the claim-by-claim breakdown.
 
 ## Verification chain
 

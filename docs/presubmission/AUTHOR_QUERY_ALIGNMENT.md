@@ -1,8 +1,7 @@
-# Author query — action alignment (DRAFT, NOT SENT)
+# Author query — action alignment (SENT by the user before submission; no reply recorded)
 
 Filled in by S3 from PLAN Appendix D, by `docs/presubmission/s3_write_author_query.py`, which
-typed none of it. **The user sends it; nothing here has been sent.** No paper sentence says the
-author was asked or confirmed, and none may until a reply exists.
+typed none of it. **The user reports having sent it before submission (date not recorded here); no reply exists.** The paper says it was sent and unanswered, and says nothing about a reply.
 
 > Subject: RWM-U release — action alignment in the evaluation script
 >

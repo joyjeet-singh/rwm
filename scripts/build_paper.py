@@ -453,7 +453,7 @@ def main():
         "(a) Our models, " + str(N["iters_main"]["value"]) + " iterations: teacher forcing minus rollout, relative L1 at h = "
         + str(N["v2_diag_h"]["value"]) + ", by held-out episode (" + str(N["x3_n"]["value"])
         + " trajectories; episode-level exact p " + str(N["n7_x3_ep_p_h368"]["value"]) + "). (b) Error over spread, released "
-        "checkpoint and fold ensembles (20 trajectories each); calibrated " + str(N["m65_calib_ratio"]["value"])
+        "checkpoint and fold ensembles (20 trajectories each); calibrated " + f'{float(N["m65_calib_ratio"]["value"]):.2f}'
         + "; dashed: per-member rollout, not released.")
     CAPS["paper_fig8_sigma_adam.png"] = (
         "The " + str(N["fig8_n_runs"]["value"]) + " collapse-record runs of " + str(N["iters_main"]["value"])

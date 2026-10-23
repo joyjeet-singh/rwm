@@ -4167,6 +4167,15 @@ def main():
         assert len(_r) == 1
         put(f"n7_x4_{_b}_k", _r[0]["k"], _n7s)
         put(f"n7_x4_{_b}_p", f'{_r[0]["p"]:.3f}', _n7s)
+    # G16: exact p-values at n = 4 are multiples of 1/8, printed as fractions (0.125 is not "two significant
+    # figures" and `s2` would print it as 0.13). Every n7 exact-p key, and X9's n = 4 exact p, gets a `_frac` twin.
+    from fractions import Fraction as _Fr
+    for _k in [k for k in list(N) if (k.startswith("n7_") and (k.endswith("_p") or "_p_h" in k or k == "n7_p_min_n4")) or k == "x9_e5_p_h100"]:
+        try:
+            _fr = _Fr(str(N[_k]["value"])).limit_denominator(1024)
+        except ValueError:
+            continue
+        put(_k + "_frac", f"{_fr.numerator}/{_fr.denominator}", N[_k]["source"])
 
     # Round 5, G4: N9 (ledger R-83, post hoc). The released checkpoint only, so not NEEDS_WEIGHTS.
     N9 = J("n9_recalibration_scores.json")

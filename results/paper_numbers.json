@@ -7399,21 +7399,45 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_a1_p_h100_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_a1_p_h128": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_a1_p_h128_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
+  "n7_a1_p_h1_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "3/8"
   },
   "n7_a1_p_h32": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_a1_p_h32_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_a1_p_h368": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_a1_p_h368_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_a1_p_h8": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_a1_p_h8_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
   },
   "n7_align_k_rel_l1": {
     "source": "results/n7_exact_tests.json",
@@ -7435,6 +7459,10 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_bl_mlp_ar_nrmse_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_bl_mlp_tf_nrmse_h368_k": {
     "source": "results/n7_exact_tests.json",
     "value": 4
@@ -7442,6 +7470,10 @@
   "n7_bl_mlp_tf_nrmse_h368_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_bl_mlp_tf_nrmse_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
   },
   "n7_bl_rssm_ar_nrmse_h368_k": {
     "source": "results/n7_exact_tests.json",
@@ -7451,6 +7483,10 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_bl_rssm_ar_nrmse_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_bl_rssm_tf_nrmse_h368_k": {
     "source": "results/n7_exact_tests.json",
     "value": 4
@@ -7458,6 +7494,10 @@
   "n7_bl_rssm_tf_nrmse_h368_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_bl_rssm_tf_nrmse_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
   },
   "n7_bl_transformer_ar_nrmse_h368_k": {
     "source": "results/n7_exact_tests.json",
@@ -7467,6 +7507,10 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_bl_transformer_ar_nrmse_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_bl_transformer_tf_nrmse_h368_k": {
     "source": "results/n7_exact_tests.json",
     "value": 4
@@ -7474,6 +7518,10 @@
   "n7_bl_transformer_tf_nrmse_h368_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_bl_transformer_tf_nrmse_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
   },
   "n7_m43w_k_h128": {
     "source": "results/n7_exact_tests.json",
@@ -7495,21 +7543,41 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_m43w_p_h128_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_m43w_p_h32": {
     "source": "results/n7_exact_tests.json",
     "value": "0.875"
+  },
+  "n7_m43w_p_h32_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "7/8"
   },
   "n7_m43w_p_h368": {
     "source": "results/n7_exact_tests.json",
     "value": "0.500"
   },
+  "n7_m43w_p_h368_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/2"
+  },
   "n7_m43w_p_h8": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_m43w_p_h8_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_m49_seedavg_cov_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_m49_seedavg_cov_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
   },
   "n7_m49_seedavg_k": {
     "source": "results/n7_exact_tests.json",
@@ -7518,6 +7586,10 @@
   "n7_m49_seedavg_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_m49_seedavg_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
   },
   "n7_n_4of4": {
     "source": "results/n7_exact_tests.json",
@@ -7535,9 +7607,17 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_p_min_n4_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_r2_combined_seedavg_cov_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_r2_combined_seedavg_cov_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
   },
   "n7_r2_combined_seedavg_k": {
     "source": "results/n7_exact_tests.json",
@@ -7547,9 +7627,17 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_r2_combined_seedavg_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_r2_seedavg_cov_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_r2_seedavg_cov_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
   },
   "n7_r2_seedavg_k": {
     "source": "results/n7_exact_tests.json",
@@ -7558,6 +7646,10 @@
   "n7_r2_seedavg_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
+  },
+  "n7_r2_seedavg_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
   },
   "n7_sweep_can_reject": {
     "source": "results/n7_exact_tests.json",
@@ -7599,21 +7691,45 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x3_ep_p_h100_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x3_ep_p_h128": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x3_ep_p_h128_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
+  "n7_x3_ep_p_h1_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "133/681"
   },
   "n7_x3_ep_p_h32": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x3_ep_p_h32_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x3_ep_p_h368": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x3_ep_p_h368_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x3_ep_p_h8": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0215"
+  },
+  "n7_x3_ep_p_h8_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "2/93"
   },
   "n7_x4_can_reject": {
     "source": "results/n7_exact_tests.json",
@@ -7627,6 +7743,10 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.125"
   },
+  "n7_x4_mlp_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/8"
+  },
   "n7_x4_transformer_k": {
     "source": "results/n7_exact_tests.json",
     "value": 2
@@ -7635,85 +7755,169 @@
     "source": "results/n7_exact_tests.json",
     "value": "0.875"
   },
+  "n7_x4_transformer_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "7/8"
+  },
   "n7_x9_fold_f_h100_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_fold_f_h100_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n7_x9_fold_f_h128_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_fold_f_h128_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_fold_f_h32_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_fold_f_h32_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n7_x9_fold_f_h368_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_fold_f_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_fold_f_h8_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_fold_f_h8_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n7_x9_fold_log_ratio_h100_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_fold_log_ratio_h100_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_fold_log_ratio_h128_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_fold_log_ratio_h128_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n7_x9_fold_log_ratio_h32_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_fold_log_ratio_h32_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_fold_log_ratio_h368_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_fold_log_ratio_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n7_x9_fold_log_ratio_h8_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_fold_log_ratio_h8_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_rel_f_h100_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_rel_f_h100_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n7_x9_rel_f_h128_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_rel_f_h128_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_rel_f_h32_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_rel_f_h32_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n7_x9_rel_f_h368_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_rel_f_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_rel_f_h8_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_rel_f_h8_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n7_x9_rel_log_ratio_h100_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_rel_log_ratio_h100_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_rel_log_ratio_h128_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_rel_log_ratio_h128_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n7_x9_rel_log_ratio_h32_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_rel_log_ratio_h32_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_rel_log_ratio_h368_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
   },
+  "n7_x9_rel_log_ratio_h368_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
+  },
   "n7_x9_rel_log_ratio_h8_p": {
     "source": "results/n7_exact_tests.json",
     "value": "0.0020"
+  },
+  "n7_x9_rel_log_ratio_h8_p_frac": {
+    "source": "results/n7_exact_tests.json",
+    "value": "1/500"
   },
   "n8_adequate_n": {
     "source": "results/n8_tails.json",
@@ -8557,7 +8761,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 55
+    "value": 56
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -11813,7 +12017,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 746
+    "value": 755
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -13154,6 +13358,10 @@
   "x9_e5_p_h100": {
     "source": "results/x9_per_member_propagation.json",
     "value": "0.125"
+  },
+  "x9_e5_p_h100_frac": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1/8"
   },
   "x9_e5_p_h368": {
     "source": "results/x9_per_member_propagation.json",

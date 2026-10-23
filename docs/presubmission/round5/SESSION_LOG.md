@@ -731,3 +731,25 @@ Body words / main-content pages: see LENGTH_LOG / 11.25
 Subagents: none
 Next: G16 (Opus 5.5, high; a new terminal): the fresh-eyes review.
 Decisions for user: none new (Y10 and Figure 3 stand from G14).
+
+## G16 — 2026-10-24 06:00 — Opus 5.5, high (a Sonnet 5.5 session ran it in the same terminal; no new terminal could be opened) — status: COMPLETE
+Commits:
+(one commit, [G16][1-5], follows this entry)
+Review items closed: verifies every item in Annex 1 (`round5/REVIEW.md`)
+Done:
+- **User directives applied first.** (a) **Y10:** the query was sent and has no reply, so §6 now reads "We sent this to the first author before submission and had no reply when we submitted" (no date is recorded; the paper gives none) and `AUTHOR_QUERY_ALIGNMENT.md`'s header says so. (b) **README pointers:** the README template's seven section pointers now read §6, §5.3, §5.6, §5.7 and "§4, Table 4 and Appendix D". (c) **Figure 3:** judged not necessary for TMLR; not drawn, OUTLINE's slot dropped (recorded in `REVIEW.md`).
+- **Review.** `body.txt` (pages 1–12, 6,977 words) read once; `rwm-referee` ×1 (13 points, all verified); `rwm-checker` ×2 (each hit its 60-turn limit and delivered a partial report, which I asked for; coverage and the unchecked parts are listed in `REVIEW.md`). Fixes: eleven wording and scope points from the referee (fairness of "sizes them wrong", Spearman's unit, the band, three scales for the released checkpoint, per-fold intervals, the factor's driver against the floors, term glosses, and others, each listed in `REVIEW.md`); four from the checkers (a swapped row-label pair in App. L, a misdescribed count in App. I, a wrong clause in App. J, a wrong clause in App. M) and one wording in App. D; RV39's "Table S9" → the follow-up's Table S8.
+- **Gates now clean and blocking.** `ids` was 19 (all "RWM-U", the follow-up's name, a false positive logged since G8: now in the gate's acronym list); `once` was 1 (the coverage nominal's 68% in four prose places: now words in three); `sig` was 13 (the calibrated 0.80 in Figure 1's caption, the 3.68 ratio, and exact p-values 0.125 and 0.875): exact n = 4 p-values now print as fractions through a `_frac` twin of every `n7_*` exact-p key and `x9_e5_p_h100`. FILE_MAP §3 and the gate list now run `round5_gates.py` without `--report`.
+- **`CONSISTENCY.md`** (front-matter sentence | body anchor | every reading | agrees) written; every row agrees.
+Build/gates: pass (fast build → gates → fast build; last two byte-identical); both bundles pass; PDF channels clean.
+Round-5 gates (blocking): pages 11.67/12, abstract 209/5, ids 0, once 0, sig 0, keys missing 0
+Paper numbers changed: none
+New keys: `n7_*_p_frac` twins and `x9_e5_p_h100_frac` (read from the same artifacts)
+Ledger: none
+Re-anchored checks: none new (the gate's acronym list gained "RWM-U", the false positive of G8)
+CPU jobs over 1 min: the two bundle builds, about 6 min each
+Queue (Y5): done and discharged
+Body words / main-content pages: see LENGTH_LOG / 11.67
+Subagents: rwm-referee ×1, rwm-checker ×2
+Next: G17 (Opus 5.5, medium).
+Decisions for user: none new. The unchecked parts of the appendices (REVIEW.md) are the residual risk.

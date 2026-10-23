@@ -12,3 +12,4 @@ Body words and main-content pages at the end of each session (PLAN §1.4 log fie
 | G13 | 8,919 | 13.1 | New §5 (2,366 words with Table 3; outline 1,700); the old §6 is supplementary S20–S27. The paper is now 13.1 pages: G14 needs to cut about one page more and writes §6–§8. |
 | G14 | 7,295 | 11.25 | New §6 defects, §7 lessons and limitations, §8 conclusion with Table 4 (the claim table); the old §7, §9, §11, §12 are supplementary S28–S31. Main content is under the 12-page limit with 0.75 page spare. |
 | G15 | 7,295 | 11.25 | Appendices rebuilt to A–O (main content unchanged). The appendices run to about 27,000 rendered words against the outline's 12,000: tables and per-horizon detail are kept at full precision, and further cuts would move results out of the paper. |
+| G16 | 7,589 | 11.67 | After the review's text fixes (glosses, scope sentences, the floor comparison). Round-5 gates blocking. |
