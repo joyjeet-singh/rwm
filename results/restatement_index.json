@@ -423,7 +423,7 @@
           "section": "Reproducibility and data",
           "line": 242,
           "key": "ver_part_sci",
-          "ctx": " archive itself, its size and its commit count, while {{ver_part_sci}} are a measurement, a statistic or a ver"
+          "ctx": " commit count, the PDF's page and text counts), while {{ver_part_sci}} are a measurement, a statistic or a ver"
         },
         {
           "section": "Appendix F \u2014 Metrics and floors",
@@ -6480,11 +6480,11 @@
     },
     {
       "value": "3",
-      "n_locations": 38,
+      "n_locations": 36,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 1,
-      "n_substituted": 37,
+      "n_substituted": 35,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/e5_synthetic_sigma.json",
@@ -6496,8 +6496,7 @@
         "results/task_d1_threeseed.json",
         "results/task_d3_cross_model.json",
         "results/task_d3_ens5.json",
-        "results/v1_ensemble_topology.json",
-        "results/verify_reproduction.json"
+        "results/v1_ensemble_topology.json"
       ],
       "keys": [
         "None",
@@ -6514,16 +6513,9 @@
         "r2_n_shared",
         "t1_first_entry_n",
         "t1_n_frag_oneword",
-        "v1_n_arms_checked",
-        "ver_differing"
+        "v1_n_arms_checked"
       ],
       "locations": [
-        {
-          "section": "Reproducibility and data",
-          "line": 242,
-          "key": "ver_differing",
-          "ctx": "es, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the s"
-        },
         {
           "section": "References",
           "line": 260,
@@ -6679,12 +6671,6 @@
           "line": 1589,
           "key": "e5_seeds",
           "ctx": "nts were first made on the released checkpoint alone. The {{e5_seeds}} ensemble-5 Arm A arms (\u00a76.6) reproduce "
-        },
-        {
-          "section": "S11 Reproducibility accounting and the build's own checks",
-          "line": 1879,
-          "key": "ver_differing",
-          "ctx": "e clean-clone gate requires that none differ at all; {{ver_differing}} do, so it fails and is published as fai"
         },
         {
           "section": "S13 The earlier title and abstract",
@@ -9260,11 +9246,11 @@
     },
     {
       "value": "5",
-      "n_locations": 49,
+      "n_locations": 51,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 13,
-      "n_substituted": 36,
+      "n_substituted": 38,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/e4_sigma_gradients.json",
@@ -9278,7 +9264,8 @@
         "results/task_b2_epistemic.json",
         "results/task_d2b_robustness.json",
         "results/task_d3_cross_model.json",
-        "results/task_d_nind20.json"
+        "results/task_d_nind20.json",
+        "results/verify_reproduction.json"
       ],
       "keys": [
         "None",
@@ -9299,9 +9286,16 @@
         "m68_n_indep",
         "n_runs_offwidth",
         "r2_n_indep",
-        "rt_runs_m49"
+        "rt_runs_m49",
+        "ver_differing"
       ],
       "locations": [
+        {
+          "section": "Reproducibility and data",
+          "line": 242,
+          "key": "ver_differing",
+          "ctx": "es, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the s"
+        },
         {
           "section": "Appendix D \u2014 Claims of the originals and the version crosswalk",
           "line": 332,
@@ -9415,6 +9409,12 @@
           "line": 1809,
           "key": "rt_runs_m49",
           "ctx": "s` field of the run artifacts rather than estimated. **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m"
+        },
+        {
+          "section": "S11 Reproducibility accounting and the build's own checks",
+          "line": 1879,
+          "key": "ver_differing",
+          "ctx": "e clean-clone gate requires that none differ at all; {{ver_differing}} do, so it fails and is published as fai"
         },
         {
           "section": "S14 The earlier introduction and contributions",

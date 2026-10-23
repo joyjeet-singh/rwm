@@ -1062,9 +1062,9 @@
       "note": ""
     },
     {
-      "id": "421f95328302",
+      "id": "43c6bb0e87cb",
       "section": "Reproducibility and data",
-      "claim": "A clean clone reproduces every scientific value: of {{ver_values}} regenerated values, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the supplementary archive itself, its size and its commit count, while {{ver_part_sci}} are a measurement, a statistic or a verdict (supplement S11).",
+      "claim": "A clean clone reproduces every scientific value: of {{ver_values}} regenerated values, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the submission's own files (the archive's size and commit count, the PDF's page and text counts), while {{ver_part_sci}} are a measurement, a statistic or a verdict (supplement S11).",
       "keys": [
         "ver_values",
         "ver_identical",
@@ -2781,9 +2781,9 @@
       "note": ""
     },
     {
-      "id": "4353de2c161b",
+      "id": "e5e0071ac45e",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "The nRMSE readings quoted alongside the rules here and in \u00a74.3 are pooled, recomputed afterwards (post hoc, `results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (\u00a74.3 gives the {{n2_n_changed_word}} readings of its rules that differ).",
+      "claim": "The nRMSE readings quoted alongside the rules here and in \u00a74.3 are pooled, recomputed afterwards (post hoc, `results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (Appendix E gives the {{n2_n_changed_word}} readings of its rules that differ).",
       "keys": [
         "n2_n_changed_word"
       ],

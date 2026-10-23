@@ -16,6 +16,8 @@
     "insample_framing.json",
     "manifest.json",
     "mn_sweep_verdict.json",
+    "n10_floors.json",
+    "n9_recalibration_scores.json",
     "original_paper_figures.json",
     "p4_transfer_power.json",
     "paper_numbers.json",
@@ -59,15 +61,15 @@
     "x6_stepsize_short_units.json",
     "x7_loeo_recalibration.json"
   ],
-  "values_compared": 16405,
-  "bitwise_identical": 16402,
+  "values_compared": 18299,
+  "bitwise_identical": 18294,
   "identical_to_1e-9": 0,
-  "differing": 3,
-  "timing_excluded": 15794,
+  "differing": 5,
+  "timing_excluded": 17910,
   "nan_in_both": 4,
-  "copied_file_values": 2235141,
-  "copied_identical": 2235138,
-  "copied_differing": 3,
+  "copied_file_values": 2676570,
+  "copied_identical": 2676569,
+  "copied_differing": 1,
   "machine_file_values_excluded": 706,
   "keys_lost": 1,
   "keys_lost_files": [
@@ -812,8 +814,64 @@
       "keys_lost": 0,
       "keys_lost_paths": []
     },
+    "n10_floors.json": {
+      "regenerated": true,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "n11_rank_correlations.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "n12_provenance.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "n13_adam.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "n14_one_step_accounting.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
     "n5_stale_armA_ci.json": {
       "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "n7_exact_tests.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "n8_tails.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "n9_recalibration_scores.json": {
+      "regenerated": true,
       "differing": 0,
       "differing_keys": [],
       "keys_lost": 0,
@@ -884,19 +942,20 @@
     },
     "part_f_gate.json": {
       "regenerated": false,
-      "differing": 3,
+      "differing": 1,
       "differing_keys": [
-        ".n_pass",
-        ".n_run",
-        ".n_not_run"
+        ".n_pass"
       ],
       "keys_lost": 0,
       "keys_lost_paths": []
     },
     "pdf_channels.json": {
       "regenerated": true,
-      "differing": 0,
-      "differing_keys": [],
+      "differing": 2,
+      "differing_keys": [
+        ".pages",
+        ".scanned.text"
+      ],
       "keys_lost": 0,
       "keys_lost_paths": []
     },
@@ -992,6 +1051,20 @@
       "keys_lost_paths": []
     },
     "round4_queue_timing.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "round5_gates.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "round5_queue_timing.json": {
       "regenerated": false,
       "differing": 0,
       "differing_keys": [],
@@ -1604,6 +1677,62 @@
       "keys_lost": 0,
       "keys_lost_paths": []
     },
+    "version_crosswalk.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x10_insample_vs_heldout.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x11_power.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x11a_fold_ens5_calibration.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x11b_fold_m43.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x11c_fold_recalibration.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x11d_fold_m44.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x11e_fold_e5_propagation.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
     "x1_partc_timing.json": {
       "regenerated": false,
       "differing": 0,
@@ -1632,7 +1761,21 @@
       "keys_lost": 0,
       "keys_lost_paths": []
     },
+    "x3_run_armA_ho02_seed0_ens5.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
     "x3_run_armA_ho02_seed1.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho02_seed1_ens5.json": {
       "regenerated": false,
       "differing": 0,
       "differing_keys": [],
@@ -1646,7 +1789,35 @@
       "keys_lost": 0,
       "keys_lost_paths": []
     },
+    "x3_run_armA_ho02_seed2_ens5.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho02_seed3.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho02_seed4.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
     "x3_run_armA_ho34_seed0.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho34_seed0_ens5.json": {
       "regenerated": false,
       "differing": 0,
       "differing_keys": [],
@@ -1660,7 +1831,35 @@
       "keys_lost": 0,
       "keys_lost_paths": []
     },
+    "x3_run_armA_ho34_seed1_ens5.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
     "x3_run_armA_ho34_seed2.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho34_seed2_ens5.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho34_seed3.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho34_seed4.json": {
       "regenerated": false,
       "differing": 0,
       "differing_keys": [],
@@ -1674,7 +1873,21 @@
       "keys_lost": 0,
       "keys_lost_paths": []
     },
+    "x3_run_armA_ho56_seed0_ens5.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
     "x3_run_armA_ho56_seed1.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho56_seed1_ens5.json": {
       "regenerated": false,
       "differing": 0,
       "differing_keys": [],
@@ -1688,7 +1901,35 @@
       "keys_lost": 0,
       "keys_lost_paths": []
     },
+    "x3_run_armA_ho56_seed2_ens5.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho56_seed3.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho56_seed4.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
     "x3_run_armA_ho79_seed0.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho79_seed0_ens5.json": {
       "regenerated": false,
       "differing": 0,
       "differing_keys": [],
@@ -1702,7 +1943,35 @@
       "keys_lost": 0,
       "keys_lost_paths": []
     },
+    "x3_run_armA_ho79_seed1_ens5.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
     "x3_run_armA_ho79_seed2.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho79_seed2_ens5.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho79_seed3.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x3_run_armA_ho79_seed4.json": {
       "regenerated": false,
       "differing": 0,
       "differing_keys": [],
@@ -1836,6 +2105,13 @@
       "keys_lost_paths": []
     },
     "x8_sweep_eval_offset0.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
+    "x9_per_member_propagation.json": {
       "regenerated": false,
       "differing": 0,
       "differing_keys": [],

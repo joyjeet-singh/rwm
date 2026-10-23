@@ -18,8 +18,23 @@ T1 — BIBLIOGRAPHY VERIFICATION
   [ok] seitzer2022            ICLR 2022              arXiv:2203.09168   fragments 1/1
   [ok] hafner2019             ICML 2019 (PMLR 97)    arXiv:1811.04551   fragments 2/2
   [ok] hafner2021             ICLR 2021              arXiv:2010.02193
+  [ok] venkatraman2015        AAAI 2015              doi:10.1609/aaai.v29i1.9590
+  [ok] bengio2015             NeurIPS 2015           arXiv:1506.03099
+  [ok] talvitie2017           AAAI 2017              arXiv:1612.06018
+  [ok] lambert2021            IEEE CDC 2021          arXiv:2012.09156
+  [ok] angelopoulos2021       arXiv:2107.07511       arXiv:2107.07511
+  [ok] stankeviciute2021      NeurIPS 2021           https://proceedings.neurips.cc/paper_files/paper/2021/hash/312f1ba2a72318edaaa995a67835fad5-Abstract.html
+  [ok] lindemann2023          IEEE RA-L 2023         arXiv:2210.10254
+  [ok] osband2016             NeurIPS 2016           arXiv:1602.04621
+  [ok] osband2018             NeurIPS 2018           arXiv:1806.03335
+  [ok] agarwal2021            NeurIPS 2021           arXiv:2108.13264
+  [ok] henderson2018          AAAI 2018              arXiv:1709.06560
+  [ok] cameron2008            Review of Economics and Statistics 90(3) doi:10.1162/rest.90.3.414
+  [ok] kingma2015             ICLR 2015              arXiv:1412.6980
+  [ok] prereg2020             PMLR 148               https://proceedings.mlr.press/v148/
+  [ok] prereg2021             PMLR 181               https://proceedings.mlr.press/v181/
 
-  18 of 18 entries metadata-verified; 19 of 19 asserted fragments verbatim
-  references: 2 -> 20
+  33 of 33 entries metadata-verified; 19 of 19 asserted fragments verbatim
+  references: 2 -> 35
 
   wrote results/t1_bibliography_verified.json

@@ -27,8 +27,15 @@ APPENDIX G — PRE-REGISTERED RULES
   M-88          +0.19 h  DISAGREEMENT BEATS STEP SIZE X6: does ensemble disagreement beat the mode
   M-89          +0.19 h  WITHIN BAND AT 6 OF 6 HORIZO X7: per-horizon recalibration, fitted on nin
   M-90          +0.19 h  SAME VERDICT for M-74, M-75, X8: would any verdict change under the relea
+  M-97         +94.10 h  MIXED                        X11a: the ensemble-5 arms' held-out calibrat
+  M-98         +94.10 h  GENERALISES                  X11b: M-43's disagreement-against-index comp
+  M-99         +94.10 h  PER-HORIZON SCALAR DOES NOT  X11c: the per-horizon recalibration on episo
+  M-100        +94.10 h  MECHANISM SUPPORTED          X11d: M-44's independent-against-shared-trun
+  M-101         +0.05 h  PROPAGATION NARROWS THE GAP  X9: does propagating each member on its own 
+  M-102         +0.05 h  IN-SAMPLE IS WORSE           X10: does measuring on training data flatter
+  M-103        +92.11 h  PROPAGATION NARROWS THE GAP  X11e: X9's per-member propagation on X3's fo
   S-12          -2.94 h  RETRACTED                    "Task 3's duplication rule was pre-registere
 ====================================================================================================
-  28 rules, 28 with a computed lead time
+  35 rules, 35 with a computed lead time
   wrote results/appendix_g_rules.json
-  wrote docs/APPENDIX_G_RULES.md (28 rules, each its ledger block verbatim)
+  wrote docs/APPENDIX_G_RULES.md (35 rules, each its ledger block verbatim)

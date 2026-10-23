@@ -1,24 +1,23 @@
 B8 — TYPED NUMERAL AUDIT
 ============================================================================================
   self-test          : passed — planted measurement 12.7 caught
-  numerals typed in PAPER.template.md: 1149
-    section-ref             439
-    exception               322
-    ledger-id               148
-    code-location            58
-    table-row-label          42
-    citation-year            31
-    figure-ref               28
-    markdown-heading         25
-    arxiv-id                 18
-    math-mode                15
-    equation-ref              9
+  numerals typed in PAPER.template.md: 754
+    section-ref             264
+    exception               210
+    ledger-id                98
+    citation-year            38
+    code-location            36
+    table-row-label          32
+    markdown-heading         22
+    figure-ref               22
+    table-ref                 9
+    arxiv-id                  7
+    equation-ref              6
     table-denominator         6
-    subsection-heading        5
-    date                      2
-    originals-figure          1
+    math-mode                 4
 
   every typed numeral is an address, a horizon label or a declared constant
-  (23 declared exceptions, 18 classes)
+  (23 declared exceptions, 19 classes)
+  numerals typed in docs/SUPPLEMENT.template.md: 611, 0 not covered
 
   wrote results/typed_numerals.json
