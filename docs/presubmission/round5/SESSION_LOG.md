@@ -537,3 +537,28 @@ Body words / main-content pages: 18,114 / 26.3 (see LENGTH_LOG for the counting 
 Subagents: none
 Next: G10 (Sonnet 5.5, high): figures.
 Decisions for user: none (the SAFE_ORGS addition is reported above for your awareness)
+
+## G10 — 2026-10-23 14:10 — Sonnet 5.5, high — status: COMPLETE
+Commits:
+(one commit, [G10][1-3], follows this entry)
+Review items closed: RV07; the figure half of RV25
+Done:
+- **Item 1, two new figures** drawn from artifacts only through `scripts/paper_figures.py` (new functions `fig7_findings`, `fig8_sigma_adam`; values recorded in `results/paper_figures.json`).
+  - **Figure 1** (`paper_fig7_findings.png`): (a) X3's per-fold exact intervals and per-episode gaps at h = 368, with the pooled interval, from `results/x3_cross_fold.json`; (b) error-to-spread ρ by horizon for the released checkpoint and the fold ensembles under the released and per-member rollouts, with the calibrated line, from `results/x9_per_member_propagation.json`.
+  - **Figure 2** (`paper_fig8_sigma_adam.png`): the lower and upper σ bounds per logged iteration, and the change in log Δ per iteration over the learning rate with the typical and worst-case Adam bounds, from `results/n13_adam.json`. The 75 runs of 2,500 iterations; the 10,000-iteration runs are left out so the axes match. Sign flip (+0.3 under gaussian_nll, −0.94 under sampled MSE) and the Adam signature are both visible.
+  - **Departure from OUTLINE:** it asks for "measured σ at the saved checkpoints". N13 stores only the logged values and the maximum difference between them and the 342 checkpoints (all within tolerance), not σ read off each checkpoint. The caption says that and no checkpoint markers are drawn.
+- **Item 2, renumbering.** `build_paper.py` now places each figure at the first "Figure N" at or after an anchor heading, so a moved figure lands in its appendix. Numbers follow document order: 1 findings (§1), 2 σ and Adam (§6.3), 3 pre-registration lead time (App. E), 4 collapse (App. J), 5 σ profile (App. K), 6 advantage by horizon (App. L), 7 calibration (App. M), 8 contamination control (App. Q). Every reference in the three templates was remapped (24 sites); a pointer sentence was added to §1, §6.3, App. L and App. M, since each figure needs a first reference where it lands. **The anchors use today's appendix letters, not OUTLINE's final A–O:** G15 re-letters and moves them with the appendices.
+- **Item 3, captions.** The two new figures' captions are three lines in the PDF and name arena, n, checkpoint and horizon. The six moved figures keep their old, longer captions: PLAN does not name them and G15 owns the appendices.
+- **Limits of my check.** `pdftoppm` is not installed, so I could not look at the rendered PDF pages. I looked at both new PNGs, and checked placement, numbering and caption length from the PDF text (`pypdf`, layout mode). `pdf_render_check.py` passes. G16 should open pages 2, 14, 37, 42, 45, 47, 50 and 58 by eye.
+Build/gates: pass (fast build → gates → fast build; `PAPER.md`, `PAPER.tex`, `MODEL_CARD.md`, `README.md`, `BUILD_CHECKS.md`, `SUPPLEMENT.md` identical across the last two builds); `xref_sweep` 0 suspect; `keys` 0 missing.
+Round-5 gates (report mode until G16): pages 24.0/12, abstract 300/19, ids 90, once 33, sig 505, keys missing 0
+Paper numbers changed: none
+New keys: fig8_n_runs (results/paper_figures.json)
+Ledger: none
+Re-anchored checks: C21.1's quoted sentence "Figure 1 plots" → "Figure 3 plots" (the pre-registration figure's new number); expectation unchanged.
+CPU jobs over 1 min: none
+Queue (Y5): done (20 of 20 by the runner's file at the start of this session; GT2 reads it)
+Body words / main-content pages: 17698 / 24.0
+Subagents: none
+Next: GT2 (Sonnet 5.5, medium) now that the queue shows 20 of 20, if Y5 is B or C; otherwise G11 (Opus 5.5, high).
+Decisions for user: none

@@ -578,10 +578,106 @@ def fig5_three_way(rec):
     return p
 
 
+def fig7_findings(rec):
+    """Figure 1 of the paper: one finding about each original (G10; OUTLINE.md section figures).
+
+    (a) the base paper's claim held out episode by episode (X3); (b) whether the ensemble's
+    spread accumulates with the horizon, under the released rollout and per-member rollout (X9).
+    """
+    fig, ax = plt.subplots(1, 2, figsize=(7.6, 3.2))
+    x3 = J("x3_cross_fold.json")
+    h = x3["reading"]["h"]
+    folds = x3["part_of_rule"]["per_fold_h368"]
+    ep = x3["part_of_rule"]["per_episode_sign_test_h368"]["per_episode_mean_gap"]
+    rec["fig7a"] = {"h": h, "folds": {}, "pooled": {"gap": x3["reading"]["gap"], "ci95": x3["reading"]["ci95"]}}
+    ax[0].axhline(0, color="k", lw=1)
+    for i, (f, v) in enumerate(folds.items()):
+        lo, hi = v["ci95_exact"]
+        ax[0].plot([i, i], [lo, hi], color=C["faithful"], lw=2.5, alpha=0.5, solid_capstyle="butt")
+        eps = [e for e in f]            # a fold's name is its two held-out episodes' digits
+        pts = [ep[e] for e in eps]
+        ax[0].scatter([i] * len(pts), pts, s=22, color=C["armB"], zorder=3,
+                      label="held-out episode" if i == 0 else None)
+        rec["fig7a"]["folds"][f] = {"ci95_exact": v["ci95_exact"], "episodes": dict(zip(eps, pts))}
+    n = len(folds)
+    lo, hi = x3["reading"]["ci95"]
+    ax[0].plot([n, n], [lo, hi], color="k", lw=2.5, solid_capstyle="butt")
+    ax[0].scatter([n], [x3["reading"]["gap"]], marker="D", s=26, color="k", zorder=3, label="all 20 trajectories")
+    ax[0].set_xticks(range(n + 1))
+    ax[0].set_xticklabels([f"{f[0]}, {f[1]}" for f in folds] + ["pooled"], fontsize=7.5)
+    ax[0].set(xlabel="fold (the two held-out episodes)",
+              ylabel=f"teacher forcing minus rollout,\nrelative L1 at h = {h}",
+              title="(a) the base claim, held out")
+    ax[0].legend(fontsize=7, loc="upper center")
+    x9 = J("x9_per_member_propagation.json")
+    hs = [int(k) for k in x9["tables"]["rel"]]
+    calib = x9["design"]["calibrated_rho"]
+    rec["fig7b"] = {"calibrated_rho": calib, "curves": {}}
+    for tab, mode, lab, col, ls in (
+            ("rel", "mean", "released checkpoint, released rollout", C["released"], "-"),
+            ("rel", "per", "released checkpoint, per-member rollout", C["released"], "--"),
+            ("fold", "mean", "fold ensembles, released rollout", C["faithful"], "-"),
+            ("fold", "per", "fold ensembles, per-member rollout", C["faithful"], "--")):
+        ys = [x9["tables"][tab][str(k)][mode]["rho"] for k in hs]
+        ax[1].plot(hs, ys, ls, color=col, marker="o", ms=3, lw=1.3, label=lab)
+        rec["fig7b"]["curves"][f"{tab}/{mode}"] = dict(zip(map(str, hs), ys))
+    ax[1].axhline(calib, color="k", lw=1)
+    ax[1].text(hs[0], calib * 1.15, "calibrated", fontsize=7)
+    ax[1].set(xscale="log", yscale="log", xlabel="forecast horizon h", ylabel="error / spread",
+              title="(b) does the spread accumulate?")
+    ax[1].legend(fontsize=6.5, loc="upper left")
+    fig.tight_layout()
+    p = os.path.join(R.FIGURES, "paper_fig7_findings.png")
+    fig.savefig(p); plt.close(fig)
+    return p
+
+
+def fig8_sigma_adam(rec):
+    """Figure 2 of the paper: sigma itself, and the Adam signature (G10 item 1; results/n13_adam.json)."""
+    n13 = J("n13_adam.json")
+    lr = n13["bound"]["typical"]
+    fig, ax = plt.subplots(1, 2, figsize=(7.6, 3.2))
+    rows = {"faithful": [], "corrected": []}
+    for r in n13["runs"]:
+        if r["iterations"] != 2500:
+            continue
+        kind = "corrected" if (r["loss_type"] == "gaussian_nll" or r["file"].endswith("_nll.json")) else "faithful"
+        t = n13["sigma_trajectory"][r["file"]]
+        it = np.array(t["iter"], float)
+        # log Delta recovered from the artifact's own bounds: upper = exp(min_logstd + exp(log Delta))
+        ld = np.log(np.log(np.array(t["sigma_upper"])) - np.array(t["min_logstd_mean"]))
+        rate = np.diff(ld) / np.diff(it) / lr
+        col = C[kind]
+        ax[0].plot(it, t["sigma_lower"], color=col, lw=0.7, alpha=0.5)
+        ax[0].plot(it, t["sigma_upper"], color=col, lw=0.7, alpha=0.5, ls="--")
+        ax[1].plot(it[1:], rate, color=col, lw=0.7, alpha=0.5)
+        rows[kind].append(r["file"])
+    for k, lab in (("faithful", "sampled MSE"), ("corrected", "gaussian_nll")):
+        ax[0].plot([], [], color=C[k], label=f"{lab} (n={len(rows[k])})")
+    ax[0].plot([], [], color="grey", label="lower bound")
+    ax[0].plot([], [], color="grey", ls="--", label="upper bound")
+    ax[0].set(yscale="log", xlabel="iteration", ylabel=r"$\sigma$ bounds",
+              title="(a) the range sigma can take")
+    ax[0].legend(fontsize=6.5)
+    ax[1].axhline(0, color="k", lw=1)
+    for v, lab in ((1.0, "typical bound"), (n13["bound"]["worst_over_lr"], "worst-case bound")):
+        ax[1].axhline(-v, color="grey", lw=0.8, ls=":")
+        ax[1].text(2500, -v - 0.1, lab, fontsize=6.5, va="top", ha="right")
+    ax[1].set(xlabel="iteration", ylabel=r"change in $\log\Delta$ per step / learning rate",
+              title="(b) the Adam signature,\nand the sign flip")
+    rec["fig8"] = {"n_runs": {k: len(v) for k, v in rows.items()}, "lr": lr,
+                   "bound_over_lr": n13["bound"]["worst_over_lr"], "source": "results/n13_adam.json"}
+    fig.tight_layout()
+    p = os.path.join(R.FIGURES, "paper_fig8_sigma_adam.png")
+    fig.savefig(p); plt.close(fig)
+    return p
+
+
 def main():
     rec = {}
     made = [fig1_calibration(rec), fig2_sigma_profile(rec), fig3_collapse(rec),
-            fig4_timeline(rec), fig5_three_way(rec), fig6_ab_by_horizon(rec)]
+            fig4_timeline(rec), fig5_three_way(rec), fig6_ab_by_horizon(rec),
+            fig7_findings(rec), fig8_sigma_adam(rec)]
     op = os.path.join(R.RESULTS, "paper_figures.json")
     json.dump(rec, open(op, "w"), indent=2)
     print("PAPER FIGURES")

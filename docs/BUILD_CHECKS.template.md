@@ -453,7 +453,7 @@ claims stayed, and only their history moved.
   inferred the mechanism (content rather than count) without it.
 - **[§8]** The duplication-control rule's lead time is dated from the commit that introduced the
   log line, because the log records wall clock with no date and no offset; that is what makes
-  Figure 1 reproducible outside this machine's timezone. Before that change the figure used the
+  Figure 3 reproducible outside this machine's timezone. Before that change the figure used the
   local timestamp.
 - **[§8]** `S-15` was named by position in §8 ("the second framing retraction") until the second
   pre-submission review entered {{n_framing_last_cohort_word}} more framing retractions and moved it.

@@ -4206,6 +4206,9 @@ def main():
     put("n13_iters_measured", f'{_re13["iterations_at_measured_rate"]:,.0f}', _n13s)
     put("n13_ckpt_log_delta", f'{N13["ckpt_log_delta"]:.4f}', _n13s)
     put("n13_n_checkpoints_checked", N13["assertions"]["checkpoints_vs_logs"]["n_checked"], _n13s)
+    # G10: Figure 2 plots every 2,500-iteration run in the collapse record; its caption's counts are the figure's own.
+    _f8 = J("paper_figures.json")["fig8"]
+    put("fig8_n_runs", sum(_f8["n_runs"].values()), "results/paper_figures.json")
 
     # Round 5, G4: N14 (ledger R-88, post hoc, optional, descriptive).
     N14 = J("n14_one_step_accounting.json")

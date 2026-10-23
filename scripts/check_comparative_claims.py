@@ -743,7 +743,7 @@ CLAIMS = [
     # every one of them wrong, and none of the twenty-two kinds above could see
     # it because no kind knew how many figures the document has.
     {"id": "C21.1", "kind": "figure_reference", "where": "whole paper",
-     "says": "This is the same computation Figure 1 plots"},
+     "says": "This is the same computation Figure 3 plots"},
 
     # ---- C22 population_partition -----------------------------------------
     # Section 6.3 opened "across all 26 runs the collapse is linear", said four

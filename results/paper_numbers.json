@@ -4135,6 +4135,10 @@
     "source": "results/paper_figures.json",
     "value": 8
   },
+  "fig8_n_runs": {
+    "source": "results/paper_figures.json",
+    "value": 75
+  },
   "floor_h368": {
     "source": "results/task4_arenas.json",
     "value": "0.9930"
@@ -8489,7 +8493,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 67
+    "value": 68
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -11745,7 +11749,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 969
+    "value": 975
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

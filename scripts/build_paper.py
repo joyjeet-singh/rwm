@@ -446,6 +446,18 @@ def main():
             "values rather than whole trajectories narrows " + str(N["bu_n_narrowed"]["value"])
             + " of the " + str(N["bu_cells"]["value"]) + " intervals.",
     }
+    # G10 (OUTLINE section figures): the new Figure 1 and the recast Figure 2.
+    CAPS["paper_fig7_findings.png"] = (
+        "(a) Our models, " + str(N["iters_main"]["value"]) + " iterations: teacher forcing minus rollout, relative L1 at h = "
+        + str(N["v2_diag_h"]["value"]) + ", by held-out episode (" + str(N["x3_n"]["value"])
+        + " trajectories; episode-level exact p " + str(N["n7_x3_ep_p_h368"]["value"]) + "). (b) Error over spread, released "
+        "checkpoint and fold ensembles (20 trajectories each); calibrated " + str(N["m65_calib_ratio"]["value"])
+        + "; dashed: per-member rollout, not released.")
+    CAPS["paper_fig8_sigma_adam.png"] = (
+        "The " + str(N["fig8_n_runs"]["value"]) + " collapse-record runs of " + str(N["iters_main"]["value"])
+        + " iterations. (a) The lower (solid) and upper (dashed) bound of $\\sigma$ per logged iteration; "
+        + str(N["n13_n_checkpoints_checked"]["value"]) + " saved checkpoints reproduce them. (b) Change in $\\log\\Delta$ per "
+        "iteration over the learning rate, with Adam's typical and worst-case bounds; the corrected objective flips the sign.")
     missing = [f for f in figs if f not in CAPS]
     assert not missing, f"figures with no caption: {missing}"
     # PLACEMENT AT FIRST REFERENCE (Session 5 addendum B.3).
@@ -470,12 +482,28 @@ def main():
     # placed, and that is a defect in the prose rather than something to paper
     # over -- it is asserted rather than silently appended.
     INTEXT = {
-        "paper_fig4_prereg_timeline.png": "1",
-        "paper_fig6_ab_by_horizon.png": "2",
-        "paper_fig1_calibration.png": "3",
+        "paper_fig7_findings.png": "1",
+        "paper_fig8_sigma_adam.png": "2",
+        "paper_fig4_prereg_timeline.png": "3",
         "paper_fig3_collapse.png": "4",
         "paper_fig2_sigma_profile.png": "5",
-        "paper_fig5_three_way.png": "6",
+        "paper_fig6_ab_by_horizon.png": "6",
+        "paper_fig1_calibration.png": "7",
+        "paper_fig5_three_way.png": "8",
+    }
+    # G10: where a figure is placed is its first reference at or after an anchor heading, so that a figure
+    # that moved to an appendix lands there rather than beside a main-text pointer. The numbers above
+    # follow document order, the order LaTeX gives them. The anchors are today's appendix letters; G15
+    # renames the appendices and moves these with them.
+    ANCHOR = {
+        "paper_fig7_findings.png": "## 1. Introduction",
+        "paper_fig8_sigma_adam.png": "### 6.3 ",
+        "paper_fig4_prereg_timeline.png": "## Appendix E ",
+        "paper_fig3_collapse.png": "## Appendix J ",
+        "paper_fig2_sigma_profile.png": "## Appendix K ",
+        "paper_fig6_ab_by_horizon.png": "## Appendix L ",
+        "paper_fig1_calibration.png": "## Appendix M ",
+        "paper_fig5_three_way.png": "## Appendix Q ",
     }
     assert sorted(INTEXT) == sorted(figs), (
         f"INTEXT does not cover the figures on disk: {sorted(INTEXT)} vs {sorted(figs)}")
@@ -488,7 +516,9 @@ def main():
         # "(?!\\d)" rather than "\\b": the prose refers to sub-panels as "Figure 5a",
         # where \\b fails between the digit and the letter, and a bare \\d+ would let
         # a search for Figure 1 match Figure 15.
-        _m = re.search(r"Figure~?\s*" + _n + r"(?!\d)", body)
+        _from = body.find(ANCHOR[f])
+        assert _from >= 0, f"{f}: anchor heading {ANCHOR[f]!r} not found"
+        _m = re.compile(r"Figure~?\s*" + _n + r"(?!\d)").search(body, _from)
         if not _m:
             unplaced.append(f)
             continue

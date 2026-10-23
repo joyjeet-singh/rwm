@@ -38,6 +38,10 @@ uncertainty-aware Robotic World Model reports one. This paper asks what that num
 and the title gives the answer: it gets the order of the model's errors right and their size
 wrong.
 
+Figure 1 shows one finding about each original paper. Panel (a) is the base paper's claim that training on rollouts beats teacher forcing, measured on episodes the models never saw: the gap at h = 368, one interval per fold and one point per held-out episode. Panel (b) asks whether the uncertainty-aware follow-up's spread grows with the horizon as the error does, under the released rollout and under a per-member rollout that is not the released method.
+
+![(a) Our models, 2,500 iterations: teacher forcing minus rollout, relative L1 at h = 368, by held-out episode (20 trajectories; episode-level exact p 0.0020). (b) Error over spread, released checkpoint and fold ensembles (20 trajectories each); calibrated 0.7979; dashed: per-member rollout, not released.](figures/paper_fig7_findings.png)
+
 We set out to reproduce the base paper: rebuild the proprioceptive dynamics model from scratch,
 check it against the released implementation, and test the central training claim, which holds at long horizons.
 The rebuild made a second question cheap to ask: *is the predicted σ calibrated?* Neither of the
@@ -52,14 +56,12 @@ the same, but what re-measuring the method reveals about where it is robust and 
 Three things distinguish it from a re-run of the authors' code. **We rebuilt rather than
 imported**, and matched the rebuild to the reference before any training (Appendix A), so a later
 discrepancy belongs to the method, not to our wiring. **Decision rules were committed to git
-before the data**, with timestamps a reader can check (§8, Figure 1); several returned verdicts against the original or could not settle the question, and we report each (Appendix E). **We keep our withdrawn findings in the record.** The ledger keeps
+before the data**, with timestamps a reader can check (§8, Figure 3); several returned verdicts against the original or could not settle the question, and we report each (Appendix E). **We keep our withdrawn findings in the record.** The ledger keeps
 24 superseded entries, each beside the evidence that withdrew it:
 nine claims withdrawn on evidence, eight framings withdrawn,
 and the rest early hypotheses closed as housekeeping (§8 and the supplementary
 `docs/BUILD_CHECKS.md`; every pre-registered rule, with its lead time and verdict, is in Appendix E). §9 gives the lessons in a form
 a practitioner can use without reading the rest.
-
-![Pre-registration lead time for every pre-registered rule whose data exist (Appendix E), with M-16's annotation beside its rule, from git commit timestamps on a symmetric-logarithmic axis. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. A lead of a few minutes means the rule was committed just before its runs were launched or its readings computed. The one negative bar, labelled the Task 3 duplication rule, is §7.4's duplication control, withdrawn as a pre-registration in this paper (§8).](figures/paper_fig4_prereg_timeline.png)
 
 **Contributions.**
 
@@ -332,11 +334,9 @@ true inputs, where the original's teacher forcing is $N = 1$, and the direction 
 definitions (Appendix L).
 At h = 100, the method's own imagination rollout length and the
 horizon everything in §6 is anchored to, the same three seeds give **2.58×**.
-Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts,
+Quoting one and not the other would be a choice, so we report the curve (Figure 6, Appendix L): same rollouts,
 same 3 seeds at 10,000 training iterations, same held-out arena,
 n_independent = 4, with a cluster bootstrap over whole trajectories. The two floor columns are each arm's error divided by the hold-last floor's, so a value below one beats the floor:
-
-![The autoregressive-versus-teacher-forcing advantage as a function of forecast horizon, out-of-sample over three seeds at 10,000 training iterations, on the held-out pair's 4 independent 400-step trajectories. (a) the ratio, which grows monotonically with depth: h = 368 is the end of a trend rather than a selected point, and the method's own rollout length of h = 100 sits partway along it. (b) the same comparison as a gap with its 95\% cluster-bootstrap interval over whole trajectories; the interval spans zero only at h = 1, where teacher forcing is ahead -- a lead a shorter evaluation unit resolves as real, not nominal (\S5, M-64). Rule M-23 was run at h = 368 on seed 1 of each arm; these three-seed values, and every other horizon, were computed afterwards.](figures/paper_fig6_ab_by_horizon.png)
 
 | h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A ÷ floor | B ÷ floor | episodes A leads |
 |---|---|---|---|---|---|---|---|---|---|
@@ -581,9 +581,7 @@ For each model we compute the mean predicted σ, the mean absolute realised erro
 of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.27% inside ±1σ (§3.1).
 
 On the held-out pair, the only arena on which our arms can be scored fairly (n_independent =
-4 400-step trajectories), every model's aleatoric head is overconfident by between one and four orders of magnitude over the whole 368-step rollout (Figure 3; Appendix M gives the four models' table); for the released checkpoint that arena is in-sample (the in-sample caveat of §3). That is the quantity §6.1 shows the method discards.
-
-![Calibration of all four models on the held-out pair's 4 independent 400-step trajectories, our arms at 2,500 training iterations. The released checkpoint trained on these episodes, so for it this arena is in-sample (\S3). (a) reliability: observed against predicted coverage, with the calibrated diagonal; the inset repeats the same points with observed coverage on a log scale, where the four models separate. (b) coverage at $\pm1\sigma$ against forecast horizon, log scale, against the 68.27\% a calibrated Gaussian gives. Every curve sits far below the diagonal and falls further with horizon. (c) the overconfidence factor for each model: mean absolute error divided by mean predicted $\sigma$, log scale, with the dashed line where error equals $\sigma$.](figures/paper_fig1_calibration.png)
+4 400-step trajectories), every model's aleatoric head is overconfident by between one and four orders of magnitude over the whole 368-step rollout (Figure 7; Appendix M gives the four models' table); for the released checkpoint that arena is in-sample (the in-sample caveat of §3). That is the quantity §6.1 shows the method discards.
 
 **The quantity the method does use is also uncalibrated.** It is measured on the released 5-member checkpoint over all 10 episodes, at n_independent = **20** non-overlapping 400-step trajectories. The checkpoint trained on all ten, so restricting it to the held-out pair would buy no independence and cost four fifths of the sample; Appendix M compares that version with this one.
 
@@ -670,9 +668,9 @@ the true noise and does not track it at all**, while under the authors' unused l
 recovers the true level to a median ratio of 0.9779, seed-variably. The rule returns
 **OBJECTIVE-DRIVEN**, which establishes the contrast and not the size of the recovery (Appendix J).
 
-We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside §5.2's sweep the log-σ range moves linearly in iteration count, falling under sampled MSE and rising under the corrected one (Figure 4a; Appendix J lists the runs and which the rate is fitted on).
+We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside §5.2's sweep the log-σ range moves linearly in iteration count, falling under sampled MSE and rising under the corrected one (Figure 4a; Appendix J lists the runs and which the rate is fitted on). Figure 2 shows the same runs through σ itself: panel (a) draws the two bounds σ can take, and panel (b) divides the change in log Δ per iteration by the learning rate, which is where the Adam optimiser's step size shows.
 
-![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for each of the 28 runs of the collapse family, which is every run of §5–§7 at the released width outside §5.2's sweep (Appendix J). The runs are drawn individually but are visually coincident within each objective, so the 28 read as two lines, one falling and one rising -- which is the point: the trajectory does not vary visibly from run to run. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
+![The 75 collapse-record runs of 2,500 iterations. (a) The lower (solid) and upper (dashed) bound of $\sigma$ per logged iteration; 342 saved checkpoints reproduce them. (b) Change in $\log\Delta$ per iteration over the learning rate, with Adam's typical and worst-case bounds; the corrected objective flips the sign.](figures/paper_fig8_sigma_adam.png)
 
 **Two different things are being explained here, and §6.5 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all 17 sampled-MSE runs at a rate of
@@ -741,10 +739,8 @@ So this section's claim is: **the magnitude failure is established and large; th
 **The structural excuse does not survive.** One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
 σ is flat while error grows (Figure 5; out-of-sample held-out pair, n_independent = 4 400-step trajectories, in-sample for the released checkpoint; Appendix K gives all four models): the faithful arm's σ *declines* (0.9241×) while its error grows
-3.49×. The coverage collapse in Figure 3(b) is therefore driven entirely by
+3.49×. The coverage collapse in Figure 7(b) is therefore driven entirely by
 growing error against a fixed σ.
-
-![Why the coverage collapse is a horizon effect. Both panels are normalised to forecast step 1, on the out-of-sample held-out pair, n\_independent = 4 400-step trajectories; our arms at 2,500 training iterations, the released checkpoint as released; it trained on these episodes, so for it this arena is in-sample (\S3). (a) predicted $\sigma$ barely moves, and for the faithful arm it declines. (b) realised error grows 1.79× to 6.11× over the same steps, across the four models. The gap between the panels is the collapse.](figures/paper_fig2_sigma_profile.png)
 
 ### 6.6 Ensemble disagreement beats the trivial baseline
 
@@ -953,10 +949,8 @@ released checkpoint, trained on the entire file, no held-out measurement is poss
 3.53%, by design, so that no held-out row leaks), raises training loss by
 21.57% where a duplication control adding the same number of exact copies raises it by
 0.90%. In rollout, over 32 cells (the held-out pair and the training episodes, 200 and 400-step trajectories, the 500 and 2,500-iteration checkpoints, n_independent 4 to 39), it is hurt in 0 and helped
-in 9 (Figure 6a), the signature of regularisation. At this rate the splices do
+in 9 (Figure 8a), the signature of regularisation. At this rate the splices do
 not harm rollout; the unmarked boundaries remain a real defect on leakage grounds (Appendix Q).
-
-![The contamination control. (a) outcome across 32 cells for each arm pair (the held-out pair and the training episodes, 200 and 400-step trajectories, the 500 and 2,500-iteration checkpoints, n\_independent 4 to 39), naive bootstrap on the left of each position and cluster bootstrap on the right; the duplication control is inert. (b) a different family, the 16 cells of \S5's A/B gap at the 500 and 2,500-iteration checkpoints (\S8): distribution of the ratio of cluster to naive confidence-interval width, with the mean marked. Resampling pooled seed × trajectory values rather than whole trajectories narrows 15 of the 16 intervals.](figures/paper_fig5_three_way.png)
 
 ---
 
@@ -974,7 +968,7 @@ supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 
 **An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (309 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 and Appendix E give the lead time for each of the 28 whose data exist; 27 are positive and 1 is not. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 3 and Appendix E give the lead time for each of the 28 whose data exist; 27 are positive and 1 is not. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn. A discipline that is only checked when it succeeds is not a discipline.
 
 **Nine claims withdrawn on evidence**, and eight framings withdrawn rather than numbers, out of 24 superseded entries kept in the record (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framings withdrawn is the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.5). Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called its strongest result.
 
@@ -1096,7 +1090,7 @@ The pre-registration argument in §8 rests on commit timestamps, and those are
 author-settable via `git commit --date`. That matters, because §8 is load-bearing. Two
 things address it. The
 supplementary material includes an anonymised `git log` covering every commit cited here, so the
-ordering in Figure 1 is checkable at review time. In the submitted paper and bundle, commit identifiers are replaced by stable
+ordering in Figure 3 is checkable at review time. In the submitted paper and bundle, commit identifiers are replaced by stable
 anonymous labels, with ordering, timestamps and subjects unchanged, and the map from label to
 identifier is disclosed on acceptance. And **the repository was archived by a
 third-party archive before submission**, under a permanent identifier whose visit timestamp is
@@ -1257,8 +1251,10 @@ or an instruction to open a 734 KB ledger, so here is the table. It is generated
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
-it tested, never by a stored hash: the first rules' commits are found by *subject*, because the history was rewritten once and two of the commits Figure 1 cites changed hash (Data and code), and the later rules' by the commit that introduced their ledger heading. Positive means the rule was in git before the data
-existed. This is the same computation Figure 1 plots. A rule whose data do not exist yet has neither a lead time nor a verdict, and Figure 1 leaves it out until they do.
+it tested, never by a stored hash: the first rules' commits are found by *subject*, because the history was rewritten once and two of the commits Figure 3 cites changed hash (Data and code), and the later rules' by the commit that introduced their ledger heading. Positive means the rule was in git before the data
+existed. This is the same computation Figure 3 plots. A rule whose data do not exist yet has neither a lead time nor a verdict, and Figure 3 leaves it out until they do.
+
+![Pre-registration lead time for every pre-registered rule whose data exist (Appendix E), with M-16's annotation beside its rule, from git commit timestamps on a symmetric-logarithmic axis. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. A lead of a few minutes means the rule was committed just before its runs were launched or its readings computed. The one negative bar, labelled the Task 3 duplication rule, is §7.4's duplication control, withdrawn as a pre-registration in this paper (§8).](figures/paper_fig4_prereg_timeline.png)
 
 | rule | what it governs | commit | lead time | tested by | verdict |
 |---|---|---|---|---|---|
@@ -1486,6 +1482,8 @@ gradient of exactly zero (`results/e4_sigma_gradients.json`, Appendix J).
 **§6.3's run-count summary.** We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside §5.2's sweep the log-σ range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
 every rate, and the 22 the rate is fitted on.
 
+![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for each of the 28 runs of the collapse family, which is every run of §5–§7 at the released width outside §5.2's sweep (Appendix J). The runs are drawn individually but are visually coincident within each objective, so the 28 read as two lines, one falling and one rising -- which is the point: the trajectory does not vary visibly from run to run. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
+
 **§6.3's permutation detail on the corrected objective.** Under the trajectory permutation test of §6.5, at h = 368, those counts give P = 0.0417 and 1.0000 out of sample, 0.0240 and 0.8746 in sample. The faithful arm's ordering is the one result in this family that points the same way in both arenas; it is also the weakest effect of the three, and it does not survive multiplicity correction either.
 
 **§6.4's source walkthrough.** `system_dynamics.py:34` builds **one**
@@ -1653,6 +1651,8 @@ uncertainty about step 368. It cannot report it about step 8 either. Inside the 
 σ is flat while error grows (Figure 5; out-of-sample held-out pair, n_independent = 4 400-step trajectories, in-sample for the released checkpoint; our arms at
 2,500 training iterations, the released checkpoint as released):
 
+![Why the coverage collapse is a horizon effect. Both panels are normalised to forecast step 1, on the out-of-sample held-out pair, n\_independent = 4 400-step trajectories; our arms at 2,500 training iterations, the released checkpoint as released; it trained on these episodes, so for it this arena is in-sample (\S3). (a) predicted $\sigma$ barely moves, and for the faithful arm it declines. (b) realised error grows 1.79× to 6.11× over the same steps, across the four models. The gap between the panels is the collapse.](figures/paper_fig2_sigma_profile.png)
+
 | model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
 |---|---|---|
 | faithful Arm A | 0.9241× | 3.49× |
@@ -1661,7 +1661,7 @@ uncertainty about step 368. It cannot report it about step 8 either. Inside the 
 | released checkpoint | 1.0007× | 1.79× |
 
 The faithful arm's σ *declines* (0.9241×) while its error grows
-3.49×. The coverage collapse in Figure 3(b) is therefore driven entirely by
+3.49×. The coverage collapse in Figure 7(b) is therefore driven entirely by
 growing error against a fixed σ.
 
 **The permutation tests.** **§6.5's P column is a permutation P, not a binomial one**, and the binomial P-values an earlier draft attached to its counts are withdrawn (`S-15`). A binomial null treats the 45 state dimensions as independent trials, and they are not: position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error, including one it was never paired with.
@@ -1679,6 +1679,10 @@ The null means explain why, and the explanation is the one that motivates §6.6.
 ---
 
 ## Appendix L — section 5 in detail: the floor, seeds and short horizon, the data budget, the baselines' pooled readings and the RSSM, the long-horizon cells and multiplicity, and the reimplementation beside the released checkpoint
+
+Figure 6 shows the autoregressive-versus-teacher-forcing advantage by forecast horizon, the curve §5 refers to.
+
+![The autoregressive-versus-teacher-forcing advantage as a function of forecast horizon, out-of-sample over three seeds at 10,000 training iterations, on the held-out pair's 4 independent 400-step trajectories. (a) the ratio, which grows monotonically with depth: h = 368 is the end of a trend rather than a selected point, and the method's own rollout length of h = 100 sits partway along it. (b) the same comparison as a gap with its 95\% cluster-bootstrap interval over whole trajectories; the interval spans zero only at h = 1, where teacher forcing is ahead -- a lead a shorter evaluation unit resolves as real, not nominal (\S5, M-64). Rule M-23 was run at h = 368 on seed 1 of each arm; these three-seed values, and every other horizon, were computed afterwards.](figures/paper_fig6_ab_by_horizon.png)
 
 **Three passages of §5 in full.**
 
@@ -1834,6 +1838,10 @@ give intervals only, coarse for the same reason (the n = 4 caveat of §3).
 
 ## Appendix M — section 6.2 in detail: every horizon, the held-out-pair version, the ensemble-5 arms, and the reading checks (the resampling unit, the spread across dimensions, the permutation column)
 
+Figure 7 shows the models' calibration on the held-out pair, the measurement §6.2 reports.
+
+![Calibration of all four models on the held-out pair's 4 independent 400-step trajectories, our arms at 2,500 training iterations. The released checkpoint trained on these episodes, so for it this arena is in-sample (\S3). (a) reliability: observed against predicted coverage, with the calibrated diagonal; the inset repeats the same points with observed coverage on a log scale, where the four models separate. (b) coverage at $\pm1\sigma$ against forecast horizon, log scale, against the 68.27\% a calibrated Gaussian gives. Every curve sits far below the diagonal and falls further with horizon. (c) the overconfidence factor for each model: mean absolute error divided by mean predicted $\sigma$, log scale, with the dashed line where error equals $\sigma$.](figures/paper_fig1_calibration.png)
+
 **The held-out-pair version (§6.2).** §6.2 states that restricting the checkpoint to the held-out pair would buy no independence and cost four fifths of the sample; that version, at n_independent = 4 400-step trajectories, is in the supplementary material (`results/task_b2_epistemic.json`). Its epistemic column agrees in direction with this one at all 6 of 6 horizons; its aleatoric column agrees at 4 of 6, flipping sign at h=8 and h=100, where both readings sit close to chance and the aleatoric σ is in any case 1,827× (h = 1) to 20,669× (h = 368) too small for its ordering to be the interesting quantity.
 
 **§6.2's four-model table.** On the held-out pair, the four models stood as follows.
@@ -1847,7 +1855,7 @@ give intervals only, coarse for the same reason (the n = 4 caveat of §3).
 
 *Our arms are at 2,500 training iterations; the released checkpoint is as released. Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = 4, quantised as the n = 4 caveat of §3 describes; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8).*
 
-**All four rows are the held-out pair** — the two episodes withheld from our own arms, n_independent = 4 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards. The released checkpoint's 7,878× is its whole 368-step rollout on those same 4 trajectories, for comparability with the arms; its best-sampled figure is the 11,683× below, cumulative to h = 100 at n_independent = 20. **Both are correct, on a different arena and a different horizon**, and neither is out-of-sample for that checkpoint (the in-sample caveat of §3).
+**All four rows are the held-out pair** — the two episodes withheld from our own arms, n_independent = 4 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 7); that is the quantity §6.1 shows the method discards. The released checkpoint's 7,878× is its whole 368-step rollout on those same 4 trajectories, for comparability with the arms; its best-sampled figure is the 11,683× below, cumulative to h = 100 at n_independent = 20. **Both are correct, on a different arena and a different horizon**, and neither is out-of-sample for that checkpoint (the in-sample caveat of §3).
 
 **§6.2's released-checkpoint table at every horizon.** Over all 10 episodes, n_independent = 20 non-overlapping 400-step trajectories, the released checkpoint as released:
 
@@ -2213,8 +2221,10 @@ dataset size.
 
 In rollout, across 32 cells (the held-out pair and the training episodes, 200 and 400-step trajectories, the 500 and 2,500-iteration checkpoints, n_independent 4 to 39, at two horizons on two
 metrics), contamination hurts in **0** of 32 and
-helps in 9 (Figure 6a). The control is inert, differing from clean in
+helps in 9 (Figure 8a). The control is inert, differing from clean in
 2 cells.
+
+![The contamination control. (a) outcome across 32 cells for each arm pair (the held-out pair and the training episodes, 200 and 400-step trajectories, the 500 and 2,500-iteration checkpoints, n\_independent 4 to 39), naive bootstrap on the left of each position and cluster bootstrap on the right; the duplication control is inert. (b) a different family, the 16 cells of \S5's A/B gap at the 500 and 2,500-iteration checkpoints (\S8): distribution of the ratio of cluster to naive confidence-interval width, with the mean marked. Resampling pooled seed × trajectory values rather than whole trajectories narrows 15 of the 16 intervals.](figures/paper_fig5_three_way.png)
 
 **So "costs nothing" is too strong.** Splicing raises training loss by 21.57% against
 duplication's 0.90%, and improves rollout in 9 of 32
