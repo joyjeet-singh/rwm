@@ -119,7 +119,9 @@
       "input_selection": "whole-file",
       "reason": "searches PAPER.md for the sentence stating the sum",
       "files_named_by_claims": [],
-      "surface_named_by_claims": []
+      "surface_named_by_claims": [
+        "docs/SUPPLEMENT.md"
+      ]
     },
     {
       "kind": "cell",

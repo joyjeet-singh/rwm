@@ -282,4 +282,49 @@ is never consumed.
 | Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair, n_independent = 4 400-step trajectories, +3.33 to +1.20; in-sample, n_independent = 16, +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×). The held-out values are not monotone: both peak at the second checkpoint (+6.74, 12.38×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, supplementary S2) |
 | Our trained models respond to the action they are given: fed another trajectory's actions, Arm A's error at h = 8 on its in-sample arena's 16 trajectories rises by +227.8% at 2,500 iterations and +676.3% at 10,000 (rule X2, pre-registered: RESPONDS TO THE ACTION) | M-84, M-85; `results/action_sensitivity.json` | A world model must respond to actions before it can serve policy optimisation; ours do on this test, though every action in the data comes from one policy and no policy is trained here (§7.2, Appendix V) |
 
+## S7 Compute: runtimes, the queues and their overlaps
+
+*Was the rest of the paper's Appendix B, after the reproduce commands; moved here to meet the length limit.*
+
+**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 33 runs takes **49.8 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 30.1 for the remaining 27 at 2,500. The longest single run is 4.4 hours. Every figure here is read from the `wall_clock_s` field of the run artifacts rather than estimated.
+
+**5 of those 33 runs, 1.9 hours, are `M-49`'s capacity-matched
+arm at `rnn_hidden_size` 124** rather than the released 256. They are part
+of this project's CPU spend and are counted in the total above — the other 47.9
+hours are the 28 runs at the released width, and the two parts are asserted to make the
+total rather than stated beside it. They are **not** part of the 28 runs of §6.3's σ-collapse family, because §6.3's rate is a property of one architecture and mixing widths into it would make "nearly identical across runs" a claim about two
+different models. Every run artifact records the width it trained at, and `paper_numbers.py`
+selects the collapse family by that field rather than by filename; `docs/BUILD_CHECKS.md`, shipped as supplementary, records how that selection came to be made.
+
+**The pre-submission runs are counted separately.** §5.2's sweep and §5.3's baselines added
+42 runs and **28.3 hours**: 24 sweep runs (13.4 h),
+then 9 teacher-forced and 9 autoregressive baseline runs
+(7.9 h and 7.0 h), read from `results/presubmission_runtime.json`. They
+are outside the total above, whose remainder that paragraph describes as released-width runs, which
+the baselines are not. Of these, 8 overlapped other CPU work a session logged,
+which inflates their wall clock and changes no weight; the artifact lists each overlap. Rule X1's Part C (§5.3) ran 2 more teacher-forced RSSM runs from a second queue, 4.2 hours, which are in neither total; 1 of them overlapped CPU work a session logged. Rules X3 and X4 (§5, §5.3) ran 30 more runs from a third queue, 26.5 hours (24 for X3, 17.7 h; 6 for X4, 8.8 h), also in neither total; 4 of them overlapped CPU work a session logged while that queue ran. That queue's log lost its first runner's lines when another session resumed it, so 4 of its runs are timed by the log and the rest by their weights files, as `results/presubmission_runtime.json` records run by run; the resumed runner's runs overlap no logged work because that session logged none. X1's rows follow the baselines', and X3's and X4's close the table. Per run family, every run at 2,500 iterations (the sweep's centre is §5's Arm A, whose runs are counted above):
+
+| run family | runs | hours per run, mean | runs that overlapped other CPU work |
+|---|---|---|---|
+| (1, 8) (§5.2) | 3 | 0.15 | 0 |
+| (2, 8) (§5.2) | 3 | 0.16 | 0 |
+| (8, 8) (§5.2) | 3 | 0.30 | 1 |
+| (16, 8) (§5.2) | 3 | 0.51 | 2 |
+| (32, 1) (§5.2) | 3 | 0.51 | 0 |
+| (32, 2) (§5.2) | 3 | 0.74 | 3 |
+| (32, 16) (§5.2) | 3 | 0.78 | 1 |
+| (32, 32) (§5.2) | 3 | 1.32 | 1 |
+| MLP, teacher-forced (§5.3) | 3 | 0.04 | 0 |
+| RSSM, teacher-forced (§5.3) | 3 | 1.88 | 0 |
+| transformer, teacher-forced (§5.3) | 3 | 0.71 | 0 |
+| MLP, autoregressive (§5.3) | 3 | 0.06 | 0 |
+| RSSM, autoregressive (§5.3) | 3 | 1.53 | 0 |
+| transformer, autoregressive (§5.3) | 3 | 0.74 | 0 |
+| RSSM, teacher-forced, PlaNet's KL settings (rule X1, §5.3) | 1 | 2.11 | 1 |
+| RSSM, teacher-forced, DreamerV2's layer-normalised cell (rule X1, §5.3) | 1 | 2.10 | 0 |
+| Arm A, autoregressive, each episode held out in turn (rule X3, §5) | 12 | 0.74 | 2 |
+| Arm B, teacher-forced, each episode held out in turn (rule X3, §5) | 12 | 0.73 | 2 |
+| MLP, autoregressive, size-matched (rule X4, §5.3) | 3 | 0.10 | 0 |
+| transformer, autoregressive, size-matched (rule X4, §5.3) | 3 | 2.83 | 0 |
+
 ---

@@ -1151,28 +1151,8 @@ What every downstream number rests on. Each level was passed before the next was
 
 `--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
-**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of recorded wall clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} runs at 10,000 iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. The longest single run is {{rt_longest}} hours. Every figure here is read from the `wall_clock_s` field of the run artifacts rather than estimated.
+Runtimes, the queues that produced them and the CPU work they overlapped are in supplementary S7.
 
-**{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m49}} hours, are `M-49`'s capacity-matched
-arm at `rnn_hidden_size` {{m49_width}}** rather than the released {{released_width}}. They are part
-of this project's CPU spend and are counted in the total above — the other {{rt_hours_released}}
-hours are the {{n_runs}} runs at the released width, and the two parts are asserted to make the
-total rather than stated beside it. They are **not** part of the {{n_runs}} runs of §6.3's σ-collapse family, because §6.3's rate is a property of one architecture and mixing widths into it would make "nearly identical across runs" a claim about two
-different models. Every run artifact records the width it trained at, and `paper_numbers.py`
-selects the collapse family by that field rather than by filename; `docs/BUILD_CHECKS.md`, shipped as supplementary, records how that selection came to be made.
-
-**The pre-submission runs are counted separately.** §5.2's sweep and §5.3's baselines added
-{{rt_pre_runs}} runs and **{{rt_pre_hours}} hours**: {{rt_sweep_runs}} sweep runs ({{rt_sweep_hours}} h),
-then {{rt_bl_tf_runs}} teacher-forced and {{rt_bl_ar_runs}} autoregressive baseline runs
-({{rt_bl_tf_hours}} h and {{rt_bl_ar_hours}} h), read from `results/presubmission_runtime.json`. They
-are outside the total above, whose remainder that paragraph describes as released-width runs, which
-the baselines are not. Of these, {{rt_pre_overlapped}} overlapped other CPU work a session logged,
-which inflates their wall clock and changes no weight; the artifact lists each overlap. Rule X1's Part C (§5.3) ran {{rt_x1c_runs}} more teacher-forced RSSM runs from a second queue, {{rt_x1c_hours}} hours, which are in neither total; {{rt_x1c_overlapped}} of them overlapped CPU work a session logged. Rules X3 and X4 (§5, §5.3) ran {{rt_r4_runs}} more runs from a third queue, {{rt_r4_hours}} hours ({{rt_r4_x3_runs}} for X3, {{rt_r4_x3_hours}} h; {{rt_r4_x4_runs}} for X4, {{rt_r4_x4_hours}} h), also in neither total; {{rt_r4_overlapped}} of them overlapped CPU work a session logged while that queue ran. That queue's log lost its first runner's lines when another session resumed it, so {{rt_r4_by_log}} of its runs are timed by the log and the rest by their weights files, as `results/presubmission_runtime.json` records run by run; the resumed runner's runs overlap no logged work because that session logged none. X1's rows follow the baselines', and X3's and X4's close the table. Per run family, every run at {{iters_main}} iterations (the sweep's centre is §5's Arm A, whose runs are counted above):
-
-| run family | runs | hours per run, mean | runs that overlapped other CPU work |
-|---|---|---|---|
-{{rt_pre_table}}
-{{rt_r4_table}}
 
 ## Appendix C — what testing the untested claims would require
 

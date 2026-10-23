@@ -11745,7 +11745,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 1015
+    "value": 1004
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

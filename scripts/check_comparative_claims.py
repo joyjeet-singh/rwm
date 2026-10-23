@@ -639,10 +639,10 @@ CLAIMS = [
     # Appendix B read "46 hours ... 20 for the 6 runs at 10,000 iterations and
     # 27 for the remaining 20". 20 + 27 = 47. All three came from wall_clock_s
     # and none was typed; each was rounded to whole hours independently.
-    {"id": "C15.1", "kind": "arithmetic", "where": "Appendix B",
+    {"id": "C15.1", "kind": "arithmetic", "where": "Appendix B -> supplementary S7 (G9)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "of recorded wall clock on two CPU cores",
      "total": "rt_hours", "parts": ["rt_hours_10k", "rt_hours_short"], "tol": 0.05},
-    {"id": "C15.2", "kind": "arithmetic", "where": "Appendix B",
+    {"id": "C15.2", "kind": "arithmetic", "where": "Appendix B -> supplementary S7 (G9)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "runs at 10,000 iterations and",
      "total": "rt_runs", "parts": ["rt_runs_10k", "rt_runs_short"], "tol": 0},
     {"id": "C15.3", "kind": "arithmetic", "where": "4 / Appendix D",
@@ -656,7 +656,7 @@ CLAIMS = [
     # total rather than a further part of the iteration-length split. Stated
     # beside a total it does not visibly sum with, it is free to drift. The
     # partition that does hold is total = matched + released, and it is asserted.
-    {"id": "C15.5", "kind": "arithmetic", "where": "Appendix B",
+    {"id": "C15.5", "kind": "arithmetic", "where": "Appendix B -> supplementary S7 (G9)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "runs at the released width, and the two parts are asserted to make the total",
      "total": "rt_hours",
      "parts": ["rt_hours_m49", "rt_hours_released"], "tol": 0.05},
