@@ -505,3 +505,35 @@ Body words / main-content pages: 17,804 / 26.88 (unchanged)
 Subagents: rwm-referee ×1
 Next: G9 (Sonnet 5.5, medium), only after DECISIONS.md#G8-outline is approved.
 Decisions for user: DECISIONS.md#G8-outline
+
+## G9 — 2026-10-23 12:40 — Sonnet 5.5, medium — status: COMPLETE
+Commits:
+dea227c [G9][1] Appendix C to supplementary S1
+f5a9d7d [G9][2] Appendix R to S2
+08d6205 [G9][3] Appendix S to S3
+721ee24 [G9][4] App. I related work to S4
+a7c26e0 [G9][5] App. H §6.1 in full to S5
+d133386 [G9][6] App. H Measurements rows to S6
+9c6ad9e [G9][7] App. B runtime, M-49 width, pre-submission runs to S7
+69d714a [G9][8-11] Data-and-code history paragraphs, §10, §8 reproducibility paragraph to S8–S11
+4efad15 [G9][12] App. W body to S12
+effbb1a [G9][13] Drafting-history framings to BUILD_CHECKS
+(the closing commit, [G9][close], follows this entry: it holds the SAFE_ORGS fix, regenerated bundle records, this log and the checkpoint)
+Review items closed: RV06, RV08 (the bulk moves; G14 and G15 finish the appendices)
+Done:
+- **All 13 items of OUTLINE §supplement-migration**, cut verbatim with keys intact into S1–S12 or the BUILD_CHECKS "Moved from the paper body" list. Each item was built and gated before its commit.
+- **How this session ran.** It spanned two conversations: the first did items 1–13 (commits above); this one found the checkpoint still reading "after G8", did the step 3 bundle checks and closed the session.
+- **Step 3.** `build_supplementary.py` first refused: `github.com/aangelopoulos/conformal-prediction` appeared in `results/t1_bibliography_verified.json` and `scripts/t1_bibliography.py`. It is the cited Angelopoulos & Bates tutorial's own code link, stored verbatim from its arXiv comment field by G7's verification, so it identifies them, not us. Added `aangelopoulos` to `SAFE_ORGS` in both `build_supplementary.py` and `make_anon_bundle.py` (the `martius-lab` precedent, kept in step as FILE_MAP §10 says). Both then pass: supplementary 597 files scanned, git log clean, zip written (599 entries, 26.8 MB, under TMLR's 100 MB); anon bundle `PASS — zero identifying strings`. `docs/SUPPLEMENT.md` is in `docs/`, which both include (`supplementary.zip` lists it). `f5_pdf_channels.py`: no identifying strings on three channels. This widened an anonymity allow-list, so it is flagged for you.
+- `supplementary_anon.zip` was not rewritten (dry run, no `--zip`).
+Build/gates: pass (fast build → eight prose checks, round-5 gates, supplement self-test, placeholders → fast build; `PAPER.md`, `PAPER.tex`, `MODEL_CARD.md`, `README.md`, `BUILD_CHECKS.md`, `SUPPLEMENT.md` byte-identical across the second and third build). `xref_sweep` 0 suspect; `keys` 0 missing.
+Round-5 gates (report mode until G16): pages 26.3/12, abstract 300/19, ids 93, once 33, sig 507, keys missing 0
+Paper numbers changed: none
+New keys: none
+Ledger: none
+Re-anchored checks: C15.1, C15.2, C15.5 (item 7), C5.1, C10.2 (item 3) to the supplement through their surface field, a1_consent_letter's passage (item 5) to the supplement template; expectations unchanged. Earlier log lines for items 1–13 are in the commit messages.
+CPU jobs over 1 min: the two bundle builds, about 6 min each (contended with the X11 queue)
+Queue (Y5): not checked this session (no CPU contention measured beyond the above)
+Body words / main-content pages: 18,114 / 26.3 (see LENGTH_LOG for the counting method)
+Subagents: none
+Next: G10 (Sonnet 5.5, high): figures.
+Decisions for user: none (the SAFE_ORGS addition is reported above for your awareness)

@@ -44,6 +44,10 @@ URL = re.compile(r"github\.com/([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+", re.I)
 # them would make the one file whose purpose is accurate metadata inaccurate.
 SAFE_ORGS = {"leggedrobotics", "jmlrorg", "isaac-sim", "goodfeli",
              "jannerm", "martius-lab",
+             # A CITED paper's own code repository (Angelopoulos and Bates, arXiv
+             # 2107.07511), recorded verbatim from its arXiv comment field by the
+             # bibliography verification (G7). It identifies THEM, not us.
+             "aangelopoulos",
              # The subjects of the Q1 survey (results/q1_pets_descendants.json, cited
              # by section 2): public repositories examined for the PETS bounded-head
              # construction, each recorded with its URL so the survey's --verify path

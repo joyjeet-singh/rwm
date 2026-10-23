@@ -249,6 +249,10 @@ SAFE_ORGS = {"leggedrobotics", "jmlrorg", "isaac-sim", "goodfeli", "jannerm",
              # us, and removing it would mean recording their metadata inaccurately
              # in the one file whose purpose is that the metadata is accurate.
              "martius-lab",
+             # A CITED paper's own code repository (Angelopoulos and Bates, arXiv
+             # 2107.07511), recorded verbatim from its arXiv comment field by the
+             # bibliography verification (G7). It identifies THEM, not us.
+             "aangelopoulos",
              # The subjects of the Q1 survey (results/q1_pets_descendants.json, cited
              # by section 2): public repositories examined for the PETS bounded-head
              # construction, each recorded with its URL so the survey's --verify path
