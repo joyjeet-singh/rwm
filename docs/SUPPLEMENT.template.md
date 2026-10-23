@@ -309,4 +309,56 @@ which inflates their wall clock and changes no weight; the artifact lists each o
 {{rt_pre_table}}
 {{rt_r4_table}}
 
+## S8 The repository's history
+
+*Was a paragraph of the paper's Data and code section; moved here to meet the length limit.*
+
+**The repository's history was rewritten once, and §8 depends on that history, so we say
+what changed.** A supplementary file quoting private correspondence was committed and
+briefly published before consent to quote it had been given; it was purged from the history
+rather than merely deleted, because a deletion commit leaves the content recoverable from a
+public repository indefinitely. Purging a path rewrites every commit from the one that
+introduced it onward, so **{{f1_n_kept}} of the {{f1_n_cited}} commits Figure 1 cites keep their identifiers and {{f1_n_moved_word}} do not**: the {{f1_n_moved_word}} made between that file's introduction and the purge. Timestamps, content and ordering are unchanged; only the hashes moved, and for that reason Figure 1 finds its first rules' commits by subject and the later ones by the commit that introduced their ledger heading, never by a stored hash alone. The transcript itself reaches reviewers in the anonymised
+supplementary archive, which is not published.
+
+## S9 Anonymity
+
+*Was a paragraph of the paper's Data and code section; moved here to meet the length limit.*
+
+**On anonymity.** The code and data for this work are public, as they are for most reproducibility work, and the submission is anonymised: its bundle is scrubbed, asserted clean of a deny-list, and excludes the files that carry identity. Why the repository stays public, which §8's checkability depends on, is recorded in `docs/DOUBLE_BLIND_DECISION.md`.
+
+## S10 Broader impact
+
+*Was the paper's section 10. TMLR asks for a broader-impact statement only where there is a significant risk of harm, and this reproduction creates none, so the paper carries none (ruling G8-outline).*
+
+## 10. Broader impact
+
+This is a reproduction of a dynamics model on public simulation data. It creates no new
+capability, uses no personal data and deploys nothing.
+
+The findings bear on one practice, and it is not the one the original method uses. The follow-up
+applies ensemble disagreement as a reward penalty. For that use, our measurements support its
+ordering (§6.6), with the qualification that a free signal ranks error nearly as well. A different
+use is reading the same number as an error bar, a safety margin, or a trigger for handing control
+to a fallback controller. The original papers neither make nor recommend that use, and it is the
+use our measurements rule out. At the method's own {{v2_deploy_h}}-step horizon, the disagreement
+is {{d1n_epi_ratio_h100}}× smaller than realised error and covers {{d1n_epi_cov1_h100}}% of
+outcomes where {{v3_cov_nominal1}}% is expected. We say this because the released checkpoint
+exposes the quantity, and it is easy to read as an interval.
+
+We do not claim the original method is unsafe. No policy is trained here. The one policy-free
+test we ran found that correcting the scale per horizon leaves every pairwise ordering of accumulated penalty unchanged on the available trajectories, a test whose null is partly structural (§11).
+
+## S11 Reproducibility accounting and the build's own checks
+
+*Was a paragraph of the paper's section 8; moved here to meet the length limit.*
+
+**Reproducibility, and a build that checks its own prose.** Every measured number in this paper is
+substituted from an artifact on each build, and a quick run on a clean clone (`./reproduce.sh --quick --force`, which skips
+training) rewrites {{ver_claim_pct}}% of the numeric values under `results/` that the comparison counts; the rest are carried in
+and prove nothing about reproduction. **The number of regenerated values that differ and are
+themselves a measurement, a statistic or the verdict of a test is {{ver_part_sci}}.** The clean-clone gate requires that
+none differ at all; {{ver_differing}} do, so it fails and is published as failing. The supplementary
+`docs/BUILD_CHECKS.md` gives the accounting and the checks the build runs on this paper's own prose.
+
 ---

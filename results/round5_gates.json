@@ -1,13 +1,13 @@
 {
  "mode": "report",
- "summary": "pages 27.06/12, abstract 300/19, ids 93, once 33, sig 510, keys missing 0",
+ "summary": "pages 26.3/12, abstract 300/19, ids 93, once 33, sig 507, keys missing 0",
  "gates": {
   "pages": {
    "pass": false,
-   "value": 27.06,
+   "value": 26.3,
    "max": 12.0,
-   "references_page": 28,
-   "references_y": 659.9150000000001
+   "references_page": 27,
+   "references_y": 510.0839999999996
   },
   "abstract": {
    "pass": false,
@@ -283,7 +283,7 @@
      "key": "d1n_epi_ratio_h100",
      "interval": false,
      "abstract": 1,
-     "prose": 7,
+     "prose": 6,
      "table_caption": 1
     },
     {
@@ -395,7 +395,7 @@
      "key": "v3_cov_nominal1",
      "interval": false,
      "abstract": 0,
-     "prose": 7,
+     "prose": 6,
      "table_caption": 0
     },
     {
@@ -456,8 +456,8 @@
   },
   "sig": {
    "pass": false,
-   "n": 510,
-   "n_decimals": 618,
+   "n": 507,
+   "n_decimals": 614,
    "examples": [
     "4.61",
     "0.133",
