@@ -1329,8 +1329,7 @@ The σ collapse is linear in iteration count and its rate is nearly identical ac
 
 ## Appendix G — the metrics' formulas, the two nRMSE aggregations, and the comparison one of them inverted
 
-**The metrics' formulas (§3.1).** §3.1 states each metric in words. Its formulas, as implemented, and
-the check on the coverage nominal stood there as follows.
+**The metrics' formulas (§3.1).**
 
 **Relative-L1** is the reference's own metric, reproduced in behaviour (`model_training.py:203`) so
 that our numbers are comparable to the upstream's printed one. On config-normalised states, per
@@ -1479,8 +1478,6 @@ hypothesis to reach widely infers more than the evidence supports.
 
 ## Appendix J — the σ = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, the runs behind the collapse rate, and section 6.4's source walkthrough
 
-**What §6.3 and §6.4 keep, and what is here.** §6.3 keeps its derivation, the synthetic-noise verdict and the objective's two effects; §6.4 keeps the 89.15% sharing in its parameter counts and the mechanism. The passages below stood there as follows; the first two summarise sections of this appendix that state them in full.
-
 **§6.3's term-by-term summary.** **The derivation above covers two terms, and the objective has 7.** Each term,
 back-propagated alone on one real batch, confirms it: 4 are live under the released
 configuration, exactly 2 reach σ (`state` and `bound`), and the other 5 give a
@@ -1614,8 +1611,6 @@ capacity-matched arm:
 
 ## Appendix K — section 6.5's two tables, and the per-dimension permutation tests behind them
 
-**What §6.5 keeps, and what is here.** §6.5 keeps the teacher-forced arm's finding, the epistemic term's, its claim and the structural-excuse result. Its two tables and the paragraphs around them stood there as follows.
-
 Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms at 2,500 training iterations; the released checkpoint as released):
 
 | model | σ variation across inputs (CoV) | dims with r(σ, error) > 0 at h=368, held-out pair | perm P at h=368, held-out pair | perm P at h=368, training episodes |
@@ -1685,8 +1680,7 @@ The null means explain why, and the explanation is the one that motivates §6.6.
 
 ## Appendix L — section 5 in detail: the floor, seeds and short horizon, the data budget, the baselines' pooled readings and the RSSM, the long-horizon cells and multiplicity, and the reimplementation beside the released checkpoint
 
-**Three passages of §5 in full.** §5 keeps two sentences of each of the next three paragraphs, which
-stood there as follows.
+**Three passages of §5 in full.**
 
 *Against a baseline, because neither number means anything without one.* The hold-last
 floor, predicting that nothing changes, scores **0.9930** in the h = 368
@@ -1732,8 +1726,7 @@ A dynamics model trained on 0.133% of the reference's data still reproduces the 
 
 **Three limits.** It is not a reproduction of the 6,000,000-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's 6,000,000 transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
 
-**Two passages of §5.3 in full.** §5.3 keeps a short summary of each, with every verdict; they
-stood there as follows.
+**Two passages of §5.3 in full.**
 
 On the in-sample arena's 16 trajectories, with nRMSE pooled as §3.1 defines it (computed afterwards, post hoc; ledger R-77), two readings differ from the per-trajectory average the rules' evaluator used. Teacher-forced, at h = 1 all three baselines are ahead of RWM: D, signed as the rules sign it (positive favours RWM), is -0.160 [-0.286, -0.002] for the MLP, -0.186 [-0.328, -0.013] for the RSSM and -0.052 [-0.089, -0.005] for the transformer, so M-75's reading there is DOES NOT REPRODUCE where the average gave CANNOT BE SETTLED: the same one-step lead for teacher forcing as §5's. Trained autoregressively, the MLP's deficit at h = 100 is no longer resolved (+0.017 [-0.017, +0.044]), so M-76's reading there is PARTIAL where the average gave RWM AHEAD OF ALL THREE. Neither changes a verdict; both rules govern at h = 368 on relative-L1.
 
@@ -1841,8 +1834,6 @@ give intervals only, coarse for the same reason (the n = 4 caveat of §3).
 
 ## Appendix M — section 6.2 in detail: every horizon, the held-out-pair version, the ensemble-5 arms, and the reading checks (the resampling unit, the spread across dimensions, the permutation column)
 
-**What §6.2 keeps, and what is here.** §6.2 keeps its released-checkpoint table's h = 1 and h = 100 rows and two sentences on the ensemble-5 arms. The rest stood there as follows; §6.2's note on the permutation column read: "The last column of the released checkpoint's table gives permutation P-values over whole trajectories; none survives Holm–Bonferroni across the arena's 30 cells, so it is a consistency check on direction (Appendix M)."
-
 **The held-out-pair version (§6.2).** §6.2 states that restricting the checkpoint to the held-out pair would buy no independence and cost four fifths of the sample; that version, at n_independent = 4 400-step trajectories, is in the supplementary material (`results/task_b2_epistemic.json`). Its epistemic column agrees in direction with this one at all 6 of 6 horizons; its aleatoric column agrees at 4 of 6, flipping sign at h=8 and h=100, where both readings sit close to chance and the aleatoric σ is in any case 1,827× (h = 1) to 20,669× (h = 368) too small for its ordering to be the interesting quantity.
 
 **§6.2's four-model table.** On the held-out pair, the four models stood as follows.
@@ -1893,8 +1884,6 @@ The last column of §6.2's released-checkpoint table gives permutation P-values 
 ---
 
 ## Appendix N — section 6.6 in detail and its robustness checks: r_dd per horizon, the free baselines' cost, depth controls, the decomposition, rule M-43, and the within-step control
-
-**What §6.6 keeps, and what is here.** §6.6 keeps the counter table, the paired test, the free-baselines verdict and rule X6, with every verdict. The passages below stood there as follows; rule M-43's is stated in full again later in this appendix.
 
 **Why §6.6's paired test, not overlapping intervals.** Comparing the two marginal intervals for overlap is the wrong comparison: both correlations are measured on the *same* trajectories, so their sampling errors move together and the marginal intervals are needlessly conservative. The paired difference, resampling whole trajectories and recomputing *both* correlations inside each draw, is the appropriate and more powerful test.
 
@@ -2021,7 +2010,7 @@ opposite, and `M-54` records the correction.
 
 ## Appendix O — rule M-44 in full: an ensemble that shares nothing
 
-**§6.8's table for rule M-44.** §6.8 keeps the verdict and the h = 100 figures; the table stood there as follows.
+**The table for rule M-44.**
 
 | h | independent err/σ | shared-trunk err/σ | independent ±1σ | shared-trunk ±1σ |
 |---|---|---|---|---|
@@ -2104,7 +2093,7 @@ doing and it is not sufficient; §6.7's per-horizon multiplier remains the only 
 
 ## Appendix P — rule M-68 in full: both fixes on the same models
 
-**§6.8's table for rule M-68.** §6.8 keeps the verdict; the table stood there as follows.
+**The table for rule M-68.**
 
 | h | combined err/σ | shared-trunk err/σ | combined ±1σ | shared ±1σ | combined ±2σ | shared ±2σ |
 |---|---|---|---|---|---|---|
@@ -2247,8 +2236,6 @@ This appendix is now section S3 of the supplementary material (`docs/SUPPLEMENT.
 
 ## Appendix T — section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)
 
-**What §6.7 keeps, and what is here.** §6.7 keeps the two senses of unseen, its verdicts, the cautions and rule X7. The passages below stood there as follows.
-
 **The constant scalar (§6.7).** On the released checkpoint, each scalar fitted on one held-out episode's 2 trajectories and scored on the other's: fitting at one step works at one step and nowhere else. On the epistemic term — the quantity the
 method uses — a scalar of 5.08–5.82 brings h=1 coverage to
 63–74%, essentially calibrated against the 68.27% target,
@@ -2332,8 +2319,6 @@ iteration is steady training time per iteration, timed
 without contention; the compute ratio is the centre's total training computation over the configuration's.
 
 ## Appendix V — rule X2, and section 7.2's figures for our models: whether they respond to the action they are given
-
-**What §7.2 keeps, and what is here.** §7.2 keeps the defect, its cost to the released checkpoint in both metrics and arenas, the fix, and rule X2's verdict with its caveat. The passages below stood there as follows.
 
 **The held-out pair's per-trajectory values (§7.2).** §7.2's sentence on the held-out pair at h = 368 ended "…, with per-trajectory values +0.8%, +9.8%, +14.8%, +6.5% and +2.4%, +5.8%, +8.3%, -0.3%", relative-L1 and nRMSE.
 

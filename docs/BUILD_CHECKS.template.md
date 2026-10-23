@@ -482,3 +482,15 @@ claims stayed, and only their history moved.
   than listed by hand because a hand-maintained list of what a paper cites drifts exactly as a
   hand-typed count does, and this one had: six entries cited in §2's prose appeared in no reference
   entry while the note claimed all of them verified.
+
+- **[Appendices, framing moved by G9 item 13]** **What §6.3 and §6.4 keep, and what is here.** §6.3 keeps its derivation, the synthetic-noise verdict and the objective's two effects; §6.4 keeps the {{v1_shared_pct}}% sharing in its parameter counts and the mechanism. The passages below stood there as follows; the first two summarise sections of this appendix that state them in full.
+- **[Appendices, framing moved by G9 item 13]** **What §6.5 keeps, and what is here.** §6.5 keeps the teacher-forced arm's finding, the epistemic term's, its claim and the structural-excuse result. Its two tables and the paragraphs around them stood there as follows.
+- **[Appendices, framing moved by G9 item 13]** **What §6.2 keeps, and what is here.** §6.2 keeps its released-checkpoint table's h = 1 and h = {{v2_deploy_h}} rows and two sentences on the ensemble-5 arms. The rest stood there as follows; §6.2's note on the permutation column read: "The last column of the released checkpoint's table gives permutation P-values over whole trajectories; none survives Holm–Bonferroni across the arena's {{perm_all_holm_n}} cells, so it is a consistency check on direction (Appendix M)."
+- **[Appendices, framing moved by G9 item 13]** **What §6.6 keeps, and what is here.** §6.6 keeps the counter table, the paired test, the free-baselines verdict and rule X6, with every verdict. The passages below stood there as follows; rule M-43's is stated in full again later in this appendix.
+- **[Appendices, framing moved by G9 item 13]** **What §6.7 keeps, and what is here.** §6.7 keeps the two senses of unseen, its verdicts, the cautions and rule X7. The passages below stood there as follows.
+- **[Appendices, framing moved by G9 item 13]** **What §7.2 keeps, and what is here.** §7.2 keeps the defect, its cost to the released checkpoint in both metrics and arenas, the fix, and rule X2's verdict with its caveat. The passages below stood there as follows.
+- **[Appendices, framing moved by G9 item 13]** **§6.8's table for rule M-44.** §6.8 keeps the verdict and the h = {{v2_deploy_h}} figures; the table stood there as follows.
+- **[Appendices, framing moved by G9 item 13]** **§6.8's table for rule M-68.** §6.8 keeps the verdict; the table stood there as follows.
+- **[Appendices, framing moved by G9 item 13]** **The metrics' formulas (§3.1).** §3.1 states each metric in words. Its formulas, as implemented, and the check on the coverage nominal stood there as follows.
+- **[Appendices, framing moved by G9 item 13]** **Three passages of §5 in full.** §5 keeps two sentences of each of the next three paragraphs, which stood there as follows.
+- **[Appendices, framing moved by G9 item 13]** **Two passages of §5.3 in full.** §5.3 keeps a short summary of each, with every verdict; they stood there as follows.

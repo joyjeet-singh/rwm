@@ -725,7 +725,7 @@ So the finding is not that the release is internally inconsistent. It is that \t
 
 \section{The metrics' formulas, the two nRMSE aggregations, and the comparison one of them inverted}
 
-\textbf{The metrics' formulas (\S{}3.1).} \S{}3.1 states each metric in words. Its formulas, as implemented, and the check on the coverage nominal stood there as follows.
+\textbf{The metrics' formulas (\S{}3.1).}
 
 \textbf{Relative-L1} is the reference's own metric, reproduced in behaviour (\texttt{model\_training.py:203}) so that our numbers are comparable to the upstream's printed one. On config-normalised states, per forecast step,
 
@@ -809,8 +809,6 @@ What is \textbf{not} inherited is the objective, and one line of the bounds. PET
 
 \section{The $\sigma$ = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, the runs behind the collapse rate, and section 6.4's source walkthrough}
 
-\textbf{What \S{}6.3 and \S{}6.4 keep, and what is here.} \S{}6.3 keeps its derivation, the synthetic-noise verdict and the objective's two effects; \S{}6.4 keeps the 89.15\% sharing in its parameter counts and the mechanism. The passages below stood there as follows; the first two summarise sections of this appendix that state them in full.
-
 \textbf{\S{}6.3's term-by-term summary.} \textbf{The derivation above covers two terms, and the objective has 7.} Each term, back-propagated alone on one real batch, confirms it: 4 are live under the released configuration, exactly 2 reach $\sigma$ (\texttt{state} and \texttt{bound}), and the other 5 give a gradient of exactly zero (\texttt{results/\allowbreak{}e4\_\allowbreak{}sigma\_\allowbreak{}gradients\allowbreak{}.json}, Appendix J).
 
 \textbf{\S{}6.3's run-count summary.} We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside \S{}5.2's sweep the log-$\sigma$ range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from every rate, and the 22 the rate is fitted on.
@@ -883,8 +881,6 @@ Arm B & 10,000 & 1 & mse & clean & 256 & 3 & 0, 1, 2 \\
 
 \section{Section 6.5's two tables, and the per-dimension permutation tests behind them}
 
-\textbf{What \S{}6.5 keeps, and what is here.} \S{}6.5 keeps the teacher-forced arm's finding, the epistemic term's, its claim and the structural-excuse result. Its two tables and the paragraphs around them stood there as follows.
-
 Adding the teacher-forced arm, trained for \S{}5, sharpens the finding (our arms at 2,500 training iterations; the released checkpoint as released):
 
 \begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
@@ -938,7 +934,7 @@ The null means explain why, and the explanation is the one that motivates \S{}6.
 
 \section{Section 5 in detail: the floor, seeds and short horizon, the data budget, the baselines' pooled readings and the RSSM, the long-horizon cells and multiplicity, and the reimplementation beside the released checkpoint}
 
-\textbf{Three passages of \S{}5 in full.} \S{}5 keeps two sentences of each of the next three paragraphs, which stood there as follows.
+\textbf{Three passages of \S{}5 in full.}
 
 \emph{Against a baseline, because neither number means anything without one.} The hold-last floor, predicting that nothing changes, scores \textbf{0.9930} in the h = 368 cell, and autoregressive training beats it by \textbf{2.8$\times$} there and by 2.0$\times$ at h = 100. \textbf{Teacher forcing is 1.66$\times$ worse than assuming nothing changes at all} at h = 368, and 1.27$\times$ worse at h = 100: the arm that reaches a lower training loss predicts the future worse than a model that makes no prediction, at every horizon we measured on the 400-step unit, the sharper statement of what exposure bias costs here; but on M-64's shorter units, each 32 + h rows long and non-overlapping (60 at h = 1, 50 at h = 8, 30 at h = 32, 14 at h = 100 and 12 at h = 128 on these episodes), at the same checkpoint and on the same two episodes, it beats the floor at h = 1, 8, 32 and 100 and loses to it only at the longest horizon those units reach, so that statement holds on the 400-step unit and not on the shorter one. \textbf{The floor is not a weak baseline everywhere}: at h=1 it beats the autoregressive arm as well, scoring 0.0796 at h = 1 against autoregressive training's 0.1447, the only horizon where the autoregressive arm loses to predicting no change on the 400-step unit; on the 33-row unit both arms beat the floor at h = 1 (0.1315 and 0.1121 against 0.1687). At 50 Hz one step is 20 ms and the state barely moves, so that is what one should expect.
 
@@ -956,7 +952,7 @@ A dynamics model trained on 0.133\% of the reference's data still reproduces the
 
 \textbf{Three limits.} It is not a reproduction of the 6,000,000-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's 6,000,000 transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
 
-\textbf{Two passages of \S{}5.3 in full.} \S{}5.3 keeps a short summary of each, with every verdict; they stood there as follows.
+\textbf{Two passages of \S{}5.3 in full.}
 
 On the in-sample arena's 16 trajectories, with nRMSE pooled as \S{}3.1 defines it (computed afterwards, post hoc; ledger R-77), two readings differ from the per-trajectory average the rules' evaluator used. Teacher-forced, at h = 1 all three baselines are ahead of RWM: D, signed as the rules sign it (positive favours RWM), is -0.160 [-0.286, -0.002] for the MLP, -0.186 [-0.328, -0.013] for the RSSM and -0.052 [-0.089, -0.005] for the transformer, so M-75's reading there is DOES NOT REPRODUCE where the average gave CANNOT BE SETTLED: the same one-step lead for teacher forcing as \S{}5's. Trained autoregressively, the MLP's deficit at h = 100 is no longer resolved (+0.017 [-0.017, +0.044]), so M-76's reading there is PARTIAL where the average gave RWM AHEAD OF ALL THREE. Neither changes a verdict; both rules govern at h = 368 on relative-L1.
 
@@ -1021,8 +1017,6 @@ all five, pooled & 20 & \textbf{+2.2275 [+1.3683, +3.5053]} & 10 of 10 positive,
 
 \section{Section 6.2 in detail: every horizon, the held-out-pair version, the ensemble-5 arms, and the reading checks (the resampling unit, the spread across dimensions, the permutation column)}
 
-\textbf{What \S{}6.2 keeps, and what is here.} \S{}6.2 keeps its released-checkpoint table's h = 1 and h = 100 rows and two sentences on the ensemble-5 arms. The rest stood there as follows; \S{}6.2's note on the permutation column read: "The last column of the released checkpoint's table gives permutation P-values over whole trajectories; none survives Holm--Bonferroni across the arena's 30 cells, so it is a consistency check on direction (Appendix M)."
-
 \textbf{The held-out-pair version (\S{}6.2).} \S{}6.2 states that restricting the checkpoint to the held-out pair would buy no independence and cost four fifths of the sample; that version, at n\_independent = 4 400-step trajectories, is in the supplementary material (\texttt{results/\allowbreak{}task\_\allowbreak{}b2\_\allowbreak{}epistemic\allowbreak{}.json}). Its epistemic column agrees in direction with this one at all 6 of 6 horizons; its aleatoric column agrees at 4 of 6, flipping sign at h=8 and h=100, where both readings sit close to chance and the aleatoric $\sigma$ is in any case 1,827$\times$ (h = 1) to 20,669$\times$ (h = 368) too small for its ordering to be the interesting quantity.
 
 \textbf{\S{}6.2's four-model table.} On the held-out pair, the four models stood as follows.
@@ -1084,8 +1078,6 @@ The last column of \S{}6.2's released-checkpoint table gives permutation P-value
 
 
 \section{Section 6.6 in detail and its robustness checks: r\_dd per horizon, the free baselines' cost, depth controls, the decomposition, rule M-43, and the within-step control}
-
-\textbf{What \S{}6.6 keeps, and what is here.} \S{}6.6 keeps the counter table, the paired test, the free-baselines verdict and rule X6, with every verdict. The passages below stood there as follows; rule M-43's is stated in full again later in this appendix.
 
 \textbf{Why \S{}6.6's paired test, not overlapping intervals.} Comparing the two marginal intervals for overlap is the wrong comparison: both correlations are measured on the \emph{same} trajectories, so their sampling errors move together and the marginal intervals are needlessly conservative. The paired difference, resampling whole trajectories and recomputing \emph{both} correlations inside each draw, is the appropriate and more powerful test.
 
@@ -1160,7 +1152,7 @@ Two qualifications go with that. The within-rollout effect is \textbf{materially
 
 \section{Rule M-44 in full: an ensemble that shares nothing}
 
-\textbf{\S{}6.8's table for rule M-44.} \S{}6.8 keeps the verdict and the h = 100 figures; the table stood there as follows.
+\textbf{The table for rule M-44.}
 
 \begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
 \begin{tabular}{lllll}
@@ -1209,7 +1201,7 @@ h & $\sigma$ larger by & error smaller by & total & share from $\sigma$ & share 
 
 \section{Rule M-68 in full: both fixes on the same models}
 
-\textbf{\S{}6.8's table for rule M-68.} \S{}6.8 keeps the verdict; the table stood there as follows.
+\textbf{The table for rule M-68.}
 
 \begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
 \begin{tabular}{lllllll}
@@ -1281,8 +1273,6 @@ This appendix is now section S3 of the supplementary material (\texttt{docs/\all
 
 \section{Section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)}
 
-\textbf{What \S{}6.7 keeps, and what is here.} \S{}6.7 keeps the two senses of unseen, its verdicts, the cautions and rule X7. The passages below stood there as follows.
-
 \textbf{The constant scalar (\S{}6.7).} On the released checkpoint, each scalar fitted on one held-out episode's 2 trajectories and scored on the other's: fitting at one step works at one step and nowhere else. On the epistemic term --- the quantity the method uses --- a scalar of 5.08--5.82 brings h=1 coverage to 63--74\%, essentially calibrated against the 68.27\% target, and leaves h=368 at 17--21\%. On the aleatoric term a scalar of 593--611 gives 64--70\% at h=1 and 11--15\% at h=368. Fitting over the whole rollout instead drives one-step coverage to 100\%, an interval wide enough to be vacuous where the model is accurate, while still falling short at the far end. A constant multiplier cannot track an error that grows while $\sigma$ does not (\S{}6.5), so for a \emph{constant} scale "right shape, wrong scale" does not survive.
 
 \textbf{The per-horizon table and its reading (\S{}6.7).} One multiplier per horizon is fitted on one held-out episode and evaluated on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute 4 non-overlapping 400-step trajectories between them, so each direction fits on n\_independent = 2 and is scored on the other 2. The last column repeats the test on Arm A at ensemble size 5 and 2,500 iterations (3 seeds), whose model never saw either episode:
@@ -1340,8 +1330,6 @@ All 48 runs at 2,500 iterations, the sweep's, the baselines' and both arms', are
 \textbf{Arenas: the held-out pair (episodes 1 and 8, 4 non-overlapping 400-step trajectories, n\_independent = 4) and the in-sample arena (the training episodes' 16 non-overlapping 400-step trajectories, n\_independent = 16). Checkpoints: each configuration at 2,500 iterations, the centre at the iterations in the second column; three seeds each.} Each cell is D, the configuration's relative-L1 minus the centre's, the mean over trajectories of the three-seed means, with its 95\% interval: exact over all 256 ordered resamples on the held-out pair, 20,000 Monte Carlo resamples (seed 0) in-sample. Negative favours the configuration, so every reading here is signed as in \S{}5.2's table; bold where the interval excludes zero. Cost per iteration is steady training time per iteration, timed without contention; the compute ratio is the centre's total training computation over the configuration's.
 
 \section{Rule X2, and section 7.2's figures for our models: whether they respond to the action they are given}
-
-\textbf{What \S{}7.2 keeps, and what is here.} \S{}7.2 keeps the defect, its cost to the released checkpoint in both metrics and arenas, the fix, and rule X2's verdict with its caveat. The passages below stood there as follows.
 
 \textbf{The held-out pair's per-trajectory values (\S{}7.2).} \S{}7.2's sentence on the held-out pair at h = 368 ended "…, with per-trajectory values +0.8\%, +9.8\%, +14.8\%, +6.5\% and +2.4\%, +5.8\%, +8.3\%, -0.3\%", relative-L1 and nRMSE.
 
