@@ -1,13 +1,13 @@
-# Round-5 checkpoint — after G14 (2026-10-24)
+# Round-5 checkpoint — after G15 (2026-10-24)
 
-**State.** Branch `presubmission5`. Last log entry: **G14 — COMPLETE**. Nothing pushed. **Main content 11.25 pages (limit 12)**, abstract 207/5.
+**State.** Branch `presubmission5`. Last log entry: **G15 — COMPLETE**. Nothing pushed. Main content 11.25 pages (limit 12), abstract 207/5.
 
-**Next action.** `docs/presubmission/round5/go.zsh G15` (Opus 5.5, medium): the appendices, standalone A–O. Appendices are still the earlier A–Z (letters, titles and contents unchanged except pointers); G15 re-letters them to OUTLINE's A–O, writes each opener, folds in the "stood there as follows" evidence, and moves G10's figure anchors with the appendices.
+**Next action.** `docs/presubmission/round5/go.zsh G16` (Opus 5.5, high, **a new terminal**): the fresh-eyes review (PLAN Annex 6 is its checklist). G17 then rechecks against TMLR, freezes, measures and packages; G18 verifies a clean clone, last, no edits.
 
-**G14 did.** New §6 (defects), §7 (lessons and limitations), §8 (conclusion, with Table 4, the claim table); old §7, §9, §11, §12 are supplementary S28–S31. The body is now §1–§8 plus "Reproducibility and data". Rule-10 audit of every summary site is in the log; contribution 4 and §1 now scope the rescaling claim.
+**G15 did.** Appendices A–O (outline lettering) with openers; new App. C (statistical methods), App. D's crosswalk, App. O's corrected rows; old Z, Y, X etc. regrouped; restating prose to supplementary S32. Figure order: 1 findings, 2 σ and Adam, 3 pre-registration lead time (E), 4 advantage by horizon (G), 5 calibration and 6 σ profile (I), 7 collapse (J), 8 contamination control (N).
 
-**For the user.** (1) Y10: the alignment query is still an unsent draft, so §6 says it was not reported before submission; send it before submission and the sentence changes. (2) Figure 3 (σ-coverage by horizon) is undrawn; room exists (0.75 page).
+**Open for G16/G17 and the user.** (1) **Figure 3** (σ-coverage by horizon) is undrawn: draw it or drop it from OUTLINE. (2) **Y10:** the alignment query is an unsent draft; §6 says it was not reported before submission. (3) The appendices are about 27,000 rendered words against 12,000 planned (see the log). (4) The README template still points at old section numbers, and the model card builder may too. (5) `scripts/a1_consent_letter.py`'s fallback rewrites no longer match (OUT_OF_SCOPE). (6) `pdftoppm` is absent: G16 must open the figure pages (pages with Figures 1–8) by eye. (7) `round5_gates.py` is still in report mode: its pages, abstract, ids, once and sig gates need G16 to read them as blocking; current report: pages 11.25/12, abstract 207/5, ids 21, once 1, sig 6, keys 0 missing.
 
-**What G15–G17 must know.** The body's pointers use final numbering (§1–§8); appendix pointers use OUTLINE's letters (A–O) and today's letters coexist until G15 re-letters, so `pdf_render_check` check 1 only sees today's letters. The README template still points at the old section numbers (G17). `scripts/a1_consent_letter.py`'s fallback rewrites no longer match (G15, OUT_OF_SCOPE). Keys that leave the paper on purpose go into `RETIRED_KEYS.md`. `typed_numeral_audit`: cite "Name (year)", `$\rho$`, no bare numerals; `{{key|s2}}` on a text key fails. `pdftoppm` is absent: G16 must open the figure pages by eye. Table numbers: 1 arenas, 2 baselines, 3 ensembles, 4 claims.
+**Carried facts.** `typed_numeral_audit`: cite "Name (year)", `$\rho$`, no bare numerals in prose; `{{key|s2}}` on a text key fails. `pdf_render_check` needs a heading for every section number the text points at, and every appendix letter in a pointer. Keys that leave the paper on purpose go into `RETIRED_KEYS.md`. Table numbers: 1 arenas, 2 baselines, 3 ensembles, 4 claims.
 
 **Blockers.** None.

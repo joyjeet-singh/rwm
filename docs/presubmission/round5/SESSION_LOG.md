@@ -707,3 +707,27 @@ Body words / main-content pages: 7,295 / 11.25
 Subagents: none (PLAN names none for G14)
 Next: G15 (Opus 5.5, medium).
 Decisions for user: Y10 (send the alignment query before submission or accept the "not reported" sentence); Figure 3.
+
+## G15 — 2026-10-24 03:00 — Opus 5.5, medium (a Sonnet 5.5 session ran it) — status: COMPLETE
+Commits:
+(one commit, [G15][1-4], follows this entry)
+Review items closed: RV06, RV09 (App. D), RV12–RV13 and RV39 (App. O), RV24 (App. M), RV25 (App. J), RV27 (App. F); RV03 and RV05 in the appendices
+Done:
+- **Re-lettered A–Z to the outline's A–O**, each opening with one or two sentences saying what it holds and which main-text claim it supports. Old to new: A→A; B (+ the pointer stub C)→B; new C (statistical methods); D→D; E and Z→E; G→F; L→G and H (split at its §4.3 passages); U→H; M and K→I; J, F and I→J; O and P→K; N and X→L; T and Y→M; V and Q→N; H's rows→O and N. The stubs R, S, W and the old C are gone: their text is supplementary S1, S2, S3 and S12.
+- **New text:** App. B's windows-and-compute paragraph; **App. C**, the procedures behind every interval and test (cluster bootstrap, exact sign-flip tests and why n = 4 cannot go below p = 0.125, Holm, permutation nulls that keep dimensions together); App. D's **version crosswalk** and the X5 sentence; App. O's corrected row: the papers name a forecast decay and set it to one (C-17 corrects C-09), the training tables, and the bootstrap-ensemble difference (C-18).
+- **Pointers:** every "Appendix X" and "Appendices X and Y" inside the moved text was remapped by context (a letter that split, such as L, K, I, H, was resolved from the words around it); figure numbers follow the new document order (3 pre-registration lead time, 4 advantage by horizon, 5 calibration, 6 σ profile, 7 collapse, 8 contamination control), and `build_paper.py`'s figure anchors follow (E, G, I, I, J, N). §6's variance-state pointer now reads Appendix J.
+- **Prose that restated the main text or explained why an appendix existed** (three paragraphs) moved verbatim to supplementary S32. The two paragraphs on the trunk's source and our own arms moved from J to K, where they belong.
+- **Retractions kept:** the appendix passages that disclose the withdrawn binomial P-values stay; only revision-history lead phrases ("as §5.7 stated them", "as §6 stated it") were rewritten.
+- **Departure to see:** the outline planned about 12,000 appendix words; the appendices render to about 27,000. They hold the tables and per-horizon detail at full precision (PLAN item 3), and cutting more would move results out of the paper, the supplement and the ledger together. G16's referee and G17 decide whether that is acceptable.
+Build/gates: pass (fast build → gates → fast build; the last two byte-identical); `xref_sweep` 0 suspect; `keys` 0 missing; both bundles pass the deny-list scan.
+Round-5 gates (report mode until G16): pages 11.25/12, abstract 207/5, ids 21, once 1, sig 6, keys missing 0
+Paper numbers changed: none
+New keys: none
+Ledger: none
+Re-anchored checks (rule 8): `restatement_index.py`'s accepted-ambiguity registry (the appendix that held rule M-44's table is now K; two new entries for the merged H and J, each with its reason); `evidence_summary.py`'s "Appendix U" → H; the horizon sweep's episode-level sentence now names its horizon. Expectations unchanged.
+CPU jobs over 1 min: the two bundle builds, about 6 min each
+Queue (Y5): done and discharged (GT2)
+Body words / main-content pages: see LENGTH_LOG / 11.25
+Subagents: none
+Next: G16 (Opus 5.5, high; a new terminal): the fresh-eyes review.
+Decisions for user: none new (Y10 and Figure 3 stand from G14).

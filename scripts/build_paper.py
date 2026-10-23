@@ -487,25 +487,23 @@ def main():
         "paper_fig7_findings.png": "1",
         "paper_fig8_sigma_adam.png": "2",
         "paper_fig4_prereg_timeline.png": "3",
-        "paper_fig3_collapse.png": "4",
-        "paper_fig2_sigma_profile.png": "5",
-        "paper_fig6_ab_by_horizon.png": "6",
-        "paper_fig1_calibration.png": "7",
+        "paper_fig6_ab_by_horizon.png": "4",
+        "paper_fig1_calibration.png": "5",
+        "paper_fig2_sigma_profile.png": "6",
+        "paper_fig3_collapse.png": "7",
         "paper_fig5_three_way.png": "8",
     }
-    # G10: where a figure is placed is its first reference at or after an anchor heading, so that a figure
-    # that moved to an appendix lands there rather than beside a main-text pointer. The numbers above
-    # follow document order, the order LaTeX gives them. The anchors are today's appendix letters; G15
-    # renames the appendices and moves these with them.
+    # G15: the appendices were re-lettered to the outline's A-O, so the anchors follow them and the numbers
+    # follow the new document order (E, G, I, I, J, N).
     ANCHOR = {
         "paper_fig7_findings.png": "## 1. Introduction",
         "paper_fig8_sigma_adam.png": "### 5.5 ",
         "paper_fig4_prereg_timeline.png": "## Appendix E ",
+        "paper_fig6_ab_by_horizon.png": "## Appendix G ",
+        "paper_fig1_calibration.png": "## Appendix I ",
+        "paper_fig2_sigma_profile.png": "## Appendix I ",
         "paper_fig3_collapse.png": "## Appendix J ",
-        "paper_fig2_sigma_profile.png": "## Appendix K ",
-        "paper_fig6_ab_by_horizon.png": "## Appendix L ",
-        "paper_fig1_calibration.png": "## Appendix M ",
-        "paper_fig5_three_way.png": "## Appendix Q ",
+        "paper_fig5_three_way.png": "## Appendix N ",
     }
     assert sorted(INTEXT) == sorted(figs), (
         f"INTEXT does not cover the figures on disk: {sorted(INTEXT)} vs {sorted(figs)}")

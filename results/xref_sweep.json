@@ -9,12 +9,12 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 118,
-  "n_ok": 112,
+  "n_pointers": 119,
+  "n_ok": 108,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
-  "n_bad": 6,
+  "n_bad": 11,
   "bad": [
     {
       "class": "semantic",
@@ -22,13 +22,6 @@
       "ok": false,
       "detail": "target 3; nouns ['data', 'metrics', 'statistics']; absent ['data', 'metrics', 'statistics']",
       "context": "\u00a73 sets out the data, metrics and statistics"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix N gives the rest, and Appendix O the places where the code departs f",
-      "ok": false,
-      "detail": "target Appendix N; nouns ['rest', 'appendix', 'places', 'where', 'code', 'departs', 'paper', 'description']; absent ['rest', 'places', 'code', 'departs', 'description']",
-      "context": "Appendix N gives the rest, and Appendix O the places where the code departs from the paper's description"
     },
     {
       "class": "semantic",
@@ -51,9 +44,46 @@
     },
     {
       "class": "semantic",
+      "pointer": "Appendix U gives",
+      "ok": false,
+      "detail": "target Appendix U not found"
+    },
+    {
+      "class": "semantic",
       "pointer": "\u00a76.3 explains",
       "ok": false,
       "detail": "target 6.3 not found"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0",
+      "ok": false,
+      "detail": "target Appendix K; nouns ['models', 'faithful', 'declines']; absent ['faithful', 'declines']",
+      "context": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix T gives",
+      "ok": false,
+      "detail": "target Appendix T not found"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix Y gives",
+      "ok": false,
+      "detail": "target Appendix Y not found"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix V gives",
+      "ok": false,
+      "detail": "target Appendix V not found"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix V gives",
+      "ok": false,
+      "detail": "target Appendix V not found"
     }
   ],
   "pointers": [
@@ -82,7 +112,7 @@
       "class": "semantic",
       "pointer": "Appendix E gives each rule, its lead time and its verdict verbatim",
       "ok": true,
-      "detail": "target Appendix E; nouns ['rule', 'lead', 'time', 'verdict', 'verbatim']; absent ['verbatim']",
+      "detail": "target Appendix E; nouns ['rule', 'lead', 'time', 'verdict', 'verbatim']; absent []",
       "context": "Appendix E gives each rule, its lead time and its verdict verbatim"
     },
     {
@@ -102,51 +132,30 @@
     {
       "class": "semantic",
       "pointer": "Appendix N gives the rest, and Appendix O the places where the code departs f",
-      "ok": false,
-      "detail": "target Appendix N; nouns ['rest', 'appendix', 'places', 'where', 'code', 'departs', 'paper', 'description']; absent ['rest', 'places', 'code', 'departs', 'description']",
+      "ok": true,
+      "detail": "target Appendix N; nouns ['rest', 'appendix', 'places', 'where', 'code', 'departs', 'paper', 'description']; absent ['places', 'where', 'departs', 'description']",
       "context": "Appendix N gives the rest, and Appendix O the places where the code departs from the paper's description"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix J lists the runs, the capacity-matched arm excluded from\nevery rate,",
+      "pointer": "Appendix I gives the tests and the binomial version they replace",
       "ok": true,
-      "detail": "target Appendix J; nouns ['runs', 'capacity-matched', 'excluded', 'rate', 'rate', 'fitted']; absent []",
-      "context": "Appendix J lists the runs, the capacity-matched arm excluded from\nevery rate, and the 22 the rate is fitted on"
+      "detail": "target Appendix I; nouns ['tests', 'binomial', 'version', 'they', 'replace']; absent ['replace']",
+      "context": "Appendix I gives the tests and the binomial version they replace"
     },
     {
       "class": "semantic",
-      "pointer": "\u00a75.5 quotes (Appendix B)",
+      "pointer": "Appendix E gives its lead time) and is\ndischarged in M-93",
       "ok": true,
-      "detail": "target 5.5; nouns ['appendix']; absent []",
-      "context": "\u00a75.5 quotes (Appendix B)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a75.2 quotes 34",
-      "ok": true,
-      "detail": "target 5.2; nouns []; absent []",
-      "context": "\u00a75.2 quotes 34"
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
+      "context": "Appendix E gives its lead time) and is\ndischarged in M-93"
     },
     {
       "class": "semantic",
       "pointer": "Appendix E gives its lead time) and is discharged in M-94",
       "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
       "context": "Appendix E gives its lead time) and is discharged in M-94"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix K explains why a binomial null is inadmissible here",
-      "ok": true,
-      "detail": "target Appendix K; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
-      "context": "Appendix K explains why a binomial null is inadmissible here"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix B gives for the 33 runs of \u00a74",
-      "ok": true,
-      "detail": "target Appendix B; nouns ['runs']; absent []",
-      "context": "Appendix B gives for the 33 runs of \u00a74"
     },
     {
       "class": "semantic",
@@ -157,38 +166,59 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix V gives every model at every horizon)",
+      "pointer": "Appendix C explains why a binomial null is inadmissible here",
       "ok": true,
-      "detail": "target Appendix V; nouns ['model', 'horizon']; absent []",
-      "context": "Appendix V gives every model at every horizon)"
+      "detail": "target Appendix C; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
+      "context": "Appendix C explains why a binomial null is inadmissible here"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix E gives its lead time) and\nis discharged in M-85",
+      "pointer": "\u00a75.2 quotes 34",
       "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
-      "context": "Appendix E gives its lead time) and\nis discharged in M-85"
+      "detail": "target 5.2; nouns []; absent []",
+      "context": "\u00a75.2 quotes 34"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a75.5 quotes (Appendix B)",
+      "ok": true,
+      "detail": "target 5.5; nouns ['appendix']; absent []",
+      "context": "\u00a75.5 quotes (Appendix B)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix B gives for the 33 runs of \u00a74",
+      "ok": true,
+      "detail": "target Appendix B; nouns ['runs']; absent []",
+      "context": "Appendix B gives for the 33 runs of \u00a74"
     },
     {
       "class": "semantic",
       "pointer": "Appendix E gives its lead time) and is\ndischarged in M-91",
       "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
       "context": "Appendix E gives its lead time) and is\ndischarged in M-91"
     },
     {
       "class": "semantic",
       "pointer": "Appendix E gives its lead time) and is\ndischarged in M-92",
       "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
       "context": "Appendix E gives its lead time) and is\ndischarged in M-92"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix E gives its lead time) and is\ndischarged in M-93",
+      "pointer": "Appendix N gives every model at every horizon)",
       "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
-      "context": "Appendix E gives its lead time) and is\ndischarged in M-93"
+      "detail": "target Appendix N; nouns ['model', 'horizon']; absent []",
+      "context": "Appendix N gives every model at every horizon)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix E gives its lead time) and\nis discharged in M-85",
+      "ok": true,
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
+      "context": "Appendix E gives its lead time) and\nis discharged in M-85"
     },
     {
       "class": "semantic",
@@ -200,7 +230,7 @@
       "class": "semantic",
       "pointer": "Appendix G gives each metric's formula and\nthe check on the coverage nominal",
       "ok": true,
-      "detail": "target Appendix G; nouns ['metric', 'formula', 'check', 'coverage', 'nominal']; absent []",
+      "detail": "target Appendix G; nouns ['metric', 'formula', 'check', 'coverage', 'nominal']; absent ['formula', 'coverage']",
       "context": "Appendix G gives each metric's formula and\nthe check on the coverage nominal"
     },
     {
@@ -220,22 +250,21 @@
       "class": "semantic",
       "pointer": "Appendix L gives the seed spread and the four\nper-trajectory gaps, 4 of 4 pos",
       "ok": true,
-      "detail": "target Appendix L; nouns ['seed', 'spread', 'per-trajectory', 'gaps', 'positive']; absent []",
+      "detail": "target Appendix L; nouns ['seed', 'spread', 'per-trajectory', 'gaps', 'positive']; absent ['spread', 'gaps']",
       "context": "Appendix L gives the seed spread and the four\nper-trajectory gaps, 4 of 4 positive"
     },
     {
       "class": "semantic",
       "pointer": "Appendix L gives the count and its three limits, the first being that this is",
       "ok": true,
-      "detail": "target Appendix L; nouns ['count', 'limits', 'first', 'being', 'policy-learning', 'comparison']; absent ['policy-learning']",
+      "detail": "target Appendix L; nouns ['count', 'limits', 'first', 'being', 'policy-learning', 'comparison']; absent ['limits', 'policy-learning']",
       "context": "Appendix L gives the count and its three limits, the first being that this is not the\npolicy-learning comparison"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix U gives every reading)",
-      "ok": true,
-      "detail": "target Appendix U; nouns ['reading']; absent []",
-      "context": "Appendix U gives every reading)"
+      "pointer": "Appendix U gives",
+      "ok": false,
+      "detail": "target Appendix U not found"
     },
     {
       "class": "semantic",
@@ -282,14 +311,14 @@
       "class": "semantic",
       "pointer": "Appendix K gives the four models' table, its arenas and a candidate mechanism",
       "ok": true,
-      "detail": "target Appendix K; nouns ['models', 'table', 'arenas', 'candidate', 'mechanism']; absent []",
+      "detail": "target Appendix K; nouns ['models', 'table', 'arenas', 'candidate', 'mechanism']; absent ['candidate']",
       "context": "Appendix K gives the four models' table, its arenas and a candidate mechanism"
     },
     {
       "class": "semantic",
       "pointer": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0",
-      "ok": true,
-      "detail": "target Appendix K; nouns ['models', 'faithful', 'declines']; absent []",
+      "ok": false,
+      "detail": "target Appendix K; nouns ['models', 'faithful', 'declines']; absent ['faithful', 'declines']",
       "context": "Appendix K gives all four models): the faithful arm's \u03c3 *declines* (0"
     },
     {
@@ -308,38 +337,41 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix T gives the table and every deviation)",
-      "ok": true,
-      "detail": "target Appendix T; nouns ['table', 'deviation']; absent []",
-      "context": "Appendix T gives the table and every deviation)"
+      "pointer": "Appendix T gives",
+      "ok": false,
+      "detail": "target Appendix T not found"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix Y gives the aleatoric term and the constant multiplier alongside",
-      "ok": true,
-      "detail": "target Appendix Y; nouns ['aleatoric', 'term', 'constant', 'multiplier', 'alongside']; absent []",
-      "context": "Appendix Y gives the aleatoric term and the constant multiplier alongside"
+      "pointer": "Appendix Y gives",
+      "ok": false,
+      "detail": "target Appendix Y not found"
     },
     {
       "class": "semantic",
       "pointer": "Appendix H lists the ledger's other confirmed contributions that the body doe",
       "ok": true,
-      "detail": "target Appendix H; nouns ['ledger', 'confirmed', 'contributions', 'body', 'does', 'state', 'among', 'them', 'defects', 'released', 'data', 'pipeline', 'departures', 'releas']; absent ['among', 'departures']",
+      "detail": "target Appendix H; nouns ['ledger', 'confirmed', 'contributions', 'body', 'does', 'state', 'among', 'them', 'defects', 'released', 'data', 'pipeline', 'departures', 'releas']; absent ['confirmed', 'contributions', 'body', 'among', 'defects', 'pipeline', 'departures']",
       "context": "Appendix H lists the ledger's other confirmed contributions that the body does not state, among\nthem defects in the released data pipeline and departures of the releas"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix V gives the per-trajectory values)",
-      "ok": true,
-      "detail": "target Appendix V; nouns ['per-trajectory', 'values']; absent []",
-      "context": "Appendix V gives the per-trajectory values)"
+      "pointer": "Appendix V gives",
+      "ok": false,
+      "detail": "target Appendix V not found"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix V gives every model at every horizon, each with its interval)",
+      "pointer": "Appendix V gives",
+      "ok": false,
+      "detail": "target Appendix V not found"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix J lists the runs, the capacity-matched arm excluded from\nevery rate,",
       "ok": true,
-      "detail": "target Appendix V; nouns ['model', 'horizon', 'interval']; absent []",
-      "context": "Appendix V gives every model at every horizon, each with its interval)"
+      "detail": "target Appendix J; nouns ['runs', 'capacity-matched', 'excluded', 'rate', 'rate', 'fitted']; absent []",
+      "context": "Appendix J lists the runs, the capacity-matched arm excluded from\nevery rate, and the 22 the rate is fitted on"
     },
     {
       "class": "artifact",

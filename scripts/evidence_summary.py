@@ -292,7 +292,7 @@ def build_rows():
         # winner (asserted above the row, on every reading as section 5.2 quotes it).
         "verdict": (MV["verdict"] + f"; {len(_better)} of {MV['governing']['m']} "
                     f"neighbours beat the centre, and no reading the rule reports puts the centre ahead of any of them; "
-                    f"the ranking depends on training length (Appendix U)"),
+                    f"the ranking depends on training length (Appendix H)"),
         "multiplicity": "yes",
         "model": "our arms",
         "artifacts": ["results/mn_sweep_verdict.json", "results/mn_sweep_eval.json"],

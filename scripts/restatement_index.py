@@ -82,11 +82,19 @@ COINCIDENCES = {
 ACCEPTED_AMBIGUOUS = {
     # Re-anchored in round 2, T7: §6.10's decomposition table and the prose beside it moved verbatim to
     # Appendix O when §6.10 and §6.11 were merged (ruling U6); the case is the same one.
-    ("Appendix O — rule M-44 in full: an ensemble that shares nothing", "3"):
+    ("Appendix K — The shared trunk and independent ensembles", "3"):
         "the shared-trunk seed count in prose against a percentage share in a "
         "cell of the decomposition table. Different units, different places, and "
         "no sentence puts them side by side -- unlike the abstract's 4.61x beside "
         "4.61%, which is what this kind exists for",
+    # G15: the appendices were regrouped to the outline's A-O, so two of them hold what were separate
+    # sections; each case below is a count against a ratio in different paragraphs of different old sections.
+    ("Appendix H — Configuration and architecture claims in detail", "10"):
+        "a count of episodes (ten) in the baseline passages against a ratio in the equal-compute passage; "
+        "different old appendices, different units, and no sentence puts them side by side",
+    ("Appendix J — Why the per-member σ collapses", "25"):
+        "the synthetic test's noise span (a ratio) against the survey's repository cap (a count), in "
+        "different old appendices; no sentence puts them side by side",
 }
 
 

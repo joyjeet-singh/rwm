@@ -1592,3 +1592,24 @@ its bounds are built*, such as §5.5's σ = 0 optimum, are the ones to expect el
 shared trunk and its specific overconfidence factors, should be checked rather than assumed in any
 other. *Properties of this dataset and its arenas* are limits on what could be resolved, not
 findings in either direction (supplementary S3 gives all three, and why §4.2's verdict should not travel either).
+
+---
+
+## S32 Appendix passages that restated the main text
+
+*Passages of the earlier appendices that restated a result the paper states in its sections, or explained why an appendix existed; moved here whole when the appendices were rebuilt for the review of 19 October. Section numbers in these passages are the earlier paper's.*
+
+**Why this appendix exists rather than a sentence.** The choice between the two once inverted a
+published-model comparison in this project's own history — a result that favoured us under one
+aggregation and did not under the other. The claim was withdrawn on our own evidence and is kept
+in the record (`FINDINGS_LEDGER.md`). Form 2 figures appear nowhere in the body; they are retained
+in `results/step4_0a_results.json` for continuity with figures this project published before the
+inversion was found. This appendix gives the two definitions and the inversion rather than those figures, so continuity rests on that committed file and not on a deleted number.
+
+**§5.5's term-by-term summary.** **The derivation above covers two terms, and the objective has 7.** Each term,
+back-propagated alone on one real batch, confirms it: 4 are live under the released
+configuration, exactly 2 reach σ (`state` and `bound`), and the other 5 give a
+gradient of exactly zero (`results/e4_sigma_gradients.json`, Appendix J).
+
+**§5.5's run-count summary.** We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside §4.2's sweep the log-σ range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 7a). Appendix J lists the runs, the capacity-matched arm excluded from
+every rate, and the 22 the rate is fitted on.
