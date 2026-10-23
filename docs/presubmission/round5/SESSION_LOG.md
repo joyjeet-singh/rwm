@@ -560,5 +560,5 @@ CPU jobs over 1 min: none
 Queue (Y5): done (20 of 20 by the runner's file at the start of this session; GT2 reads it)
 Body words / main-content pages: 17698 / 24.0
 Subagents: none
-Next: GT2 (Sonnet 5.5, medium) now that the queue shows 20 of 20, if Y5 is B or C; otherwise G11 (Opus 5.5, high).
+Next: G11 (Opus 5.5, high). GT2 runs after G12 (PLAN §0.4); the queue already shows 20 of 20.
 Decisions for user: none
