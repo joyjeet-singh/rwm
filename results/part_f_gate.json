@@ -4,25 +4,25 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "75 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "56 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
       "name": "anonymisation (PDF text, raw bytes, metadata, figures)",
       "pass": true,
-      "detail": "text clean, bytes clean, /Author '', 13 figures clean"
+      "detail": "text clean, bytes clean, /Author '', 15 figures clean"
     },
     {
       "n": 3,
       "name": "no hand-typed numbers",
       "pass": true,
-      "detail": "61 distinct numerals typed, 55 section numbers derived from the headings; unexplained: none"
+      "detail": "31 distinct numerals typed, 44 section numbers derived from the headings; unexplained: none"
     },
     {
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
-      "pass": false,
-      "detail": "verify_reproduction.json vs the clone run at clone: 58 files regenerated, 16,405 values, 16,402 identical, 3 differing; carried-in partition present (2,235,141 copied values held out); artifact post-dates the regeneration marker"
+      "pass": null,
+      "detail": "verify_reproduction.json vs NO CLONE GIVEN [set CLONE_RESULTS]: 58 files regenerated, 16,405 values, 16,402 identical, 3 differing; carried-in partition present (2,235,141 copied values held out); artifact post-dates the regeneration marker"
     },
     {
       "n": "4b",
@@ -34,23 +34,23 @@
       "n": "5b",
       "name": "appendix letters match document order",
       "pass": true,
-      "detail": "document order ABCDEFGHIJKLMNOPQRSTUVWXYZ; LaTeX letters them ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      "detail": "document order ABCDEFGHIJKLMNO; LaTeX letters them ABCDEFGHIJKLMNO"
     },
     {
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "501 section refs, unresolved none; 0 historical ref(s) inside quoted rule text exempt ; figures ['1', '2', '3', '4', '5', '6'], dangling none"
+      "detail": "303 section refs, unresolved none; 0 historical ref(s) inside quoted rule text exempt ; figures ['1', '2', '3', '4', '5', '6', '7', '8'], dangling none"
     },
     {
       "n": 6,
       "name": "numeric consistency, abstract vs body",
       "pass": true,
-      "detail": "20 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
+      "detail": "5 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
   "n_pass": 7,
-  "n_run": 8,
-  "n_not_run": 0,
+  "n_run": 7,
+  "n_not_run": 1,
   "n": 8
 }
