@@ -239,7 +239,7 @@ RWM's central training claim reproduces on held-out episodes at long horizons an
 
 ## Reproducibility and data
 
-A clean clone reproduces every scientific value: of {{ver_values}} regenerated values, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the supplementary archive itself, its size and its commit count, while {{ver_part_sci}} are a measurement, a statistic or a verdict (supplement S11). Code, every artifact and the claim ledger accompany this submission as anonymised supplementary material, and a permanent archival identifier follows acceptance. Neither upstream repository is redistributed: `setup.sh` fetches both at pinned commits and verifies their hashes.
+A clean clone reproduces every scientific value: of {{ver_values}} regenerated values, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the submission's own files (the archive's size and commit count, the PDF's page and text counts), while {{ver_part_sci}} are a measurement, a statistic or a verdict (supplement S11). Code, every artifact and the claim ledger accompany this submission as anonymised supplementary material, and a permanent archival identifier follows acceptance. Neither upstream repository is redistributed: `setup.sh` fetches both at pinned commits and verifies their hashes.
 
 ## References
 
