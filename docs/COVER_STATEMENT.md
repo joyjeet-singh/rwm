@@ -1,103 +1,59 @@
 # Cover statement — TMLR submission
 
-*Draft. Every figure is substituted from a named artifact by the paper's own build; the
-numbers below are quoted from `results/paper_numbers.json` and are current at 75 pages, the
-length of the compiled submission.*
+*Every figure below is read from `results/paper_numbers.json` by `docs/presubmission/round5/f17_cover.py`; none is
+typed. The paper's main content is 11.67 pages.*
 
 ---
 
 ## Which acceptance criterion this submission meets
 
-TMLR asks two questions. This submission answers both directly rather than leaving them to be
-inferred.
+TMLR asks two questions. This submission answers both directly.
 
-### 1. Are the claims supported by convincing evidence?
+### 1. Are the claims supported by accurate, convincing and clear evidence?
 
-The paper is a reproduction whose entire methodological argument is that every number cites a
-file on disk. Concretely:
+- **Verification before measurement.** The reimplementation matches the released module's gradients before any
+  training run is scored: a maximum difference of 0.000e+00 across 7 loss terms and
+  106 parameter tensors (paper §3.1, Appendix A).
+- **35 pre-registered decision rules, with git lead times.** Appendix E gives each rule, its commit, its lead
+  time computed from git and its verdict verbatim. 34 have a positive lead; the one that does not is the rule the
+  paper withdraws as a pre-registration, and says so (§3.4). nine claims and eight framings of our own were
+  withdrawn on evidence and are kept in the ledger beside it.
+- **Verdicts reported as returned, the inconvenient ones included.** In-sample measurement of calibration is not worse
+  at one step once every episode is held out (MIXED), against an earlier reading on four trajectories;
+  the per-horizon multiplier on episodes a model never saw does not restore calibration cell by cell
+  (72 of 180) while the pooled coverage is within the band; a rule on whole
+  trajectories at four returned an inconclusive reading that the twenty-trajectory replication resolved.
+- **Small samples are treated as small.** At four trajectories the smallest attainable exact p is
+  1/8, above every Holm level used, so no comparison at that size is called resolved; each is
+  reported with its exact p and as "k of the four". The base claim is re-tested on 20 trajectories, each of
+  ten episodes held out once.
+- **Clear scope.** Every number names its arena, its count of independent trajectories, its checkpoint and its
+  horizon; the released checkpoint's training rows are not recorded (§3.2), and the paper says so and never calls its
+  arena held out.
 
-- **Verification before measurement.** The reimplementation is checked against the released
-  reference at the gradient level — losses and gradients match to `0.000e+00` across 7 terms and 106 tensors — before any training run is scored. Shapes, wiring, action indexing and the
-  hold-last residual are each verified separately, and every later step inherits all five.
+### 2. Would some of TMLR's audience be interested?
 
-- **28 pre-registered decision rules, with git lead times.** All but one name their conditions and thresholds before their data existed, and Appendix E gives all 28 with the lead time computed from git. 27 have a positive lead and are a difference of two commit timestamps; the remaining one is negative and is not, because its data side is a line in a run log rather than a
-  commit — it is the rule this paper withdraws as a pre-registration, and Appendix E says so. The
-  full committed text of every rule ships in the supplementary material, unabridged.
-
-- **Verdicts reported as returned.** Including the ones that are inconvenient: `M-43` returns
-  `DOES NOT GENERALISE`, `M-49` returns `UNDER-POWERED — favours the matched ensemble by less than the MDE`, and `M-51`/`M-52` return
-  `SURVIVES entry-res ONLY` — a free baseline comes close enough to ensemble disagreement that
-  this sample cannot separate them, which weakens the paper's own strongest positive result.
-
-- **Two results that run against the paper's own arms**, reported at full strength rather than
-  buried. At one forecast step, teacher forcing *beats* the autoregressive training this paper
-  reproduces — a gap the 400-step unit could only report as spanning zero, resolved as real under a second pre-registered rule at 60 units. And the synthetic experiment that corroborates the
-  collapse clears its own slope threshold on only 11 of 20 seeds. `M-50`'s verdict of
-  OBJECTIVE-DRIVEN stands as returned over the 3 seeds it was discharged on and is not re-opened
-  by a larger sample; what the wider sweep establishes is that the all-seeds criterion would not
-  have held across all 20, so the hedge the rule carried was necessary rather than cautious.
-
-- **Five of the 28 rules test the paper's own weak points, and a sixth could not be run.** Retrained on fixed folds with each of the ten episodes held out once, the base claim's direction replicates, +2.2275 [+1.3683, +3.5053] at h = 368 over 20 trajectories at 2,500 iterations, not 10,000 (rule X3: `REPLICATES ACROSS FOLDS`). Matched to RWM's parameter count, the MLP baseline stays behind and the transformer cannot be told apart (rule X4: `PARTIAL`; size is the one axis matched). On 70 shorter units at h = 100, ensemble disagreement ranks error ahead of the model's own predicted step size, +0.2816 [+0.1978, +0.3896] (rule X6: `DISAGREEMENT BEATS STEP SIZE`); over the 20 whole trajectories the margin at h = 368 is not resolved, and X6 does not re-test it. Fitted on nine episodes and scored on the tenth, the disagreement's pooled coverage over all 20 trajectories is within the band at every horizon (rule X7: `WITHIN BAND AT 6 OF 6 HORIZONS`), on episodes the checkpoint trained on, so they are unseen only by the multiplier. Re-scored with the released evaluation's timing, four of our rules keep their verdicts, though 22 of their alongside readings change (rule X8: `SAME VERDICT`, a statement about those four rules only). The sixth, rule X5, a test of the penalty that needs no policy, was never pre-registered: its feasibility check found that the released data do not record the velocity command its reward terms score against, so it is reported as not run (ledger `D-38`). Two analyses made afterwards, section 7.2's figures for our own models and the difficulty control at the causal action timing, are labelled post hoc.
-
-- **Fourteen withdrawals kept in the record** — eight claims withdrawn on evidence and six framings withdrawn — with the evidence that withdrew each, including one wrong by about a factor of 10¹³ and one withdrawal of the paper's own claim to have pre-registered a rule it had not.
-
-- **A build gate published as failing.** The clean-clone check requires that no regenerated value
-  differ; 3 of 18,299 do, so it fails, it says where, and it is reported as failing. It was not
-  given a tolerance, and none of the 3 is a measurement, a statistic or the verdict of a test. The
-  reproducibility figure is stated over the 0.68% of the numeric values under `results/` that a
-  clean clone regenerates and the comparison counts, rather than over the whole directory: counting
-  the values a clone merely carries in would overstate it about 147-fold, and an earlier version of
-  this claim did exactly that.
-
-### 2. Would some individuals in TMLR's audience be interested in the findings?
-
-The reproducibility carve-out asks for work that systematically studies the robustness or
-generalizability of existing results and lays out actionable lessons. §9 is written to that
-description.
-
-The finding a practitioner can act on is that the uncertainty a deployed robotic world model
-penalises with is miscalibrated **as a scale, by a factor that grows with rollout depth** — so it
-is not a units problem a tuned coefficient absorbs. The best constant rescale, fitted and scored
-on the same data and therefore an upper bound on what any constant achieves, grows by a factor of 4 across the rollout. One candidate repair is given, a recipe to refit rather than a demonstrated fix: a per-horizon multiplier, fitted on one held-out episode and scored on the other, brings every coverage estimate of the released checkpoint within 10 points of nominal, though no single cell is resolvable at this arena and those cells are unseen only by the multiplier, since the checkpoint trained on both episodes; on Arm A, whose model never saw them, its own multipliers manage 17 of 36 epistemic cells, and the cells are not independent trials.
-
-The lessons in §9 generalise past this checkpoint: do not convert per-dimension sign counts into
-P-values when the dimensions are physically coupled; count independent trajectories rather than
-trajectories, and do not resample pooled seed x trajectory values when the trajectory is the unit;
-and price a trust metric against the free alternatives before paying for an ensemble.
+- A released uncertainty estimate ranks error well and sizes it wrongly, and the paper separates three gaps
+  (one-step, trunk-sharing, accumulation) that a single ratio runs together (§5).
+- The per-member variance collapses because the implemented loss is minimised at zero, shown against known noise
+  and as an ordinary Adam step (§5.5): a check any practitioner can run on a bounded-σ head.
+- Rolling each ensemble member out separately repairs part of the accumulation, which is not the released method
+  (§5.4); and the rescaling that fixes one-sigma coverage on the released checkpoint does not fix the tails (§5.7).
+- The paper gives practitioners 7 lessons (§7) and credits the originals' documented designs.
 
 ---
 
 ## Reproducibility Certification
 
-**We request Reproducibility Certification explicitly.**
+The paper's primary purpose is to reproduce and test two published works, and it adds value beyond the
+reproduction: a held-out replication of the base claim, an ensemble with independent members, per-member rollout,
+exact tests, the free baselines for the trust metric, and the defect analysis.
 
-The criterion is significant added value through additional baselines, analyses, ablations or
-insights beyond reproducing the original results. This work adds:
-
-| addition | what it is |
+| criterion | evidence |
 |---|---|
-| three free baselines | the forecast step index, the model's own predicted step size, and its entry residual — none run by either original |
-| six controls on the ranking claim | linear, log, cubic and rank partials on depth, a within-step control, and a pre-registered trajectory-difficulty control |
-| an independent-ensemble contrast | five separately trained models against our own shared-trunk ensembles of the released architecture, testing the mechanism rather than asserting it |
-| a capacity-matched re-test | the same contrast with parameter count held fixed: rule M-49 returns `UNDER-POWERED — favours the matched ensemble by less than the MDE`, so capacity does not explain the effect away, and how much of it capacity accounts for is not resolved |
-| a cross-fold re-test | the base claim retrained with each of the ten episodes held out once: rule X3 returns `REPLICATES ACROSS FOLDS` at 2,500 iterations, over 20 trajectories |
-| size-matched baselines | MLP and transformer baselines matched to RWM's parameter count: rule X4 returns `PARTIAL`, the MLP behind and the transformer not told apart |
-| a synthetic ground-truth experiment | data whose noise level is known, isolating the objective as the cause of the σ collapse |
-| a candidate repair, with mixed evidence | the per-horizon multiplier, fitted on one episode and scored on the other: the released checkpoint's cells within 10 points (no cell resolvable at this arena), 17 of 36 epistemic cells on Arm A |
-| two evaluation units | 400-step and short-unit figures reported side by side, each naming its unit, arena and `n_independent` |
-
-The base paper's central training claim reproduces, and the advantage grows with horizon. What
-the reproduction adds is the measurement of the uncertainty outputs neither original quantifies,
-and the negative results that come with measuring them honestly.
-
----
-
-## Anonymisation
-
-The submission is double-blind. The paper compiles in TMLR submission mode
-(`\usepackage{tmlr}` with no options), carries no author block, and the PDF is asserted clean of
-identifying strings in its text, its raw bytes, its metadata and its figures. The supplementary
-bundle is scrubbed against a deny-list covering the authors' names, both usernames, both
-repository URLs, ORCID identifiers, e-mail addresses, absolute home-directory paths, and
-resolvable archival identifiers — and the scrubber plants a known string on every run to prove
-its own scan still detects one.
+| independent reimplementation | matches the release's gradients (§3.1, Appendix A) |
+| the originals' claims tested as published | Appendix D, Table 4; the versions read are named and compared (Appendix D) |
+| code and data | the full repository, every artifact and the claim ledger, anonymised, in the supplementary ZIP |
+| clean-clone reproduction | 18,299 regenerated values compared, 18,296 identical; the 3 that differ are bookkeeping about the submission's own files, 0 scientific (§8, supplement S11) |
+| pre-registration | 35 rules, Appendix E |
+| negative and withdrawn results | kept and stated (§3.4, §5.7, Appendix E) |

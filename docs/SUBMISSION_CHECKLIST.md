@@ -9,6 +9,52 @@ it is the level of its "Open items" heading.
 
 *[2026-09-30, pre-submission S10-fix] The clean-clone figures in both passes below describe the commits they name. The paper, `docs/BUILD_CHECKS.md` and `README.md` now print a later clean-clone measurement, restated after S11's findings (`docs/DEFERRED.md`, 2026-09-30). The section 8 denominator that the pass over `c16267c` records as "not fixed, by ruling" was reworded on 2026-09-30 by the user's later ruling, so that status is historical too.*
 
+## Round 5, over `419c17c` — the known items now
+
+*[2026-10-24, pre-submission round 5, G17]
+The sections below describe earlier commits and are kept as dated records. This section is the current list,
+written by `docs/presubmission/round5/f17_checklist.py` from the files it names. The reproduction figures in the
+paper come from M3, a clean clone of `0b0ad01`; G18 measures a clone of the final commit. Rounds 4 and 5
+were committed locally: none of it had been pushed when this was written.*
+
+### Open items
+
+- **The round-5 gates** (`results/round5_gates.json`, blocking): main content 11.67 of 12 pages,
+  abstract 209 words and 5 numerals, `ids`, `once`, `sig` at 0, `keys`
+  0 missing.
+- **`submission_check` returns 21 of 22** in the working tree; pending: C1.
+  The claims audit, regenerated on the frozen text (ruling U5), extracts 384 claims,
+  31 supported and 353 unreviewed.
+- **`part_f_gate` fails check 4 alone, and the paper says so.** 7 of 8 checks pass with the
+  identity strings supplied and a clean clone's results; check 4 fails because 3 of
+  18,299 regenerated values differ, all bookkeeping about the submission's own files, none a
+  measurement, a statistic or a verdict.
+- **The supplementary manifest is exact:** 604 files for an archive of 604 members, and
+  664 commits for a log of 664.
+- **No report `reproduce.sh` writes is left untracked and unignored.**
+- **Round 5's logged items** (`docs/presubmission/round5/OUT_OF_SCOPE.md`; none changes what is uploaded):
+  - `PDM/CLAUDE.md` (Style section): says "five retractions", while the ledger's counts differ. The user's file; not this round's to fix. (Seeded by G0.)
+  - `results/original_paper_figures.json` (`sample_efficiency.where_v1`), `PAPER.template.md:1243` and `:1779`: the 6M-against-250M table is cited as v1's "Table I (Limitations)"; v1 has no such table, it is Table 1 in v2+ (`results/v…
+  - `PAPER.template.md:689` and `:1563-1568` (§6.4): "feeds the ensemble **mean** back" is true of the evaluation path only; the released imagination env (`scripts/envs/base.py:54,68,142`) feeds one random member per environment. Stat…
+  - `PAPER.template.md:1397` (App. H, C-09): "though the paper describes a decay"; both originals set α = 1.0 (no decay), so this is a naming difference, not a gap. (G1; owner G15.)
+  - `PAPER.template.md:1401` (App. H): "Table S9" for the training length does not say which paper; right for RWM v1, wrong for RWM-U v1 (S8) and v3 (S10). (G1; owner G15.)
+  - `PAPER.template.md:2353` and `:689`: "heads differ only in initialisation" omits that `rsl_rl_rwm`'s MBPO-PPO update resamples the batch per head (`system_dynamics.py:129-140`, `mbpo_ppo.py:213`); true of the offline path. (G1; ow…
+  - `scripts/insample_framing.py:37`: "the released ckpt trained on all ten" is an assumption; no record in either repository says which rows the checkpoint trained on. (G1; owner G3 for X10, G13/G14 for the wording.)
+  - `docs/APPENDIX_G_VARIANCE_ARITHMETIC.template.md:70-72` (and its generated copy): the first author is referred to as "He"/"his"/"he"; the author's pronouns are not stated in the record, so the neutral "they" is safer. (G2; owner G…
+  - `docs/presubmission/FILE_MAP.md`: no row yet for `round5/PROTOCOLS.md` (G2 added only the protocols file). (G2; owner G6 or G17.)
+  - `scripts/step5_train.py:334-335,384` (`-14.4629`), `scripts/step6_analyse.py:38`, `scripts/step6_3_min_logstd.py:32`, `scripts/task1_calibration.py:189-194`, `scripts/task5_analyse.py:146-150`: the checkpoint's `log_delta_logstd` …
+  - `scripts/round5_gates.py:105-108` (`ACRONYMS`): the `ids` gate counts "RWM-U", the follow-up's own name, as a capitalised verdict label (it lists `RWMU` but tokenises on the hyphen); found measuring G8's abstract draft, which it f…
+  - G11: `PAPER.template.md` §3.2 holds Table 1 as the arenas table (PLAN G11 item 4), not OUTLINE §figures' claim-to-verdict Table 1 (§Referee 13); the claim table needs the final verdicts and the X11 slots, so it waits for G14 (owne…
+  - G11: pointers from §1–§3 to §4.x–§7 and Appendices C, J, L, O use OUTLINE's numbering, which resolves only once G12–G15 write those sections (owner G14, G15; `xref_sweep.py` and `pdf_render_check.py` read only top-level numbers an…
+  - G13: `scripts/a1_consent_letter.py` (no argument) fails its fallback-rewrite match: the §6.1 sentences its REWRITES quote moved to supplementary S5 in G9 (and S20 in G13), so `PAPER.template.md` holds 0 matches; the extraction pas…
+- **The review's residual risk** (`docs/presubmission/round5/REVIEW.md`): the appendix checkers stopped at their
+  turn limits; Appendix O's code citations and a few tables were checked only by the build's gates.
+- **TMLR's live rules, read 2026-10-24** (`docs/presubmission/round5/TMLR_CHECK.md`): the submission is a Regular
+  one (at most 12 pages of main content); the blog since 15 October could not be read by fetch; every author's
+  quota and complete OpenReview profile are the authors' to confirm.
+- **What the reproduction evidence covers.** Repeatability on one host, one interpreter and one set of
+  hash-verified inputs, not portability: no second machine has produced these figures.
+
 ## Round 4, over `e6ca16e` — the known items now
 
 *[2026-10-17, pre-submission round 4, F11]

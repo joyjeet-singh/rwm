@@ -71,6 +71,9 @@ def main():
     bc = tpl + norm("docs/BUILD_CHECKS.template.md")
     tex = open("PAPER.tex").read()
     led = norm("FINDINGS_LEDGER.md")
+    # G17 (round 5, rule 8): the rewrite moved text out of the paper into the supplement, so four criteria that
+    # looked for a phrase in the template now look for it where it went (or for its successor in the paper).
+    ss = norm("docs/SUPPLEMENT.template.md")
     rows = []
 
     def chk(item, ok, detail):
@@ -140,11 +143,11 @@ def main():
         chk("A3 supplementary archive", False, "supplementary.zip absent")
 
     for item, needle, where, src in (
-            ("A4 broader impact", "Broader impact", tpl, "template"),
-            ("A5 actionable lessons", "Actionable lessons", tpl, "template"),
+            ("A4 broader impact", "Broader impact", ss, "supplement (S10; the outline keeps no statement in the paper)"),
+            ("A5 actionable lessons", "Lessons for a practitioner", tpl, "template (section 7)"),
             ("A6 venue decision recorded", "MLRC 2026 requires", led, "ledger"),
             ("B1 source readings", "### C-14", led, "ledger"),
-            ("B3 section 4 retargeted", "Which quantity the method actually uses", tpl, "template"),
+            ("B3 section 4 retargeted", "What RWM-U claims and what its code computes", tpl, "template (section 5.1)"),
             ("D3 hold-last floor in §3", "hold-last floor", tpl, "template"),
             ("E1 originals' claims table", "### O-14", led, "ledger"),
             ("E2 §4.3/§4.5 reconciled", "objective-driven", tpl, "template"),
@@ -162,7 +165,7 @@ def main():
             ("E6 archived before submission",
              # norm() collapses whitespace, so the needle must be single-spaced --
              # the phrase is line-wrapped in the template.
-             "archived by a third-party archive before submission", tpl, "template"),
+             "archived by a third-party archive before submission", ss, "supplement (S18)"),
             ("E7 excluded artifact named", "step4_5_timing.json", bc,
              "template or its build-checks supplementary")):
         chk(item, needle in where, f"found in {src}" if needle in where else f"absent from {src}")

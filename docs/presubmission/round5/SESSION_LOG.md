@@ -753,3 +753,38 @@ Body words / main-content pages: see LENGTH_LOG / 11.67
 Subagents: rwm-referee ×1, rwm-checker ×2
 Next: G17 (Opus 5.5, medium).
 Decisions for user: none new. The unchecked parts of the appendices (REVIEW.md) are the residual risk.
+
+## G17 — 2026-10-24 05:00 — Opus 5.5, medium (a Sonnet 5.5 session ran it) — status: COMPLETE
+Commits:
+88301c7 [G17][1-2] TMLR recheck; claims audit regenerated; xref_sweep back to 0 suspect
+6a72f7e [G17][3] Before measuring: bundles rebuilt to a fixed point
+abb7708 [G17][3] Fixes the first clean-clone measurement exposed
+dca66b6 [G17][3] Bundles rebuilt before the second measurement
+d5e7844 [G17][3] The reproducibility statement names what the differing values are
+6aa3aa0 [G17][3] Restate from M2
+0b0ad01 [G17][4] Final bundles on the restated tree (M2)
+(then) [G17][3] Restate from M3; [G17][4] Final bundles on the restated tree (M3), 419c17c; and the package-documents commit that carries this entry
+Review items closed: RV44 (draft), RV45, the venue checks behind RV01
+Done:
+- **Step 1, TMLR recheck** (`round5/TMLR_CHECK.md`, by fetch, no browser): no length limit; the 12-page line sets the review track; the form's three length choices include "Regular submission (no more than 12 pages of main content)", the invitation last modified 19 October (round 4 read 7 October; its fields are unchanged and a Beyond PDF option is listed). **Not read:** the TMLR blog (Medium answered 403), so anything posted after 15 October is unread; the package tells the user to look.
+- **Step 2, freeze.** Claims audit regenerated (ruling U5): 384 claims, 31 supported, 353 unreviewed (the paper was rewritten; the supported count fell with the sentences that carried verdicts). No prose edit after this except the reproducibility statement (below).
+- **Step 3, three clean clones** (fresh venv, `reproduce.sh --quick --force`, the verifier three times byte-identical each; 2 h 20 min each; `/Users/Shared/rwm_verify/evidence/R5G17`).
+  - **M1 (of the tree at G16)** found six things that G11–G16 had left stale or unrun, none scientific, all fixed before M2: (1) `appendix_g_rules.json` still held 28 rules: the seven X9–X11 rules were missing from Appendix E and the count, and the generator's verdict column had picked each new rule's first defined branch ("PROPAGATION CLOSES THE GAP" for X9); it now reads the returned readings and the table has 35 rules; (2) `paper_figures.json` and the lead-time figure regenerated with them (stage 23 had failed in the clone); (3) `input_set_audit.py` had five unclassified discoveries from round 5's scripts (each read and classified); (4) `pipeline_coverage.py` exempts `version_crosswalk.json`, a network-only artifact; (5) `t5_anon_transcript.json` regenerated (7 quotations); (6) the 35-row rule table overran its cells, so tight tables are set one size smaller.
+  - **M2 (of the tree after those fixes):** 134 stages, 66 OK, 64 skipped, 4 failed (20q1, 20n2, 29a, 29: round 3's four known failures); 18,299 values compared, 18,294 identical, 5 differing, **0 scientific** (the PDF's page and text counts, and the archive's size, byte count and commit count). The statement in §8 now says what the differing values are. Restated from M2.
+  - **M3 (of the tree restated from M2):** the same stages and failures; 18,299 compared, 18,296 identical, **3 differing, all in `supplementary_manifest.json`**, 0 scientific. Restated from M3: all 30 printed `ver_*` keys equal M3's measurement. M3's record has as many values as the one now committed (573), so a clone of the final commit carries the same count: G18's measurement should match.
+  - Three clones is the plan's limit.
+- **Step 4, bundles.** Rebuilt to a fixed point (manifest stable, gate record unchanged, manifest and gate record in both zips equal the committed ones); builder scan 0 residual hits, planted probe fires; **independent sweep: 0 hits in both zips and the PDF**.
+- **Step 5, package.** `docs/SUBMISSION_PACKAGE.md` in full (`round5/f17_package.py`: PDF 55 pages, 1,306,055 bytes, SHA-256 `4ebb2ced…a147`; `supplementary_anon.zip` 630 members, 28,884,293 bytes, SHA-256 `f94f454c…64ba`; abstract 209 words; "Regular submission", main content 11.67 pages; the four steps before uploading; the competing-interests text of Y11; open items). `docs/COVER_STATEMENT.md` rewritten from keys (`round5/f17_cover.py`: the round-4 text described the old paper). Round-5 section of `docs/SUBMISSION_CHECKLIST.md` (`round5/f17_checklist.py`). `submission_check.py` 21/22 (C1 pending: unreviewed claims, as ruled); four criteria that looked for phrases the rewrite moved were re-anchored to where the text went (rule 8; recorded in the commit).
+- **A gap in my own earlier sessions, found here:** my gate loops from G11 to G16 read each script's exit status, and `xref_sweep.py` exits 0 while listing suspects, so eleven flagged pointers went unnoticed (two reworded, nine in verbatim supplementary text reviewed as the earlier paper's numbering). `OUT_OF_SCOPE.md` has a line.
+Build/gates: pass (every gate, the round-5 gates, `part_f_gate` 7/8 with check 4 alone failing as the paper says, two builds byte-identical at the restate steps).
+Round-5 gates (blocking): pages 11.67/12, abstract 209/5, ids 0, once 0, sig 0, keys missing 0
+Paper numbers changed: the `ver_*` keys (restated from M3); appendix_g_rules counts (28 → 35 rules, via the generator)
+New keys: none
+Ledger: none
+Re-anchored checks (rule 8): `submission_check.py` A4, A5, B3, E6; `xref_sweep.py` nine supplementary pointers reviewed; `input_set_audit.py` five classifications; `pipeline_coverage.py` one exemption
+CPU jobs over 1 min: three clones (about 2 h 20 min each), five bundle builds, on an idle machine
+Queue (Y5): done and discharged
+Body words / main-content pages: see LENGTH_LOG / 11.67
+Subagents: none
+Next: G18 (Sonnet 5.5, medium): the clean-clone verification of the final commit, last, no edits. Then §0.5's after-G18 steps, which are yours.
+Decisions for user: none new. Open: the TMLR blog since 15 October (read it in a browser); the alignment query's date, if you want the paper to give one.
