@@ -668,7 +668,7 @@ def main():
             # historical subject as a pointer into this paper. The words of the subject are unchanged.
             commit=(f'`{r["rule_commit"]}` {r["commit_subject"].replace("§", "section ")}'
                     if r["rule_commit"] else "—"),
-            lead=_lead(r), tested=r["tested_by"] or "—",
+            lead=_lead(r), tested=(r["tested_by"] or "—").replace("results/", ""),  # G17: shorter cell, the table sits in results/
             verdict=r["verdict"].replace("|", "/"))
         for r in AG["rules"])
     put("appG_table", _rows.rstrip(), "results/appendix_g_rules.json")

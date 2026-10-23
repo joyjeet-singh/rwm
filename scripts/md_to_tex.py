@@ -150,10 +150,12 @@ def _longest_token(s):
                default=0)
 
 
-def _column_fractions(widths, floors):
+def _column_fractions(widths, floors, char_pt=None, colsep_pt=None):
     """Fractions of \\linewidth: proportional to content, never below a floor."""
     n = len(widths)
-    lo = [min((f * _FLOOR_CHAR_PT + _TABCOLSEP_PT) / _LINEWIDTH_PT, 1.0) for f in floors]
+    cp = _FLOOR_CHAR_PT if char_pt is None else char_pt
+    cs = _TABCOLSEP_PT if colsep_pt is None else colsep_pt
+    lo = [min((f * cp + cs) / _LINEWIDTH_PT, 1.0) for f in floors]
     if sum(lo) >= 1.0:                       # floors alone fill the line
         return [x / sum(lo) for x in lo]
     pinned = [False] * n
@@ -360,11 +362,16 @@ def convert(md, title, author):
             if sum(colw) > _WIDE_TABLE_CHARS:
                 floors = [max(_longest_token(c[k]) if k < len(c) else 0 for c in cells)
                           for k in range(n)]
+                # G17: when the columns' floors alone fill the line (the 35-row rule table), the table is set one
+                # size smaller, with a floor per character that matches that size, instead of squeezing every
+                # column below its longest word.
+                _tight = sum(min((f * _FLOOR_CHAR_PT + _TABCOLSEP_PT) / _LINEWIDTH_PT, 1.0) for f in floors) >= 1.0
+                _cp = _FLOOR_CHAR_PT * 0.92 if _tight else None
                 spec = "".join(
                     r">{\raggedright\arraybackslash}p{\dimexpr %.4f\linewidth-2\tabcolsep\relax}"
-                    % f for f in _column_fractions(colw, floors))
+                    % f for f in _column_fractions(colw, floors, _cp, 6.0 if _tight else None))
                 hdr = " & ".join(_wrap_cell(x) for x in body[0]) + r" \\"
-                out.append(r"\begingroup\small")
+                out.append(r"\begingroup\footnotesize\setlength{\tabcolsep}{3pt}" if _tight else r"\begingroup\small")
                 out.append(r"\begin{longtable}{" + spec + "}")
                 out.append(r"\toprule " + hdr + r" \midrule\endfirsthead")
                 out.append(r"\toprule " + hdr + r" \midrule\endhead")

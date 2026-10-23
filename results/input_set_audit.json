@@ -5,24 +5,24 @@
     "open population",
     "frozen at write time"
   ],
-  "n_hits": 26,
-  "n_open": 26,
+  "n_hits": 31,
+  "n_open": 31,
   "n_frozen": 0,
   "n_unclassified": 0,
   "unclassified": [],
   "hits": [
     {
       "file": "scripts/build_paper.py",
-      "line": 365,
-      "citation": "scripts/build_paper.py:365",
+      "line": 367,
+      "citation": "scripts/build_paper.py:367",
       "text": "figs = sorted(f for f in os.listdir(R.FIGURES) if f.startswith(\"paper_fig\"))",
       "classification": "open population",
       "reason": "bundles the paper figures that exist; a build step, not a comparison set"
     },
     {
       "file": "scripts/build_supplementary.py",
-      "line": 189,
-      "citation": "scripts/build_supplementary.py:189",
+      "line": 193,
+      "citation": "scripts/build_supplementary.py:193",
       "text": "for root, dirs, names in os.walk(d):",
       "classification": "open population",
       "reason": "walks the tree to bundle whatever is present"
@@ -45,27 +45,59 @@
     },
     {
       "file": "scripts/make_anon_bundle.py",
-      "line": 417,
-      "citation": "scripts/make_anon_bundle.py:417",
+      "line": 421,
+      "citation": "scripts/make_anon_bundle.py:421",
       "text": "for root, dirs, names in os.walk(d):",
       "classification": "open population",
       "reason": "walks the tree to stage it"
     },
     {
       "file": "scripts/make_anon_bundle.py",
-      "line": 492,
-      "citation": "scripts/make_anon_bundle.py:492",
+      "line": 496,
+      "citation": "scripts/make_anon_bundle.py:496",
       "text": "for root, dirs, names in os.walk(staging):",
       "classification": "open population",
       "reason": "walks staging to anonymise"
     },
     {
       "file": "scripts/make_anon_bundle.py",
-      "line": 611,
-      "citation": "scripts/make_anon_bundle.py:611",
+      "line": 615,
+      "citation": "scripts/make_anon_bundle.py:615",
       "text": "for root, _, names in os.walk(staging):",
       "classification": "open population",
       "reason": "walks staging to verify"
+    },
+    {
+      "file": "scripts/n12_provenance.py",
+      "line": 128,
+      "citation": "scripts/n12_provenance.py:128",
+      "text": "for p in sorted(glob.glob(os.path.join(R.RESULTS, \"*.json\"))):",
+      "classification": "open population",
+      "reason": "an informational list of the artifacts whose wording gives the released checkpoint an in-sample role; it is written into the artifact (every file named) and a new artifact that says 'released' beside a role term shows up as a changed list in the diff"
+    },
+    {
+      "file": "scripts/n13_adam.py",
+      "line": 104,
+      "citation": "scripts/n13_adam.py:104",
+      "text": "for p in sorted(glob.glob(os.path.join(R.RESULTS, \"*.json\"))):",
+      "classification": "open population",
+      "reason": "every committed run record that has a collapse fit, the X11 queue's records excluded by name so the artifact stays fixed; the artifact lists each file it used and the paper prints the count (n13_n_runs), so a change in the population is a diff"
+    },
+    {
+      "file": "scripts/n13_adam.py",
+      "line": 155,
+      "citation": "scripts/n13_adam.py:155",
+      "text": "for rd in sorted(glob.glob(os.path.join(C.ROOT, \"runs\", \"*\"))):",
+      "classification": "open population",
+      "reason": "walks the run directories to check the logged variance state against the saved checkpoints; X11 runs are skipped by name, a directory with no results record is recorded as skipped with its reason, and the stage needs weights, so a clean clone skips it"
+    },
+    {
+      "file": "scripts/n13_adam.py",
+      "line": 162,
+      "citation": "scripts/n13_adam.py:162",
+      "text": "cks = sorted(glob.glob(os.path.join(rd, \"weights_*.pt\")) + glob.glob(os.path.join(rd, \"rolling_*.pt\")))",
+      "classification": "open population",
+      "reason": "the checkpoints inside one run directory; the number checked is recorded and asserted against the logs (checkpoints_vs_logs)"
     },
     {
       "file": "scripts/paper_figures.py",
@@ -85,40 +117,40 @@
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 813,
-      "citation": "scripts/paper_numbers.py:813",
+      "line": 816,
+      "citation": "scripts/paper_numbers.py:816",
       "text": "runs_all = sorted(glob.glob(\"results/step5_arm*.json\"))",
       "classification": "open population",
       "reason": "GUARDED: the _width predicate defined beside it filters to the released width, the Appendix B fix itself"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1338,
-      "citation": "scripts/paper_numbers.py:1338",
+      "line": 1344,
+      "citation": "scripts/paper_numbers.py:1344",
       "text": "for _f in sorted(_glob.glob(\"results/step5_*.json\")):",
       "classification": "open population",
       "reason": "the CPU budget deliberately includes every run, M-49's arm included, and Appendix B states how many of them are that arm"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1990,
-      "citation": "scripts/paper_numbers.py:1990",
+      "line": 1996,
+      "citation": "scripts/paper_numbers.py:1996",
       "text": "for _f in sorted(_g.glob(\"results/step5_arm*.json\")):",
       "classification": "open population",
       "reason": "GUARDED: _width(_f) != _released_w continues, inside the loop"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 2008,
-      "citation": "scripts/paper_numbers.py:2008",
+      "line": 2014,
+      "citation": "scripts/paper_numbers.py:2014",
       "text": "_all = len([f for f in _g.glob(\"results/step5_arm*.json\")",
       "classification": "open population",
       "reason": "GUARDED: _width(f) == _released_w in the comprehension"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 2871,
-      "citation": "scripts/paper_numbers.py:2871",
+      "line": 2880,
+      "citation": "scripts/paper_numbers.py:2880",
       "text": "for f in sorted(_g2.glob(\"results/step5_arm*.json\")):",
       "classification": "open population",
       "reason": "the run inventory is deliberately every run, and run_total matches Appendix B. NOTE: width is not part of the row key, so M-49's width-124 runs share a row with released-width runs of the same shape. That is a presentation gap, not a stale set -- no number it produces is wrong -- and it is logged rather than changed, per A.3's 'fix only what affects a published number'"
@@ -141,11 +173,19 @@
     },
     {
       "file": "scripts/pipeline_coverage.py",
-      "line": 73,
-      "citation": "scripts/pipeline_coverage.py:73",
+      "line": 78,
+      "citation": "scripts/pipeline_coverage.py:78",
       "text": "for f in sorted(glob.glob(\"scripts/*.py\")) + sorted(glob.glob(\"src/*.py\")):",
       "classification": "open population",
       "reason": "coverage over whatever source files exist is the point of the measure"
+    },
+    {
+      "file": "scripts/round5_gates.py",
+      "line": 229,
+      "citation": "scripts/round5_gates.py:229",
+      "text": "for p in [\"PAPER.template.md\"] + sorted(glob.glob(os.path.join(ROOT, \"docs\", \"*.template.md\"))):",
+      "classification": "closed population",
+      "reason": "the paper template and the document templates whose placeholders the keys gate must see; a new template can only add keys, never hide one"
     },
     {
       "file": "scripts/submission_check.py",
@@ -213,8 +253,8 @@
     },
     {
       "file": "scripts/xref_sweep.py",
-      "line": 94,
-      "citation": "scripts/xref_sweep.py:94",
+      "line": 106,
+      "citation": "scripts/xref_sweep.py:106",
       "text": "for root, _, names in os.walk(up):",
       "classification": "open population",
       "reason": "walks the pinned upstream trees to resolve the paper's file:line pointers; whatever the pinned commit holds is the population"

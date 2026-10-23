@@ -6420,28 +6420,20 @@
     },
     {
       "value": "27",
-      "n_locations": 4,
+      "n_locations": 2,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 4,
+      "n_substituted": 2,
       "sources": [
-        "results/appendix_g_rules.json",
         "results/m62_episode_clustering.json",
         "results/step5_*.json"
       ],
       "keys": [
-        "appG_n_positive",
         "m62_width_pct",
         "rt_runs_short"
       ],
       "locations": [
-        {
-          "section": "Appendix E \u2014 The pre-registration record",
-          "line": 369,
-          "key": "appG_n_positive",
-          "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
-        },
         {
           "section": "Appendix I \u2014 Calibration in detail",
           "line": 748,
@@ -6453,127 +6445,6 @@
           "line": 1807,
           "key": "rt_runs_short",
           "ctx": " iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. The longest single run is {{r"
-        },
-        {
-          "section": "S17 The earlier method section",
-          "line": 2191,
-          "key": "appG_n_positive",
-          "ctx": " for each of the {{appG_n_lead}} whose data exist; {{appG_n_positive}} are positive and {{appG_n_negative}} is"
-        }
-      ]
-    },
-    {
-      "value": "28",
-      "n_locations": 16,
-      "same_quantity_candidate": false,
-      "fails_build": false,
-      "n_typed": 0,
-      "n_substituted": 16,
-      "sources": [
-        "results/appendix_g_rules.json",
-        "results/step5_arm*.json"
-      ],
-      "keys": [
-        "appG_n_lead",
-        "appG_n_rules",
-        "n_runs"
-      ],
-      "locations": [
-        {
-          "section": "5.5 Why the per-member variance collapses",
-          "line": 174,
-          "key": "n_runs",
-          "ctx": "atio {{e5s_nll_ratio|s2}}, averaged over seeds). Across the {{n_runs}} runs at the released width that the fit"
-        },
-        {
-          "section": "7. Lessons and limitations",
-          "line": 221,
-          "key": "appG_n_rules",
-          "ctx": "he reference's. We apply no correction across our own {{appG_n_rules}} pre-registered rules, each reported aga"
-        },
-        {
-          "section": "Appendix E \u2014 The pre-registration record",
-          "line": 368,
-          "key": "appG_n_rules",
-          "ctx": "e rule reached git before its data on either reading. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
-        },
-        {
-          "section": "Appendix E \u2014 The pre-registration record",
-          "line": 368,
-          "key": "appG_n_lead",
-          "ctx": "re its data on either reading. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
-        },
-        {
-          "section": "Appendix E \u2014 The pre-registration record",
-          "line": 382,
-          "key": "appG_n_rules",
-          "ctx": "he same script that generates this table. Quoting all {{appG_n_rules}} in full here would add pages to an appe"
-        },
-        {
-          "section": "Appendix J \u2014 Why the per-member \u03c3 collapses",
-          "line": 907,
-          "key": "n_runs",
-          "ctx": "the {{rt_pre_runs}} of \u00a74.2 and \u00a74.3 (Appendix B), of which {{n_runs}} are at the released `rnn_hidden_size` o"
-        },
-        {
-          "section": "Appendix J \u2014 Why the per-member \u03c3 collapses",
-          "line": 910,
-          "key": "n_runs",
-          "ctx": "cluded from every rate \u00a75.5 quotes (Appendix B). Across all {{n_runs}} runs of that family the log-\u03c3 range mov"
-        },
-        {
-          "section": "Appendix J \u2014 Why the per-member \u03c3 collapses",
-          "line": 910,
-          "key": "n_runs",
-          "ctx": "Figure 7a). Rates are fitted on {{e2_fitted_runs}} of those {{n_runs}}: the {{e2_excluded_10k}} 10,000-iterati"
-        },
-        {
-          "section": "Appendix J \u2014 Why the per-member \u03c3 collapses",
-          "line": 912,
-          "key": "n_runs",
-          "ctx": "t 2,500 and would double-weight them. Figure 7(a) shows all {{n_runs}} runs of the collapse family and Figure "
-        },
-        {
-          "section": "S2 The limitations in full",
-          "line": 1644,
-          "key": "appG_n_rules",
-          "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them (Appendix E), each reported, on"
-        },
-        {
-          "section": "S7 Compute: runtimes, the queues and their overlaps",
-          "line": 1812,
-          "key": "n_runs",
-          "ctx": "total above \u2014 the other {{rt_hours_released}} hours are the {{n_runs}} runs at the released width, and the two"
-        },
-        {
-          "section": "S7 Compute: runtimes, the queues and their overlaps",
-          "line": 1813,
-          "key": "n_runs",
-          "ctx": " rather than stated beside it. They are **not** part of the {{n_runs}} runs of \u00a76.3's \u03c3-collapse family, becau"
-        },
-        {
-          "section": "S17 The earlier method section",
-          "line": 2191,
-          "key": "appG_n_lead",
-          "ctx": "re 3 and Appendix E give the lead time for each of the {{appG_n_lead}} whose data exist; {{appG_n_positive}} a"
-        },
-        {
-          "section": "S22 The earlier section 6.3",
-          "line": 2642,
-          "key": "n_runs",
-          "ctx": " this algebra before training, then observed it: across all {{n_runs}} runs at the released width outside \u00a74.2"
-        },
-        {
-          "section": "S30 The earlier limitations section",
-          "line": 3043,
-          "key": "appG_n_rules",
-          "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them (Appendix E), each reported, on"
-        },
-        {
-          "section": "S32 Appendix passages that restated the main text",
-          "line": 3099,
-          "key": "n_runs",
-          "ctx": " this algebra before training, then observed it: across all {{n_runs}} runs at the released width outside \u00a74.2"
         }
       ]
     },
@@ -7294,19 +7165,27 @@
     },
     {
       "value": "34",
-      "n_locations": 2,
+      "n_locations": 4,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 2,
+      "n_substituted": 4,
       "sources": [
+        "results/appendix_g_rules.json",
         "results/r2_combined_arm.json"
       ],
       "keys": [
+        "appG_n_positive",
         "m68_from_acc_h100",
         "m68_from_sigma_h368"
       ],
       "locations": [
+        {
+          "section": "Appendix E \u2014 The pre-registration record",
+          "line": 369,
+          "key": "appG_n_positive",
+          "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
+        },
         {
           "section": "Appendix K \u2014 The shared trunk and independent ensembles",
           "line": 1136,
@@ -7318,6 +7197,12 @@
           "line": 1138,
           "key": "m68_from_sigma_h368",
           "ctx": "| {{m68_acc_x_h368}}\u00d7 | {{m68_total_x_h368}}\u00d7 | {{m68_from_sigma_h368}}% | {{m68_from_acc_h368}}% | *On the he"
+        },
+        {
+          "section": "S17 The earlier method section",
+          "line": 2191,
+          "key": "appG_n_positive",
+          "ctx": " for each of the {{appG_n_lead}} whose data exist; {{appG_n_positive}} are positive and {{appG_n_negative}} is"
         }
       ]
     },
@@ -7353,20 +7238,29 @@
     },
     {
       "value": "35",
-      "n_locations": 2,
+      "n_locations": 9,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 2,
+      "n_substituted": 9,
       "sources": [
+        "results/appendix_g_rules.json",
         "results/r2_independent_ensemble.json",
         "results/t1_bibliography_verified.json"
       ],
       "keys": [
+        "appG_n_lead",
+        "appG_n_rules",
         "r2_from_acc_h128",
         "t1_last_entry_n"
       ],
       "locations": [
+        {
+          "section": "7. Lessons and limitations",
+          "line": 221,
+          "key": "appG_n_rules",
+          "ctx": "he reference's. We apply no correction across our own {{appG_n_rules}} pre-registered rules, each reported aga"
+        },
         {
           "section": "References",
           "line": 260,
@@ -7374,10 +7268,46 @@
           "ctx": "{t1_reference_list}} *Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are generated from `results/t1_bibliogr"
         },
         {
+          "section": "Appendix E \u2014 The pre-registration record",
+          "line": 368,
+          "key": "appG_n_rules",
+          "ctx": "e rule reached git before its data on either reading. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
+        },
+        {
+          "section": "Appendix E \u2014 The pre-registration record",
+          "line": 368,
+          "key": "appG_n_lead",
+          "ctx": "re its data on either reading. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
+        },
+        {
+          "section": "Appendix E \u2014 The pre-registration record",
+          "line": 382,
+          "key": "appG_n_rules",
+          "ctx": "he same script that generates this table. Quoting all {{appG_n_rules}} in full here would add pages to an appe"
+        },
+        {
           "section": "Appendix K \u2014 The shared trunk and independent ensembles",
           "line": 1050,
           "key": "r2_from_acc_h128",
           "ctx": " {{r2_total_x_h128}}\u00d7 | {{r2_from_sigma_h128}}% | {{r2_from_acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}"
+        },
+        {
+          "section": "S2 The limitations in full",
+          "line": 1644,
+          "key": "appG_n_rules",
+          "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them (Appendix E), each reported, on"
+        },
+        {
+          "section": "S17 The earlier method section",
+          "line": 2191,
+          "key": "appG_n_lead",
+          "ctx": "re 3 and Appendix E give the lead time for each of the {{appG_n_lead}} whose data exist; {{appG_n_positive}} a"
+        },
+        {
+          "section": "S30 The earlier limitations section",
+          "line": 3043,
+          "key": "appG_n_rules",
+          "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them (Appendix E), each reported, on"
         }
       ]
     },
@@ -8469,20 +8399,18 @@
     },
     {
       "value": "39",
-      "n_locations": 5,
+      "n_locations": 4,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 5,
+      "n_substituted": 4,
       "sources": [
         "results/original_paper_figures.json",
-        "results/paper_figures.json",
         "results/step0_regimes.json",
         "results/task1_calibration.json"
       ],
       "keys": [
         "cal_faithA_npos",
-        "f1_n_cited",
         "v4_name_n_v1",
         "win_tail"
       ],
@@ -8498,12 +8426,6 @@
           "line": 760,
           "key": "cal_faithA_npos",
           "ctx": "-|---|---| | faithful Arm A | {{cal_faithA_cov}} | {{cal_faithA_npos}}/{{cal_faithA_ndim}} | {{perm_oos_faithA"
-        },
-        {
-          "section": "S8 The repository's history",
-          "line": 1839,
-          "key": "f1_n_cited",
-          "ctx": "ne that introduced it onward, so **{{f1_n_kept}} of the {{f1_n_cited}} commits Figure 3 cites keep their ident"
         },
         {
           "section": "S16 The earlier setup",
@@ -9201,6 +9123,36 @@
           "line": 3010,
           "key": null,
           "ctx": " the true one, settling it needs \u2400 independent 400-step trajectories, a required-sample-size estimate under an"
+        }
+      ]
+    },
+    {
+      "value": "43",
+      "n_locations": 2,
+      "same_quantity_candidate": false,
+      "fails_build": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/paper_figures.json",
+        "results/r2_independent_ensemble.json"
+      ],
+      "keys": [
+        "f1_n_cited",
+        "r2_from_sigma_h368"
+      ],
+      "locations": [
+        {
+          "section": "Appendix K \u2014 The shared trunk and independent ensembles",
+          "line": 1051,
+          "key": "r2_from_sigma_h368",
+          "ctx": "}\u00d7 | {{r2_acc_x_h368}}\u00d7 | {{r2_total_x_h368}}\u00d7 | {{r2_from_sigma_h368}}% | {{r2_from_acc_h368}}% | *On the hel"
+        },
+        {
+          "section": "S8 The repository's history",
+          "line": 1839,
+          "key": "f1_n_cited",
+          "ctx": "ne that introduced it onward, so **{{f1_n_kept}} of the {{f1_n_cited}} commits Figure 3 cites keep their ident"
         }
       ]
     },

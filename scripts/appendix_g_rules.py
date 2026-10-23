@@ -74,7 +74,13 @@ def main():
     RETURNED = {"M-43": "e5_verdict", "M-44": "m44_verdict", "M-45": "m45_verdict",
                 # M-16's Status line says the rule was pre-registered ("SETTLED"), not
                 # what it returned; §5, §8 and the introduction cite the return (S10).
-                "M-16": "m16_verdict"}
+                "M-16": "m16_verdict",
+                # Round 5 (G17): the ledger's Status lines for these say what the rule returned in several
+                # shapes; the generator's fallbacks had picked the first branch each rule defines
+                # (M-101 came out as "PROPAGATION CLOSES THE GAP"). The returned readings are keys, read
+                # from the artifacts: X9's is the same for all four models (x9_rel_verdict).
+                "M-97": "x11a_verdict", "M-98": "x11b_verdict", "M-99": "x11c_verdict", "M-100": "x11d_verdict",
+                "M-101": "x9_rel_verdict", "M-102": "x10_verdict", "M-103": "x11e_verdict"}
     lead = FIG["fig4"]
     commits = {c["rule"]: c for c in FIG["fig4_commits"]}
 

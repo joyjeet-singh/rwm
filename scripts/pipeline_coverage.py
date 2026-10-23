@@ -46,6 +46,11 @@ EXEMPT = {
     "compile_paper.json":
         "written by the LaTeX compile, which is stage 26; its declared output is "
         "the PDF rather than this artifact.",
+    "version_crosswalk.json":
+        "written by scripts/version_crosswalk.py, which reads the originals' arXiv "
+        "versions over the network and so is not a stage a clean clone can run "
+        "offline (round 5, G1; CROSSWALK.md). The committed record carries the "
+        "evidence it read.",
 }
 
 

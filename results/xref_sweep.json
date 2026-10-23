@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 118,
-  "n_ok": 109,
+  "n_pointers": 105,
+  "n_ok": 96,
   "n_reviewed_correct": 9,
   "reviewed": [
     {
@@ -414,18 +414,6 @@
     },
     {
       "class": "artifact",
-      "pointer": "results/e5_synthetic_sigma.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/e7_free_baselines.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
       "pointer": "results/evidence_summary.json",
       "ok": true,
       "detail": "exists"
@@ -445,30 +433,6 @@
     {
       "class": "artifact",
       "pointer": "results/m49_capacity_matched.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/m62_episode_clustering.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/m63_per_dimension_coverage.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/m64_short_units.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/m65_gaussian_nominal.json",
       "ok": true,
       "detail": "exists"
     },
@@ -558,12 +522,6 @@
     },
     {
       "class": "artifact",
-      "pointer": "results/r2_combined_arm.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
       "pointer": "results/r2_independent_ensemble.json",
       "ok": true,
       "detail": "exists"
@@ -571,12 +529,6 @@
     {
       "class": "artifact",
       "pointer": "results/review_bootstrap_unit.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/rssm_diagnostics.json",
       "ok": true,
       "detail": "exists"
     },
@@ -630,12 +582,6 @@
     },
     {
       "class": "artifact",
-      "pointer": "results/task_d3_cross_model.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
       "pointer": "results/training_tail_slopes.json",
       "ok": true,
       "detail": "exists"
@@ -648,31 +594,7 @@
     },
     {
       "class": "artifact",
-      "pointer": "results/x3_cross_fold.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
       "pointer": "results/x4_matched_baselines.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/x6_stepsize_short_units.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/x7_loeo_recalibration.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/x8_released_pairing.json",
       "ok": true,
       "detail": "exists"
     },

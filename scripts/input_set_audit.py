@@ -49,6 +49,25 @@ PATTERNS = re.compile(r"glob\.glob|iglob|\.glob\(|os\.listdir|os\.walk|os\.scand
 # strict: a new discovery, or an existing one whose code changes, is unclassified until
 # someone reads it. Reasons name their guard instead of citing a line number that drifts.
 CLASSIFICATION = {
+    # Round 5, G17: the five discoveries the round's scripts added, each read before it was classified.
+    ("scripts/n12_provenance.py", 'for p in sorted(glob.glob(os.path.join(R.RESULTS, "*.json"))):'):
+        ("open population", "an informational list of the artifacts whose wording gives the released checkpoint an "
+                            "in-sample role; it is written into the artifact (every file named) and a new artifact "
+                            "that says 'released' beside a role term shows up as a changed list in the diff"),
+    ("scripts/n13_adam.py", 'for p in sorted(glob.glob(os.path.join(R.RESULTS, "*.json"))):'):
+        ("open population", "every committed run record that has a collapse fit, the X11 queue's records excluded "
+                            "by name so the artifact stays fixed; the artifact lists each file it used and the "
+                            "paper prints the count (n13_n_runs), so a change in the population is a diff"),
+    ("scripts/n13_adam.py", 'for rd in sorted(glob.glob(os.path.join(C.ROOT, "runs", "*"))):'):
+        ("open population", "walks the run directories to check the logged variance state against the saved "
+                            "checkpoints; X11 runs are skipped by name, a directory with no results record is "
+                            "recorded as skipped with its reason, and the stage needs weights, so a clean clone skips it"),
+    ("scripts/n13_adam.py", 'cks = sorted(glob.glob(os.path.join(rd, "weights_*.pt")) + glob.glob(os.path.join(rd, "rolling_*.pt")))'):
+        ("open population", "the checkpoints inside one run directory; the number checked is recorded and asserted "
+                            "against the logs (checkpoints_vs_logs)"),
+    ("scripts/round5_gates.py", 'for p in ["PAPER.template.md"] + sorted(glob.glob(os.path.join(ROOT, "docs", "*.template.md"))):'):
+        ("closed population", "the paper template and the document templates whose placeholders the keys gate "
+                              "must see; a new template can only add keys, never hide one"),
     ("scripts/build_paper.py", 'figs = sorted(f for f in os.listdir(R.FIGURES) if f.startswith("paper_fig"))'):
         ("open population", "bundles the paper figures that exist; a build step, not a comparison set"),
     ("scripts/build_supplementary.py", "for root, dirs, names in os.walk(d):"):

@@ -1,22 +1,12 @@
 {
   "n_artifacts": 106,
-  "n_paper_keys": 3381,
-  "n_uncovered": 1,
-  "uncovered": [
-    {
-      "artifact": "version_crosswalk.json",
-      "n_paper_keys": 5,
-      "writers": [
-        "version_crosswalk"
-      ],
-      "invoked_writers": [],
-      "covered": false,
-      "exempt_reason": null
-    }
-  ],
+  "n_paper_keys": 3433,
+  "n_uncovered": 0,
+  "uncovered": [],
   "exempt": {
     "verify_reproduction.json": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself.",
-    "compile_paper.json": "written by the LaTeX compile, which is stage 26; its declared output is the PDF rather than this artifact."
+    "compile_paper.json": "written by the LaTeX compile, which is stage 26; its declared output is the PDF rather than this artifact.",
+    "version_crosswalk.json": "written by scripts/version_crosswalk.py, which reads the originals' arXiv versions over the network and so is not a stage a clean clone can run offline (round 5, G1; CROSSWALK.md). The committed record carries the evidence it read."
   },
   "artifacts": [
     {
@@ -61,12 +51,24 @@
     },
     {
       "artifact": "x9_per_member_propagation.json",
-      "n_paper_keys": 150,
+      "n_paper_keys": 151,
       "writers": [
         "x9_per_member_propagation"
       ],
       "invoked_writers": [
         "x9_per_member_propagation"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "n7_exact_tests.json",
+      "n_paper_keys": 138,
+      "writers": [
+        "n7_exact_tests"
+      ],
+      "invoked_writers": [
+        "n7_exact_tests"
       ],
       "covered": true,
       "exempt_reason": null
@@ -131,18 +133,6 @@
       "invoked_writers": [
         "n7_exact_tests",
         "r2_independent_ensemble"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "n7_exact_tests.json",
-      "n_paper_keys": 87,
-      "writers": [
-        "n7_exact_tests"
-      ],
-      "invoked_writers": [
-        "n7_exact_tests"
       ],
       "covered": true,
       "exempt_reason": null
@@ -1136,11 +1126,14 @@
       "artifact": "version_crosswalk.json",
       "n_paper_keys": 5,
       "writers": [
+        "pipeline_coverage",
         "version_crosswalk"
       ],
-      "invoked_writers": [],
-      "covered": false,
-      "exempt_reason": null
+      "invoked_writers": [
+        "pipeline_coverage"
+      ],
+      "covered": true,
+      "exempt_reason": "written by scripts/version_crosswalk.py, which reads the originals' arXiv versions over the network and so is not a stage a clean clone can run offline (round 5, G1; CROSSWALK.md). The committed record carries the evidence it read."
     },
     {
       "artifact": "step6_analysis.json",

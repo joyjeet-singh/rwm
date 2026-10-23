@@ -379,7 +379,7 @@ survived in the ensemble-5 comparison until this revision found it, moving two p
 values (`M-66`). A sweep of the pattern-based input discoveries in `scripts/` and `src/`
 classifies each as an open population or frozen at write time. It found 1
 frozen, the ensemble-5 glob, since replaced by an explicit seed list and retired from the sweep;
-of the 26 discoveries in the code now, 0 are frozen. Artifacts that
+of the 31 discoveries in the code now, 0 are frozen. Artifacts that
 discover their inputs now record the file list they were computed over.
 
 *Round 2, T8: from "A sweep" to "frozen." this is no longer verbatim. It read "A sweep of all
