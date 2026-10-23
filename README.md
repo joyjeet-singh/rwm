@@ -19,7 +19,7 @@ way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean 
 62 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 309 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 310 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
 are never edited in place: the ledger keeps 24 superseded entries.
 Of those, nine claims withdrawn on evidence are our own **numbered claims**,

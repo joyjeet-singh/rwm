@@ -614,3 +614,32 @@ Body words / main-content pages: see LENGTH_LOG
 Subagents: none
 Next: GT2 (Sonnet 5.5, medium), then G13.
 Decisions for user: none
+
+## GT2 — 2026-10-23 21:30 — Sonnet 5.5, medium — status: COMPLETE
+Commits:
+(one commit, [GT2][1-3], follows this entry)
+Review items closed: RV20 (data)
+Done:
+- **Item 1, the gate.** `round5/gt2_queue_check.py` → `gt2_queue_check.json`: the queue log ends `queue empty; runner exits`; all 20 IDs are in the done list; none failed; every run record has the right fold complement, ensemble size, seed and 2,500 iterations, finite losses, and a non-empty weights file. PASS.
+- **Item 2, the readings.** Each frozen script found its SHA-256 in its own ledger entry, ran unchanged, and reproduced its fold-{1, 8} assertion exactly (difference 0.0). As returned:
+  - **X11a (M-97): MIXED** at h = 1 (Q = 0.92 [0.81, 1.07]); IN-SAMPLE FLATTERS at h = 100 and 368 (as the label it would carry).
+  - **X11b (M-98): GENERALISES** (leads at 4 of 4 horizons, interval excludes zero at 4 of 4).
+  - **X11c (M-99): PER-HORIZON SCALAR DOES NOT RESTORE CALIBRATION** (72 of 180 cells; constant 17). Alongside only: pooled ±1σ coverage is within band at every horizon.
+  - **X11d (M-100): MECHANISM SUPPORTED** (1.82× lower overconfidence, +6.0 points).
+  - **X11e (M-103): PROPAGATION NARROWS THE GAP** (f = 0.72 [0.67, 0.76] at h = 100, n = 20).
+  `round5/gt2_write_ledger.py` appended **M-104** (the discharge record, every number read from the artifacts) and set the five Status lines. `RESULTS.md`'s M- count is 104; `ledger_check.py` passes.
+- **Two results change what the paper may say** (rule 10, recorded in READINGS' addendum): (a) X10's "in-sample is worse at h = 1" does not hold at n = 20 (MIXED); (b) the pre-registered cell-level reading on unseen episodes says per-horizon rescaling does not restore calibration, while the alongside pooled coverage is within band. G13 must give both for §5.7 and the h = 1 in-sample sentence.
+- **Item 3.** Stages: training 11l and readings 20v3 to 20v7 in `reproduce.sh` (all `NEEDS_WEIGHTS`). 45 keys `x11a_*` … `x11e_*`. READINGS addendum (458 words). No paper text was edited; the paper's numbers did not change.
+- **A process slip to know about.** Round 5's rule was that the fifteen `results/x3_run_*_ens5.json` and `_seed3/4.json` records stay uncommitted until GT2. My commit `86633cd` (G11) ran `git add … results` and swept them in. Nothing read them: no session opened a run record's evaluation before the frozen scripts did, and the scripts' own gate was unaffected. Now moot, as GT2 has run, and recorded here.
+Build/gates: pass (fast build → gates → fast build; last two byte-identical); `keys` 0 missing.
+Round-5 gates (report mode until G16): pages 18.25/12, abstract 207/5, ids 58, once 17, sig 265, keys missing 0
+Paper numbers changed: none
+New keys: x11a_* (verdict, q, ci, label, rho at h = 1, 100, 368), x11b_*, x11c_*, x11d_*, x11e_* (results/x11*.json)
+Ledger: M-104 (new); Status lines of M-97, M-98, M-99, M-100, M-103 set to DISCHARGED
+Re-anchored checks: none
+CPU jobs over 1 min: the five readings, 11 min in all (x11b 7 min), idle machine
+Queue (Y5): done (20 of 20), discharged
+Body words / main-content pages: unchanged (see LENGTH_LOG)
+Subagents: none
+Next: G13 (Opus 5.5, high).
+Decisions for user: none

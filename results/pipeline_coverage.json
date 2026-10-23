@@ -1,8 +1,19 @@
 {
-  "n_artifacts": 100,
-  "n_paper_keys": 3278,
-  "n_uncovered": 0,
-  "uncovered": [],
+  "n_artifacts": 106,
+  "n_paper_keys": 3381,
+  "n_uncovered": 1,
+  "uncovered": [
+    {
+      "artifact": "version_crosswalk.json",
+      "n_paper_keys": 5,
+      "writers": [
+        "version_crosswalk"
+      ],
+      "invoked_writers": [],
+      "covered": false,
+      "exempt_reason": null
+    }
+  ],
   "exempt": {
     "verify_reproduction.json": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself.",
     "compile_paper.json": "written by the LaTeX compile, which is stage 26; its declared output is the PDF rather than this artifact."
@@ -125,6 +136,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "n7_exact_tests.json",
+      "n_paper_keys": 87,
+      "writers": [
+        "n7_exact_tests"
+      ],
+      "invoked_writers": [
+        "n7_exact_tests"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "r2_independent_ensemble.json",
       "n_paper_keys": 85,
       "writers": [
@@ -134,18 +157,6 @@
       "invoked_writers": [
         "n7_exact_tests",
         "r2_independent_ensemble"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "n7_exact_tests.json",
-      "n_paper_keys": 71,
-      "writers": [
-        "n7_exact_tests"
-      ],
-      "invoked_writers": [
-        "n7_exact_tests"
       ],
       "covered": true,
       "exempt_reason": null
@@ -302,6 +313,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "x11c_fold_recalibration.json",
+      "n_paper_keys": 28,
+      "writers": [
+        "x11c_fold_recalibration"
+      ],
+      "invoked_writers": [
+        "x11c_fold_recalibration"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task_d3_cross_model.json",
       "n_paper_keys": 27,
       "writers": [
@@ -434,6 +457,18 @@
       ],
       "invoked_writers": [
         "task5_analyse"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "t1_bibliography_verified.json",
+      "n_paper_keys": 22,
+      "writers": [
+        "t1_bibliography"
+      ],
+      "invoked_writers": [
+        "t1_bibliography"
       ],
       "covered": true,
       "exempt_reason": null
@@ -575,6 +610,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "x11a_fold_ens5_calibration.json",
+      "n_paper_keys": 16,
+      "writers": [
+        "x11a_fold_ens5_calibration"
+      ],
+      "invoked_writers": [
+        "x11a_fold_ens5_calibration"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "review_bootstrap_unit.json",
       "n_paper_keys": 15,
       "writers": [
@@ -625,6 +672,22 @@
       "exempt_reason": null
     },
     {
+      "artifact": "paper_figures.json",
+      "n_paper_keys": 13,
+      "writers": [
+        "check_comparative_claims",
+        "paper_figures",
+        "paper_numbers"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "paper_figures",
+        "paper_numbers"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "rssm_diagnostics.json",
       "n_paper_keys": 13,
       "writers": [
@@ -649,22 +712,6 @@
       "exempt_reason": null
     },
     {
-      "artifact": "paper_figures.json",
-      "n_paper_keys": 12,
-      "writers": [
-        "check_comparative_claims",
-        "paper_figures",
-        "paper_numbers"
-      ],
-      "invoked_writers": [
-        "check_comparative_claims",
-        "paper_figures",
-        "paper_numbers"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
       "artifact": "mn_sweep_eval.json",
       "n_paper_keys": 12,
       "writers": [
@@ -674,6 +721,18 @@
       "invoked_writers": [
         "mn_sweep_eval",
         "verdict_mn_sweep"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "x11b_fold_m43.json",
+      "n_paper_keys": 12,
+      "writers": [
+        "x11b_fold_m43"
+      ],
+      "invoked_writers": [
+        "x11b_fold_m43"
       ],
       "covered": true,
       "exempt_reason": null
@@ -722,18 +781,6 @@
       ],
       "invoked_writers": [
         "ledger_check"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "t1_bibliography_verified.json",
-      "n_paper_keys": 10,
-      "writers": [
-        "t1_bibliography"
-      ],
-      "invoked_writers": [
-        "t1_bibliography"
       ],
       "covered": true,
       "exempt_reason": null
@@ -969,6 +1016,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "x11e_fold_e5_propagation.json",
+      "n_paper_keys": 7,
+      "writers": [
+        "x9_per_member_propagation"
+      ],
+      "invoked_writers": [
+        "x9_per_member_propagation"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "step5_armA_seed0.json",
       "n_paper_keys": 6,
       "writers": [
@@ -1024,6 +1083,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "x11d_fold_m44.json",
+      "n_paper_keys": 6,
+      "writers": [
+        "x11d_fold_m44"
+      ],
+      "invoked_writers": [
+        "x11d_fold_m44"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "p4_transfer_power.json",
       "n_paper_keys": 5,
       "writers": [
@@ -1059,6 +1130,16 @@
         "taskAB_gate_r27"
       ],
       "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "version_crosswalk.json",
+      "n_paper_keys": 5,
+      "writers": [
+        "version_crosswalk"
+      ],
+      "invoked_writers": [],
+      "covered": false,
       "exempt_reason": null
     },
     {

@@ -111,3 +111,43 @@ caveat; "the first calibration measurement we are aware of" (`:59`) is removed; 
 failure (`:595`), and "deep-rollout states are under-penalised" wherever it appears, go: the penalty's job is to
 bound one-step error at visited states; "freezes" (`:632`) becomes "receives no gradient from the bound term"; the
 in-sample sentence (`:585`) goes, per X10.
+
+---
+
+## Addendum, GT2 (2026-10-23): X11, read at n = 20 on the five folds
+
+For G13 onwards. Ledger `M-104` records the readings; keys are `x11a_*` … `x11e_*` (`results/paper_numbers.json`). The queue gate
+passed (`round5/gt2_queue_check.json`). Each reading is exploratory, bounded, and re-opens no discharged rule. **Scope every
+time:** each fold's own ensemble-5 arms on that fold's own held-out pair, 20 trajectories from ten episodes held out once;
+the models of different folds share most training episodes.
+
+**X11a, in-sample against held-out (M-97): MIXED at h = 1** (`x11a_verdict`; `x11a_q_h1` `x11a_q_h1_ci`: all three seeds below
+1, the pooled interval contains 1). At h = 100 and h = 368 the label it would carry is IN-SAMPLE FLATTERS
+(`x11a_label_h100`, `x11a_label_h368`). So X10's h = 1 reading (IN-SAMPLE IS WORSE, 16 against 4 trajectories) **does not
+hold at n = 20**; the rule-10 row on in-sample measurement now reads: no direction at h = 1, flattering at long horizons.
+**Story:** a summary may say the effect depends on the horizon and that the h = 1 sign is not stable across arenas; it may
+not say in-sample is worse at one step.
+
+**X11b, disagreement against the forecast-step index (M-98): GENERALISES** (`x11b_verdict`): disagreement leads at
+`x11b_n_leads` of `x11b_n_horizons` horizons and the paired interval excludes zero at `x11b_n_excl`; r values `x11b_r_dis_h*`
+against `x11b_r_idx_h*`. Supports contribution 4's ranking claim at n = 20 for the ensemble-5 arms.
+
+**X11c, per-horizon recalibration on unseen episodes (M-99): DOES NOT RESTORE CALIBRATION** (`x11c_verdict`):
+`x11c_cells_cal` of `x11c_n_cells` cells calibrated, the constant multiplier `x11c_const_cal`. **Alongside only:** the pooled
+±1σ coverage is WITHIN BAND at every horizon (`x11c_pooled_cov1_h*`, `x11c_pooled_label_h*`) against `x11c_before_cov1_h*`
+before any multiplier. **Story:** the sentence "rescaling restores one-sigma coverage" holds for the released checkpoint
+(X7) and, pooled, for the fold arms, but the pre-registered cell-level reading on unseen episodes says no. This is the
+**[X11c]** row of OUTLINE's rule-10 table: §5.7 must give both, and no summary may drop "on the released checkpoint" without
+the cell-level reading beside it.
+
+**X11d, independent against shared trunk (M-100): MECHANISM SUPPORTED** (`x11d_verdict`): `x11d_ratio_gain`× lower
+overconfidence and `x11d_cov_gain` points more ±1σ coverage at h = 100, against M-44's committed thresholds; the n = 20
+label is the same (`x11d_label_n20`). §5.3's sharing claim now rests on n = 20 as well as n = 4; members still differ in
+capacity and data order.
+
+**X11e, per-member propagation on the fold arms (M-103): PROPAGATION NARROWS THE GAP** (`x11e_verdict`) at h = 100, n = 20:
+`x11e_f_h100` `x11e_f_h100_ci`; ρ `x11e_mean_rho_h100` → `x11e_per_rho_h100`; ±1σ `x11e_mean_cov1_h100`% →
+`x11e_per_cov1_h100`%. Same direction as X9; `x9_scope` applies.
+
+**Slots.** OUTLINE's **[X11 slot]** marks fill as: H7 (Table 3) gains the fold ensembles' X11a calibration row; H11 the X11d
+reading; H12 the X11e reading; H16 the X11c reading with both of its faces; H9 the X11a reading above.

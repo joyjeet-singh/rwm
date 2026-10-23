@@ -3884,7 +3884,7 @@
       "id": "M-97",
       "claim": "PRE-REGISTERED rule X11a: the ensemble-5 arms' held-out calibration at n = 20, and in-sa",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11a_fold_ens5_calibration.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x11a_fold_ens5_calibration.json` (`verdict`): **MIXED** at h = 1 (Q = 0.92 [0.81, 1.07]); the label it would carry at h = 100 is IN-SAMPLE FLATTERS. Recorded in `M-104`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3906,7 +3906,7 @@
       "id": "M-98",
       "claim": "PRE-REGISTERED rule X11b: M-43's disagreement-against-index comparison on X3's five fold",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11b_fold_m43.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x11b_fold_m43.json` (`verdict`): **GENERALISES**. Recorded in `M-104`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3930,7 +3930,7 @@
       "id": "M-99",
       "claim": "PRE-REGISTERED rule X11c: the per-horizon recalibration on episodes the ensemble-5 arms ",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11c_fold_recalibration.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x11c_fold_recalibration.json` (`verdict`): **PER-HORIZON SCALAR DOES NOT RESTORE CALIBRATION** (72 of 180 cells). Recorded in `M-104`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3953,7 +3953,7 @@
       "id": "M-100",
       "claim": "PRE-REGISTERED rule X11d: M-44's independent-against-shared-trunk comparison on X3's fiv",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11d_fold_m44.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x11d_fold_m44.json` (`verdict`): **MECHANISM SUPPORTED**. Recorded in `M-104`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -4021,7 +4021,7 @@
       "id": "M-103",
       "claim": "PRE-REGISTERED rule X11e: X9's per-member propagation on X3's folds' ensemble-5 arms",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11e_fold_e5_propagation.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x11e_fold_e5_propagation.json` (`verdict`): **PROPAGATION NARROWS THE GAP** at h = 100, n = 20. Recorded in `M-104`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -4278,13 +4278,37 @@
         "results/q1_search_protocol.md"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-104",
+      "claim": "Discharge record of rules X11a\u2013X11e (M-97, M-98, M-99, M-100, M-103): the fold ensembles",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/x11a_fold_ens5_calibration.json",
+        "results/x11b_fold_m43.json",
+        "results/x11c_fold_recalibration.json",
+        "results/x11d_fold_m44.json",
+        "results/x11e_fold_e5_propagation.json",
+        "scripts/x11_common.py",
+        "scripts/x11a_fold_ens5_calibration.py",
+        "scripts/x11b_fold_m43.py",
+        "scripts/x11c_fold_recalibration.py",
+        "scripts/x11d_fold_m44.py",
+        "scripts/x9_per_member_propagation.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 18,
     "D": 39,
-    "M": 103,
+    "M": 104,
     "O": 14,
     "R": 89,
     "S": 24,

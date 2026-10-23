@@ -564,7 +564,7 @@ The released evaluation pairs states and actions one step stale (\S{}7.2) & all 
 
 \section{Every pre-registered rule, its lead time and its verdict}
 
-\S{}3.4's argument rests on decision rules committed to git before the data that tested them, and the body names those rules by identifier. An identifier with no table behind it is either decoration or an instruction to open a 734 KB ledger, so here is the table. It is generated from \texttt{FINDINGS\_LEDGER.md} and \texttt{results/\allowbreak{}appendix\_\allowbreak{}g\_\allowbreak{}rules\allowbreak{}.json}; nothing in it is typed.
+\S{}3.4's argument rests on decision rules committed to git before the data that tested them, and the body names those rules by identifier. An identifier with no table behind it is either decoration or an instruction to open a 738 KB ledger, so here is the table. It is generated from \texttt{FINDINGS\_LEDGER.md} and \texttt{results/\allowbreak{}appendix\_\allowbreak{}g\_\allowbreak{}rules\allowbreak{}.json}; nothing in it is typed.
 
 \textbf{Lead time} is the rule's commit timestamp subtracted from the commit that first held the data it tested, never by a stored hash: the first rules' commits are found by \emph{subject}, because the history was rewritten once and two of the commits Figure 3 cites changed hash (Data and code), and the later rules' by the commit that introduced their ledger heading. Positive means the rule was in git before the data existed. This is the same computation Figure 3 plots. A rule whose data do not exist yet has neither a lead time nor a verdict, and Figure 3 leaves it out until they do.
 

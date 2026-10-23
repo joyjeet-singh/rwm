@@ -203,9 +203,13 @@ if [ $QUICK -eq 0 ]; then
   # it writes was checked to be byte-identical to the one that ran.
   stage 11k "TRAINING — X3's cross-fold arms and X4's size-matched baselines (M-86, M-87)" "27 h" \
         results/baseline_run_transformer_ar_matched_seed2.json bash -c "$PY scripts/round4_queue_timing.py --queue-from-record && PY=$PY bash scripts/queue_runner.sh runs/queue_round4.txt > runs/queue_round4.log 2>&1 && [ ! -s runs/queue_round4_failed.txt ]"
+  # Round 5's queue (GT1, GT2): rule X11's twelve ensemble-5 and eight single-model fold runs (M-97 to M-100), 20 runs,
+  # written from the committed record with no re-probe.
+  stage 11l "TRAINING — X11's fold ensembles and extra single models (M-97 to M-100)" "55 h" \
+        results/x3_run_armA_ho79_seed2_ens5.json bash -c "$PY scripts/round5_queue_timing.py --queue-from-record && PY=$PY bash scripts/queue_runner.sh runs/queue_round5.txt > runs/queue_round5.log 2>&1 && [ ! -s runs/queue_round5_failed.txt ]"
 else
   echo ""
-  echo " STAGES 9-11k (training) SKIPPED in --quick mode."
+  echo " STAGES 9-11l (training) SKIPPED in --quick mode."
   echo "   Their outputs are committed as results/step5_*.json and are consumed below."
 fi
 
@@ -495,13 +499,23 @@ stage 20u6 "N5 — our models' stale-timing change with intervals (post hoc, R-8
 # Round 5 (docs/presubmission/round5/PROTOCOLS.md). X9 and X10 are inference-only rules on existing weights. X9's
 # frozen script reads the released checkpoint AND our arms in one run (it cannot be split without changing a
 # pre-registered script), so the whole stage is NEEDS_WEIGHTS. 20v0 is X11's power check, computed in GT1 before any
-# X11 fold run existed; the X11 training queue and readings get their stages in GT2.
+# X11 fold run existed; the X11's training queue (11l) and readings (20v3 to 20v7) got their stages in GT2.
 stage 20v0 "X11 power — M-43's criterion and M-44's MDE at n = 20, before any fold run" "3 min" \
       results/x11_power.json NEEDS_WEIGHTS $PY scripts/x11_power.py
 stage 20v1 "X9 — per-member propagation against the released mean protocol (M-101)" "3 min" \
       results/x9_per_member_propagation.json NEEDS_WEIGHTS $PY scripts/x9_per_member_propagation.py
 stage 20v2 "X10 — in-sample against held-out calibration, ensemble-5 arms (M-102)" "1 min" \
       results/x10_insample_vs_heldout.json NEEDS_WEIGHTS $PY scripts/x10_insample_vs_heldout.py
+stage 20v3 "X11a — the fold ensemble-5 arms' calibration at n = 20, and in-sample against held-out (M-97)" "2 min" \
+      results/x11a_fold_ens5_calibration.json NEEDS_WEIGHTS $PY scripts/x11a_fold_ens5_calibration.py
+stage 20v4 "X11b — M-43's disagreement-against-index comparison on the five folds (M-98)" "8 min" \
+      results/x11b_fold_m43.json NEEDS_WEIGHTS $PY scripts/x11b_fold_m43.py
+stage 20v5 "X11c — the per-horizon recalibration on episodes the ensemble-5 arms never saw (M-99)" "1 min" \
+      results/x11c_fold_recalibration.json NEEDS_WEIGHTS $PY scripts/x11c_fold_recalibration.py
+stage 20v6 "X11d — M-44's independent-against-shared-trunk comparison on the five folds (M-100)" "3 min" \
+      results/x11d_fold_m44.json NEEDS_WEIGHTS $PY scripts/x11d_fold_m44.py
+stage 20v7 "X11e — X9's per-member propagation on the fold ensemble-5 arms (M-103)" "3 min" \
+      results/x11e_fold_e5_propagation.json NEEDS_WEIGHTS $PY scripts/x9_per_member_propagation.py --x11e
 stage 20w8 "N8 — the tails: M-65's cells at +-2 sigma and the coverage-matching multiplier (post hoc, R-81)" "10 s" \
       results/n8_tails.json NEEDS_WEIGHTS $PY scripts/n8_tails.py
 stage 20w7 "N7 — exact sign-flip tests at n = 4 and at the episode level (post hoc, R-82)" "6 min" \

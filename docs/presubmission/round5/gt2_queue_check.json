@@ -1,0 +1,273 @@
+{
+ "gate": "GT2 item 1",
+ "log_last_line": "2026-10-21 17:48:52 queue empty; runner exits",
+ "queue_ids": 20,
+ "done": 20,
+ "failed": 0,
+ "all_ids_done": true,
+ "log_ends_empty": true,
+ "runs": [
+  {
+   "id": "x11_e5_02_s0",
+   "fold": [
+    0,
+    2
+   ],
+   "seed": 0,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho02_seed0_ens5.json",
+   "weights": "runs/x3_armA_ho02_seed0_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_34_s0",
+   "fold": [
+    3,
+    4
+   ],
+   "seed": 0,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho34_seed0_ens5.json",
+   "weights": "runs/x3_armA_ho34_seed0_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_56_s0",
+   "fold": [
+    5,
+    6
+   ],
+   "seed": 0,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho56_seed0_ens5.json",
+   "weights": "runs/x3_armA_ho56_seed0_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_79_s0",
+   "fold": [
+    7,
+    9
+   ],
+   "seed": 0,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho79_seed0_ens5.json",
+   "weights": "runs/x3_armA_ho79_seed0_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_A_02_s3",
+   "fold": [
+    0,
+    2
+   ],
+   "seed": 3,
+   "ensemble": 1,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho02_seed3.json",
+   "weights": "runs/x3_armA_ho02_seed3/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "problems": []
+  },
+  {
+   "id": "x11_A_34_s3",
+   "fold": [
+    3,
+    4
+   ],
+   "seed": 3,
+   "ensemble": 1,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho34_seed3.json",
+   "weights": "runs/x3_armA_ho34_seed3/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "problems": []
+  },
+  {
+   "id": "x11_A_56_s3",
+   "fold": [
+    5,
+    6
+   ],
+   "seed": 3,
+   "ensemble": 1,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho56_seed3.json",
+   "weights": "runs/x3_armA_ho56_seed3/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "problems": []
+  },
+  {
+   "id": "x11_A_79_s3",
+   "fold": [
+    7,
+    9
+   ],
+   "seed": 3,
+   "ensemble": 1,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho79_seed3.json",
+   "weights": "runs/x3_armA_ho79_seed3/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_02_s1",
+   "fold": [
+    0,
+    2
+   ],
+   "seed": 1,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho02_seed1_ens5.json",
+   "weights": "runs/x3_armA_ho02_seed1_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_34_s1",
+   "fold": [
+    3,
+    4
+   ],
+   "seed": 1,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho34_seed1_ens5.json",
+   "weights": "runs/x3_armA_ho34_seed1_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_56_s1",
+   "fold": [
+    5,
+    6
+   ],
+   "seed": 1,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho56_seed1_ens5.json",
+   "weights": "runs/x3_armA_ho56_seed1_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_79_s1",
+   "fold": [
+    7,
+    9
+   ],
+   "seed": 1,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho79_seed1_ens5.json",
+   "weights": "runs/x3_armA_ho79_seed1_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_A_02_s4",
+   "fold": [
+    0,
+    2
+   ],
+   "seed": 4,
+   "ensemble": 1,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho02_seed4.json",
+   "weights": "runs/x3_armA_ho02_seed4/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "problems": []
+  },
+  {
+   "id": "x11_A_34_s4",
+   "fold": [
+    3,
+    4
+   ],
+   "seed": 4,
+   "ensemble": 1,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho34_seed4.json",
+   "weights": "runs/x3_armA_ho34_seed4/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "problems": []
+  },
+  {
+   "id": "x11_A_56_s4",
+   "fold": [
+    5,
+    6
+   ],
+   "seed": 4,
+   "ensemble": 1,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho56_seed4.json",
+   "weights": "runs/x3_armA_ho56_seed4/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "problems": []
+  },
+  {
+   "id": "x11_A_79_s4",
+   "fold": [
+    7,
+    9
+   ],
+   "seed": 4,
+   "ensemble": 1,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho79_seed4.json",
+   "weights": "runs/x3_armA_ho79_seed4/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_02_s2",
+   "fold": [
+    0,
+    2
+   ],
+   "seed": 2,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho02_seed2_ens5.json",
+   "weights": "runs/x3_armA_ho02_seed2_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_34_s2",
+   "fold": [
+    3,
+    4
+   ],
+   "seed": 2,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho34_seed2_ens5.json",
+   "weights": "runs/x3_armA_ho34_seed2_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_56_s2",
+   "fold": [
+    5,
+    6
+   ],
+   "seed": 2,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho56_seed2_ens5.json",
+   "weights": "runs/x3_armA_ho56_seed2_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  },
+  {
+   "id": "x11_e5_79_s2",
+   "fold": [
+    7,
+    9
+   ],
+   "seed": 2,
+   "ensemble": 5,
+   "record": "/Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/x3_run_armA_ho79_seed2_ens5.json",
+   "weights": "runs/x3_armA_ho79_seed2_ens5/weights_2500.pt",
+   "weights_bytes": 8020484,
+   "problems": []
+  }
+ ],
+ "problems": [],
+ "pass": true
+}

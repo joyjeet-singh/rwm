@@ -4625,7 +4625,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "734"
+    "value": "738"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -8305,7 +8305,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 309
+    "value": 310
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -12382,6 +12382,282 @@
   "x10_verdict": {
     "source": "results/x10_insample_vs_heldout.json",
     "value": "IN-SAMPLE IS WORSE"
+  },
+  "x11a_label_h1": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "MIXED"
+  },
+  "x11a_label_h100": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "IN-SAMPLE FLATTERS"
+  },
+  "x11a_label_h368": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "IN-SAMPLE FLATTERS"
+  },
+  "x11a_q_h1": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "0.92"
+  },
+  "x11a_q_h100": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "0.65"
+  },
+  "x11a_q_h100_ci": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "[0.58, 0.73]"
+  },
+  "x11a_q_h1_ci": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "[0.81, 1.07]"
+  },
+  "x11a_q_h368": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "0.70"
+  },
+  "x11a_q_h368_ci": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "[0.64, 0.78]"
+  },
+  "x11a_rho_in_h1": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "3.50"
+  },
+  "x11a_rho_in_h100": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "7.62"
+  },
+  "x11a_rho_in_h368": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "9.58"
+  },
+  "x11a_rho_out_h1": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "3.80"
+  },
+  "x11a_rho_out_h100": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "11.74"
+  },
+  "x11a_rho_out_h368": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "13.60"
+  },
+  "x11a_verdict": {
+    "source": "results/x11a_fold_ens5_calibration.json",
+    "value": "MIXED"
+  },
+  "x11b_n_excl": {
+    "source": "results/x11b_fold_m43.json",
+    "value": 4
+  },
+  "x11b_n_horizons": {
+    "source": "results/x11b_fold_m43.json",
+    "value": 4
+  },
+  "x11b_n_leads": {
+    "source": "results/x11b_fold_m43.json",
+    "value": 4
+  },
+  "x11b_r_dis_h128": {
+    "source": "results/x11b_fold_m43.json",
+    "value": "0.77"
+  },
+  "x11b_r_dis_h32": {
+    "source": "results/x11b_fold_m43.json",
+    "value": "0.83"
+  },
+  "x11b_r_dis_h368": {
+    "source": "results/x11b_fold_m43.json",
+    "value": "0.68"
+  },
+  "x11b_r_dis_h8": {
+    "source": "results/x11b_fold_m43.json",
+    "value": "0.82"
+  },
+  "x11b_r_idx_h128": {
+    "source": "results/x11b_fold_m43.json",
+    "value": "0.20"
+  },
+  "x11b_r_idx_h32": {
+    "source": "results/x11b_fold_m43.json",
+    "value": "0.04"
+  },
+  "x11b_r_idx_h368": {
+    "source": "results/x11b_fold_m43.json",
+    "value": "0.10"
+  },
+  "x11b_r_idx_h8": {
+    "source": "results/x11b_fold_m43.json",
+    "value": "0.20"
+  },
+  "x11b_verdict": {
+    "source": "results/x11b_fold_m43.json",
+    "value": "GENERALISES"
+  },
+  "x11c_before_cov1_h1": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "36.6"
+  },
+  "x11c_before_cov1_h100": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "8.5"
+  },
+  "x11c_before_cov1_h128": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "8.0"
+  },
+  "x11c_before_cov1_h32": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "10.8"
+  },
+  "x11c_before_cov1_h368": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "6.6"
+  },
+  "x11c_before_cov1_h8": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "15.3"
+  },
+  "x11c_cells_cal": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": 72
+  },
+  "x11c_const_cal": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": 17
+  },
+  "x11c_n_cells": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": 180
+  },
+  "x11c_pooled_cov1_h1": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "67.6"
+  },
+  "x11c_pooled_cov1_h100": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "67.1"
+  },
+  "x11c_pooled_cov1_h100_ci": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "[61.0, 73.2]"
+  },
+  "x11c_pooled_cov1_h128": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "67.2"
+  },
+  "x11c_pooled_cov1_h128_ci": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "[61.7, 72.9]"
+  },
+  "x11c_pooled_cov1_h1_ci": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "[59.6, 75.3]"
+  },
+  "x11c_pooled_cov1_h32": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "67.2"
+  },
+  "x11c_pooled_cov1_h32_ci": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "[59.8, 74.6]"
+  },
+  "x11c_pooled_cov1_h368": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "67.5"
+  },
+  "x11c_pooled_cov1_h368_ci": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "[62.5, 72.5]"
+  },
+  "x11c_pooled_cov1_h8": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "67.2"
+  },
+  "x11c_pooled_cov1_h8_ci": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "[60.0, 74.6]"
+  },
+  "x11c_pooled_label_h1": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "WITHIN BAND"
+  },
+  "x11c_pooled_label_h100": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "WITHIN BAND"
+  },
+  "x11c_pooled_label_h128": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "WITHIN BAND"
+  },
+  "x11c_pooled_label_h32": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "WITHIN BAND"
+  },
+  "x11c_pooled_label_h368": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "WITHIN BAND"
+  },
+  "x11c_pooled_label_h8": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "WITHIN BAND"
+  },
+  "x11c_verdict": {
+    "source": "results/x11c_fold_recalibration.json",
+    "value": "PER-HORIZON SCALAR DOES NOT RESTORE CALIBRATION"
+  },
+  "x11d_cov_gain": {
+    "source": "results/x11d_fold_m44.json",
+    "value": "6.00"
+  },
+  "x11d_label_n20": {
+    "source": "results/x11d_fold_m44.json",
+    "value": "MECHANISM SUPPORTED"
+  },
+  "x11d_mde_cov_n20": {
+    "source": "results/x11d_fold_m44.json",
+    "value": "1.92"
+  },
+  "x11d_mde_ratio_n20": {
+    "source": "results/x11d_fold_m44.json",
+    "value": "1.40"
+  },
+  "x11d_ratio_gain": {
+    "source": "results/x11d_fold_m44.json",
+    "value": "1.82"
+  },
+  "x11d_verdict": {
+    "source": "results/x11d_fold_m44.json",
+    "value": "MECHANISM SUPPORTED"
+  },
+  "x11e_f_h100": {
+    "source": "results/x11e_fold_e5_propagation.json",
+    "value": "0.72"
+  },
+  "x11e_f_h100_ci": {
+    "source": "results/x11e_fold_e5_propagation.json",
+    "value": "[0.67, 0.76]"
+  },
+  "x11e_mean_cov1_h100": {
+    "source": "results/x11e_fold_e5_propagation.json",
+    "value": "8.5"
+  },
+  "x11e_mean_rho_h100": {
+    "source": "results/x11e_fold_e5_propagation.json",
+    "value": "11.74"
+  },
+  "x11e_per_cov1_h100": {
+    "source": "results/x11e_fold_e5_propagation.json",
+    "value": "42.2"
+  },
+  "x11e_per_rho_h100": {
+    "source": "results/x11e_fold_e5_propagation.json",
+    "value": "1.71"
+  },
+  "x11e_verdict": {
+    "source": "results/x11e_fold_e5_propagation.json",
+    "value": "PROPAGATION NARROWS THE GAP"
   },
   "x1_final_reading": {
     "source": "results/rssm_diagnostics.json",
