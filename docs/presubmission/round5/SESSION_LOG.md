@@ -104,7 +104,7 @@ Subagents: rwm-reader × 1
 Next: GT1 (Y5 = B; Opus 5.5, high) — complete PROTOCOLS.md §4, probe, pre-register and launch the queue. Then G3.
 Decisions for user: none
 
-## GT1 — 2026-10-19 16:55 — Opus 5.5, high — status: COMPLETE
+## GT1 — 2026-10-19 16:53 — Opus 5.5, high — status: COMPLETE
 Commits: dbecbf0 [GT1][3] Training support for X11: step5_train --holdout with --ensemble 5 (five lines changed in place, none moved); queue_run's x11-e5 trainers; fold checks (a)-(c) pass, (b) bitwise
          e1a92d0 [GT1][1] X11 power before any fold run: M-43's criterion and M-44's MDE at n = 20 by the n = 4 code (results/x11_power.json); n = 4 reproductions pass
          99f6bd2 [GT1][5] Timing probe on an idle machine: 55.5 CPU-h projected for 20 runs; cap 62 h by ruling GT1-cap
@@ -225,7 +225,7 @@ Subagents: none
 Next: G4 (Sonnet 5.5, high) — post hoc N7–N14 per PROTOCOLS §5. N7 item 8 can now include X9's (a) and (d) per-trajectory values. Beside the queue.
 Decisions for user: none (ruling this session: DECISIONS.md#G3-assert-ii)
 
-## G4 — 2026-10-19 21:10 — Opus 5.5 (the plan assigns Sonnet 5.5), high — status: COMPLETE
+## G4 — 2026-10-19 21:11 — Opus 5.5 (the plan assigns Sonnet 5.5), high — status: COMPLETE
 Commits: 302e66d [G4][N8] The tails (post hoc, R-81): 30 of 48 M-65 cells heavy-tailed, 18 mixed, 0 near-Gaussian; coverage-matching multiplier per cell; stage
          0f049b5 [G4][N7] Exact sign-flip tests (post hoc, R-82): 260 comparisons, 228 at n = 4 (154 at the minimum p = 0.125); no Holm family can reject under
          f880529 [G4][N9] The per-horizon recalibration scored (post hoc, R-83): +-1 sigma restored, +-2 sigma 84-86% against 95%, CRPS and NLL improve, interv
@@ -401,7 +401,7 @@ Subagents: none
 Next: G7 (Sonnet 5.5, medium) — bibliography.
 Decisions for user: none
 
-## G7 — 2026-10-19 21:58 — Opus 5.5 (the plan assigns Sonnet 5.5, medium) — status: COMPLETE
+## G7 — 2026-10-19 22:34 — Opus 5.5 (the plan assigns Sonnet 5.5, medium) — status: COMPLETE
 Commits: [G7][1-3] scripts/t1_bibliography.py verifies DOI and proceedings-page records; fifteen entries; references 1 and 2 from the crosswalk
          (final [G7][close] commit: this entry and the checkpoint)
 Review items closed: RV10, RV32–RV36 and RV46 at the reference list. The citations enter the text in G11–G15.
@@ -460,7 +460,7 @@ Subagents: rwm-sources ×1 (record identification; read-only)
 Next: G8 (Opus 5.5, high) — outline, page budget and abstract.
 Decisions for user: none
 
-## G8 — 2026-10-19 22:36 — Opus 5.5, high — status: COMPLETE
+## G8 — 2026-10-19 22:59 — Opus 5.5, high — status: COMPLETE
 Commits: 1dfac17 [G8][1-2] round5/OUTLINE.md, with the rwm-referee read answered
          (final [G8][close] commit: the approval question, this entry and the checkpoint)
 Review items closed: the decisions for RV01, RV04, RV07, RV14, RV18 and RV37 (OUTLINE §review-items maps all of Annex 1).
@@ -506,7 +506,7 @@ Subagents: rwm-referee ×1
 Next: G9 (Sonnet 5.5, medium), only after DECISIONS.md#G8-outline is approved.
 Decisions for user: DECISIONS.md#G8-outline
 
-## G9 — 2026-10-23 12:40 — Sonnet 5.5, medium — status: COMPLETE
+## G9 — 2026-10-23 12:55 — Sonnet 5.5, medium — status: COMPLETE
 Commits:
 dea227c [G9][1] Appendix C to supplementary S1
 f5a9d7d [G9][2] Appendix R to S2
@@ -538,7 +538,7 @@ Subagents: none
 Next: G10 (Sonnet 5.5, high): figures.
 Decisions for user: none (the SAFE_ORGS addition is reported above for your awareness)
 
-## G10 — 2026-10-23 14:10 — Sonnet 5.5, high — status: COMPLETE
+## G10 — 2026-10-23 13:15 — Sonnet 5.5, high — status: COMPLETE
 Commits:
 (one commit, [G10][1-3], follows this entry)
 Review items closed: RV07; the figure half of RV25
@@ -563,7 +563,7 @@ Subagents: none
 Next: G11 (Opus 5.5, high). GT2 runs after G12 (PLAN §0.4); the queue already shows 20 of 20.
 Decisions for user: none
 
-## G11 — 2026-10-23 17:30 — Opus 5.5, high (a Sonnet 5.5 session ran it) — status: COMPLETE
+## G11 — 2026-10-23 14:04 — Opus 5.5, high (a Sonnet 5.5 session ran it) — status: COMPLETE
 Commits:
 86633cd [G11][1] Title and abstract
 (one more commit, [G11][2-6], follows this entry: §1, §2, §3, the reproducibility statement and the closing record)
@@ -590,7 +590,7 @@ Subagents: none (PLAN's G11 names none)
 Next: G12 (Opus 5.5, high).
 Decisions for user: none
 
-## G12 — 2026-10-23 20:30 — Opus 5.5, high (a Sonnet 5.5 session ran it) — status: COMPLETE
+## G12 — 2026-10-23 14:29 — Opus 5.5, high (a Sonnet 5.5 session ran it) — status: COMPLETE
 Commits:
 (one commit, [G12][1-4], follows this entry)
 Review items closed: RV18, RV19 (this section), RV21, RV22, RV23 (this section), RV27 (this section)
@@ -615,7 +615,7 @@ Subagents: none
 Next: GT2 (Sonnet 5.5, medium), then G13.
 Decisions for user: none
 
-## GT2 — 2026-10-23 21:30 — Sonnet 5.5, medium — status: COMPLETE
+## GT2 — 2026-10-23 14:50 — Sonnet 5.5, medium — status: COMPLETE
 Commits:
 (one commit, [GT2][1-3], follows this entry)
 Review items closed: RV20 (data)
@@ -644,7 +644,7 @@ Subagents: none
 Next: G13 (Opus 5.5, high).
 Decisions for user: none
 
-## G13 — 2026-10-23 23:30 — Opus 5.5, high (a Sonnet 5.5 session ran it) — status: COMPLETE
+## G13 — 2026-10-23 15:32 — Opus 5.5, high (a Sonnet 5.5 session ran it) — status: COMPLETE
 Commits:
 (one commit, [G13][1-8], follows this entry)
 Review items closed: RV11, RV12, RV14, RV15–RV17 (text), RV19 and RV23 (this section), RV24–RV26, RV28 (this section), RV29–RV31, RV33 (framing), RV42, RV43 (this section)
@@ -674,7 +674,7 @@ Subagents: rwm-checker ×1
 Next: G14 (Opus 5.5, medium).
 Decisions for user: Figure 3 (see above): draw it in G14, or drop it from OUTLINE.
 
-## G14 — 2026-10-24 01:00 — Opus 5.5, medium (a Sonnet 5.5 session ran it) — status: COMPLETE
+## G14 — 2026-10-23 16:01 — Opus 5.5, medium (a Sonnet 5.5 session ran it) — status: COMPLETE
 Commits:
 (one commit, [G14][1-5], follows this entry)
 Review items closed: RV01 (the budget: main content 11.25 pages against Y1's 12), RV25 (the variance state as Adam's bound), RV40 (the upstream report's status), RV43; the summaries for everything
@@ -708,7 +708,7 @@ Subagents: none (PLAN names none for G14)
 Next: G15 (Opus 5.5, medium).
 Decisions for user: Y10 (send the alignment query before submission or accept the "not reported" sentence); Figure 3.
 
-## G15 — 2026-10-24 03:00 — Opus 5.5, medium (a Sonnet 5.5 session ran it) — status: COMPLETE
+## G15 — 2026-10-23 16:51 — Opus 5.5, medium (a Sonnet 5.5 session ran it) — status: COMPLETE
 Commits:
 (one commit, [G15][1-4], follows this entry)
 Review items closed: RV06, RV09 (App. D), RV12–RV13 and RV39 (App. O), RV24 (App. M), RV25 (App. J), RV27 (App. F); RV03 and RV05 in the appendices
@@ -732,7 +732,7 @@ Subagents: none
 Next: G16 (Opus 5.5, high; a new terminal): the fresh-eyes review.
 Decisions for user: none new (Y10 and Figure 3 stand from G14).
 
-## G16 — 2026-10-24 06:00 — Opus 5.5, high (a Sonnet 5.5 session ran it in the same terminal; no new terminal could be opened) — status: COMPLETE
+## G16 — 2026-10-23 17:29 — Opus 5.5, high (a Sonnet 5.5 session ran it in the same terminal; no new terminal could be opened) — status: COMPLETE
 Commits:
 (one commit, [G16][1-5], follows this entry)
 Review items closed: verifies every item in Annex 1 (`round5/REVIEW.md`)
@@ -754,7 +754,7 @@ Subagents: rwm-referee ×1, rwm-checker ×2
 Next: G17 (Opus 5.5, medium).
 Decisions for user: none new. The unchecked parts of the appendices (REVIEW.md) are the residual risk.
 
-## G17 — 2026-10-24 05:00 — Opus 5.5, medium (a Sonnet 5.5 session ran it) — status: COMPLETE
+## G17 — 2026-10-24 05:18 — Opus 5.5, medium (a Sonnet 5.5 session ran it) — status: COMPLETE
 Commits:
 88301c7 [G17][1-2] TMLR recheck; claims audit regenerated; xref_sweep back to 0 suspect
 6a72f7e [G17][3] Before measuring: bundles rebuilt to a fixed point
@@ -788,3 +788,27 @@ Body words / main-content pages: see LENGTH_LOG / 11.67
 Subagents: none
 Next: G18 (Sonnet 5.5, medium): the clean-clone verification of the final commit, last, no edits. Then §0.5's after-G18 steps, which are yours.
 Decisions for user: none new. Open: the TMLR blog since 15 October (read it in a browser); the alignment query's date, if you want the paper to give one.
+
+## Correction note — 2026-10-24 — G16R — header times
+Fourteen entry headers above carried times that did not match `git log` (all commits +0530, the machine's zone). Each
+is now the commit time of that session's last commit (the last commit whose subject carries the session's tag); nothing
+else in those entries changed. Old → new, with the commit:
+- GT1: 2026-10-19 16:55 → 2026-10-19 16:53 (`14a11fb`)
+- G4: 2026-10-19 21:10 → 2026-10-19 21:11 (`1d3a000`)
+- G7: 2026-10-19 21:58 → 2026-10-19 22:34 (`507f7ef`)
+- G8: 2026-10-19 22:36 → 2026-10-19 22:59 (`debf0a8`, `[G8][ruling]`; the entry itself was committed at 22:55 in `c8ea4b6`)
+- G9: 2026-10-23 12:40 → 2026-10-23 12:55 (`7afc49c`; G9's commits span 19 to 23 October)
+- G10: 2026-10-23 14:10 → 2026-10-23 13:15 (`a08b23b`)
+- G11: 2026-10-23 17:30 → 2026-10-23 14:04 (`0f6658f`)
+- G12: 2026-10-23 20:30 → 2026-10-23 14:29 (`096c5b7`)
+- GT2: 2026-10-23 21:30 → 2026-10-23 14:50 (`78f8317`)
+- G13: 2026-10-23 23:30 → 2026-10-23 15:32 (`5af131e`)
+- G14: 2026-10-24 01:00 → 2026-10-23 16:01 (`657e554`; the date was wrong too)
+- G15: 2026-10-24 03:00 → 2026-10-23 16:51 (`76e0f5c`; the date was wrong too)
+- G16: 2026-10-24 06:00 → 2026-10-23 17:29 (`98bbde8`; the date was wrong too, and the old time was later than G17's)
+- G17: 2026-10-24 05:00 → 2026-10-24 05:18 (`90d8adb`)
+
+Unchanged because they already match: G3 18:50 (`165c118`), G5 21:32 (`6a4de03`), G6 21:55 (`44340cb`). G0, G1 and G2
+give a date and no time; the dates match their commits (`c5ef543` 12:26, `9a46560` 12:49, `d340844` 15:49) and no time
+was added. Other round-5 files that date G16 to 24 October (`REVIEW.md`'s heading) are not log headers; G16R's review
+section in `REVIEW.md` states the commit date.
