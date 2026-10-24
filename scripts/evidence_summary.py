@@ -167,7 +167,7 @@ def _ab_multiplicity(A1, C3, ab_family):
     if row_it in fam:
         return multiplicity(family_rejected=ab_family)
     return (f"not applicable at {row_it:,}; the {cells}-iteration cells "
-            + ("survive Holm" if ab_family else "do not all survive Holm") + " (Appendix L)")
+            + ("survive Holm" if ab_family else "do not all survive Holm") + " (Appendix H)")  # Holm on these cells is App. H's (G15-fix)
 
 
 # ---------------------------------------------------------------------- rows
@@ -446,6 +446,8 @@ def build_rows():
         "claim": ("With both the rollout and the depth held constant, disagreement "
                   "still tracks error"),
         "section": "5.6",
+        # §5.6 owns the ranking claim but no longer prints r_dd; Appendix L does (G15-fix)
+        "detail": "Appendix L",
         "arena": a2_arena,
         "n_independent": A2["design"]["n_independent"],
         "in_sample": in_sample(a2_model, a2_arena),
@@ -625,7 +627,8 @@ def markdown(rows):
     # columns' unbreakable words no longer fit the line and the PDF gate failed on
     # overfull boxes, so the section rides with the claim and n_independent with its arena.
     return "\n".join(
-        f'| {r["claim"]} (§{r["section"]}) | {arena_label(r)} ({r["n_independent"]}) | '
+        f'| {r["claim"]} (§{r["section"]}{", " + r["detail"] if r.get("detail") else ""}) | '
+        f'{arena_label(r)} ({r["n_independent"]}) | '
         f'{r["checkpoint"]} | {r["in_sample"]} | {r["verdict"]} | {r["multiplicity"]} |'
         for r in rows)
 
