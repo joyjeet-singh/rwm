@@ -12301,11 +12301,11 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "2,694,947"
+    "value": "2,694,975"
   },
   "ver_book_named": {
     "source": "results/verify_reproduction.json",
-    "value": "1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`)"
+    "value": "1 in `results/pdf_channels.json` (the amount of PDF text the anonymity scan read); 1 in `results/pdf_channels.json` (the page count of this document's PDF); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`)"
   },
   "ver_claim_pct": {
     "source": "results/verify_reproduction.json",
@@ -12321,19 +12321,19 @@
   },
   "ver_diff_by_file": {
     "source": "results/verify_reproduction.json",
-    "value": "`results/supplementary_manifest.json` (3)"
+    "value": "`results/input_set_audit.json` (5), `results/supplementary_manifest.json` (3), `results/pdf_channels.json` (2), `results/pipeline_coverage.json` (2)"
   },
   "ver_diff_nfiles": {
     "source": "results/verify_reproduction.json",
-    "value": 1
+    "value": 4
   },
   "ver_diff_plain": {
     "source": "results/verify_reproduction.json",
-    "value": "the archive's size and commit count"
+    "value": "the PDF's page count and text count, the archive's size and commit count"
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 3
+    "value": 12
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
@@ -12341,11 +12341,11 @@
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
-    "value": 34
+    "value": 35
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "18,296"
+    "value": "18,315"
   },
   "ver_keys_lost": {
     "source": "results/verify_reproduction.json",
@@ -12377,7 +12377,7 @@
   },
   "ver_part_else": {
     "source": "results/verify_reproduction.json",
-    "value": 3
+    "value": 12
   },
   "ver_part_index": {
     "source": "results/verify_reproduction.json",
@@ -12385,15 +12385,15 @@
   },
   "ver_part_sci": {
     "source": "results/verify_reproduction.json",
-    "value": 0
+    "value": 7
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "99.98"
+    "value": "99.93"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",
-    "value": 27
+    "value": 28
   },
   "ver_tb_budget": {
     "source": "results/step4_4_overfit_ens1.json",
@@ -12421,7 +12421,7 @@
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "18,299"
+    "value": "18,327"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

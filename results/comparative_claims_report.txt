@@ -36,7 +36,7 @@ PART C — COMPARATIVE CLAIM CHECK
   PASS  C11.3  cross-artifact-sync §EXTERNAL_READ_BRIEF 23/23 headline values present in docs/EXTERNAL_READ_BRIEF.md
   PASS  C11.2  cross-artifact-sync §MODEL_CARD         4/4 headline values present in MODEL_CARD.md
   PASS  C11.4  cross-artifact-sync §BUILD_CHECKS       4/4 headline values present in docs/BUILD_CHECKS.md
-  PASS  C12.1  abstract-budget §abstract           209 words (max 210), 5 numerals (max 5) ['0.90', '100', '4.6', '68', '33']
+  PASS  C12.1  abstract-budget §abstract           210 words (max 210), 5 numerals (max 5) ['0.90', '100', '4.6', '68', '33']
   PASS  C13.1  interval-required §6.2                4/4 quoted quantities carry their interval
   PASS  C13.2  interval-required §6.2                3/3 quoted quantities carry their interval
   PASS  C7.3   count-consistency §3.1 / 6.7 / Figure 1 nominal coverage at ±1σ: canonical 68.27; 3 near-miss spellings checked across 6 files; none present
@@ -58,7 +58,7 @@ PART C — COMPARATIVE CLAIM CHECK
   PASS  C17.1  scope-consistency §4 / Appendix C -> supplementary S19 (G12) 6 universal quantifiers checked against the enumerated set; none present
   PASS  C21.1  figure_reference §whole paper        8 figures, 8 distinct numbers cited [1, 2, 3, 4, 5, 6, 7, 8]
   PASS  C22.1  population_partition §6.3 / Appendix B   n_runs=28 + n_runs_offwidth=5 = 33 vs run_total=33; e2_fitted_runs=22 + e2_excluded_10k=6 = 28 vs 28; table 9 rows sum 33, widths ['124', '256'], seed-id lengths match; figure plots 28
-  PASS  C23.1  table_renders §Appendix C / D / E 38 source tables, 38 rendered; source rows [5, 11, 6, 7, 7, 13, 21, 36, 26, 26, 26, 21, 12, 7, 13, 5, 7, 7, 5, 5, 3, 8, 10, 7, 7, 7, 7, 7, 11, 3, 3, 7, 26, 26, 11, 11, 3, 6] vs row separators [5, 11, 6, 8, 7, 14, 22, 37, 26, 26, 26, 21, 12, 7, 14, 5, 7, 7, 5, 5, 3, 8, 10, 7, 7, 7, 7, 7, 11, 3, 4, 8, 26, 26, 11, 11, 4, 7]
+  PASS  C23.1  table_renders §Appendix C / D / E 39 source tables, 39 rendered; source rows [5, 11, 6, 7, 7, 13, 21, 36, 26, 26, 26, 21, 12, 7, 13, 5, 7, 7, 5, 5, 3, 8, 10, 7, 7, 7, 7, 7, 11, 3, 3, 7, 7, 26, 26, 11, 11, 3, 6] vs row separators [5, 11, 6, 8, 7, 14, 22, 37, 26, 26, 26, 21, 12, 7, 14, 5, 7, 7, 5, 5, 3, 8, 10, 7, 7, 7, 7, 7, 11, 3, 4, 8, 7, 26, 26, 11, 11, 4, 7]
   PASS  C24.1  arena_consistency §3.2 -> supplementary S16 (G11) / Appendix D 20 claims; arena confirmed against its own section in 20, n_independent in 20
   PASS  C25.1  rule-seed-scope §abstract / contributions / 5 / 11 -> supplementary S19 (G12) 7 lines quote the rule-horizon figures near 'rule'/'pre-register'; 7 name the seed or the three-seed extension
   PASS  C25.2  overstat-reversal §7.2 / abstract / contributions -> supplementary S28-S31 (G14) 0 paragraphs pair 'overstat' with an alignment figure; 0 name the reversal
@@ -67,7 +67,7 @@ PART C — COMPARATIVE CLAIM CHECK
   PASS  C27.2  action-response §7.2 / model card -> supplementary S28-S31 (G14) 2 paragraphs cite Arm A's stale-pairing figures; 2 carry an X2 response key
   PASS  C28.1  stale-interval §7.2 / model card   3 sentences print our models' stale-timing change; 3 give each figure its own N5 interval at its own horizon
   PASS  C28.2  action-caveat §7.2 / Appendices H, V / model card 6 paragraphs or table rows say our models respond to the action; 6 carry the one-policy caveat
-  PASS  C28.3  config-unresolved §abstract / contributions -> supplementary S13, S14 (G11) / README 7 summary sentences name the configurations; 7 pair them with no count of unresolved readings
+  PASS  C28.3  config-unresolved §abstract / contributions -> supplementary S13, S14 (G11) / README 8 summary sentences name the configurations; 8 pair them with no count of unresolved readings
 ========================================================================================================
   68/68 comparative claims verified
 
@@ -109,14 +109,14 @@ PART C — COMPARATIVE CLAIM CHECK
   caught C11.3  0/24 headline values present in requirements.txt; missing ['rt_hours', 'rt_runs', 'd1_ratio', 'd1n_epi_ratio_h1', 'd1n_epi_cov1_h1', 'v3_cov_nominal1', 'a2_rdd', 'stale_pct', 'v1_shared_pct', 'm44_ratio_gain', 'm49_ratio_gain', 'e7_step_r', 'e7_r_dis', 'e5s_span', 'e5s_mse_under', 'ad_nrmse', 'ad_nrmse_ci', 'ad_rel', 'ad_rel_ci', 'd3x_own_epi_ok', 'n_retractions_lower', 'n_retract_framing_word', 'n_superseded', 'd1_ratio']
   caught C11.2  0/5 headline values present in requirements.txt; missing ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'm44_ratio_gain', 'r2_indep_ratio_h100', 'd1_ratio']
   caught C11.4  0/5 headline values present in requirements.txt; missing ['cc_n', 'cc_kinds', 'cc_st_caught', 'cc_selfdefects_word', 'd1_ratio']
-  caught C12.1  209 words (max 10), 5 numerals (max 0) ['0.90', '100', '4.6', '68', '33']
+  caught C12.1  210 words (max 10), 5 numerals (max 0) ['0.90', '100', '4.6', '68', '33']
   caught C13.1  4/5 quoted quantities carry their interval; ['planted: no interval key no_such_interval_key']
   caught C13.2  3/4 quoted quantities carry their interval; ['planted: no interval key no_such_interval_key']
   caught C7.3   nominal coverage at ±1σ: canonical 68.27; 4 near-miss spellings checked across 6 files; PRESENT: ["'68.27' in PAPER.md", "'68.27' in PAPER.tex", "'68.27' in docs/SUPPLEMENT.md", "'68.27' in README.md", "'68.27' in MODEL_CARD.md"]
   caught C7.4   the h=1 disagreement interval: canonical [+0.918, +0.999]; 2 near-miss spellings checked across 5 files; PRESENT: ["'[+0.918, +0.999]' in docs/SUPPLEMENT.md"]
   caught C3.7   0.68270 -> 0.77480 is a rise of 0.09210, text says fall
   caught C3.8   0.68270 -> 0.76550 is a rise of 0.08280, text says fall
-  caught C14.1  1 horizon-unscoped figures (1 calibration, 0 other); first: L1518 ['d1n_alea_ratio_h368'] The released checkpoint is {{d1n_alea_ratio_h368}} times overconfident
+  caught C14.1  1 horizon-unscoped figures (1 calibration, 0 other); first: L1534 ['d1n_alea_ratio_h368'] The released checkpoint is {{d1n_alea_ratio_h368}} times overconfident
   caught C15.1  rt_hours=49.8 vs rt_hours_10k=19.7 + rt_hours=49.8 = 69.5 (tol 0.05)
   caught C15.2  rt_runs=33 vs rt_runs_10k=6 + rt_runs=33 = 39 (tol 0)
   caught C15.3  appF_n_claims=12 vs orig_n_tested=6 + appF_n_claims=12 = 18 (tol 0)
@@ -131,15 +131,15 @@ PART C — COMPARATIVE CLAIM CHECK
   caught C17.1  7 universal quantifiers checked against the enumerated set; PRESENT: ['we did not test']
   caught C21.1  7 figures, 8 distinct numbers cited [1, 2, 3, 4, 5, 6, 7, 8]; dangling [8]
   caught C22.1  n_runs=28 + n_runs_offwidth=5 = 33 vs run_total=34; e2_fitted_runs=22 + e2_excluded_10k=6 = 28 vs 28; table 9 rows sum 33, widths ['124', '256'], seed-id lengths match; figure plots 28
-  caught C23.1  38 source tables, 38 rendered; source rows [5, 11, 6, 7, 7, 13, 21, 36, 26, 26, 26, 21, 12, 7, 13, 5, 7, 7, 5, 5, 3, 8, 10, 7, 7, 7, 7, 7, 11, 3, 3, 7, 26, 26, 11, 11, 3, 6] vs row separators [5, 11, 6, 8, 7, 14, 22, 37, 26, 26, 26, 21, 12, 7, 14, 5, 7, 7, 5, 5, 3, 8, 10, 7, 7, 7, 7, 7, 11, 3, 4, 8, 26, 26, 11, 11, 4, 7]; short [(0, 5, 5), (1, 11, 11), (2, 6, 6), (4, 7, 7), (8, 26, 26), (9, 26, 26), (10, 26, 26), (11, 21, 21), (12, 12, 12), (13, 7, 7), (15, 5, 5), (16, 7, 7), (17, 7, 7), (18, 5, 5), (19, 5, 5), (20, 3, 3), (21, 8, 8), (22, 10, 10), (23, 7, 7), (24, 7, 7), (25, 7, 7), (26, 7, 7), (27, 7, 7), (28, 11, 11), (29, 3, 3), (32, 26, 26), (33, 26, 26), (34, 11, 11), (35, 11, 11)]
+  caught C23.1  39 source tables, 39 rendered; source rows [5, 11, 6, 7, 7, 13, 21, 36, 26, 26, 26, 21, 12, 7, 13, 5, 7, 7, 5, 5, 3, 8, 10, 7, 7, 7, 7, 7, 11, 3, 3, 7, 7, 26, 26, 11, 11, 3, 6] vs row separators [5, 11, 6, 8, 7, 14, 22, 37, 26, 26, 26, 21, 12, 7, 14, 5, 7, 7, 5, 5, 3, 8, 10, 7, 7, 7, 7, 7, 11, 3, 4, 8, 7, 26, 26, 11, 11, 4, 7]; short [(0, 5, 5), (1, 11, 11), (2, 6, 6), (4, 7, 7), (8, 26, 26), (9, 26, 26), (10, 26, 26), (11, 21, 21), (12, 12, 12), (13, 7, 7), (15, 5, 5), (16, 7, 7), (17, 7, 7), (18, 5, 5), (19, 5, 5), (20, 3, 3), (21, 8, 8), (22, 10, 10), (23, 7, 7), (24, 7, 7), (25, 7, 7), (26, 7, 7), (27, 7, 7), (28, 11, 11), (29, 3, 3), (32, 7, 7), (33, 26, 26), (34, 26, 26), (35, 11, 11), (36, 11, 11)]
   caught C24.1  20 claims; arena confirmed against its own section in 5, n_independent in 20; 15 mismatch(es), first: 4.1: table says in-sample, section names ['out-of-sample', 'all ten episodes']
-  caught C25.1  9 lines quote the rule-horizon figures near 'rule'/'pre-register'; 7 name the seed or the three-seed extension; missing at ['PAPER.template.md:1520', 'README.template.md:217']
+  caught C25.1  9 lines quote the rule-horizon figures near 'rule'/'pre-register'; 7 name the seed or the three-seed extension; missing at ['PAPER.template.md:1536', 'README.template.md:217']
   caught C25.2  1 paragraphs pair 'overstat' with an alignment figure; 0 name the reversal; missing in ["PAPER.template.md: 'predict state *t* — stale by one step. Scored correctly the released c'"]
   caught C26.1  2 forbidden phrasings in 6 rendered files; 2 front-matter sentences name compute or longer training ({'abstract': 1, 'contributions': 0, 'appendix_d': 1, 'conclusion': 0}), 1 with the qualifier; failures ["PAPER.md: 'even when that setting'", "PAPER.md: 'trains twice as long'", 'abstract: "---  Trained longer, the original\'s setting still trails the best longer forecas"']
   caught C27.1  8 sentences pair the alignment defect with a short-horizon cost; 7 have the all-ten-episodes figures or words in their paragraph; missing in ["PAPER.template.md: 'Separately, the released evaluation pairs each prediction with the previous step'"]
   caught C27.2  4 paragraphs cite Arm A's stale-pairing figures; 2 carry an X2 response key; missing in ["PAPER.template.md: 'Our own Arm A checkpoints at {{iters_long}} iterations, trained under '", 'PAPER.template.md: "On their own training episodes\' {{x2_n_ins}} trajectories it raises ou"']
   caught C28.1  7 sentences print our models' stale-timing change; 3 give each figure its own N5 interval at its own horizon; failing: ["PAPER.template.md: 'Our own Arm A checkpoints at {{iters_long}} iterations, trained under the causal' (an Arm A stale-timing figure with no N5 interval)", 'PAPER.template.md: "Our Arm A\'s error under the stale action rises by {{n5_ins_h1}}% {{n5_ins_ci_h10" (n5_ins_h1 is not followed by its own interval key)', 'PAPER.template.md: "Fed the stale action, our Arm A\'s error rises by {{n5_ho_h100}}% {{n5_ho_ci_h100" (n5_ho_h100 is printed beside horizon 368)', 'PAPER.template.md: "Fed the stale action, our Arm A checkpoints\' held-out error rises by +22.7% at h" (a typed percentage beside our models and the stale timing)']
   caught C28.2  10 paragraphs or table rows say our models respond to the action; 7 carry the one-policy caveat; missing in ['PAPER.template.md: "They respond to the action. Given another trajectory\'s actions, their "', "PAPER.template.md: 'Our trained models respond to actions: their error rises when the acti'", "PAPER.template.md: '| the forecasts depend on the actions they are given | X2 |'"]
-  caught C28.3  10 summary sentences name the configurations; 7 pair them with no count of unresolved readings; paired in ['PAPER.template.md: "On accuracy alone, {{mn_better_kinds}} beat the original\'s setting at our budget"', "PAPER.template.md: 'On accuracy alone at our budget, {{mn_n_better_word}} of the {{mn_n_configs_word'", 'PAPER.template.md: "On accuracy alone, {{mn_better_kinds}} beat the original\'s setting at our budget"']
+  caught C28.3  11 summary sentences name the configurations; 8 pair them with no count of unresolved readings; paired in ['PAPER.template.md: "On accuracy alone, {{mn_better_kinds}} beat the original\'s setting at our budget"', "PAPER.template.md: 'On accuracy alone at our budget, {{mn_n_better_word}} of the {{mn_n_configs_word'", 'PAPER.template.md: "On accuracy alone, {{mn_better_kinds}} beat the original\'s setting at our budget"']
   ----------------------------------------------------------------------------------------------------
   68/68 corruptions caught

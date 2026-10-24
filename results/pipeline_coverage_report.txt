@@ -1,7 +1,7 @@
 PIPELINE COVERAGE — every artifact the paper reads has a stage that writes it
 ================================================================================================
   artifacts feeding paper_numbers.json : 106
-  paper keys they supply               : 3433
+  paper keys they supply               : 3434
   exempt, with a stated reason         : 3
 
   every artifact has a writer the pipeline invokes

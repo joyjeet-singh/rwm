@@ -1,16 +1,16 @@
 B8 — TYPED NUMERAL AUDIT
 ============================================================================================
   self-test          : passed — planted measurement 12.7 caught
-  numerals typed in PAPER.template.md: 754
-    section-ref             264
-    exception               210
-    ledger-id                98
+  numerals typed in PAPER.template.md: 735
+    section-ref             227
+    exception               211
+    ledger-id               101
     citation-year            38
+    table-row-label          38
     code-location            36
-    table-row-label          32
+    figure-ref               25
     markdown-heading         22
-    figure-ref               22
-    table-ref                 9
+    table-ref                14
     arxiv-id                  7
     equation-ref              6
     table-denominator         6

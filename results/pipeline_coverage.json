@@ -1,6 +1,6 @@
 {
   "n_artifacts": 106,
-  "n_paper_keys": 3433,
+  "n_paper_keys": 3434,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -303,6 +303,21 @@
       "exempt_reason": null
     },
     {
+      "artifact": "verify_reproduction.json",
+      "n_paper_keys": 28,
+      "writers": [
+        "part_f_gate",
+        "pipeline_coverage",
+        "verify_reproduction"
+      ],
+      "invoked_writers": [
+        "part_f_gate",
+        "pipeline_coverage"
+      ],
+      "covered": true,
+      "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
+    },
+    {
       "artifact": "x11c_fold_recalibration.json",
       "n_paper_keys": 28,
       "writers": [
@@ -325,21 +340,6 @@
       ],
       "covered": true,
       "exempt_reason": null
-    },
-    {
-      "artifact": "verify_reproduction.json",
-      "n_paper_keys": 27,
-      "writers": [
-        "part_f_gate",
-        "pipeline_coverage",
-        "verify_reproduction"
-      ],
-      "invoked_writers": [
-        "part_f_gate",
-        "pipeline_coverage"
-      ],
-      "covered": true,
-      "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
     },
     {
       "artifact": "action_sensitivity.json",

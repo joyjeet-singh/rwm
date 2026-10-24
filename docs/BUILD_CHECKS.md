@@ -25,18 +25,18 @@ the enumeration below to assert exactly that.
 and cross-references that now point the other way were changed.*
 
 **The number of regenerated values that differ and are themselves a measurement, a statistic or
-the verdict of a test is 0.**
-`./reproduce.sh --quick --force` regenerates 60 artifact files and 18,299
-numeric values from a clean clone: 18,296 bitwise identical (99.98%),
+the verdict of a test is 7.**
+`./reproduce.sh --quick --force` regenerates 60 artifact files and 18,327
+numeric values from a clean clone: 18,315 bitwise identical (99.93%),
 0 equal to within the verifier's floating-point tolerance but not bitwise, and
-3 differing. Those
-three account for the 18,299 exactly. Regeneration does not reproduce 1 of the committed values, in
+12 differing. Those
+three account for the 18,327 exactly. Regeneration does not reproduce 1 of the committed values, in
 1 of the files; that count is kept separate, because a value that is not
 produced twice cannot be compared twice.
-The 3 differing values are partitioned by cause from the per-file record in
+The 12 differing values are partitioned by cause from the per-file record in
 `results/verify_reproduction.json`: 0 are in the document-line index
 (`results/restatement_index.json`), 0 in the stochastic dilution study
-(`results/e5_sigma_dilution.json`), and 3 elsewhere. The document-line index records where each
+(`results/e5_sigma_dilution.json`), and 12 elsewhere. The document-line index records where each
 numeral sits in this paper's source and what it renders to. A clone checks out the same source, so
 every position reproduces; the only values it can disagree on are this paper's own statements about
 this comparison, which is why the committed index is regenerated whenever those figures are restated. Whether a differing value carries
@@ -44,12 +44,12 @@ a scientific result is decided value by value, not file by file: it does only if
 itself a measurement, a statistic or the verdict of a test, and a value does not qualify merely
 because the file holding it also holds results. `scripts/paper_numbers.py` applies that rule in
 code, counts any differing value it does not recognise as scientific, and places these outside the
-scientific class: 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`). **`part_f_gate` still fails.** Its clean-clone check requires
-that no regenerated value differ; 3 do, and it is published as failing, with no
+scientific class: 1 in `results/pdf_channels.json` (the amount of PDF text the anonymity scan read); 1 in `results/pdf_channels.json` (the page count of this document's PDF); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`). **`part_f_gate` still fails.** Its clean-clone check requires
+that no regenerated value differ; 12 do, and it is published as failing, with no
 tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
-honest test is the subset the run actually rewrites: 18,299 values, or 0.68% of the 2,694,947 numeric values under `results/` that the comparison counts. The other 2,676,648 are carried in, prove
+honest test is the subset the run actually rewrites: 18,327 values, or 0.68% of the 2,694,975 numeric values under `results/` that the comparison counts. The other 2,676,648 are carried in, prove
 nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 147-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 735 numerals that is not one is classified as an address, a horizon label or a declared constant — 19 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **68 comparative claims** across 35 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 68 of 68 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
@@ -145,7 +145,7 @@ during this revision — two calibration figures that named no horizon, and one 
 three ways in a single sentence — none of which a human reader had noticed.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model. A third category is not an exclusion but a partition, and it
-bounds everything in this record: of the 2,694,947 numeric values under `results/` that the comparison counts, a clean clone regenerates 18,299 and carries in 2,676,648. The reproducibility claim covers 0.68% of that counted set and is silent about the rest. We state that fraction because a
+bounds everything in this record: of the 2,694,975 numeric values under `results/` that the comparison counts, a clean clone regenerates 18,327 and carries in 2,676,648. The reproducibility claim covers 0.68% of that counted set and is silent about the rest. We state that fraction because a
 reviewer who computes it and finds we did not will reasonably discount everything around it.
 
 *The CPU budget.* `results/step4_5_timing.json` measures the machine, not the model: projected
@@ -164,11 +164,11 @@ iteration count. Read `results/step4_5_timing.json` as one machine's account of 
 property of the code.
 
 **One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
-check in `part_f_gate` requires that *no* regenerated value differ. 3 do, so the
-check fails, and it is published as failing. We did not give it a tolerance. The differences sit in 1 artifacts, counted from the per-file record in
-`results/verify_reproduction.json`: `results/supplementary_manifest.json` (3). The stochastic dilution study differs in
+check in `part_f_gate` requires that *no* regenerated value differ. 12 do, so the
+check fails, and it is published as failing. We did not give it a tolerance. The differences sit in 4 artifacts, counted from the per-file record in
+`results/verify_reproduction.json`: `results/input_set_audit.json` (5), `results/supplementary_manifest.json` (3), `results/pdf_channels.json` (2), `results/pipeline_coverage.json` (2). The stochastic dilution study differs in
 0, and the number of differing values that are a measurement, a statistic or a
-test verdict, under the rule the previous section states, is 0 — but a partition we believe is benign
+test verdict, under the rule the previous section states, is 7 — but a partition we believe is benign
 is a reason to read the check's output, not to move its threshold. A gate that passes because its criterion was relaxed
 tells a reader strictly less than one that fails and says where.
 
@@ -327,11 +327,11 @@ time-bounded.
 *source* of every value it holds, and it had copied that diagnostic's iteration count into a key
 of its own — so the host-dependence leaked through a file that was not excluded, and the clean
 clone duly differed on it. The verifier now drops any key whose recorded source is an excluded
-artifact (34 of them), which follows the provenance the file already carries rather
+artifact (35 of them), which follows the provenance the file already carries rather
 than requiring anyone to remember.
 
 **One further class, excluded by the same mechanism and worth naming because it sounds like an
-excuse.** 27 keys in `paper_numbers.json` are sourced from
+excuse.** 28 keys in `paper_numbers.json` are sourced from
 `verify_reproduction.json` — that is, they are this paper's statements *about this very
 comparison*: how many files it regenerated, how many values matched, how many differed. A clean
 clone necessarily carries in the **previous** run's figures and is then compared against a tree
@@ -426,7 +426,7 @@ claims stayed, and only their history moved.
   anchored at the training horizon, returned "cannot be settled". That change of anchor was made
   before the runs, not after them (§8).
 - **[§7.2]** An earlier version of §7.2 printed our models' stale-pairing figures computed with a scoring bug; they are withdrawn, and the record keeps them.
-- **[§8]** §8 said: "One of the build's own gates, the clean-clone check in `part_f_gate`, requires that no regenerated value differ at all; 3 do, so it fails, and it is published as failing rather than given a tolerance. The accounting behind these figures, the registry of checks the build runs on this paper's own prose, and the paper's record of verifying its own claims are in `docs/BUILD_CHECKS.md`, shipped as supplementary."
+- **[§8]** §8 said: "One of the build's own gates, the clean-clone check in `part_f_gate`, requires that no regenerated value differ at all; 12 do, so it fails, and it is published as failing rather than given a tolerance. The accounting behind these figures, the registry of checks the build runs on this paper's own prose, and the paper's record of verifying its own claims are in `docs/BUILD_CHECKS.md`, shipped as supplementary."
 - **[§6.2]** The epistemic ratio at h = 368 (34.4×) barely differs
   from the one at h = 100 (33.4×). That is why re-anchoring the
   paper's calibration claims from the diagnostic horizon to the deployment one changed the reading

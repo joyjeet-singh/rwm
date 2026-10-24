@@ -117,40 +117,40 @@
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 816,
-      "citation": "scripts/paper_numbers.py:816",
+      "line": 837,
+      "citation": "scripts/paper_numbers.py:837",
       "text": "runs_all = sorted(glob.glob(\"results/step5_arm*.json\"))",
       "classification": "open population",
       "reason": "GUARDED: the _width predicate defined beside it filters to the released width, the Appendix B fix itself"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1344,
-      "citation": "scripts/paper_numbers.py:1344",
+      "line": 1365,
+      "citation": "scripts/paper_numbers.py:1365",
       "text": "for _f in sorted(_glob.glob(\"results/step5_*.json\")):",
       "classification": "open population",
       "reason": "the CPU budget deliberately includes every run, M-49's arm included, and Appendix B states how many of them are that arm"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1996,
-      "citation": "scripts/paper_numbers.py:1996",
+      "line": 2017,
+      "citation": "scripts/paper_numbers.py:2017",
       "text": "for _f in sorted(_g.glob(\"results/step5_arm*.json\")):",
       "classification": "open population",
       "reason": "GUARDED: _width(_f) != _released_w continues, inside the loop"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 2014,
-      "citation": "scripts/paper_numbers.py:2014",
+      "line": 2035,
+      "citation": "scripts/paper_numbers.py:2035",
       "text": "_all = len([f for f in _g.glob(\"results/step5_arm*.json\")",
       "classification": "open population",
       "reason": "GUARDED: _width(f) == _released_w in the comprehension"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 2880,
-      "citation": "scripts/paper_numbers.py:2880",
+      "line": 2901,
+      "citation": "scripts/paper_numbers.py:2901",
       "text": "for f in sorted(_g2.glob(\"results/step5_arm*.json\")):",
       "classification": "open population",
       "reason": "the run inventory is deliberately every run, and run_total matches Appendix B. NOTE: width is not part of the row key, so M-49's width-124 runs share a row with released-width runs of the same shape. That is a presentation gap, not a stale set -- no number it produces is wrong -- and it is logged rather than changed, per A.3's 'fix only what affects a published number'"
