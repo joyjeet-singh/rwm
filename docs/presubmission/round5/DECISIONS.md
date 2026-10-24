@@ -129,3 +129,20 @@ first; every gate's printed output read, not only its exit status); (2) every ro
 checked against `git log` and each wrong one set to the commit time of that session's last commit, with a dated
 correction note; (3) Figure 3 decided (`#G16R-figure3`); (4) the close of §1.4. If the paper, the supplement, the
 figures or a bundled file changes, G17's steps 3–5 run again before G18; G16R does not run them.
+
+## G16R-figure3
+**Figure 3 (±1σ and ±2σ coverage by horizon on the released checkpoint, OUTLINE §figures) is dropped from OUTLINE.**
+Decided by G16R under the user's test: draw it only if it fits within the 12-page limit, no result leaves the record, and
+it adds evidence a reviewer needs.
+- **Limit.** OUTLINE homes it in §5.7, in the main text. Main content is 11.67 of 12 pages; a two-panel figure with its
+  caption takes about a third of a page, and a float that size at the end of §5 would push the main text past 12 or
+  force cuts. It does not fit where it was planned.
+- **Evidence.** What it would show is now all printed, as numbers with intervals. ±1σ by horizon under no multiplier,
+  one constant and per-horizon multipliers is Appendix M's X7 table. ±2σ by horizon was the real gap: the paper printed
+  it at h = 100 only, although the abstract, §1, §7 and §8 say "not two-sigma" without a horizon. G16R added it to
+  Appendix M as a table (N9, post hoc, read from keys; `n9_recalibration_scores.json` reproduces X7's ±1σ cells
+  exactly). Every horizon agrees: 83.5–86.3%, every interval below 95.45%. Figure 1b already shows what no constant can
+  absorb, the error-to-spread ratio growing with the horizon.
+- **Moved to an appendix instead** it would fit and lose nothing, but it would add only a picture of the two tables,
+  renumber Appendix N's Figure 8 and change the placement code after the freeze, for no evidence a table does not give.
+- **Record.** Nothing leaves it: the figure was never drawn, and its data are in the two tables and the ledger (R-83).

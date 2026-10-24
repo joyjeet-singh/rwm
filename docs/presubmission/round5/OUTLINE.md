@@ -70,7 +70,7 @@ print at `s2`, except the attainable minimum at n = 4 (0.125, which `s2` would p
 | H13 | The per-member variance collapses: the objective's optimum is σ = 0 | 5.5, Figure 2 | every run that logs σ; the synthetic test on known noise | `d1n_alea_ratio_h1` (as stored, an integer-scale ratio); `e5s_verdict` → plain words; `n13_rate_over_lr_median`, `n13_bound_over_lr` (s2); `n13_iters_worst`, `n13_iters_typical` (as stored) | abstract; contribution 3; §6 (the variance state, by cross-reference) |
 | H14 | The PETS survey counts | App. J; 5.5 one clause | 13 repositories inspected | `q1_n_looked`, `q1_n_carry`, `q1_n_inherit` (as stored) | none |
 | H15 | Disagreement ranks error; the free signals | 5.6 | the released checkpoint on its ten episodes ({{e7_nind}}), whole trajectories and X6's {{x6_n_units}} shorter units | `n11_d2_sp_epi_h1`, `n11_d2_sp_epi_h100` (s2); `n11_e7_sp_step_margin`, `_ci` (s2); the Pearson verdict named as pre-registered, in words; `x6_margin`, `x6_ci` (s2) | abstract; contribution 4; §7 lessons |
-| H16 | Per-horizon rescaling: scale, not shape (X7, N8, N9) | 5.7, Figure 3 | released checkpoint, leave-one-episode-out over its ten episodes, {{x7_n_traj}} trajectories; in-sample use only **[X11 slot: held-out folds]** | X7's within-band count in words; `n9_epi_perh_cov2_h100`, `_ci` (s2) against `v3_cov_nominal2`; `n9_epi_before_crps_h100` → `n9_epi_perh_crps_h100` (s2); `n8_n_heavy` of `n8_n_cells` (as stored); Arm A's own multipliers `d3x_own_epi_ok` of `d3x_own_epi_cells` | abstract; contribution 4; §7 lessons |
+| H16 | Per-horizon rescaling: scale, not shape (X7, N8, N9) | 5.7, App. M (Figure 3 dropped, G16R) | released checkpoint, leave-one-episode-out over its ten episodes, {{x7_n_traj}} trajectories; in-sample use only **[X11 slot: held-out folds]** | X7's within-band count in words; `n9_epi_perh_cov2_h100`, `_ci` (s2) against `v3_cov_nominal2`; `n9_epi_before_crps_h100` → `n9_epi_perh_crps_h100` (s2); `n8_n_heavy` of `n8_n_cells` (as stored); Arm A's own multipliers `d3x_own_epi_ok` of `d3x_own_epi_cells` | abstract; contribution 4; §7 lessons |
 | H17 | The stale action in the released evaluation | 6 | released checkpoint, all ten episodes ({{ad20_nind}}), and the held-out pair ({{ad_nind}}) | `adh20_rel_h1`, `adh20_rel_ci_h1` (s2); `ad_rel`, `ad_rel_ci` (s2) | abstract ("two defects"); contribution 4 |
 | H18 | Data budget | 3.2 | the released dataset against the reference's | `c2_pct` (s2) | §7 limitations |
 | H19 | The pre-registration record and the retractions | 3.4 | every rule, App. E | `n_superseded`, `n_retractions_lower` (as stored) | none |
@@ -95,7 +95,7 @@ print at `s2`, except the attainable minimum at n = 4 (0.125, which `s2` would p
 log Δ over the learning rate, so the Adam signature and the sign flip under the corrected objective both show.
 Source: `results/n13_adam.json`.
 
-**Figure 3 (§5.7).** ±1σ and ±2σ coverage by horizon on the released checkpoint, before rescaling, under the one
+**Figure 3 (§5.7): dropped by G16R** (`DECISIONS.md#G16R-figure3`); its ±1σ content is Appendix M's X7 table and its ±2σ content Appendix M's ±2σ table. As planned: ±1σ and ±2σ coverage by horizon on the released checkpoint, before rescaling, under the one
 constant and under the per-horizon multipliers, with both nominal lines. Source: `results/n9_recalibration_scores.json`
 (`scores`) and `results/x7_loeo_recalibration.json`.
 
