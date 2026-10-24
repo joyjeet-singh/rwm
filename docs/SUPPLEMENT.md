@@ -375,8 +375,8 @@ test we ran found that correcting the scale per horizon leaves every pairwise or
 substituted from an artifact on each build, and a quick run on a clean clone (`./reproduce.sh --quick --force`, which skips
 training) rewrites 0.68% of the numeric values under `results/` that the comparison counts; the rest are carried in
 and prove nothing about reproduction. **The number of regenerated values that differ and are
-themselves a measurement, a statistic or the verdict of a test is 7.** The clean-clone gate requires that
-none differ at all; 12 do, so it fails and is published as failing. The supplementary
+themselves a measurement, a statistic or the verdict of a test is 0.** The clean-clone gate requires that
+none differ at all; 3 do, so it fails and is published as failing. The supplementary
 `docs/BUILD_CHECKS.md` gives the accounting and the checks the build runs on this paper's own prose.
 
 ## S12 Why X5 could not be run

@@ -48,8 +48,9 @@ C1 — RESTATEMENT INDEX
                 §Appendix L — Ranking against free  L1277  a2_h1_r                    ...has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}}
                 §S25 The earlier section 6.6        L2757  d2_epi_h1                  ... | **1** | — | **{{d2_epi_h1}}** {{d2_epi_ci_h1}} | — | — | | 8 | {{d2
                 §S29 The earlier lessons section    L2998  d2_epi_h1                  ...lmost perfectly, {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npo
-             0  keys ['None', 'ab_short_excl', 'd2b_n_index_wins', 'd3x_ale_ok', 'd3x_tol_res', 'e5s_fp_rate', 'm65_n_heavy', 'perm_all_holm_rej', 'perm_ins_holm_rej', 'perm_oos_holm_rej', 'q3_n_reorder', 'relale_all_pos_h368', 'tw_cc_cluster_hurt']
+             0  keys ['None', 'ab_short_excl', 'd2b_n_index_wins', 'd3x_ale_ok', 'd3x_tol_res', 'e5s_fp_rate', 'm65_n_heavy', 'perm_all_holm_rej', 'perm_ins_holm_rej', 'perm_oos_holm_rej', 'q3_n_reorder', 'relale_all_pos_h368', 'tw_cc_cluster_hurt', 'ver_part_sci']
                 §6. Defects in the released pipelin L200   tw_cc_cluster_hurt         ...hurt in {{tw_cc_cluster_hurt}} and helped in {{tw_cc_cluster_helped}},
+                §Reproducibility and data           L242   ver_part_sci               ...ain}}), while {{ver_part_sci}} are a measurement, a statistic or a ver
                 §Appendix F — Metrics and floors    L481   m65_n_heavy                ...on cells, with {{m65_n_heavy}} below it ({{m65_n_adequate}} within its
                 §Appendix G — Rollout training agai L545   ab_short_excl              ...es zero in **{{ab_short_excl}} of {{ab_short_cells}}** h = 8 cells (bo
                 §Appendix I — Calibration in detail L766   relale_all_pos_h368        ...ead is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}}, negative
@@ -61,6 +62,7 @@ C1 — RESTATEMENT INDEX
                 §Appendix M — Per-horizon recalibra L1352  d3x_tol_res                ... resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizo
                 §Appendix N — Defects in the releas L1491  tw_cc_cluster_hurt         ...ts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_
                 §S2 The limitations in full         L1643  q3_n_reorder               ...airs}} pairs, {{q3_n_reorder}} change order and the rule returns **{{q
+                §S11 Reproducibility accounting and L1894  ver_part_sci               ... of a test is {{ver_part_sci}}.** The clean-clone gate requires that n
                 §S19 The earlier sections on the or L2365  ab_short_excl              ...es zero in **{{ab_short_excl}} of {{ab_short_cells}}** h = 8 cells, an
                 §S25 The earlier section 6.6        L2766  d2b_n_index_wins           ... leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons. 
                 §S26 The earlier section 6.7        L2871  d3x_tol_res                ... resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizo
@@ -628,7 +630,8 @@ C1 — RESTATEMENT INDEX
          26.62  keys ['e5_cov2_h8', 'm68_shared_cov2_h8']
                 §Appendix I — Calibration in detail L741   e5_cov2_h8                 ...cov1_ci_h8}}] | {{e5_cov2_h8}}% | {{e5_npos_h8}}/45 | | 32 | {{e5_rati
                 §Appendix K — The shared trunk and  L1087  m68_shared_cov2_h8         ...h8}}% | {{m68_shared_cov2_h8}}% | | 32 | {{m68_indep_ratio_h32}}× | {{
-             3  keys ['None', 'a1_sign_pos_h1', 'd1_seeds', 'd3x_n_in', 'd3x_nseeds', 'e5_seeds', 'e5s_seeds', 'h2h_nseeds', 'm68_n_shared', 'q1_n_absent', 'r2_from_acc_h8', 'r2_n_shared', 't1_first_entry_n', 't1_n_frag_oneword', 'v1_n_arms_checked']
+             3  keys ['None', 'a1_sign_pos_h1', 'd1_seeds', 'd3x_n_in', 'd3x_nseeds', 'e5_seeds', 'e5s_seeds', 'h2h_nseeds', 'm68_n_shared', 'q1_n_absent', 'r2_from_acc_h8', 'r2_n_shared', 't1_first_entry_n', 't1_n_frag_oneword', 'v1_n_arms_checked', 'ver_differing']
+                §Reproducibility and data           L242   ver_differing              ...cal, and the {{ver_differing}} that differ are bookkeeping about the s
                 §References                         L260   t1_first_entry_n           ... *Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are generated from 
                 §References                         L260   t1_n_frag_oneword          ...agments, {{t1_n_frag_oneword}} of them single common words whose match
                 §Appendix G — Rollout training agai L541   d1_seeds                   ... training and all {{d1_seeds}} seeds. The same comparison by horizon (
@@ -655,6 +658,7 @@ C1 — RESTATEMENT INDEX
                 §Appendix M — Per-horizon recalibra L1362  d3x_n_in                   ...outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} str
                 §Appendix M — Per-horizon recalibra L1364  d3x_nseeds                 ...dent tests, the {{d3x_nseeds}} Arm A seeds share their training data a
                 §S2 The limitations in full         L1605  e5_seeds                   ...kpoint alone. The {{e5_seeds}} ensemble-5 Arm A arms (§6.6) reproduce 
+                §S11 Reproducibility accounting and L1895  ver_differing              ...ffer at all; {{ver_differing}} do, so it fails and is published as fai
                 §S13 The earlier title and abstract L1923  d1_seeds                   ...m23_seed}}): over {{d1_seeds}} seeds, training on the model's own roll
                 §S14 The earlier introduction and c L1986  d1_seeds                   ... = {{v2_diag_h}}; {{d1_seeds}} seeds at {{iters_long}} iterations exte
                 §S19 The earlier sections on the or L2306  a1_sign_pos_h1             ...h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, the same story the

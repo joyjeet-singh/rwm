@@ -62,14 +62,14 @@
     "x7_loeo_recalibration.json"
   ],
   "values_compared": 18327,
-  "bitwise_identical": 18315,
+  "bitwise_identical": 18324,
   "identical_to_1e-9": 0,
-  "differing": 12,
+  "differing": 3,
   "timing_excluded": 17910,
   "nan_in_both": 4,
   "copied_file_values": 2676648,
-  "copied_identical": 2676647,
-  "copied_differing": 1,
+  "copied_identical": 2676645,
+  "copied_differing": 3,
   "machine_file_values_excluded": 706,
   "keys_lost": 1,
   "keys_lost_files": [
@@ -538,14 +538,8 @@
     },
     "input_set_audit.json": {
       "regenerated": true,
-      "differing": 5,
-      "differing_keys": [
-        ".hits[13].line",
-        ".hits[14].line",
-        ".hits[15].line",
-        ".hits[16].line",
-        ".hits[17].line"
-      ],
+      "differing": 0,
+      "differing_keys": [],
       "keys_lost": 0,
       "keys_lost_paths": []
     },
@@ -950,20 +944,19 @@
     },
     "part_f_gate.json": {
       "regenerated": false,
-      "differing": 1,
+      "differing": 3,
       "differing_keys": [
-        ".n_pass"
+        ".n_pass",
+        ".n_run",
+        ".n_not_run"
       ],
       "keys_lost": 0,
       "keys_lost_paths": []
     },
     "pdf_channels.json": {
       "regenerated": true,
-      "differing": 2,
-      "differing_keys": [
-        ".pages",
-        ".scanned.text"
-      ],
+      "differing": 0,
+      "differing_keys": [],
       "keys_lost": 0,
       "keys_lost_paths": []
     },
@@ -976,11 +969,8 @@
     },
     "pipeline_coverage.json": {
       "regenerated": true,
-      "differing": 2,
-      "differing_keys": [
-        ".n_paper_keys",
-        ".artifacts[24].n_paper_keys"
-      ],
+      "differing": 0,
+      "differing_keys": [],
       "keys_lost": 0,
       "keys_lost_paths": []
     },

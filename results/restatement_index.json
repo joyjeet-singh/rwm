@@ -379,11 +379,11 @@
     },
     {
       "value": "0",
-      "n_locations": 43,
+      "n_locations": 45,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 27,
-      "n_substituted": 16,
+      "n_substituted": 18,
       "sources": [
         "results/e5_sigma_dilution.json",
         "results/m65_gaussian_nominal.json",
@@ -393,7 +393,8 @@
         "results/task3_three_way.json",
         "results/task_b_permutation.json",
         "results/task_d3_cross_model.json",
-        "results/task_d_nind20.json"
+        "results/task_d_nind20.json",
+        "results/verify_reproduction.json"
       ],
       "keys": [
         "None",
@@ -408,7 +409,8 @@
         "perm_oos_holm_rej",
         "q3_n_reorder",
         "relale_all_pos_h368",
-        "tw_cc_cluster_hurt"
+        "tw_cc_cluster_hurt",
+        "ver_part_sci"
       ],
       "locations": [
         {
@@ -416,6 +418,12 @@
           "line": 200,
           "key": "tw_cc_cluster_hurt",
           "ctx": "{tw_cells}} cells a contaminated arm is hurt in {{tw_cc_cluster_hurt}} and helped in {{tw_cc_cluster_helped}},"
+        },
+        {
+          "section": "Reproducibility and data",
+          "line": 242,
+          "key": "ver_part_sci",
+          "ctx": "he submission's own files ({{ver_diff_plain}}), while {{ver_part_sci}} are a measurement, a statistic or a ver"
         },
         {
           "section": "Appendix F \u2014 Metrics and floors",
@@ -482,6 +490,12 @@
           "line": 1643,
           "key": "q3_n_reorder",
           "ctx": " by the checkpoint (\u00a73). Of the {{q3_n_pairs}} pairs, {{q3_n_reorder}} change order and the rule returns **{{q"
+        },
+        {
+          "section": "S11 Reproducibility accounting and the build's own checks",
+          "line": 1894,
+          "key": "ver_part_sci",
+          "ctx": " measurement, a statistic or the verdict of a test is {{ver_part_sci}}.** The clean-clone gate requires that n"
         },
         {
           "section": "S19 The earlier sections on the original papers' claims",
@@ -3608,17 +3622,16 @@
     },
     {
       "value": "12",
-      "n_locations": 29,
+      "n_locations": 27,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 29,
+      "n_substituted": 27,
       "sources": [
         "results/p4_transfer_power.json",
         "results/task_d3_cross_model.json",
         "results/task_d3_ens5.json",
-        "results/task_d3_perhorizon.json",
-        "results/verify_reproduction.json"
+        "results/task_d3_perhorizon.json"
       ],
       "keys": [
         "d3_ale_cells",
@@ -3628,16 +3641,9 @@
         "d3x_epi_ok",
         "d3x_tol_pairs",
         "e5_lead_cells",
-        "e5_total_cells",
-        "ver_differing"
+        "e5_total_cells"
       ],
       "locations": [
-        {
-          "section": "Reproducibility and data",
-          "line": 242,
-          "key": "ver_differing",
-          "ctx": "es, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the s"
-        },
         {
           "section": "Appendix L \u2014 Ranking against free signals",
           "line": 1208,
@@ -3733,12 +3739,6 @@
           "line": 1711,
           "key": "d3_epi_cells",
           "ctx": " global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic cells, though no single cell "
-        },
-        {
-          "section": "S11 Reproducibility accounting and the build's own checks",
-          "line": 1895,
-          "key": "ver_differing",
-          "ctx": "e clean-clone gate requires that none differ at all; {{ver_differing}} do, so it fails and is published as fai"
         },
         {
           "section": "S25 The earlier section 6.6",
@@ -6489,11 +6489,11 @@
     },
     {
       "value": "3",
-      "n_locations": 36,
+      "n_locations": 38,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 1,
-      "n_substituted": 35,
+      "n_substituted": 37,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/e5_synthetic_sigma.json",
@@ -6505,7 +6505,8 @@
         "results/task_d1_threeseed.json",
         "results/task_d3_cross_model.json",
         "results/task_d3_ens5.json",
-        "results/v1_ensemble_topology.json"
+        "results/v1_ensemble_topology.json",
+        "results/verify_reproduction.json"
       ],
       "keys": [
         "None",
@@ -6522,9 +6523,16 @@
         "r2_n_shared",
         "t1_first_entry_n",
         "t1_n_frag_oneword",
-        "v1_n_arms_checked"
+        "v1_n_arms_checked",
+        "ver_differing"
       ],
       "locations": [
+        {
+          "section": "Reproducibility and data",
+          "line": 242,
+          "key": "ver_differing",
+          "ctx": "es, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the s"
+        },
         {
           "section": "References",
           "line": 260,
@@ -6680,6 +6688,12 @@
           "line": 1605,
           "key": "e5_seeds",
           "ctx": "nts were first made on the released checkpoint alone. The {{e5_seeds}} ensemble-5 Arm A arms (\u00a76.6) reproduce "
+        },
+        {
+          "section": "S11 Reproducibility accounting and the build's own checks",
+          "line": 1895,
+          "key": "ver_differing",
+          "ctx": "e clean-clone gate requires that none differ at all; {{ver_differing}} do, so it fails and is published as fai"
         },
         {
           "section": "S13 The earlier title and abstract",
@@ -10232,24 +10246,22 @@
     },
     {
       "value": "7",
-      "n_locations": 16,
+      "n_locations": 14,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 16,
+      "n_substituted": 14,
       "sources": [
         "results/e4_sigma_gradients.json",
         "results/r2_combined_arm.json",
         "results/step0_regimes.json",
-        "results/step4_3_differential.json",
-        "results/verify_reproduction.json"
+        "results/step4_3_differential.json"
       ],
       "keys": [
         "d10_extra_ep",
         "diff_terms",
         "e4_n_terms",
-        "m68_from_acc_h8",
-        "ver_part_sci"
+        "m68_from_acc_h8"
       ],
       "locations": [
         {
@@ -10263,12 +10275,6 @@
           "line": 52,
           "key": "diff_terms",
           "ctx": "a maximum difference of {{diff_grad_max}}) across those {{diff_terms}} terms and {{diff_n_params}} parameter t"
-        },
-        {
-          "section": "Reproducibility and data",
-          "line": 242,
-          "key": "ver_part_sci",
-          "ctx": "he submission's own files ({{ver_diff_plain}}), while {{ver_part_sci}} are a measurement, a statistic or a ver"
         },
         {
           "section": "Appendix A \u2014 Reimplementation and equivalence",
@@ -10305,12 +10311,6 @@
           "line": 1811,
           "key": "d10_extra_ep",
           "ctx": "d10_per_ep_word}} per episode with a third in episode {{d10_extra_ep}}; the command itself is not recorded, an"
-        },
-        {
-          "section": "S11 Reproducibility accounting and the build's own checks",
-          "line": 1894,
-          "key": "ver_part_sci",
-          "ctx": " measurement, a statistic or the verdict of a test is {{ver_part_sci}}.** The clean-clone gate requires that n"
         },
         {
           "section": "S14 The earlier introduction and contributions",
