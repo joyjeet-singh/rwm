@@ -118,3 +118,14 @@ written, with no broader-impact statement; (2) "the released checkpoint, on its 
 11's "trained on all ten episodes" for X7 and every released-checkpoint scope sentence; (3) the title *Right Ranking,
 Wrong Scale: Reproducing the Robotic World Model's Dynamics Model and Testing the Uncertainty of Its Follow-up*;
 (4) G9's migration list, item 13 included.
+
+## G16R-ruling
+**Start gate overridden by the user** (PLAN §1.4 would have G18 next, after G17 COMPLETE). User ruling, 2026-10-24
+(chat), quoted: "Run an independent fresh-eyes review in a new terminal before G18, including fixing the log
+timestamps and deciding Figure 3." So session G16R runs between G17 and G18 in a new terminal, by a session that wrote
+none of G11–G17 and treats their checks as unverified. Its items: (1) G16's review again from scratch (G16's
+subagents, at most three; the appendix parts `REVIEW.md` lists as unchecked and the `xref_sweep` suspects G17 found go
+first; every gate's printed output read, not only its exit status); (2) every round-5 `SESSION_LOG.md` header time
+checked against `git log` and each wrong one set to the commit time of that session's last commit, with a dated
+correction note; (3) Figure 3 decided (`#G16R-figure3`); (4) the close of §1.4. If the paper, the supplement, the
+figures or a bundled file changes, G17's steps 3–5 run again before G18; G16R does not run them.
