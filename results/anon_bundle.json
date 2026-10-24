@@ -1,6 +1,6 @@
 {
   "cited_files_absent": [],
-  "cited_files_checked": 26,
+  "cited_files_checked": 27,
   "excluded_as_identifying": [
     "docs/ARCHIVAL_IDENTIFIERS.md"
   ],
@@ -26,6 +26,6 @@
     "n_hits_on_probe": 9,
     "planted": "a file whose NAME and CONTENTS both carry deny-list strings"
   },
-  "zip_bytes": 28884293,
+  "zip_bytes": 28890283,
   "zip_written": "supplementary_anon.zip"
 }
