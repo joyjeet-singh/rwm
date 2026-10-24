@@ -9,28 +9,28 @@ it is the level of its "Open items" heading.
 
 *[2026-09-30, pre-submission S10-fix] The clean-clone figures in both passes below describe the commits they name. The paper, `docs/BUILD_CHECKS.md` and `README.md` now print a later clean-clone measurement, restated after S11's findings (`docs/DEFERRED.md`, 2026-09-30). The section 8 denominator that the pass over `c16267c` records as "not fixed, by ruling" was reworded on 2026-09-30 by the user's later ruling, so that status is historical too.*
 
-## Round 5, over `419c17c` — the known items now
+## Round 5, over `22b2d7b` — the known items now
 
 *[2026-10-24, pre-submission round 5, G17]
 The sections below describe earlier commits and are kept as dated records. This section is the current list,
 written by `docs/presubmission/round5/f17_checklist.py` from the files it names. The reproduction figures in the
-paper come from M3, a clean clone of `0b0ad01`; G18 measures a clone of the final commit. Rounds 4 and 5
+paper come from N3, a clean clone of `89421c7`; G18 measures a clone of the final commit. Rounds 4 and 5
 were committed locally: none of it had been pushed when this was written.*
 
 ### Open items
 
 - **The round-5 gates** (`results/round5_gates.json`, blocking): main content 11.67 of 12 pages,
-  abstract 209 words and 5 numerals, `ids`, `once`, `sig` at 0, `keys`
+  abstract 210 words and 5 numerals, `ids`, `once`, `sig` at 0, `keys`
   0 missing.
 - **`submission_check` returns 21 of 22** in the working tree; pending: C1.
-  The claims audit, regenerated on the frozen text (ruling U5), extracts 384 claims,
-  31 supported and 353 unreviewed.
+  The claims audit, regenerated on the frozen text (ruling U5), extracts 387 claims,
+  29 supported and 358 unreviewed.
 - **`part_f_gate` fails check 4 alone, and the paper says so.** 7 of 8 checks pass with the
   identity strings supplied and a clean clone's results; check 4 fails because 3 of
-  18,299 regenerated values differ, all bookkeeping about the submission's own files, none a
+  18,327 regenerated values differ, all bookkeeping about the submission's own files, none a
   measurement, a statistic or a verdict.
 - **The supplementary manifest is exact:** 604 files for an archive of 604 members, and
-  664 commits for a log of 664.
+  681 commits for a log of 681.
 - **No report `reproduce.sh` writes is left untracked and unignored.**
 - **Round 5's logged items** (`docs/presubmission/round5/OUT_OF_SCOPE.md`; none changes what is uploaded):
   - `PDM/CLAUDE.md` (Style section): says "five retractions", while the ledger's counts differ. The user's file; not this round's to fix. (Seeded by G0.)
@@ -47,6 +47,16 @@ were committed locally: none of it had been pushed when this was written.*
   - G11: `PAPER.template.md` §3.2 holds Table 1 as the arenas table (PLAN G11 item 4), not OUTLINE §figures' claim-to-verdict Table 1 (§Referee 13); the claim table needs the final verdicts and the X11 slots, so it waits for G14 (owne…
   - G11: pointers from §1–§3 to §4.x–§7 and Appendices C, J, L, O use OUTLINE's numbering, which resolves only once G12–G15 write those sections (owner G14, G15; `xref_sweep.py` and `pdf_render_check.py` read only top-level numbers an…
   - G13: `scripts/a1_consent_letter.py` (no argument) fails its fallback-rewrite match: the §6.1 sentences its REWRITES quote moved to supplementary S5 in G9 (and S20 in G13), so `PAPER.template.md` holds 0 matches; the extraction pas…
+  - G17: my G11–G16 gate loops read each script's exit status, and `xref_sweep.py` exits 0 with suspects listed, so eleven pointers it flagged went unnoticed from G11 to G17 (fixed in G17); a gate loop should grep its own output as we…
+  - G16R: `results/task_c2_data_budget.json` key `ours.note` (written by `scripts/task_c2_data_budget.py:70`) says "33-step windows ... overlap almost completely"; the windows are 40 rows (`results/step0_regimes.json` `window_accounti…
+  - G16R: `results/original_paper_figures.json` `sample_efficiency.where_v1` gives "2501.10100v1 Table I (Limitations)"; v1 has no Limitations section and no such table (read from `docs/presubmission/sources/2501.10100v1.pdf`; `result…
+  - G16R: `scripts/xref_sweep.py:60-73` (`REVIEWED`): G17's nine keys match by substring anywhere in the paper and the supplement, so a future live pointer in the paper such as "Appendix K gives all four" would be exempted too. All ni…
+  - G16R: `scripts/check_comparative_claims.py` `CLAIMS[].where` labels still name round-4 sections (`§6.6`, `§6.2`, `§12`); metadata printed in the check's console output only, not a reading.
+  - G15-fix: `PAPER.template.md:646` (App. H, "in-sample for it, which trained on all {{h2h_ckpt_neps_word}} episodes"), `:1323` (App. L, X6's arena "the released checkpoint's training data") and App. N `:1414`, `:1434`, `:1454`, `:14…
+  - G15-fix: `PAPER.template.md:907` (App. J) and `:1022` (App. K): "{{run_total}} runs for §4.1–§6" counts the 33-run table (`{{run_table}}`), which excludes X3's fold runs and the fold and independent ensembles that §4.1 and §5 also…
+  - G15-fix: `scripts/evidence_summary.py:1` and the `what` field it writes to `results/evidence_summary.json`, and `reproduce.sh:555`'s stage label, say §3.2 points to Appendix D's evidence table; §3.2 no longer does. Metadata only, …
+  - G17b: the fast build (`paper_numbers`, `build_paper`, `build_model_card`, `build_readme`, `compile_paper`) does not rerun stages 20n8 (`results/input_set_audit.json`) or 28a3 (`results/pipeline_coverage.json`), so G16R's edit of `…
+  - G17b: `docs/presubmission/s10fix_docs.py` (step 4 of the restate driver used through G17) no longer applies: `docs/COVER_STATEMENT.md` has been generated by `round5/f17_cover.py` since G17 step 5, and the phrase it patches is gone…
 - **The review's residual risk** (`docs/presubmission/round5/REVIEW.md`): the appendix checkers stopped at their
   turn limits; Appendix O's code citations and a few tables were checked only by the build's gates.
 - **TMLR's live rules, read 2026-10-24** (`docs/presubmission/round5/TMLR_CHECK.md`): the submission is a Regular

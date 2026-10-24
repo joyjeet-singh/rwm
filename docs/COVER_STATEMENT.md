@@ -54,6 +54,6 @@ exact tests, the free baselines for the trust metric, and the defect analysis.
 | independent reimplementation | matches the release's gradients (§3.1, Appendix A) |
 | the originals' claims tested as published | Appendix D, Table 4; the versions read are named and compared (Appendix D) |
 | code and data | the full repository, every artifact and the claim ledger, anonymised, in the supplementary ZIP |
-| clean-clone reproduction | 18,299 regenerated values compared, 18,296 identical; the 3 that differ are bookkeeping about the submission's own files, 0 scientific (§8, supplement S11) |
+| clean-clone reproduction | 18,327 regenerated values compared, 18,324 identical; the 3 that differ are bookkeeping about the submission's own files, 0 scientific (§8, supplement S11) |
 | pre-registration | 35 rules, Appendix E |
 | negative and withdrawn results | kept and stated (§3.4, §5.7, Appendix E) |

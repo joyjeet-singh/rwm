@@ -1,7 +1,7 @@
 # Submission package
 
 Everything needed to upload this submission, and nothing else. **Written for a person at a
-browser.** Every figure here was read from the file it describes, at commit `419c17c`, by
+browser.** Every figure here was read from the file it describes, at commit `22b2d7b`, by
 `docs/presubmission/round5/f17_package.py`, which also asserts each statement below about the two
 bundles before writing it; the checksums were computed for this document rather than copied from an
 earlier session. This replaces round 4's version.
@@ -37,8 +37,8 @@ Then upload the two files in §1, checking their checksums first.
 
 | file | what it is | size | SHA-256 |
 |---|---|---|---|
-| `PAPER.pdf` | the submission, 55 pages, TMLR submission mode | 1,306,055 bytes | `4ebb2cedad1a4925c1f613e2fd9853e84cc9ecca3d6e1107f908e875a38ca147` |
-| `supplementary_anon.zip` | the anonymised supplementary bundle, 630 members | 28,884,293 bytes | `f94f454c6e4211e28908be92b54ce96fd0d20e2b0159092976187b424e7a64ba` |
+| `PAPER.pdf` | the submission, 56 pages, TMLR submission mode | 1,308,073 bytes | `34a975ebfe9bd9b0bb7ec2335a79dfdd41fe1057171cdf9183c2c5cc48c617d0` |
+| `supplementary_anon.zip` | the anonymised supplementary bundle, 630 members | 28,890,722 bytes | `61fcbb84bc39e293890daa46178d9a57e5ead202da0ee1c70809e9e6e30f50f8` |
 
 **`supplementary.zip` is NOT uploaded — and not because it is unsafe.** Both bundles are anonymised:
 each is built by a script that refuses to write the archive if any staged file carries the author
@@ -68,7 +68,7 @@ shasum -a 256 PAPER.pdf supplementary_anon.zip
 ```
 
 and confirm the two lines match the table above. If they do not, something has rebuilt one of them
-since `419c17c`; do not upload until they match. Every build recompiles `PAPER.pdf` with a new date
+since `22b2d7b`; do not upload until they match. Every build recompiles `PAPER.pdf` with a new date
 and ID, so a rebuild alone changes its checksum.
 
 ## 2. Title
@@ -87,8 +87,8 @@ print(" ".join(re.search(r"##\s*Abstract\s*\n+(.+?)\n\s*---", md, re.S).group(1)
 EOF
 ```
 
-At `419c17c` it is 209 words by a whitespace split, within the 210-word cap the paper's own
-check C12.1 enforces, and 1,318 characters, within the submission form's 5,000. The
+At `22b2d7b` it is 210 words by a whitespace split, within the 210-word cap the paper's own
+check C12.1 enforces, and 1,321 characters, within the submission form's 5,000. The
 title is 125 characters, within the form's 250. It begins "We reimplement the dynamics model of the Robotic World Model" and ends
 "...defects. One robot, gait and dataset; no policy is trained.". It is not retyped anywhere.
 
@@ -104,7 +104,7 @@ error well and sizes it wrongly, at one step and increasingly with the horizon.
 
 ## 5. Anonymity confirmation
 
-Swept at commit `419c17c`, twice and independently: by the builders' own scans (the anonymised
+Swept at commit `22b2d7b`, twice and independently: by the builders' own scans (the anonymised
 bundle's builder also plants a probe, now a full commit hash since round 2, T8, which fired on every
 run; the supplementary builder's scan has no probe), and by sweep code written separately for
 verification. The channels covered were member paths, member text
@@ -121,7 +121,7 @@ this repository.
 A reviewer should meet these in the paper rather than discover them:
 
 - **A build gate is published as failing.** `part_f_gate` requires that no regenerated value differ
-  between the repository and a clean clone. 3 of 18,299 do, so it fails,
+  between the repository and a clean clone. 3 of 18,327 do, so it fails,
   and the paper's reproducibility statement says so. None of them is a measurement, a statistic or the verdict of a test; all are
   bookkeeping, and the build-checks supplementary (`docs/BUILD_CHECKS.md`) names each kind. With the identity strings supplied from outside the archive
   and a clean clone's results, 7 of 8 checks pass, check 4 alone failing. A
@@ -159,15 +159,15 @@ affiliated with the authors of the reproduced papers. **Human-subjects reporting
    in prose.
 2. **The alignment query was sent and has no reply.** The paper says so (§6) without a date. If a reply
    arrives before submission, §6 and the supplement need an update; after submission nothing changes.
-3. **The claims audit was regenerated on the frozen text** (ruling U5) and is not reviewed: 384 claims,
-   31 marked supported and 353 unreviewed.
+3. **The claims audit was regenerated on the frozen text** (ruling U5) and is not reviewed: 387 claims,
+   29 marked supported and 358 unreviewed.
 4. **The review's residual risk** (`round5/REVIEW.md`): two checker reads stopped at their turn limits, so
    Appendix O's code citations against the pinned upstream, Appendix N's two pipeline rows and a few tables
    of Appendices H and L were checked only by the build's own gates.
 5. **No one has looked at the rendered PDF pages** (`pdftoppm` is not installed on the build machine):
    open the pages with Figures 1 to 8 and the 35-row table of Appendix E by eye before uploading.
 6. **`results/supplementary_manifest.json` is exact** (round 3, R5): it records 604 files for
-   an archive of 604 members and 664 commits for a log of 664, both counted.
+   an archive of 604 members and 681 commits for a log of 681, both counted.
 7. **`scripts/a1_consent_letter.py`'s fallback rewrites no longer match the paper's text**
    (round5/OUT_OF_SCOPE.md); no gate runs it and the primary path, the quotation extractor, is checked.
 8. **Rounds 4 and 5's logged items** are in `docs/presubmission/round4/OUT_OF_SCOPE.md` and
