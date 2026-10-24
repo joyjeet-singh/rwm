@@ -357,6 +357,27 @@ def main():
                   key=lambda x: (-x[0], x[1]))
     put("ver_diff_nfiles", len(_byf), _vsrc)
     put("ver_diff_by_file", ", ".join(f"`results/{f}` ({n})" for n, f in _byf), _vsrc)
+    # G16R: section 9 names the differing values in words. It was typed, and went stale between
+    # two measurements (it still named the PDF's counts after only the archive's values differed).
+    _PLAIN = [
+        ("supplementary_manifest.json", r"\.(bytes|uncompressed)", "the archive's", "size"),
+        ("supplementary_manifest.json", r"\.files", "the archive's", "file count"),
+        ("supplementary_manifest.json", r"\.commits_in_log", "the archive's", "commit count"),
+        ("pdf_channels.json", r"\.pages", "the PDF's", "page count"),
+        ("pdf_channels.json", r"\.scanned\.text", "the PDF's", "text count"),
+    ]
+    _obj = {}
+    for _f in sorted(_pf):
+        for _k in _pf[_f]["differing_keys"]:
+            _hit = [(o, a) for bf, rx, o, a in _PLAIN if bf == _f and re.fullmatch(rx, _k)]
+            assert _hit or _sci, f"no plain name for differing value {_f}{_k}: add it to _PLAIN"
+            for o, a in _hit:
+                _obj.setdefault(o, [])
+                if a not in _obj[o]:
+                    _obj[o].append(a)
+    put("ver_diff_plain", ", ".join(
+        o + " " + (a[0] if len(a) == 1 else ", ".join(a[:-1]) + " and " + a[-1]) for o, a in _obj.items()),
+        _vsrc)
 
     # Part C: the count of COMPARATIVE claims verified, reported in section 8
     # beside the numeral count. A build that verifies its own interpretive claims
@@ -2545,7 +2566,7 @@ def main():
             _cfn = f"{_a}_{_reg}_s7"
             for _h in H2["horizons"]:
                 put(f"h2h_bl_{_a}_{_reg}_nrmse_h{_h}", f'{N2R["three_seed_mean"][_cfn]["held_out"]["pooled_nrmse"][str(_h)]:.4f}', _n2s)
-            put(f"h2h_bl_{_a}_{_reg}_label", f'{_nm[_a]}, {_nm2r[_reg]} (§5.3){" †" if _cfn in _div else ""}', _n2s)
+            put(f"h2h_bl_{_a}_{_reg}_label", f'{_nm[_a]}, {_nm2r[_reg]} (§4.3){" †" if _cfn in _div else ""}', _n2s)
     _chg = N2A["readings_whose_result_changed"]
     assert not any(c.startswith("M-74") or "held_out" in c for c in _chg), "a pooled held-out or M-74 reading changed"
     _nm2 = {"M-75": "teacher-forced", "M-76": "autoregressive"}

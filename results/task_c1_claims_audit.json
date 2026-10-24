@@ -1,22 +1,10 @@
 {
-  "n_claims": 384,
+  "n_claims": 386,
   "by_verdict": {
-    "UNREVIEWED": 353,
-    "SUPPORTED": 31
+    "UNREVIEWED": 356,
+    "SUPPORTED": 30
   },
   "claims": [
-    {
-      "id": "eb642160cc82",
-      "section": "Abstract",
-      "claim": "RWM-U's ensemble disagreement ranks errors right but sizes them wrong: it ranks them better than the forecast step does (Spearman {{n11_d2_sp_epi_h100 s2}}%.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
     {
       "id": "f3def3572472",
       "section": "1. Introduction",
@@ -514,9 +502,9 @@
       "note": ""
     },
     {
-      "id": "b03280ac8479",
+      "id": "97921f8f2758",
       "section": "4.3 The architecture claim: consistent, but a weak test",
-      "claim": "Every baseline is worse than RWM on all four trajectories, but that is the smallest p the sample allows, and no baseline beats even the training mean, which is the stronger of the three floors here.",
+      "claim": "Every baseline is worse than RWM on all four trajectories, but at four trajectories even that gives only the smallest attainable exact p, and no baseline beats even the training mean, which is the stronger of the three floors here.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
@@ -628,9 +616,9 @@
       "note": ""
     },
     {
-      "id": "96d950cd6c95",
+      "id": "4b9f11ec6b04",
       "section": "5.2 At one step, the spread already falls short",
-      "claim": "On the folds' {{x3_n}} independent held-out trajectories, the shared-trunk ensembles' error-to-spread ratio at one step is {{x11a_rho_out_h1 s2}}% coverage, and the per-member \u03c3 the method discards is {{d1n_alea_ratio_h1}}\u00d7 smaller than that error; which rows trained it is not recorded (\u00a73.2), so that figure rests on all ten of its released episodes, {{e7_nind}} independent trajectories.",
+      "claim": "On the folds' {{x3_n}} independent held-out trajectories, the shared-trunk ensembles' error-to-spread ratio $\\rho$ at one step is {{x11a_rho_out_h1 s2}}% coverage, and the per-member \u03c3 the method discards is {{d1n_alea_ratio_h1}}\u00d7 smaller than that error; which rows trained it is not recorded (\u00a73.2), so that figure rests on all ten of its released episodes, {{e7_nind}} independent trajectories.",
       "keys": [
         "x3_n",
         "d1n_alea_ratio_h1",
@@ -693,9 +681,9 @@
       "note": ""
     },
     {
-      "id": "9f0716286232",
+      "id": "c14de21f0161",
       "section": "5.3 What an ensemble can see: the shared trunk",
-      "claim": "Training five independently initialised full models and using them as an ensemble improves the overconfidence factor at h = {{v2_deploy_h}} by {{m44_ratio_gain s2}}\u00d7, is below what that comparison can resolve.",
+      "claim": "Training five independently initialised full models and using them as an ensemble improves the error-to-spread ratio $\\rho$ at h = {{v2_deploy_h}} by {{m44_ratio_gain s2}}\u00d7, is below what that comparison can resolve.",
       "keys": [
         "v2_deploy_h"
       ],
@@ -821,6 +809,18 @@
       ],
       "n_keys": 2,
       "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "eea746707e0c",
+      "section": "5.6 Ranking",
+      "claim": "Disagreement keeps real information with step size partialled out, so \"disagreement ranks error well\" is supported, and \"it ranks better than a free signal\" holds on shorter units and under ranks but not under the pre-registered whole-trajectory test.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
@@ -1006,9 +1006,9 @@
       "note": ""
     },
     {
-      "id": "3fbb773172a9",
+      "id": "356af789b172",
       "section": "7. Lessons and limitations",
-      "claim": "Lessons for a practitioner.** - *Use ensemble disagreement as a ranking signal, price it against free alternatives, and do not read it as a distance.* It ranks error well and better than the forecast step; the model's own predicted step size ranks nearly as well on whole trajectories, and disagreement is ahead of it on shorter units on the released checkpoint.",
+      "claim": "Lessons for a practitioner.** - *Use ensemble disagreement as a ranking signal, price it against free alternatives, and do not read it as a distance.* It ranks error well and better than the forecast step; on the released checkpoint it is also ahead of the model's own predicted step size on shorter units and under ranks, though the linear margin on whole trajectories is not resolved.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
@@ -1026,6 +1026,22 @@
       ],
       "artifacts": [
         "results/appendix_g_rules.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "c6750fd18697",
+      "section": "8. Conclusion",
+      "claim": "RWM's central training claim reproduces on held-out episodes at long horizons and reverses at one step on short windows; its other two claims get weak tests, and at h = {{v2_diag_h}} the baselines we built never beat even the training mean.",
+      "keys": [
+        "v2_diag_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json"
       ],
       "n_keys": 1,
       "generated": true,
@@ -1062,19 +1078,20 @@
       "note": ""
     },
     {
-      "id": "43c6bb0e87cb",
+      "id": "8da5852f841e",
       "section": "Reproducibility and data",
-      "claim": "A clean clone reproduces every scientific value: of {{ver_values}} regenerated values, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the submission's own files (the archive's size and commit count, the PDF's page and text counts), while {{ver_part_sci}} are a measurement, a statistic or a verdict (supplement S11).",
+      "claim": "A clean clone reproduces every scientific value: of {{ver_values}} regenerated values, {{ver_identical}} are bitwise identical, and the {{ver_differing}} that differ are bookkeeping about the submission's own files ({{ver_diff_plain}}), while {{ver_part_sci}} are a measurement, a statistic or a verdict (supplement S11).",
       "keys": [
         "ver_values",
         "ver_identical",
         "ver_differing",
+        "ver_diff_plain",
         "ver_part_sci"
       ],
       "artifacts": [
         "results/verify_reproduction.json"
       ],
-      "n_keys": 4,
+      "n_keys": 5,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -1675,6 +1692,25 @@
       "note": ""
     },
     {
+      "id": "ed6bba56355a",
+      "section": "Appendix F \u2014 Metrics and floors",
+      "claim": "The floors (\u00a73.3, Table 2).** Predicting the training mean forecasts every step by each dimension's mean over the arena's training-episode rows; holding the last state repeats the last history row; the seasonal floor repeats the history's last {{n10_period_default}} rows in order, a period of {{n10_period_s}} s fixed from the training episodes' joint-position autocorrelation before any held-out scoring ({{n10_period_min}} to {{n10_period_max}} rows across the folds).",
+      "keys": [
+        "n10_period_default",
+        "n10_period_s",
+        "n10_period_min",
+        "n10_period_max"
+      ],
+      "artifacts": [
+        "results/n10_floors.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "f9c90d57c477",
       "section": "Appendix F \u2014 Metrics and floors",
       "claim": "with $t_0$ = `history_horizon` = {{v2_history}}: the first {{v2_history}} steps are teacher-forced and excluded.",
@@ -1690,18 +1726,6 @@
       "verdict": "SUPPORTED",
       "sample_size": "n/a \u2014 a configuration fact, from the pinned upstream and the published hyperparameter table",
       "note": "revision review (V2/X-13): horizon checked against the upstream config, the arithmetic 400 - 32 = 368, and the follow-up's Table S9 (v1) / S11 (v3)"
-    },
-    {
-      "id": "7556ee33ccc0",
-      "section": "Appendix F \u2014 Metrics and floors",
-      "claim": "A value of 1.0 means no better than predicting the training mean.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "n/a \u2014 not a quantitative claim",
-      "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own."
     },
     {
       "id": "3ac876e84a23",
@@ -1772,9 +1796,9 @@
       "note": ""
     },
     {
-      "id": "3f1d0726c451",
+      "id": "8162435d1933",
       "section": "Appendix F \u2014 Metrics and floors",
-      "claim": "The two aggregations.** \u00a73.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the {{cal_rel_ndim}} state dimensions, then divide by the pooled scale \u2014 a ratio of means.",
+      "claim": "The two aggregations.** \u00a73.3 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the {{cal_rel_ndim}} state dimensions, then divide by the pooled scale \u2014 a ratio of means.",
       "keys": [
         "cal_rel_ndim"
       ],
@@ -2182,9 +2206,9 @@
       "note": ""
     },
     {
-      "id": "d7f9bd34d561",
+      "id": "c4429a3aacf6",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "On the in-sample arena's {{mn_nind_ins}} trajectories, with nRMSE pooled as \u00a73.1 defines it (computed afterwards, post hoc; ledger R-77), {{n2_n_changed_word}} readings differ from the per-trajectory average the rules' evaluator used.",
+      "claim": "On the in-sample arena's {{mn_nind_ins}} trajectories, with nRMSE pooled as \u00a73.3 defines it (computed afterwards, post hoc; ledger R-77), {{n2_n_changed_word}} readings differ from the per-trajectory average the rules' evaluator used.",
       "keys": [
         "mn_nind_ins",
         "n2_n_changed_word"
@@ -2514,9 +2538,9 @@
       "note": ""
     },
     {
-      "id": "997405d38b4b",
+      "id": "e64b093a514b",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "Arena, stated once for the whole table: {{h2h_arena}}, episodes {{h2h_episodes}}, {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{h2h_nind}}; in-sample for the released checkpoint.** Arm rows are the mean over {{h2h_nseeds}} seeds at {{iters_main}} training iterations (the `{{h2h_arm_ckpt}}` checkpoint), with per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (\u00a73.1), and both metrics are cumulative over forecast steps 1..h.",
+      "claim": "Arena, stated once for the whole table: {{h2h_arena}}, episodes {{h2h_episodes}}, {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{h2h_nind}}; possibly in-sample for the released checkpoint (\u00a73.2).** Arm rows are the mean over {{h2h_nseeds}} seeds at {{iters_main}} training iterations (the `{{h2h_arm_ckpt}}` checkpoint), with per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (\u00a73.3), and both metrics are cumulative over forecast steps 1..h.",
       "keys": [
         "h2h_arena",
         "h2h_episodes",
@@ -3537,9 +3561,9 @@
       "note": ""
     },
     {
-      "id": "7210951492ce",
+      "id": "aad73ec6647d",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "Under the permutation null that count gives P = {{perm_oos_epi_p_h368}} on the held-out pair and {{perm_ins_epi_p_h368}} on the training episodes, both in-sample for the checkpoint, against {{perm_oos_epi_binom_h368}} from the independent-trials test.",
+      "claim": "Under the permutation null that count gives P = {{perm_oos_epi_p_h368}} on the held-out pair and {{perm_ins_epi_p_h368}} on the training episodes, both possibly in-sample for the checkpoint (\u00a73.2), against {{perm_oos_epi_binom_h368}} from the independent-trials test.",
       "keys": [
         "perm_oos_epi_p_h368",
         "perm_ins_epi_p_h368",
@@ -3584,9 +3608,9 @@
       "note": ""
     },
     {
-      "id": "eb5289e9006e",
+      "id": "ffc7e0169400",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "Inside the trained horizon, \u03c3 is flat while error grows (Figure 6; {{sig_arena}}, n_independent = {{sig_nind}} 400-step trajectories, in-sample for the released checkpoint; our arms at {{iters_main}} training iterations, the released checkpoint as released):",
+      "claim": "Inside the trained horizon, \u03c3 is flat while error grows (Figure 6; {{sig_arena}}, n_independent = {{sig_nind}} 400-step trajectories, possibly in-sample for the released checkpoint (\u00a73.2); our arms at {{iters_main}} training iterations, the released checkpoint as released):",
       "keys": [
         "sig_arena",
         "sig_nind",
@@ -3693,9 +3717,9 @@
       "note": ""
     },
     {
-      "id": "eac284f0d0f4",
+      "id": "e37a40d9fcb8",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "The larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} 400-step trajectories on the held-out pair, in-sample for the checkpoint, the epistemic ordering looks strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h=368) and unremarkable at short ({{perm_oos_epi_p_h1}} at h=1).",
+      "claim": "The larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} 400-step trajectories on the held-out pair, possibly in-sample for the checkpoint (\u00a73.2), the epistemic ordering looks strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h=368) and unremarkable at short ({{perm_oos_epi_p_h1}} at h=1).",
       "keys": [
         "perm_oos_nind",
         "perm_oos_epi_p_h128",
@@ -5219,9 +5243,9 @@
       "note": ""
     },
     {
-      "id": "2e061049bf53",
+      "id": "f55e1e01494c",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "X6's alongside readings (\u00a75.6).** On the released checkpoint's {{x6_n_units}} units of {{x6_unit_len}} rows over all ten episodes, its training data, at h = {{v2_deploy_h}} the margin also exceeds the {{x6_mde}} minimum detectable effect computed before the reading by rule M-51's method.",
+      "claim": "X6's alongside readings (\u00a75.6).** On the released checkpoint's {{x6_n_units}} units of {{x6_unit_len}} rows over its ten released episodes, at h = {{v2_deploy_h}} the margin also exceeds the {{x6_mde}} minimum detectable effect computed before the reading by rule M-51's method.",
       "keys": [
         "x6_n_units",
         "x6_unit_len",
@@ -6277,6 +6301,24 @@
       "note": ""
     },
     {
+      "id": "f5d855b7f217",
+      "section": "Appendix M \u2014 Per-horizon recalibration",
+      "claim": "\u00b12\u03c3 under the same fits (post hoc).** Scored post hoc on the same fits, arena and draws (X7's \u00b11\u03c3 cells are reproduced exactly first), \u00b12\u03c3 coverage under the per-horizon multiplier stays below the {{v3_cov_nominal2}}% a calibrated Gaussian gives at every horizon, so \u00a75.7's \"not two-sigma\" holds at each one, not only at h = {{v2_deploy_h}}.",
+      "keys": [
+        "v3_cov_nominal2",
+        "v2_deploy_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json",
+        "results/v3_metric_definitions.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "edb77a54ba2f",
       "section": "Appendix N \u2014 Defects in the released pipeline",
       "claim": "The held-out pair's per-trajectory values (\u00a76).** \u00a76's sentence on the held-out pair at h = {{v2_diag_h}} ended \"\u2026, with per-trajectory values {{ad_rel_traj}} and {{ad_nrmse_traj}}\", relative-L1 and nRMSE.",
@@ -6507,9 +6549,9 @@
       "note": ""
     },
     {
-      "id": "b761e0d2b05d",
+      "id": "4da2faa9b8bd",
       "section": "Appendix N \u2014 Defects in the released pipeline",
-      "claim": "Arena: the held-out pair (episodes {{h2h_episodes}}, {{ad_nind}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{ad_nind}}), out-of-sample for our arms and in-sample for the released checkpoint.",
+      "claim": "Arena: the held-out pair (episodes {{h2h_episodes}}, {{ad_nind}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{ad_nind}}), out-of-sample for our arms and possibly in-sample for the released checkpoint (\u00a73.2).",
       "keys": [
         "h2h_episodes",
         "ad_nind",

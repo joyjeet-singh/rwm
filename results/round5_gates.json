@@ -1,6 +1,6 @@
 {
  "mode": "blocking",
- "summary": "pages 11.67/12, abstract 209/5, ids 0, once 0, sig 0, keys missing 0",
+ "summary": "pages 11.67/12, abstract 210/5, ids 0, once 0, sig 0, keys missing 0",
  "gates": {
   "pages": {
    "pass": true,
@@ -11,7 +11,7 @@
   },
   "abstract": {
    "pass": true,
-   "words": 209,
+   "words": 210,
    "max_words": 210,
    "numerals": 5,
    "max_numerals": 5,

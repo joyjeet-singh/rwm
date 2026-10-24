@@ -3553,7 +3553,7 @@
   },
   "e4_table": {
     "source": "results/e4_sigma_gradients.json",
-    "value": "| `state` | live | 1.00 | `system_dynamics.py:270-289` | 0.000325 | 0.0509 | 0.0703 |\n| `sequence` | **dead** | 1.00 | `system_dynamics.py:274-277` | 0 | 0 | 0 |\n| `bound` | live | 1.00 | `system_dynamics.py:301-302` | 0 | 0.2 | 0 |\n| `kl` | **dead** | 0.10 | `system_dynamics.py:223` | 0 | 0 | 0 |\n| `extension` | **dead** | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |\n| `contact` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |\n| `termination` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |"
+    "value": "| `state` | live | 1.00 | `system_dynamics.py:270-284` | 0.000325 | 0.0509 | 0.0703 |\n| `sequence` | **dead** | 1.00 | `system_dynamics.py:272-279` | 0 | 0 | 0 |\n| `bound` | live | 1.00 | `system_dynamics.py:301-302` | 0 | 0.2 | 0 |\n| `kl` | **dead** | 0.10 | `system_dynamics.py:205` | 0 | 0 | 0 |\n| `extension` | **dead** | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |\n| `contact` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |\n| `termination` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |"
   },
   "e4_touching": {
     "source": "results/e4_sigma_gradients.json",
@@ -4285,7 +4285,7 @@
   },
   "h2h_bl_mlp_ar_label": {
     "source": "results/pooled_nrmse_rescore.json",
-    "value": "MLP, autoregressive (\u00a75.3)"
+    "value": "MLP, autoregressive (\u00a74.3)"
   },
   "h2h_bl_mlp_ar_nrmse_h1": {
     "source": "results/pooled_nrmse_rescore.json",
@@ -4321,7 +4321,7 @@
   },
   "h2h_bl_mlp_tf_label": {
     "source": "results/pooled_nrmse_rescore.json",
-    "value": "MLP, teacher-forced (\u00a75.3) \u2020"
+    "value": "MLP, teacher-forced (\u00a74.3) \u2020"
   },
   "h2h_bl_mlp_tf_nrmse_h1": {
     "source": "results/pooled_nrmse_rescore.json",
@@ -4357,7 +4357,7 @@
   },
   "h2h_bl_rssm_ar_label": {
     "source": "results/pooled_nrmse_rescore.json",
-    "value": "RSSM, autoregressive (\u00a75.3) \u2020"
+    "value": "RSSM, autoregressive (\u00a74.3) \u2020"
   },
   "h2h_bl_rssm_ar_nrmse_h1": {
     "source": "results/pooled_nrmse_rescore.json",
@@ -4393,7 +4393,7 @@
   },
   "h2h_bl_rssm_tf_label": {
     "source": "results/pooled_nrmse_rescore.json",
-    "value": "RSSM, teacher-forced (\u00a75.3)"
+    "value": "RSSM, teacher-forced (\u00a74.3)"
   },
   "h2h_bl_rssm_tf_nrmse_h1": {
     "source": "results/pooled_nrmse_rescore.json",
@@ -4429,7 +4429,7 @@
   },
   "h2h_bl_transformer_ar_label": {
     "source": "results/pooled_nrmse_rescore.json",
-    "value": "transformer, autoregressive (\u00a75.3)"
+    "value": "transformer, autoregressive (\u00a74.3)"
   },
   "h2h_bl_transformer_ar_nrmse_h1": {
     "source": "results/pooled_nrmse_rescore.json",
@@ -4465,7 +4465,7 @@
   },
   "h2h_bl_transformer_tf_label": {
     "source": "results/pooled_nrmse_rescore.json",
-    "value": "transformer, teacher-forced (\u00a75.3) \u2020"
+    "value": "transformer, teacher-forced (\u00a74.3) \u2020"
   },
   "h2h_bl_transformer_tf_nrmse_h1": {
     "source": "results/pooled_nrmse_rescore.json",
@@ -8761,7 +8761,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 55
+    "value": 56
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -12017,7 +12017,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 754
+    "value": 771
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -12326,6 +12326,10 @@
   "ver_diff_nfiles": {
     "source": "results/verify_reproduction.json",
     "value": 1
+  },
+  "ver_diff_plain": {
+    "source": "results/verify_reproduction.json",
+    "value": "the archive's size and commit count"
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",

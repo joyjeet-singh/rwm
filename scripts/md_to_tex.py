@@ -316,8 +316,14 @@ def convert(md, title, author):
                                           or lines[i].strip() == "---"):
                     i += 1
                 continue
+            numbered = re.match(r"^\d", txt) is not None
             txt = re.sub(r"^\d+(\.\d+)*\.?\s*", "", txt)   # LaTeX numbers sections itself
             cmd = {1: "section", 2: "section", 3: "subsection", 4: "subsubsection"}[lvl]
+            # G16R: a top-level heading the Markdown leaves unnumbered ("Reproducibility and data",
+            # "References") stays unnumbered; numbering it made the PDF's last sections 9 and 10
+            # while the text says section 8 states what reproduces.
+            if lvl == 2 and not numbered and not txt.strip().startswith("Appendix"):
+                cmd = "section*"
             if txt.strip().startswith("Appendix") and not any(
                     x.startswith(chr(92) + "appendix") for x in out):
                 out.append(r"\appendix")

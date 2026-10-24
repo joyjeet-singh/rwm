@@ -411,7 +411,7 @@ def main():
             "The variance collapse is objective-driven. (a) mean "
             "$\\log\\Delta_{\\log\\sigma}$ against training iteration for each of the "
             + N_COLLAPSE + " runs of the collapse family, which is every run of §5–§7 at the released "
-            "width outside §5.2's sweep (Appendix J). The runs are drawn individually but are visually coincident within each "
+            "width outside §4.2's sweep (Appendix H). The runs are drawn individually but are visually coincident within each "
             "objective, so the " + N_COLLAPSE + " read as two lines, one falling and one rising "
             "-- which is the point: the trajectory does not vary visibly from run to run. "
             "(b) the fitted per-iteration slope for each run, grouped by objective: negative and "

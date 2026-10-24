@@ -41,10 +41,10 @@ OUT = "e4_sigma_gradients.json"
 
 # Where the reference computes each term. Paths as LOSS_ASSEMBLY.md fixes them.
 WHERE = {
-    "state":       ("system_dynamics.py:270-289", "squared error on a reparameterised SAMPLE"),
-    "sequence":    ("system_dynamics.py:274-277", "guarded by prediction_type == 'sequence'"),
+    "state":       ("system_dynamics.py:270-284", "squared error on a reparameterised SAMPLE"),
+    "sequence":    ("system_dynamics.py:272-279", "guarded by prediction_type == 'sequence'"),
     "bound":       ("system_dynamics.py:301-302", "mean(max_logstd) - mean(min_logstd)"),
-    "kl":          ("system_dynamics.py:223", "rssm branch only"),
+    "kl":          ("system_dynamics.py:205", "rssm branch only"),
     "extension":   ("system_dynamics.py:233-268", "auxiliary head, extension_dim = 0"),
     "contact":     ("system_dynamics.py:233-268", "auxiliary head, contact_dim = 8"),
     "termination": ("system_dynamics.py:233-268", "auxiliary head, termination_dim = 1"),

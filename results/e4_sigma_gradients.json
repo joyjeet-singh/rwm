@@ -34,7 +34,7 @@
       "grad_log_delta_logstd_abs": 0.05088302493095398,
       "grad_min_logstd_abs": 0.07029780000448227,
       "touches_sigma": true,
-      "where": "system_dynamics.py:270-289",
+      "where": "system_dynamics.py:270-284",
       "note": "squared error on a reparameterised SAMPLE"
     },
     {
@@ -47,7 +47,7 @@
       "grad_log_delta_logstd_abs": 0.0,
       "grad_min_logstd_abs": 0.0,
       "touches_sigma": false,
-      "where": "system_dynamics.py:274-277",
+      "where": "system_dynamics.py:272-279",
       "note": "guarded by prediction_type == 'sequence'"
     },
     {
@@ -73,7 +73,7 @@
       "grad_log_delta_logstd_abs": 0.0,
       "grad_min_logstd_abs": 0.0,
       "touches_sigma": false,
-      "where": "system_dynamics.py:223",
+      "where": "system_dynamics.py:205",
       "note": "rssm branch only"
     },
     {
