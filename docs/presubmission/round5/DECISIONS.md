@@ -161,3 +161,24 @@ Options: **(A, recommended)** a fix session ("G15-fix", Opus) that rewrites each
 the same build-gates-build close, then G17's steps 3–5, then G18; **(B)** accept them as known and record them in
 `SUBMISSION_PACKAGE.md`'s open items; **(C)** have G16R resume and fix them under an explicit waiver of the
 three-sentence rule.
+
+**Status: RULED A.** User ruling, 2026-10-24 (chat), quoted: "Option A - a fix session rewrites them". So a session
+**G15-fix** (Opus 5.5, high, new terminal) runs next, from this brief. PLAN.md has no section for it, and `go.zsh` does
+not know the name, so the user starts it with the prompt in `CHECKPOINT.md`.
+
+**G15-fix brief.** Reads: PLAN §1; this anchor; `REVIEW.md`'s G16R section ("Open" and "Coverage"); `CHECKPOINT.md`.
+Subagents: `rwm-checker` once at most, for item 3.
+1. For each sentence on G16R's list (`PAPER.template.md` lines 332, 636, 649, 651, 724, 737, 750, 754, 767, 785, 811,
+   829, 995, 1000, 1114, 1191, 1265, 1293, 1343 at commit `07a7770`; locate them by their quoted text, since lines
+   move), read the body section it names. Rewrite the sentence so that it points to where the content now lives (usually
+   the appendix's own table or figure), or drop the pointer clause. Never change a number, a key, a verdict or a scope.
+   Line 785's "the abstract and §8 use 33.4× at h = 100" goes. Edit sources only: the template, or the generator that
+   writes a caption or a table label.
+2. G16R's list came from a pattern search, so it may be incomplete. Check every `§n` and `§n.n` reference in Appendices
+   A–O (about 230) against what the named body section now holds. Fix any further stale ones the same way. Leave the
+   supplement's earlier-paper passages alone (they say their numbering is the earlier paper's).
+3. Close as PLAN §1.4: regenerate the claims audit (ruling U5), then fast build, gates (read the printed output, not the
+   exit status), fast build again, byte-identical. Restore `PAPER.pdf` if only its date changed. One commit per item,
+   subject `[G15-fix][n]`; log entry and checkpoint. The page and abstract gates must still pass; nothing leaves the
+   record. Any change bigger than a pointer rewrite (a number, a reading, a moved result) is `BLOCKED`.
+Next after G15-fix: G17's steps 3–5 only (clean clones and restatement, bundles and sweep, package documents), then G18.
