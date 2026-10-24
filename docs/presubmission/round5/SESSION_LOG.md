@@ -898,3 +898,25 @@ Body words / main-content pages: body unchanged / 11.67; PDF 56 pages
 Subagents: none
 Next: G18 (the clean-clone verification of the final commit; no edits)
 Decisions for user: none. Note: I judged N1's 7 default-scientific values benign without stopping (above); N2 and N3 measured 0.
+
+## G18 — 2026-10-25 02:47 — Opus 5.5 (the plan names Sonnet 5.5, medium; run in this terminal after G17b at the user's request) — status: COMPLETE
+Commits: (this entry, `FINAL_REPORT.md` and the checkpoint: [G18] final report)
+Review items closed: none (verification only)
+Done: A clean clone of the local `presubmission5` at `3ebf338` (a `file://` clone; nothing pushed) into `/Users/Shared/rwm_verify/r5/G18/`, fresh venv from `requirements.txt`; round 4's F12 driver copied and adapted into `/Users/Shared/rwm_verify/evidence/R5G18/g18_driver.zsh` (branch, paths, N3 as the stage reference, G0 base `796a026`, every `ver_*` key compared, the round-5 gates and self-tests added, `docs/SUPPLEMENT.md` swept and hashed). `setup.sh`, `reproduce.sh --quick --force` (7,816 s), the verifier three times (byte-identical), two full builds and every gate, both bundles, the deny-list sweep of the rebuilt and the committed upload files, the PDF comparison. **Every criterion passes:** 0 scientific differing values (18,327 compared, 18,324 identical, 3 bookkeeping); 31/31 printed reproduction figures equal the clone's measurement; the PDF equals the committed one after blanking dates and ID (56 pages); 0 deny-list hits; the 16 round-5 stages run (2) or skip for want of weights (14), as designed; every round-5 gate passes. Stage tally 134: 66 OK, 64 skipped, 4 failed (20q1, 20n2, 29a, 29: the known four), identical to N1–N3. No edit to the repository; its status and HEAD unchanged at the end. `FINAL_REPORT.md` gives pages, main-content pages, body and abstract words and every gate against G0, and the upload files' SHA-256s.
+Build/gates: pass (in the clone; two builds byte-identical; `part_f_gate` 7/8, check 4 alone, as published; `submission_check` 21/22, C1 by ruling U5)
+Round-5 gates (blocking): pages 11.67/12, abstract 210/5, ids 0, once 0, sig 0, keys missing 0
+Paper numbers changed: none
+New keys: none
+Ledger: none
+Re-anchored checks: none
+CPU jobs over 1 min: the G18 driver, 3 h 30 min (reproduce 2 h 10 min, bundles 20 min, two sweeps 52 min), machine otherwise idle
+Queue (Y5): done and discharged
+Body words / main-content pages: 7,659 (title to References) / 11.67 (G0: 18,644 by the same measure, 17,804 by `t6_words.py` / 26.9)
+Subagents: none
+Next: §0.5's after-G18 steps, which only the user can do, in this order:
+  1. Fast-forward or merge `presubmission5` into `main` and push, if you still want the repository's state public before review; then re-upload `MODEL_CARD.md` to Hugging Face, and trigger a Software Heritage archive of the pushed commit (the paper says the repository was archived before submission).
+  2. Every author checks their remaining 2026 TMLR quota and completes their OpenReview profile (`round4/TMLR_CHECK.md`).
+  3. On the form: the title and abstract from `docs/SUBMISSION_PACKAGE.md`; "Regular submission" (main content 11.67 pages); competing interests from G17's draft (Y11); human subjects "N/A"; suggested action editors.
+  4. Upload `PAPER.pdf` and `supplementary_anon.zip` last, after checking both against the SHA-256s in `docs/SUBMISSION_PACKAGE.md` (`34a975eb…17d0`, `61fcbb84…50f8`), without rebuilding them.
+  Nothing is pushed once the paper is under double-blind review, so step 1 comes before step 4.
+Decisions for user: none. Open: the TMLR blog since 15 October (read it in a browser); the alignment query's date; the 24 `OUT_OF_SCOPE.md` items, none of which changes the upload.

@@ -1,13 +1,11 @@
-# Round-5 checkpoint — after G17b (2026-10-24)
+# Round-5 checkpoint — after G18 (2026-10-25)
 
-**State.** Branch `presubmission5`. Last log entry: **G17b — COMPLETE** (G17's steps 3–5 rerun on the G15-fix tree). Nothing pushed. Main content 11.67 of 12 pages, abstract 210/5, every gate blocking and clean. PDF 56 pages.
+**State.** Branch `presubmission5`. Last log entry: **G18 — COMPLETE** (`FINAL_REPORT.md`: PASS). Nothing pushed. Main content 11.67 of 12 pages, abstract 210/5, every gate clean. Upload files: `PAPER.pdf` (56 pages, SHA-256 `34a975eb…17d0`) and `supplementary_anon.zip` (630 members, SHA-256 `61fcbb84…50f8`), verified on a clean clone of `3ebf338`.
 
-**Done in G17b.** Three clean clones (N1–N3). The printed reproduction figures come from N2 and equal N3's measurement on all 31 `ver_*` keys: 18,327 regenerated values compared, 18,324 identical, 3 differing, all the archive's own size and commit count, 0 scientific. Final bundles: builder scan 0 residual hits, independent sweep 0 hits in both zips, the PDF and `docs/SUPPLEMENT.md`. `docs/SUBMISSION_PACKAGE.md`, `docs/COVER_STATEMENT.md` and the round-5 checklist section regenerated over `22b2d7b`.
+**Done in G18.** A clean clone of `3ebf338`: 0 scientific differing values, 31/31 printed reproduction figures equal the clone's measurement, the PDF equal to the committed one after blanking dates and ID, 0 deny-list hits, every round-5 stage and gate as designed. Evidence in `/Users/Shared/rwm_verify/evidence/R5G18/`.
 
-**Next action.** G18: clean-clone verification of HEAD, no edits (PLAN §2, G18). Driver: round 4's F12 driver adapted, in `/Users/Shared/rwm_verify/evidence/R5G18/`.
+**Next action.** The user's after-G18 steps (PLAN §0.5; listed in order in `FINAL_REPORT.md` and the G18 log entry): merge and push, re-upload `MODEL_CARD.md`, archive; quotas and profiles; the form; upload last, checking the SHA-256s, without rebuilding. No session follows.
 
 **Blockers.** None.
 
-**Open, for a session allowed to change scope wording** (`OUT_OF_SCOPE.md`, G15-fix lines): six appendix sentences (H:646, L:1323, N:1414/1434/1454/1469) call all ten episodes the released checkpoint's training data, against §3.2; "33 runs for §4.1–§6" (J:907, K:1022) excludes the fold runs.
-
-**Open, unchanged.** The alignment query's date; the TMLR blog since 15 October (read it in a browser); the 358 unreviewed claims (ruled known, U5); the figure pages, which no one has seen rendered.
+**Open, not blocking the upload.** The TMLR blog since 15 October (read it in a browser); the alignment query's date; the 358 unreviewed claims (ruled known, U5); the 24 `OUT_OF_SCOPE.md` items, including six appendix sentences about the checkpoint's training data and the "33 runs" count's scope; the figure pages, which no one has seen rendered.
