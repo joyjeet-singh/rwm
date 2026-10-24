@@ -118,3 +118,21 @@ artifact, the pinned upstream or the downloaded originals.
 **Open: BLOCKED (G16 item 3: more than three sentences).** About twenty sentences in Appendices D, H, I, J, K, L and M describe body content by the earlier paper's structure: the body sections they name hold no such table, column, figure or number. `PAPER.template.md` lines: 332 ("no cell survives multiplicity correction (§5.6)"); 636 and 651 ("§5.2's" rollouts, "§5.2's two held-out tables"); 649 ("§5.3's … paired contrasts"); 724, 750, 754 ("§5.2's released-checkpoint table", "§5.2's numbers", "the last column of §5.2's … table"); 737 ("The ensemble-5 arms (§5.2)", "(§5.6, 3 seeds"); 767 ("Our ensemble-5 arms (§5.6)"); 785 ("§5.2 quotes 34.4× … and the abstract and §8 use 33.4× at h = 100": neither does since RV14); 811 ("§5.6's P column"); 829 ("the trajectory permutation test of §5.6"); 995, 1000 ("§5.2's comparison", "§5.2's 'our arms fail the same way at 10.5×'"); 1114 ("§5.3's table"); 1191 ("§5.2's [+0.545, +0.694]"); 1265, 1293 ("what §5.6 reports", "§5.6's released-checkpoint table"); 1343 ("while σ does not (§5.6)"). Most need the sentence rewritten to point at the appendix's own table or removed, not a number changed; none is a measurement. The question is in `DECISIONS.md#G16R-blocked`.
 
 **Coverage.** Checkers delivered after their turn limit (asked to report at it). A–H: parts 1–5 fully (App. H tables cell by cell, slopes, data budget, "4 of 8 neighbours", App. D), App. D, E, G, H; A–C against keys; **not reached:** the X8 tables against `x8_released_pairing.json` cell by cell; App. F (read by me instead). I–O: App. O's code lines, App. N's pipeline rows and captions, App. J, K, M's X7 table and `p4` MDEs, App. L's X6 and e7 values; **not reached:** App. I against `action_sensitivity.json`, `n5_stale_armA_ci.json`, `task_b2_epistemic.json`, `q1_pets_descendants.json`, the captions of I, K, L, M, App. M's multiplier ratios. `n13_adam.json`, `n9_recalibration_scores.json` and `e7_free_baselines.json` feed no I–O table (G16's list was wrong about that).
+
+# G15-fix — the stale appendix pointers (2026-10-24; ruling A of `DECISIONS.md#G16R-blocked`)
+
+**Item 1, G16R's list.** All 19 lines, 20 replacements (`fc8e2e9`). The abstract-and-§8 clause of App. I goes.
+**Item 2, the full sweep.** Every one of the 203 `§n`/`§n.n` references in Apps A–O, their 49 appendix-letter
+pointers and the named-section and supplement pointers checked against the body section, appendix or supplement
+section named (body read from `body.txt`, which this session did not change). 60 more rewritten (`1b8c289`):
+"keeps N sentences" and "in full" headers whose body sentences are gone (G, H); tables that §4.1, §4.2, §5.2, §5.3
+and §5.6 no longer have; App. D's X3 cell (G → H) and its "the body's §4" (→ Table 4); App. B cited for run counts it
+no longer gives (→ S7); "(Data and code)" (→ S8); App. G's "(Table I)" (→ Table 1, from v2 on, as RV09); App. N's
+quotation of a §6 sentence §6 no longer has; ten self-pointers (→ above/below). Generator: the evidence table's
+r_dd row now reads "(§5.6, Appendix L)", and its Holm pointer is App. H, not L. 157 references remain.
+**Check.** `rwm-checker` ×1 on all 78 changed lines and both generator pointers: 0 mismatches; no number, key or
+rule ID changed. One pointer it called thin, L "§5.6 states it that way" (the h = 1 ranking of whole rollouts): §5.6
+says the h = 1 correlation is "across trajectories", which is that statement; kept.
+**Not changed, logged** (`OUT_OF_SCOPE.md`, G15-fix): six appendix sentences that call all ten episodes the released
+checkpoint's training data (scope, not pointer); "{{run_total}} runs for §4.1–§6" (a count's scope); metadata naming
+§3.2 as pointing to App. D.

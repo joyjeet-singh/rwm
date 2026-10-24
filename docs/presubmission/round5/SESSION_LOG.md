@@ -839,3 +839,29 @@ Body words / main-content pages: 7,336 (pages 1–12 to "References", as extract
 Subagents: rwm-referee ×1, rwm-checker ×2
 Next: the user answers `DECISIONS.md#G16R-blocked`. Whatever the answer, **the paper (`PAPER.template.md`, `PAPER.pdf`), bundled scripts (`paper_numbers.py`, `build_paper.py`, `md_to_tex.py`, `e4_sigma_gradients.py`) and bundled results changed after G17 (the supplement did not), so G17's steps 3 to 5 (clean clones and restatement, both bundles and the deny-list sweep, the package documents) must run again before G18.** `SUBMISSION_PACKAGE.md`'s PDF size and SHA-256 (55 pages) are stale, and `supplementary_anon.zip` predates these commits. G16R did not run them.
 Decisions for user: DECISIONS.md#G16R-blocked
+
+## G15-fix — 2026-10-24 12:18 — Opus 5.5, high (new terminal; ruling A of DECISIONS.md#G16R-blocked) — status: COMPLETE
+Commits:
+fc8e2e9 [G15-fix][1] G16R's listed stale appendix pointers rewritten (Apps D, H-M)
+1b8c289 [G15-fix][2] The full sweep: every section and appendix pointer in Apps A-O checked; 60 more rewritten, two in the evidence-table generator
+c39e6b3 [G15-fix][3] Close: claims audit regenerated (U5), build -> gates -> build -> gates -> build, last two byte-identical
+(this entry, the checkpoint, `REVIEW.md`, `DECISIONS.md` and `OUT_OF_SCOPE.md` lines: [G15-fix][3] records)
+Review items closed: the stale-pointer class G16R left open (`REVIEW.md`, G16R "Open")
+Done:
+- **Start gate** overridden by the user's ruling A (`DECISIONS.md#G16R-blocked`); the template had not moved since `07a7770`, so G16R's line numbers held.
+- **Item 1.** All 19 listed lines (20 replacements). App. I's "the abstract and §8 use 33.4×" goes; each other pointer now names where the content lives (usually the appendix's own table) or loses its pointer clause.
+- **Item 2.** All 203 section references in Apps A–O, 49 appendix-letter pointers and the named-section and supplement pointers checked against their targets; 60 further rewrites (list in `REVIEW.md`, G15-fix). `scripts/evidence_summary.py`: r_dd row "(§5.6, Appendix L)", Holm pointer L → H; `results/evidence_summary.json` regenerated, only those strings differ. The supplement's earlier-paper passages untouched.
+- **Item 3.** Claims audit regenerated (387 claims, 29 supported, 358 unreviewed; was 386/30/356: App. G's sample-efficiency sentence lost its verdict when its "(Table I)" was corrected, as the audit does on any rewording). `rwm-checker` ×1: 0 mismatches over the 78 changed lines; one pointer called thin and kept (`REVIEW.md`).
+- **Logged, not fixed** (`OUT_OF_SCOPE.md`): six appendix sentences asserting the released checkpoint trained on all ten episodes (scope); "33 runs for §4.1–§6" (a count's scope); stale metadata in `evidence_summary.py` and `reproduce.sh:555`.
+Build/gates: pass (build → gates → build → gates → build; the last two byte-identical on PAPER.md, PAPER.tex, MODEL_CARD.md, README.md, docs/BUILD_CHECKS.md, docs/SUPPLEMENT.md); every gate's printed output read; xref_sweep 0 suspect, 9 reviewed (the same nine as G16R); `submission_check` 21/22 (C1 pending, as ruled). PDF text changed, so it was committed, not restored.
+Round-5 gates (blocking): pages 11.67/12, abstract 210/5, ids 0, once 0, sig 0, keys missing 0
+Paper numbers changed: none measured. Counts and labels: `tn_typed` 771 → 735; `evidence_table` (two pointers)
+New keys: none
+Ledger: none
+Re-anchored checks: none
+CPU jobs over 1 min: none (each fast build about 1 min)
+Queue (Y5): done and discharged
+Body words / main-content pages: body unchanged / 11.67; PDF 56 pages
+Subagents: rwm-checker ×1
+Next: G17's steps 3–5 only (clean clones and restatement; both bundles with the builder scan and the independent deny-list sweep; the package documents, whose PDF size and SHA-256 are stale), then G18.
+Decisions for user: none

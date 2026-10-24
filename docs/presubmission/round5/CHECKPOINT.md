@@ -1,17 +1,13 @@
-# Round-5 checkpoint — after G16R (2026-10-24)
+# Round-5 checkpoint — after G15-fix (2026-10-24)
 
-**State.** Branch `presubmission5`. Last log entry: **G16R — BLOCKED**, ruled A (an independent re-review the user ordered after G17; `DECISIONS.md#G16R-ruling`). Nothing pushed. Main content 11.67 of 12 pages, abstract 210/5, every gate blocking and clean, two fast builds byte-identical. The PDF is now 56 pages.
+**State.** Branch `presubmission5`. Last log entry: **G15-fix — COMPLETE** (ruling A of `DECISIONS.md#G16R-blocked`). Nothing pushed. Main content 11.67 of 12 pages, abstract 210/5, every gate blocking and clean, the last two fast builds byte-identical. PDF 56 pages.
 
-**Done in G16R.** Review again from scratch, with fixes in sources (`REVIEW.md`, G16R section; `CONSISTENCY.md`, G16R rows). Log header times corrected (14 entries; a dated correction note in `SESSION_LOG.md`). Figure 3 dropped from OUTLINE, with its evidence now in Appendix M's two tables (`DECISIONS.md#G16R-figure3`).
+**Done in G15-fix.** G16R's 19 stale appendix pointers, plus 60 more found by checking all 203 section references and 49 appendix-letter pointers in Apps A–O against their targets; two pointers in `scripts/evidence_summary.py` (artifact regenerated, pointer strings only). No number, key, verdict or scope changed (`rwm-checker`: 0 mismatches). Details in `REVIEW.md`, G15-fix.
 
-**Ruling.** The user chose option A (`DECISIONS.md#G16R-blocked`, "RULED A"): a fix session, **G15-fix**, rewrites the stale appendix pointers. The brief is under that anchor. `go.zsh` does not know the name, so start it in a new terminal from the repository root with:
+**Next action.** G17's steps 3–5 only: (3) clean clones and the restatement; (4) both bundles with the builder scan and the independent deny-list sweep; (5) the package documents. Then G18. The paper, the PDF, bundled scripts (`paper_numbers.py`, `build_paper.py`, `md_to_tex.py`, `e4_sigma_gradients.py`, `evidence_summary.py`) and bundled results changed after G17's freeze, so `docs/SUBMISSION_PACKAGE.md`'s PDF size and SHA-256 (55 pages) and `supplementary_anon.zip` are stale. `go.zsh` does not know a "G17 steps 3–5" session; start it by name in a new terminal, as the G15-fix prompt was.
 
-```
-claude --model claude-opus-5-5 --effort high --name round5-G15-fix --settings '{"claudeMdExcludes":["'"$HOME"'/Downloads/CLAUDE.md"]}' "Read docs/presubmission/round5/PLAN.md §1, docs/presubmission/round5/DECISIONS.md#G16R-blocked (its G15-fix brief), the G16R section of docs/presubmission/round5/REVIEW.md and docs/presubmission/round5/CHECKPOINT.md, then carry out session G15-fix. The start gate is overridden by the user's ruling A."
-```
+**Blockers.** None.
 
-**After G15-fix.** G17's steps 3–5 only (clean clones and restatement, both bundles with the builder scan and the independent deny-list sweep, the package documents), then G18. The paper, the PDF, four bundled scripts and bundled results changed after G17's freeze, so `docs/SUBMISSION_PACKAGE.md`'s PDF size and SHA-256 (55 pages) and `supplementary_anon.zip` are stale.
+**Open, for a session allowed to change scope wording** (`OUT_OF_SCOPE.md`, G15-fix lines): six appendix sentences (H:646, L:1323, N:1414/1434/1454/1469) call all ten episodes the released checkpoint's training data, against §3.2; "33 runs for §4.1–§6" (J:907, K:1022) excludes the fold runs.
 
-**Files.** `PAPER.template.md`; `scripts/paper_numbers.py` (`ver_diff_plain`; the `h2h_bl_*_label` section), `scripts/build_paper.py:414`, `scripts/md_to_tex.py` (unnumbered headings), `scripts/e4_sigma_gradients.py:44-47` with `results/e4_sigma_gradients.json`; `round5/REVIEW.md`, `CONSISTENCY.md`, `DECISIONS.md`, `OUT_OF_SCOPE.md` (four new lines), `OUTLINE.md`, `SESSION_LOG.md`.
-
-**Open, unchanged.** The alignment query's date; the TMLR blog since 15 October (read it in a browser); the 356 unreviewed claims (ruled known); the figure pages, which no one has seen rendered.
+**Open, unchanged.** The alignment query's date; the TMLR blog since 15 October (read it in a browser); the 358 unreviewed claims (ruled known, U5); the figure pages, which no one has seen rendered.

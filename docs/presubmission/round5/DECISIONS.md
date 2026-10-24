@@ -182,3 +182,5 @@ Subagents: `rwm-checker` once at most, for item 3.
    subject `[G15-fix][n]`; log entry and checkpoint. The page and abstract gates must still pass; nothing leaves the
    record. Any change bigger than a pointer rewrite (a number, a reading, a moved result) is `BLOCKED`.
 Next after G15-fix: G17's steps 3–5 only (clean clones and restatement, bundles and sweep, package documents), then G18.
+**Done by G15-fix** (2026-10-24): `fc8e2e9` (item 1), `1b8c289` (item 2, 60 further pointers and two in the evidence-table
+generator), `c39e6b3` (close); `REVIEW.md`, G15-fix. Nothing BLOCKED. G17's steps 3–5, then G18, are next.
