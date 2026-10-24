@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 105,
-  "n_ok": 96,
+  "n_pointers": 101,
+  "n_ok": 92,
   "n_reviewed_correct": 9,
   "reviewed": [
     {
@@ -147,13 +147,6 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix E gives the two readings of its rules that differ)",
-      "ok": true,
-      "detail": "target Appendix E; nouns ['readings', 'rules', 'differ']; absent []",
-      "context": "Appendix E gives the two readings of its rules that differ)"
-    },
-    {
-      "class": "semantic",
       "pointer": "Appendix C explains why a binomial null is inadmissible here",
       "ok": true,
       "detail": "target Appendix C; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
@@ -161,24 +154,10 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a75.2 quotes 34",
+      "pointer": "\u00a75.5 quotes (supplement S7)",
       "ok": true,
-      "detail": "target 5.2; nouns []; absent []",
-      "context": "\u00a75.2 quotes 34"
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a75.5 quotes (Appendix B)",
-      "ok": true,
-      "detail": "target 5.5; nouns ['appendix']; absent []",
-      "context": "\u00a75.5 quotes (Appendix B)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix B gives for the 33 runs of \u00a74",
-      "ok": true,
-      "detail": "target Appendix B; nouns ['runs']; absent []",
-      "context": "Appendix B gives for the 33 runs of \u00a74"
+      "detail": "target 5.5; nouns ['supplement']; absent ['supplement']",
+      "context": "\u00a75.5 quotes (supplement S7)"
     },
     {
       "class": "semantic",
@@ -193,13 +172,6 @@
       "ok": true,
       "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
       "context": "Appendix E gives its lead time) and is\ndischarged in M-92"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix N gives every model at every horizon)",
-      "ok": true,
-      "detail": "target Appendix N; nouns ['model', 'horizon']; absent []",
-      "context": "Appendix N gives every model at every horizon)"
     },
     {
       "class": "semantic",

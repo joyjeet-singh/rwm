@@ -1,8 +1,8 @@
 {
-  "n_claims": 386,
+  "n_claims": 387,
   "by_verdict": {
-    "UNREVIEWED": 356,
-    "SUPPORTED": 30
+    "UNREVIEWED": 358,
+    "SUPPORTED": 29
   },
   "claims": [
     {
@@ -1452,9 +1452,9 @@
       "note": ""
     },
     {
-      "id": "c3286ecc4337",
+      "id": "e9c6f70c8259",
       "section": "Appendix E \u2014 The pre-registration record",
-      "claim": "Lead time** is the rule's commit timestamp subtracted from the commit that first held the data it tested, never by a stored hash: the first rules' commits are found by *subject*, because the history was rewritten once and {{f1_n_moved_word}} of the commits Figure 3 cites changed hash (Data and code), and the later rules' by the commit that introduced their ledger heading.",
+      "claim": "Lead time** is the rule's commit timestamp subtracted from the commit that first held the data it tested, never by a stored hash: the first rules' commits are found by *subject*, because the history was rewritten once and {{f1_n_moved_word}} of the commits Figure 3 cites changed hash (supplement S8), and the later rules' by the commit that introduced their ledger heading.",
       "keys": [
         "f1_n_moved_word"
       ],
@@ -1533,9 +1533,9 @@
       "note": ""
     },
     {
-      "id": "f8ba0f972d78",
+      "id": "a11b2cd97be3",
       "section": "Appendix E \u2014 The pre-registration record",
-      "claim": "Rule X8.** Rule X8 re-scores four of our rules with the released evaluation's timing, through each rule's own evaluator, and all four keep their verdicts: for the configuration and baseline rules (M-74, M-75 and M-76, three seeds at {{iters_main}} iterations) and the A/B comparison (M-23's statistic, three seeds at {{iters_long}}), all on the held-out pair's {{mn_nind}} trajectories, it returns **{{x8_reading}}**, though {{x8_n_changed}} of their alongside readings change (Appendix E); this concerns our models, not the original's printed numbers.",
+      "claim": "Rule X8.** Rule X8 re-scores four of our rules with the released evaluation's timing, through each rule's own evaluator, and all four keep their verdicts: for the configuration and baseline rules (M-74, M-75 and M-76, three seeds at {{iters_main}} iterations) and the A/B comparison (M-23's statistic, three seeds at {{iters_long}}), all on the held-out pair's {{mn_nind}} trajectories, it returns **{{x8_reading}}**, though {{x8_n_changed}} of their alongside readings change (below); this concerns our models, not the original's printed numbers.",
       "keys": [
         "iters_main",
         "iters_long",
@@ -1556,9 +1556,9 @@
       "note": ""
     },
     {
-      "id": "d3e937f90210",
+      "id": "abc514efccfc",
       "section": "Appendix E \u2014 The pre-registration record",
-      "claim": "It re-scores rules M-74, M-75 and M-76 (their models at {{iters_main}} iterations, three seeds each) and the A/B comparison at {{iters_long}} iterations (three seeds; M-23's statistic and the by-horizon table's) with the released evaluation's timing, which pairs the prediction of each state with the action before the one that produced it, through each rule's own evaluator and statistic.",
+      "claim": "It re-scores rules M-74, M-75 and M-76 (their models at {{iters_main}} iterations, three seeds each) and the A/B comparison at {{iters_long}} iterations (three seeds; M-23's statistic and that of the by-horizon comparison in Figure 4) with the released evaluation's timing, which pairs the prediction of each state with the action before the one that produced it, through each rule's own evaluator and statistic.",
       "keys": [
         "iters_main",
         "iters_long"
@@ -1935,9 +1935,9 @@
       "note": ""
     },
     {
-      "id": "b8eaeeed714f",
+      "id": "2872f2c8e402",
       "section": "Appendix G \u2014 Rollout training against teacher forcing in detail",
-      "claim": "The four per-trajectory gaps behind \u00a74.1's three-seed table (Arm B minus Arm A, three seeds pooled, at h = {{v2_diag_h}}) are **{{a1_gap_traj_h368}}**.",
+      "claim": "The four per-trajectory gaps behind \u00a74.1's three-seed comparison from longer training (Arm B minus Arm A, three seeds pooled, at h = {{v2_diag_h}}) are **{{a1_gap_traj_h368}}**.",
       "keys": [
         "v2_diag_h",
         "a1_gap_traj_h368"
@@ -1993,11 +1993,26 @@
       "note": ""
     },
     {
-      "id": "e8bc64c11a5c",
+      "id": "bd14efa52677",
       "section": "Appendix G \u2014 Rollout training against teacher forcing in detail",
-      "claim": "What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the advantage is small, and it resolves only with the longer training and all {{d1_seeds}} seeds. \u00a74.1's by-horizon table, at {{iters_long}} iterations with {{d1_seeds}} seeds pooled, gives an h = 8 gap of {{a1_gap_h8}} {{a1_gap_ci_h8}}, which excludes zero, a factor of {{a1_ratio_h8}}\u00d7.",
+      "claim": "What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the advantage is small, and it resolves only with the longer training and all {{d1_seeds}} seeds.",
       "keys": [
-        "d1_seeds",
+        "d1_seeds"
+      ],
+      "artifacts": [
+        "results/task_d1_threeseed.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "4371b18861db",
+      "section": "Appendix G \u2014 Rollout training against teacher forcing in detail",
+      "claim": "The same comparison by horizon (Figure 4), at {{iters_long}} iterations with {{d1_seeds}} seeds pooled, gives an h = 8 gap of {{a1_gap_h8}} {{a1_gap_ci_h8}}, which excludes zero, a factor of {{a1_ratio_h8}}\u00d7.",
+      "keys": [
         "iters_long",
         "d1_seeds",
         "a1_gap_h8",
@@ -2009,7 +2024,7 @@
         "results/step5_arm*_10k.json",
         "results/task_d1_threeseed.json"
       ],
-      "n_keys": 6,
+      "n_keys": 5,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -2072,9 +2087,9 @@
       "note": ""
     },
     {
-      "id": "3d1dfed02832",
+      "id": "08d1ecc807fc",
       "section": "Appendix G \u2014 Rollout training against teacher forcing in detail",
-      "claim": "The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (Table I).",
+      "claim": "The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (its Table 1, from v2 on).",
       "keys": [
         "c2_ref"
       ],
@@ -2083,9 +2098,9 @@
       ],
       "n_keys": 1,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
-      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "304fc060a78b",
@@ -2284,9 +2299,9 @@
       "note": ""
     },
     {
-      "id": "71b4af9dbf27",
+      "id": "6dbb8ade5465",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "Our RSSM is not an informative comparison.** Teacher-forced, it is the most accurate of this section's models one step ahead, {{h2h_bl_rssm_tf_l1_h1}} against RWM's {{h2h_armA_l1_h1}} and the floor's {{x1_floor_h1}}, though not resolvably, and it has collapsed open-loop by h = 32, where its {{x1_tf_mode_h32}} is above the floor's {{x1_floor_h32}}.",
+      "claim": "Our RSSM is not an informative comparison.** Teacher-forced, it is the most accurate of \u00a74.3's models one step ahead, {{h2h_bl_rssm_tf_l1_h1}} against RWM's {{h2h_armA_l1_h1}} and the floor's {{x1_floor_h1}}, though not resolvably, and it has collapsed open-loop by h = 32, where its {{x1_tf_mode_h32}} is above the floor's {{x1_floor_h32}}.",
       "keys": [
         "h2h_bl_rssm_tf_l1_h1",
         "h2h_armA_l1_h1",
@@ -2364,9 +2379,9 @@
       "note": ""
     },
     {
-      "id": "1359c3c21b93",
+      "id": "1e423d7016a5",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "From \u00a74, on the original's heatmap: For the teacher-forced {{mn_n1_label}} it prints {{orig_tf_e_n1}} against {{orig_tf_e_centre}} at the centre, {{orig_tf_ratio}}\u00d7 worse, on evaluation data and at a horizon it does not state; our sweep's {{mn_n1_label}} is {{mn_tf_ratio}}\u00d7 worse on relative-L1 at h = {{v2_diag_h}} and {{iters_main}} iterations.",
+      "claim": "On the original's heatmap, for the teacher-forced {{mn_n1_label}} it prints {{orig_tf_e_n1}} against {{orig_tf_e_centre}} at the centre, {{orig_tf_ratio}}\u00d7 worse, on evaluation data and at a horizon it does not state; our sweep's {{mn_n1_label}} is {{mn_tf_ratio}}\u00d7 worse on relative-L1 at h = {{v2_diag_h}} and {{iters_main}} iterations.",
       "keys": [
         "mn_n1_label",
         "orig_tf_e_n1",
@@ -2408,9 +2423,9 @@
       "note": ""
     },
     {
-      "id": "84e494a3eaed",
+      "id": "cbe251c4ef6e",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "From \u00a74.1: Arm B predicts each of the window's {{win_fore}} forecast targets from true inputs, where the original's teacher forcing is N = 1; the sweep's {{mn_n1_label}}, trained that way, is {{mn_tf_ratio}}\u00d7 worse than the centre at h = {{v2_diag_h}} at {{iters_main}} iterations (\u00a74.2), so the direction holds under both definitions.",
+      "claim": "Arm B predicts each of the window's {{win_fore}} forecast targets from true inputs, where the original's teacher forcing is N = 1; the sweep's {{mn_n1_label}}, trained that way, is {{mn_tf_ratio}}\u00d7 worse than the centre at h = {{v2_diag_h}} at {{iters_main}} iterations (the sweep behind \u00a74.2), so the direction holds under both definitions.",
       "keys": [
         "win_fore",
         "mn_n1_label",
@@ -2562,9 +2577,9 @@
       "note": ""
     },
     {
-      "id": "52964a8aca28",
+      "id": "853a2cda7e66",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "This table is at {{iters_main}} iterations and \u00a74.1's by-horizon table at {{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer.",
+      "claim": "This table is at {{iters_main}} iterations and \u00a74.1's longer-training comparison (Figure 4) at {{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer.",
       "keys": [
         "iters_main",
         "iters_long",
@@ -2620,9 +2635,9 @@
       "note": ""
     },
     {
-      "id": "d6ae253d5bec",
+      "id": "d30e7ea977a0",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "Stored per-trajectory values elsewhere.* \u00a75.3's and supplementary S2's paired contrasts at \u00a74.1's n = {{m23_nind}} store their four per-trajectory values in `results/r2_independent_ensemble.json` and `results/m49_capacity_matched.json`; \u00a75.2's two held-out tables, at n_independent = {{b2_nind}}, give intervals only, coarse for the same reason (the n = {{m23_nind}} caveat of \u00a73).",
+      "claim": "Stored per-trajectory values elsewhere.* \u00a75.3's and supplementary S2's paired contrasts at the held-out pair's n = {{m23_nind}} store their four per-trajectory values in `results/r2_independent_ensemble.json` and `results/m49_capacity_matched.json`; Appendix I's two held-out tables (the four models and the ensemble-5 arms), at n_independent = {{b2_nind}}, give intervals only, coarse for the same reason (the n = {{m23_nind}} caveat of \u00a73).",
       "keys": [
         "m23_nind",
         "b2_nind",
@@ -2805,9 +2820,9 @@
       "note": ""
     },
     {
-      "id": "e5e0071ac45e",
+      "id": "9e9f36dbf73c",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "The nRMSE readings quoted alongside the rules here and in \u00a74.3 are pooled, recomputed afterwards (post hoc, `results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (Appendix E gives the {{n2_n_changed_word}} readings of its rules that differ).",
+      "claim": "The nRMSE readings quoted alongside the rules here and in \u00a74.3 are pooled, recomputed afterwards (post hoc, `results/pooled_nrmse_alongside.json`), and, for \u00a74.2's rule (M-74), return the same verdicts as the averaged ones (the passages behind \u00a74.3, above, give the {{n2_n_changed_word}} readings of the baseline rules that differ).",
       "keys": [
         "n2_n_changed_word"
       ],
@@ -2821,9 +2836,9 @@
       "note": ""
     },
     {
-      "id": "d669adf71f83",
+      "id": "eb5d5e6166ca",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "All {{tail_n}} runs at {{iters_main}} iterations, the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes from {{tail_slope_lo}} to {{tail_slope_hi}} per thousand iterations (`results/training_tail_slopes.json`, post hoc), so the ranking is at this budget, not at convergence, and it changes with training length (Appendix H).",
+      "claim": "All {{tail_n}} runs at {{iters_main}} iterations, the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes from {{tail_slope_lo}} to {{tail_slope_hi}} per thousand iterations (`results/training_tail_slopes.json`, post hoc), so the ranking is at this budget, not at convergence, and it changes with training length (below).",
       "keys": [
         "tail_n",
         "iters_main",
@@ -2841,9 +2856,9 @@
       "note": ""
     },
     {
-      "id": "3d485449ca11",
+      "id": "d71b0afe6af1",
       "section": "Appendix H \u2014 Configuration and architecture claims in detail",
-      "claim": "Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per iteration, {{n3_cost_M32_N16}}\u00d7 the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}\u00d7 for {{mn_best_config}}; the shorter histories that win cost less, {{n3_cost_M8_N8}}\u00d7 for {{n3_sh_label_M8_N8}} and {{n3_cost_M2_N8}}\u00d7 for {{n3_sh_label_M2_N8}} (`results/mn_compute_matched.json`; the table below gives every reading, signed as in \u00a74.2's table).",
+      "claim": "Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per iteration, {{n3_cost_M32_N16}}\u00d7 the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}\u00d7 for {{mn_best_config}}; the shorter histories that win cost less, {{n3_cost_M8_N8}}\u00d7 for {{n3_sh_label_M8_N8}} and {{n3_cost_M2_N8}}\u00d7 for {{n3_sh_label_M2_N8}} (`results/mn_compute_matched.json`; the table below gives every reading).",
       "keys": [
         "n3_cost_M32_N16",
         "n3_lf_label",
@@ -3014,9 +3029,9 @@
       "note": ""
     },
     {
-      "id": "2c6f4a020192",
+      "id": "6e3e511f173d",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "The held-out-pair version (\u00a75.2).** \u00a75.2 states that restricting the checkpoint to the held-out pair would buy no independence and cost four fifths of the sample; that version, at n_independent = {{b2_nind}} 400-step trajectories, is in the supplementary material (`results/task_b2_epistemic.json`).",
+      "claim": "That version, at n_independent = {{b2_nind}} 400-step trajectories, is in the supplementary material (`results/task_b2_epistemic.json`).",
       "keys": [
         "b2_nind"
       ],
@@ -3030,9 +3045,9 @@
       "note": ""
     },
     {
-      "id": "568179826489",
+      "id": "b3525f36f74c",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "Its epistemic column agrees in direction with this one at all {{agree_epi}} of {{agree_nh}} horizons; its aleatoric column agrees at {{agree_alea}} of {{agree_nh}} and differs at {{agree_alea_dis}}, and the aleatoric \u03c3 is in any case {{d1n_alea_ratio_h1}}\u00d7 (h = 1) to {{d1n_alea_ratio_h368}}\u00d7 (h = {{v2_diag_h}}) too small for its ordering to be the interesting quantity.",
+      "claim": "Its epistemic column agrees in direction with the all-ten-episodes table below at all {{agree_epi}} of {{agree_nh}} horizons; its aleatoric column agrees at {{agree_alea}} of {{agree_nh}} and differs at {{agree_alea_dis}}, and the aleatoric \u03c3 is in any case {{d1n_alea_ratio_h1}}\u00d7 (h = 1) to {{d1n_alea_ratio_h368}}\u00d7 (h = {{v2_diag_h}}) too small for its ordering to be the interesting quantity.",
       "keys": [
         "agree_epi",
         "agree_nh",
@@ -3140,9 +3155,9 @@
       "note": ""
     },
     {
-      "id": "2c1085dd28ad",
+      "id": "54b7c3206666",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "\u00a75.2's released-checkpoint table at every horizon.** Over all {{d1n_eps}} episodes, n_independent = {{d1n_nind}} non-overlapping 400-step trajectories, the released checkpoint as released:",
+      "claim": "The released checkpoint at every horizon.** Over all {{d1n_eps}} episodes, n_independent = {{d1n_nind}} non-overlapping 400-step trajectories, the released checkpoint as released:",
       "keys": [
         "d1n_eps",
         "d1n_nind"
@@ -3175,9 +3190,9 @@
       "note": ""
     },
     {
-      "id": "030fe7e5e05c",
+      "id": "780ddf7dbda7",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "At n_independent = {{d1n_nind}} it is {{d1n_epi_npos_h1}} of {{d1n_epi_ndim_h1}} at h=1, with mean r = {{d1n_epi_r_h1}}, the *strongest* mean correlation of any horizon, and the in-sample permutation test agrees (Appendix C).",
+      "claim": "At n_independent = {{d1n_nind}} it is {{d1n_epi_npos_h1}} of {{d1n_epi_ndim_h1}} at h=1, with mean r = {{d1n_epi_r_h1}}, the *strongest* mean correlation of any horizon, and the in-sample permutation test agrees (below).",
       "keys": [
         "d1n_nind",
         "d1n_epi_npos_h1",
@@ -3194,9 +3209,9 @@
       "note": ""
     },
     {
-      "id": "38255dc59717",
+      "id": "2ec8003e4033",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "The ensemble-5 arms (\u00a75.2).** **The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (\u00a75.6, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}} 400-step trajectories, {{iters_main}} training iterations) give, averaged over seeds:",
+      "claim": "The ensemble-5 arms (\u00a75.2).** **The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 ({{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}} 400-step trajectories, {{iters_main}} training iterations) give, averaged over seeds:",
       "keys": [
         "e5_seeds",
         "e5_nind",
@@ -3213,9 +3228,9 @@
       "note": ""
     },
     {
-      "id": "8dc48853be99",
+      "id": "e1e048263fdd",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "Our arms are **better calibrated than the released checkpoint and fail the same way**: {{e5_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} against its {{b2_epi_ratio_h100}}\u00d7 on the same held-out pair ({{d1n_epi_ratio_h100}}\u00d7 over all ten episodes), with {{e5_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1}}%. \u00a75.3 establishes that the two are the same architecture in the respect that matters here, so this is a comparison of like with like.",
+      "claim": "Our arms are **better calibrated than the released checkpoint and fail the same way**: {{e5_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} against its {{b2_epi_ratio_h100}}\u00d7 on the same held-out pair ({{d1n_epi_ratio_h100}}\u00d7 over all ten episodes), with {{e5_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1}}%.",
       "keys": [
         "e5_ratio_h100",
         "v2_deploy_h",
@@ -3238,9 +3253,9 @@
       "note": ""
     },
     {
-      "id": "57a5da416807",
+      "id": "ea9f09263282",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "Two pre-registered checks on how \u00a75.2's numbers are read.** The first (rule M-62, Appendix E) asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share.",
+      "claim": "Two pre-registered checks on how the calibration and ranking numbers are read.** The first (rule M-62, Appendix E) asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
@@ -3323,9 +3338,9 @@
       "note": ""
     },
     {
-      "id": "adc050be59cd",
+      "id": "16f5cb363a43",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "The last column of \u00a75.2's released-checkpoint table gives permutation P-values over whole trajectories, not binomial ones, on the same {{perm_all_nind}} trajectories as the counts beside them; Appendix C explains why a binomial null is inadmissible here. h = {{v2_deploy_h}} is tested too, because it carries the abstract's headline figure.",
+      "claim": "The last column of the released-checkpoint table above gives permutation P-values over whole trajectories, not binomial ones, on the same {{perm_all_nind}} trajectories as the counts beside them; Appendix C explains why a binomial null is inadmissible here. h = {{v2_deploy_h}} is tested too, because it carries the abstract's headline figure.",
       "keys": [
         "perm_all_nind",
         "v2_deploy_h"
@@ -3393,9 +3408,9 @@
       "note": ""
     },
     {
-      "id": "c59d1399162a",
+      "id": "5b0a970f6ead",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "Our ensemble-5 arms (\u00a75.6) have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is far more input-dependent than any aleatoric head here, at {{e5_cov_lo}}\u2013{{e5_cov_hi}} against the released checkpoint's {{cal_rel_cov}}.",
+      "claim": "Our ensemble-5 arms (above) have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is far more input-dependent than any aleatoric head here, at {{e5_cov_lo}}\u2013{{e5_cov_hi}} against the released checkpoint's {{cal_rel_cov}}.",
       "keys": [
         "e5_cov_lo",
         "e5_cov_hi",
@@ -3519,16 +3534,13 @@
       "note": ""
     },
     {
-      "id": "f984352448df",
+      "id": "1507deb99038",
       "section": "Appendix I \u2014 Calibration in detail",
-      "claim": "Figures in this paragraph are the held-out arena (n_independent = {{b2_nind}}) unless labelled otherwise**, so the epistemic term and the four aleatoric heads are compared on identical trajectories; \u00a75.2 quotes {{d1n_epi_ratio_h368}}\u00d7 for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}, and the abstract and \u00a78 use {{d1n_epi_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} on those {{d1n_nind}} trajectories.",
+      "claim": "Figures in this paragraph are the held-out arena (n_independent = {{b2_nind}}) unless labelled otherwise**, so the epistemic term and the four aleatoric heads are compared on identical trajectories; the released-checkpoint table above gives {{d1n_epi_ratio_h368}}\u00d7 for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}.",
       "keys": [
         "b2_nind",
         "d1n_epi_ratio_h368",
         "v2_diag_h",
-        "d1n_nind",
-        "d1n_epi_ratio_h100",
-        "v2_deploy_h",
         "d1n_nind"
       ],
       "artifacts": [
@@ -3536,7 +3548,7 @@
         "results/task_d_nind20.json",
         "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 7,
+      "n_keys": 4,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -3935,9 +3947,9 @@
       "note": ""
     },
     {
-      "id": "4e2520eb8b21",
+      "id": "d49af235ff22",
       "section": "Appendix J \u2014 Why the per-member \u03c3 collapses",
-      "claim": "\u00a75.5's permutation detail on the corrected objective.** Under the trajectory permutation test of \u00a75.6, at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of sample, {{perm_ins_faithA_p_h368}} and {{perm_ins_nll_p_h368}} in sample.",
+      "claim": "The corrected objective under the permutation test.** Under Appendix I's trajectory permutation test, at h = {{v2_diag_h}}, the faithful and corrected arms' sign counts (Appendix I's table of \u03c3 against error) give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of sample, {{perm_ins_faithA_p_h368}} and {{perm_ins_nll_p_h368}} in sample.",
       "keys": [
         "v2_diag_h",
         "perm_oos_faithA_p_h368",
@@ -4245,9 +4257,9 @@
       "note": ""
     },
     {
-      "id": "5bb699d09801",
+      "id": "65f08761eecf",
       "section": "Appendix J \u2014 Why the per-member \u03c3 collapses",
-      "claim": "This project trained {{run_total}} runs for \u00a74.1\u2013\u00a76, besides the {{rt_pre_runs}} of \u00a74.2 and \u00a74.3 (Appendix B), of which {{n_runs}} are at the released `rnn_hidden_size` of {{released_width}} and form the collapse family; the remaining {{n_runs_offwidth}} are the capacity-matched arm of rule M-49 (Appendix E) at width {{m49_width}}, a different architecture, excluded from every rate \u00a75.5 quotes (Appendix B).",
+      "claim": "This project trained {{run_total}} runs for \u00a74.1\u2013\u00a76, besides the {{rt_pre_runs}} of \u00a74.2 and \u00a74.3 (supplement S7), of which {{n_runs}} are at the released `rnn_hidden_size` of {{released_width}} and form the collapse family; the remaining {{n_runs_offwidth}} are the capacity-matched arm of rule M-49 (Appendix E) at width {{m49_width}}, a different architecture, excluded from every rate \u00a75.5 quotes (supplement S7).",
       "keys": [
         "run_total",
         "rt_pre_runs",
@@ -4475,9 +4487,9 @@
       "note": ""
     },
     {
-      "id": "802cab593d02",
+      "id": "6d930410aa19",
       "section": "Appendix K \u2014 The shared trunk and independent ensembles",
-      "claim": "So \u00a75.2's \"our arms fail the same way at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}\" compares two instances of one architecture, not two architectures.",
+      "claim": "So Appendix I's finding that our arms \"fail the same way\", {{e5_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}}, compares two instances of one architecture, not two architectures.",
       "keys": [
         "e5_ratio_h100",
         "v2_deploy_h"
@@ -4527,9 +4539,9 @@
       "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part"
     },
     {
-      "id": "8779667a1001",
+      "id": "c5aa2e7eac4c",
       "section": "Appendix K \u2014 The shared trunk and independent ensembles",
-      "claim": "The contrast, and why it is affordable.** Training {{r2_n_indep}} genuinely independent models from scratch costs about {{r2_scratch_h}} h of wall clock on two cores at these runs' iteration count, against the {{rt_hours}} h Appendix B gives for the {{run_total}} runs of \u00a74.1\u2013\u00a76 it times (\u00a74.2's sweep and \u00a74.3's baselines are counted apart).",
+      "claim": "The contrast, and why it is affordable.** Training {{r2_n_indep}} genuinely independent models from scratch costs about {{r2_scratch_h}} h of wall clock on two cores at these runs' iteration count, against the {{rt_hours}} h supplement S7 gives for the {{run_total}} runs of \u00a74.1\u2013\u00a76 it times (\u00a74.2's sweep and \u00a74.3's baselines are counted apart).",
       "keys": [
         "r2_n_indep",
         "r2_scratch_h",
@@ -4803,9 +4815,9 @@
       "note": ""
     },
     {
-      "id": "39181affd0f6",
+      "id": "b38a0fcb597f",
       "section": "Appendix K \u2014 The shared trunk and independent ensembles",
-      "claim": "Same trajectories (the held-out pair, n_independent = {{m68_nind}} 400-step trajectories), same harness, the same bootstrap unit, whole trajectories, as Appendix K's table, every model at {{iters_main}} training iterations.",
+      "claim": "Same trajectories (the held-out pair, n_independent = {{m68_nind}} 400-step trajectories), same harness, the same bootstrap unit, whole trajectories, as M-44's table above, every model at {{iters_main}} training iterations.",
       "keys": [
         "m68_nind",
         "iters_main"
@@ -4853,9 +4865,9 @@
       "note": ""
     },
     {
-      "id": "a0677d889388",
+      "id": "9fa6f737d802",
       "section": "Appendix K \u2014 The shared trunk and independent ensembles",
-      "claim": "Three of the five, seeds 0, 1 and 2, already existed under that objective; two more were trained, and the {{m68_n_indep}} are scored together as an ensemble at evaluation time under \u00a75.3's rollout protocol, on the same held-out arena of non-overlapping 400-step trajectories at n_independent = {{m68_nind}}, over the same six horizons.",
+      "claim": "Three of the five, seeds 0, 1 and 2, already existed under that objective; two more were trained, and the {{m68_n_indep}} are scored together as an ensemble at evaluation time under M-44's rollout protocol, on the same held-out arena of non-overlapping 400-step trajectories at n_independent = {{m68_nind}}, over the same six horizons.",
       "keys": [
         "m68_n_indep",
         "m68_nind"
@@ -4870,9 +4882,9 @@
       "note": ""
     },
     {
-      "id": "5a47f5c92325",
+      "id": "6cf8718fb0b6",
       "section": "Appendix K \u2014 The shared trunk and independent ensembles",
-      "claim": "The figures below are the **epistemic** one, {{m68_sigma_used}}: the quantity the rule names and \u00a75.3's table reports, so the two tables are comparable line for line.",
+      "claim": "The figures below are the **epistemic** one, {{m68_sigma_used}}: the quantity the rule names and M-44's table above reports, so the two tables are comparable line for line.",
       "keys": [
         "m68_sigma_used"
       ],
@@ -4964,9 +4976,9 @@
       "note": ""
     },
     {
-      "id": "c292c8f499c6",
+      "id": "f91cd88a42e1",
       "section": "Appendix K \u2014 The shared trunk and independent ensembles",
-      "claim": "On the held-out pair, n_independent = {{m68_nind}} 400-step trajectories, every model at {{iters_main}} iterations: the same \u03c3-versus-accuracy split Appendix K uses for rule M-44, so the two arms' improvements can be compared part by part.",
+      "claim": "On the held-out pair, n_independent = {{m68_nind}} 400-step trajectories, every model at {{iters_main}} iterations: the same \u03c3-versus-accuracy split this appendix uses for rule M-44, so the two arms' improvements can be compared part by part.",
       "keys": [
         "m68_nind",
         "iters_main"
@@ -5127,9 +5139,9 @@
       "note": ""
     },
     {
-      "id": "610f6c68a066",
+      "id": "62e161abb619",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "\u00a75.6's shorter-unit note at h = 128.** At the shorter unit of rule M-64 (Appendix E), {{m64_h128_n}} non-overlapping units over the same ten episodes give {{m64_h128_ci}} for the same paired difference, so that horizon carries more weight than it did.",
+      "claim": "The shorter unit at h = 128.** At the shorter unit of rule M-64 (Appendix E), {{m64_h128_n}} non-overlapping units over the same ten episodes give {{m64_h128_ci}} for the same paired difference, so that horizon carries more weight than it did.",
       "keys": [
         "m64_h128_n",
         "m64_h128_ci"
@@ -5144,9 +5156,9 @@
       "note": ""
     },
     {
-      "id": "4d96eafaf3a3",
+      "id": "030fb675537f",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "r_dd per horizon (\u00a75.6).** **Per horizon, on the same {{a2_nind}} trajectories (the released checkpoint over all ten episodes) and the same kind of cluster bootstrap:** it is a separate run, so its h = {{v2_diag_h}} interval differs from M-45's in \u00a75.6, {{a2_rdd_ci}}, in the third decimal, as this appendix's pooled interval does from \u00a75.2's {{d4_ci}}.",
+      "claim": "r_dd per horizon.** **Per horizon, on the same {{a2_nind}} trajectories (the released checkpoint over all ten episodes) and the same kind of cluster bootstrap:** it is a separate run, so its h = {{v2_diag_h}} interval differs from M-45's in the table below, {{a2_rdd_ci}}, in the third decimal, as this appendix's pooled interval does from Appendix D's {{d4_ci}}.",
       "keys": [
         "a2_nind",
         "v2_diag_h",
@@ -5177,9 +5189,9 @@
       "note": ""
     },
     {
-      "id": "06b681f512f1",
+      "id": "7fdd14300e65",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "The within-rollout effect is materially smaller than the pooled figure and not established at short horizon; at h = 1 the correlation ranks whole rollouts, on {{a2_h1_npoints}} trajectory-level points (Appendix L).",
+      "claim": "The within-rollout effect is materially smaller than the pooled figure and not established at short horizon; at h = 1 the correlation ranks whole rollouts, on {{a2_h1_npoints}} trajectory-level points (below).",
       "keys": [
         "a2_h1_npoints"
       ],
@@ -5215,9 +5227,9 @@
       "note": ""
     },
     {
-      "id": "d2b233625645",
+      "id": "a7e6dd3df745",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "At n_independent = {{e5_nind}} 400-step trajectories it was under-powered, which we measured after the fact and should have checked before committing it (Appendix L).",
+      "claim": "At n_independent = {{e5_nind}} 400-step trajectories it was under-powered, which we measured after the fact and should have checked before committing it (below).",
       "keys": [
         "e5_nind"
       ],
@@ -5231,9 +5243,9 @@
       "note": ""
     },
     {
-      "id": "82bc4209c3a8",
+      "id": "6d59f9441b01",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "The expectation (\u00a75.6).** **We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result, making the trust metric close to vacuous, since a counter is free.",
+      "claim": "The expectation.** **We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result, making the trust metric close to vacuous, since a counter is free.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
@@ -5313,9 +5325,9 @@
       "note": ""
     },
     {
-      "id": "3e247b7e48b5",
+      "id": "de9d04edfca0",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "[^stepcount]: Adjacent forecast steps on the same {{a2_nind}} trajectories are heavily dependent \u2014 structurally the same problem that \u00a75.6's permutation null corrects for across the 45 coupled state dimensions (Appendix C).",
+      "claim": "[^stepcount]: Adjacent forecast steps on the same {{a2_nind}} trajectories are heavily dependent \u2014 structurally the same problem that the trajectory permutation null corrects for across the 45 coupled state dimensions (Appendices C and I).",
       "keys": [
         "a2_nind"
       ],
@@ -5400,9 +5412,9 @@
       "note": ""
     },
     {
-      "id": "77f026fa9c43",
+      "id": "6ec37dc30c2d",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "The verdict.** The between-trajectory correlation is {{a2_r_between}} and the two components contribute {{a2_share_between}}% and {{a2_share_within}}% of the pooled covariance, so a large part of what \u00a75.6 reports is a between-rollout effect.",
+      "claim": "The verdict.** The between-trajectory correlation is {{a2_r_between}} and the two components contribute {{a2_share_between}}% and {{a2_share_within}}% of the pooled covariance, so a large part of the pooled correlation is a between-rollout effect.",
       "keys": [
         "a2_r_between",
         "a2_share_between",
@@ -5563,9 +5575,9 @@
       "note": ""
     },
     {
-      "id": "2c22202ae50d",
+      "id": "8c847d964b68",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "It is nevertheless a statement about **ranking whole rollouts at one step ahead**, on {{a2_h1_npoints}} points, and \u00a77 states it that way.",
+      "claim": "It is nevertheless a statement about **ranking whole rollouts at one step ahead**, on {{a2_h1_npoints}} points, and \u00a75.6 states it that way.",
       "keys": [
         "a2_h1_npoints"
       ],
@@ -5632,9 +5644,9 @@
       "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
     },
     {
-      "id": "512ec0e8266a",
+      "id": "cfece636a90e",
       "section": "Appendix L \u2014 Ranking against free signals",
-      "claim": "We report the verdict the rule returns and do not rewrite the rule, nor its denominator: it was committed over {{e5_n_horizons}} horizons, and adding h = {{v2_deploy_h}} after the fact would change what \"a majority\" means in a discharged rule. \u00a75.6's released-checkpoint table follows the six-horizon grid, because no pre-registration is stated over it, so the two counts are deliberately different.",
+      "claim": "We report the verdict the rule returns and do not rewrite the rule, nor its denominator: it was committed over {{e5_n_horizons}} horizons, and adding h = {{v2_deploy_h}} after the fact would change what \"a majority\" means in a discharged rule.",
       "keys": [
         "e5_n_horizons",
         "v2_deploy_h"
@@ -6027,9 +6039,9 @@
       "note": ""
     },
     {
-      "id": "7366870bb9cd",
+      "id": "ef9e76a49346",
       "section": "Appendix M \u2014 Per-horizon recalibration",
-      "claim": "Rule M-69 (\u00a75.7).** **The fourth column: the table is a property of the model, not of the horizon.** Under rule M-69 (Appendix E), multipliers fitted on Arm A and scored on the released checkpoint, and the reverse, on the same {{d3x_nind}} held-out trajectories, return **{{d3x_verdict}}** on the paired change in coverage the arena can resolve: {{d3x_n_out}} of {{d3x_ncells}} governing cells, which are not independent tests, have an interval wholly outside the \u00b1{{d3x_band}}-point band, and Arm A's multipliers are {{d3x_ratio_lo}}\u00d7 to {{d3x_ratio_hi}}\u00d7 the released checkpoint's at the same horizon (Appendix M).",
+      "claim": "Rule M-69.** **The fourth column: the table is a property of the model, not of the horizon.** Under rule M-69 (Appendix E), multipliers fitted on Arm A and scored on the released checkpoint, and the reverse, on the same {{d3x_nind}} held-out trajectories, return **{{d3x_verdict}}** on the paired change in coverage the arena can resolve: {{d3x_n_out}} of {{d3x_ncells}} governing cells, which are not independent tests, have an interval wholly outside the \u00b1{{d3x_band}}-point band, and Arm A's multipliers are {{d3x_ratio_lo}}\u00d7 to {{d3x_ratio_hi}}\u00d7 the released checkpoint's at the same horizon (below).",
       "keys": [
         "d3x_nind",
         "d3x_verdict",
@@ -6162,9 +6174,9 @@
       "note": ""
     },
     {
-      "id": "a20857580c3a",
+      "id": "47237e7344b7",
       "section": "Appendix M \u2014 Per-horizon recalibration",
-      "claim": "It is reported because dropping it would hide that this arena cannot resolve it; it is not the verdict and cannot move it. \u00a75.7's caution applies here unchanged and harder: the {{d3x_ncells}} governing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} Arm A seeds share their training data and differ only in initialisation and ordering, and no P-value attaches to any count here.",
+      "claim": "The caution above applies here unchanged and harder: the {{d3x_ncells}} governing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} Arm A seeds share their training data and differ only in initialisation and ordering, and no P-value attaches to any count here.",
       "keys": [
         "d3x_ncells",
         "d3x_ncells",
@@ -6319,9 +6331,9 @@
       "note": ""
     },
     {
-      "id": "edb77a54ba2f",
+      "id": "492c25f6b517",
       "section": "Appendix N \u2014 Defects in the released pipeline",
-      "claim": "The held-out pair's per-trajectory values (\u00a76).** \u00a76's sentence on the held-out pair at h = {{v2_diag_h}} ended \"\u2026, with per-trajectory values {{ad_rel_traj}} and {{ad_nrmse_traj}}\", relative-L1 and nRMSE.",
+      "claim": "The held-out pair's per-trajectory values (\u00a76).** At h = {{v2_diag_h}} on the held-out pair the stale action changes the released checkpoint's error, trajectory by trajectory, by {{ad_rel_traj}} on relative-L1 and {{ad_nrmse_traj}} on nRMSE (`results/alignment_defect_ci.json`).",
       "keys": [
         "v2_diag_h",
         "ad_rel_traj",
@@ -6338,9 +6350,9 @@
       "note": ""
     },
     {
-      "id": "ba5e8a1434fd",
+      "id": "19b303ebeb90",
       "section": "Appendix N \u2014 Defects in the released pipeline",
-      "claim": "On their own training episodes' {{x2_n_ins}} trajectories it raises our {{iters_long}}-iteration Arm A's relative-L1 error by {{n5_ins_h1}}% {{n5_ins_ci_h1}} at h = 1 and {{n5_ins_h100}}% {{n5_ins_ci_h100}} at h = {{v2_deploy_h}}; on the held-out pair's {{ad_nind}} it changes it by {{n5_ho_h1}}% {{n5_ho_ci_h1}} at h = 1, which those trajectories cannot resolve, and by {{n5_ho_h100}}% {{n5_ho_ci_h100}} at h = {{v2_deploy_h}} (three-seed means, computed post hoc, `results/n5_stale_armA_ci.json`; Appendix N gives every model at every horizon).",
+      "claim": "On their own training episodes' {{x2_n_ins}} trajectories it raises our {{iters_long}}-iteration Arm A's relative-L1 error by {{n5_ins_h1}}% {{n5_ins_ci_h1}} at h = 1 and {{n5_ins_h100}}% {{n5_ins_ci_h100}} at h = {{v2_deploy_h}}; on the held-out pair's {{ad_nind}} it changes it by {{n5_ho_h1}}% {{n5_ho_ci_h1}} at h = 1, which those trajectories cannot resolve, and by {{n5_ho_h100}}% {{n5_ho_ci_h100}} at h = {{v2_deploy_h}} (three-seed means, computed post hoc, `results/n5_stale_armA_ci.json`; the tables below give every model at every horizon).",
       "keys": [
         "x2_n_ins",
         "iters_long",
@@ -6386,9 +6398,9 @@
       "note": ""
     },
     {
-      "id": "c0c5fa811ea1",
+      "id": "ec66664fbc7e",
       "section": "Appendix N \u2014 Defects in the released pipeline",
-      "claim": "The forecast shift (\u00a76).** A percentage change depends on how accurate the model already is as much as on how much the action matters: measured as the shift in the forecast itself, the stale action moves our model's forecast at h = 8 by {{n5_delta_armA_h8}} and the released checkpoint's by {{n5_delta_rel_h8}} on their own training data (Appendix N), so at h = 8 the two respond about equally, and our model's larger percentages there reflect its smaller error, {{n5_err_armA_h8}} against {{n5_err_rel_h8}} relative-L1 (`results/n5_stale_armA_ci.json`); at h = {{v2_deploy_h}} the released checkpoint's forecast moves more, {{n5_delta_rel_h100}} against {{n5_delta_armA_h100}}.",
+      "claim": "The forecast shift (\u00a76).** A percentage change depends on how accurate the model already is as much as on how much the action matters: measured as the shift in the forecast itself, the stale action moves our model's forecast at h = 8 by {{n5_delta_armA_h8}} and the released checkpoint's by {{n5_delta_rel_h8}} on their own training data (below), so at h = 8 the two respond about equally, and our model's larger percentages there reflect its smaller error, {{n5_err_armA_h8}} against {{n5_err_rel_h8}} relative-L1 (`results/n5_stale_armA_ci.json`); at h = {{v2_deploy_h}} the released checkpoint's forecast moves more, {{n5_delta_rel_h100}} against {{n5_delta_armA_h100}}.",
       "keys": [
         "n5_delta_armA_h8",
         "n5_delta_rel_h8",
