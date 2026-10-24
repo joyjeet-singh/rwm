@@ -146,3 +146,18 @@ it adds evidence a reviewer needs.
 - **Moved to an appendix instead** it would fit and lose nothing, but it would add only a picture of the two tables,
   renumber Appendix N's Figure 8 and change the placement code after the freeze, for no evidence a table does not give.
 - **Record.** Nothing leaves it: the figure was never drawn, and its data are in the two tables and the ledger (R-83).
+
+## G16R-blocked
+**Question for the user: how should the stale appendix pointers be fixed before G17's steps 3–5 and G18?**
+G16R found about twenty sentences in Appendices D and H–M that describe body content by the earlier paper's structure:
+the section they name now holds no such table, column, figure or number (for example "§5.2's released-checkpoint
+table", "§5.6's P column", "§5.3's table", "§5.2's 'our arms fail the same way at 10.5×'", and "the abstract and §8 use
+33.4× at h = 100", which neither has done since RV14). The full list, by `PAPER.template.md` line, is in `REVIEW.md`
+(G16R, "Open"). None is a measurement or a verdict, and every gate passes: they are false descriptions of the paper's own
+structure, which a reviewer reading the appendices would meet. G16's rule allows a review to fix items of up to three
+sentences; this class is larger and most of it needs sentences rewritten (pointing at the appendix's own table, or
+dropped), so G16R stopped.
+Options: **(A, recommended)** a fix session ("G15-fix", Opus) that rewrites each listed sentence from the template, with
+the same build-gates-build close, then G17's steps 3–5, then G18; **(B)** accept them as known and record them in
+`SUBMISSION_PACKAGE.md`'s open items; **(C)** have G16R resume and fix them under an explicit waiver of the
+three-sentence rule.

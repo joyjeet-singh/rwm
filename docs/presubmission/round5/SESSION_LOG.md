@@ -812,3 +812,30 @@ Unchanged because they already match: G3 18:50 (`165c118`), G5 21:32 (`6a4de03`)
 give a date and no time; the dates match their commits (`c5ef543` 12:26, `9a46560` 12:49, `d340844` 15:49) and no time
 was added. Other round-5 files that date G16 to 24 October (`REVIEW.md`'s heading) are not log headers; G16R's review
 section in `REVIEW.md` states the commit date.
+
+## G16R — 2026-10-24 11:36 — Opus 5.5 (new terminal; run at the user's request after G17) — status: BLOCKED
+Commits:
+26ffdc1 [G16R][ruling] DECISIONS.md#G16R-ruling: the user's override of the start gate, quoted
+01f97cf [G16R][2] Session-log header times set to each session's last commit (14 corrected), with a dated correction note
+07a7770 [G16R][1] Fresh-eyes review again; every finding verified and fixed in sources; one class of stale appendix pointers left BLOCKED
+9113571 [G16R][3] Figure 3 dropped from OUTLINE (DECISIONS.md#G16R-figure3)
+(this entry, the checkpoint and DECISIONS.md#G16R-blocked: [G16R][4])
+Review items closed: Annex 6 items 1, 3–9 re-verified; Annex 1 RV09, RV19, RV27 re-fixed; the stale-pointer class open (`REVIEW.md`, G16R)
+Done:
+- **Start gate** overridden by the user, recorded first (`DECISIONS.md#G16R-ruling`).
+- **Item 2, log times.** Every round-5 header checked against `git log` (all +0530): 14 were wrong (GT1, G4, G7–G17; G14–G16 by a day), now each session's last commit time; G0–G2 give a date only, which matches; a dated correction note lists old → new. Nothing else in those entries changed.
+- **Item 1, review.** `body.txt` re-extracted (G16's copy predated its own fixes) and read in full; `rwm-referee` ×1; `rwm-checker` ×2 (both stopped at their turn limit and reported when asked; coverage in `REVIEW.md`). Every gate's printed output read: no suspect, no failure; G17's nine `xref_sweep` "reviewed" pointers checked (all in supplement passages marked as earlier-paper numbering). Fixed in sources: four rule-10 failures (lesson 1 on step size; contribution 4 omitting X6; the conclusion's unscoped "never beat even the training mean"; §5.6's closing inference); §9's typed list of differing values, stale since M2, now key `ver_diff_plain` from `verify_reproduction.json`; App. D's v1 sample-efficiency citation (v1 has no such table; v1 PDF read); App. F's RV27 error and its missing floor definitions; ±2σ at every horizon in App. M (it was printed at h = 100 only); five appendix sites that asserted the released checkpoint trained on the arena; e4's two wrong upstream lines (artifact regenerated, only those strings differ); the converter numbering References as §10; the referee's wording points and the stale section pointers in App. F, App. H and Figure 7's caption (each listed in `REVIEW.md`, G16R).
+- **Item 3, Figure 3:** dropped from OUTLINE; it does not fit in §5.7, and its evidence is now in App. M's two tables (`DECISIONS.md#G16R-figure3`).
+- **BLOCKED** on about twenty appendix sentences that describe body content by the earlier paper's structure (more than G16's three-sentence limit): `DECISIONS.md#G16R-blocked`.
+Build/gates: pass (fast build → gates → fast build, byte-identical; the final PDF differed only in its date and was restored); `submission_check` 21/22 (C1 pending, as ruled)
+Round-5 gates (blocking): pages 11.67/12, abstract 210/5, ids 0, once 0, sig 0, keys missing 0
+Paper numbers changed: none measured. Labels and counts: `h2h_bl_*_label` (§5.3 → §4.3), `e4_table` (upstream line strings), `pdf_pages` 55 → 56, `tn_typed` 754 → 771
+New keys: `ver_diff_plain` (results/verify_reproduction.json)
+Ledger: none
+Re-anchored checks: none (no check expectation changed)
+CPU jobs over 1 min: none (e4 regeneration 18 s; builds about 1 min each)
+Queue (Y5): done and discharged
+Body words / main-content pages: 7,336 (pages 1–12 to "References", as extracted) / 11.67; PDF 56 pages
+Subagents: rwm-referee ×1, rwm-checker ×2
+Next: the user answers `DECISIONS.md#G16R-blocked`. Whatever the answer, **the paper (`PAPER.template.md`, `PAPER.pdf`), bundled scripts (`paper_numbers.py`, `build_paper.py`, `md_to_tex.py`, `e4_sigma_gradients.py`) and bundled results changed after G17 (the supplement did not), so G17's steps 3 to 5 (clean clones and restatement, both bundles and the deny-list sweep, the package documents) must run again before G18.** `SUBMISSION_PACKAGE.md`'s PDF size and SHA-256 (55 pages) are stale, and `supplementary_anon.zip` predates these commits. G16R did not run them.
+Decisions for user: DECISIONS.md#G16R-blocked
