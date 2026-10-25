@@ -1,0 +1,210 @@
+
+==============================================================================
+FILE
+==============================================================================
+$HOME/Downloads/PDM/robotic_world_model_lite/assets/data/state_action_data_0.csv
+shape 10000 rows x 66 columns
+200 s at 50 Hz
+non-finite entries: 0
+
+==============================================================================
+EPISODE STRUCTURE
+==============================================================================
+episode-start detection
+  rows flagged by column 65 (termination)        : 0
+  rows with all 12 joint velocities exactly 0.0  : 10
+  rows with all 4 HAA positions exactly 0.0      : 10
+  rows with all 12 actions exactly 0.0           : 10
+  rows matching all three (reset fingerprint)    : 10
+  -> [999, 1999, 2999, 3999, 4999, 5999, 6999, 7999, 8999, 9999]
+  spacing between them: [1000] rows  (20 s)
+  episode starts (union, incl. row 0)            : 11
+  NOTE: column 65 is identically zero. These are time-limit
+        truncations, not failures -- the robot never fell in 200 s.
+        A reader who trusts column 65 alone will not see them.
+
+==============================================================================
+ASSERTIONS
+==============================================================================
+[1] gravity vector (cols 6-8) has unit length within 0.02
+    |g|      min 0.999999  max 1.000001  mean 1.000000
+    ||g|-1|  max 6.246e-07  at row 8796
+    rows outside tolerance: 0 / 10000
+    -> PASS
+
+[2] cols 57-65 contain only 0.0 and 1.0
+    unique values across all 90000 entries: [0.0, 1.0]
+    non-binary entries: 0
+    ones per column: 57:0  58:0  59:1  60:0  61:5263  62:5424  63:5519  64:5332  65:0
+    -> PASS
+
+[3] adjacent rows are continuous: max |dq| < 0.5 rad
+    (a) all 9999 adjacent pairs
+        max 0.67567 rad at row 998->999   -> FAIL
+    (b) 9989 pairs that stay inside one episode
+        max 0.25315 rad at row 12->13   -> PASS
+        percentiles  p50 0.0650   p90 0.1067   p99 0.1707   max 0.2532 rad
+    (c) 10 pairs that step across an episode reset
+        min 0.30641   median 0.56682   max 0.67567 rad
+        every one of them exceeds the within-episode max of 0.25315
+
+    Verdict: NOT one unbroken recording, and NOT shuffled samples.
+    It is a concatenation of continuous episodes. Within an episode the
+    data is smooth (b); the only breaks are the episode resets (c), and
+    they are clean, isolated, and exactly where the reset fingerprint
+    says they are. Downstream code that assumes continuity is safe as
+    long as it never builds a window across a reset.
+
+==============================================================================
+TERMINATIONS
+==============================================================================
+terminations flagged in column 65 over 10000 steps: 0
+  The robot never failed: 200 s of walking with no fall and no
+  terminating contact.
+  thigh contacts (cols 57-60) over the whole file: 1 step(s)
+    row 7039 (t = 140.78 s): RF thigh, 1 step only, all 4 feet also down, no termination
+  A brief scuff, not a fall. Thigh contact is a reward penalty in
+  this environment, not a termination condition.
+
+unmarked episode resets (time-limit truncations): 10
+  at rows: [999, 1999, 2999, 3999, 4999, 5999, 6999, 7999, 8999, 9999]
+
+episode segments: 11
+  rows     0..  998     999 steps    19.98 s
+  rows   999.. 1998    1000 steps    20.00 s
+  rows  1999.. 2998    1000 steps    20.00 s
+  rows  2999.. 3998    1000 steps    20.00 s
+  rows  3999.. 4998    1000 steps    20.00 s
+  rows  4999.. 5998    1000 steps    20.00 s
+  rows  5999.. 6998    1000 steps    20.00 s
+  rows  6999.. 7998    1000 steps    20.00 s
+  rows  7999.. 8998    1000 steps    20.00 s
+  rows  8999.. 9998    1000 steps    20.00 s
+  rows  9999.. 9999       1 steps     0.02 s
+  lengths: min 1  max 1000  mean 909.1
+
+==============================================================================
+TRAINING SET SIZE
+==============================================================================
+window = 32 history + 8 forecast = 40 steps
+
+  a) rows in the file                                    10000
+  b) windows if the file were one unbroken episode       9961   (loses 39 to the tail)
+  c) windows if you trust column 65 alone                9961   (column 65 is all zero, so this is the same as b)
+  d) windows that respect the real episode resets        9609
+
+  per segment:
+    rows     0..  998  length   999  ->    960 windows
+    rows   999.. 1998  length  1000  ->    961 windows
+    rows  1999.. 2998  length  1000  ->    961 windows
+    rows  2999.. 3998  length  1000  ->    961 windows
+    rows  3999.. 4998  length  1000  ->    961 windows
+    rows  4999.. 5998  length  1000  ->    961 windows
+    rows  5999.. 6998  length  1000  ->    961 windows
+    rows  6999.. 7998  length  1000  ->    961 windows
+    rows  7999.. 8998  length  1000  ->    961 windows
+    rows  8999.. 9998  length  1000  ->    961 windows
+    rows  9999.. 9999  length     1  ->      0 windows
+
+  ACTUAL TRAINING SET SIZE: 9609
+
+  accounting, from 10000 rows down to 9609 windows:
+     10000  rows
+   -   39  the file's last 39 rows cannot start a full window
+      9961  = b, the count you get from column 65 alone
+   -  352  windows that straddle one of the 10 unmarked resets
+      9609  = d
+
+  total gap vs the 10,000 row count: 391  (3.91%)
+  Of that, 352 windows are ones you would silently train on,
+  each stitching the end of one episode onto the start of another.
+
+==============================================================================
+GAIT
+==============================================================================
+duty factor over the full 200 s
+  LF foot   52.6 %       LF thigh   0.0 %
+  LH foot   54.2 %       LH thigh   0.0 %
+  RF foot   55.2 %       RF thigh   0.0 %
+  RH foot   53.3 %       RH thigh   0.0 %
+  thigh channels are nonzero -- check
+
+feet on the ground simultaneously
+  0 feet    0.0 %
+  1 feet    1.8 %
+  2 feet   84.4 %
+  3 feet   10.3 %
+  4 feet    3.5 %
+  mean 2.15 feet down
+
+pairwise stance overlap
+  LF+LH  left lateral    observed   9.2 %   if independent  28.5 %   ratio 0.32  ---
+  RF+RH  right lateral   observed  10.4 %   if independent  29.4 %   ratio 0.35  ---
+  LF+RF  front pair      observed   9.2 %   if independent  29.0 %   ratio 0.32  ---
+  LH+RH  hind pair       observed   8.2 %   if independent  28.9 %   ratio 0.28  ---
+  LF+RH  diagonal        observed  48.6 %   if independent  28.1 %   ratio 1.73  <<<
+  LH+RF  diagonal        observed  50.6 %   if independent  29.9 %   ratio 1.69  <<<
+
+stride period (autocorrelation of each foot's contact signal, lags 6-60)
+  LF  27 steps = 0.54 s = 1.85 Hz   (peak 0.52)
+  LH  27 steps = 0.54 s = 1.85 Hz   (peak 0.55)
+  RF  27 steps = 0.54 s = 1.85 Hz   (peak 0.57)
+  RH  27 steps = 0.54 s = 1.85 Hz   (peak 0.52)
+
+phase relative to LF (stride 27 steps): 0.0 = in phase, 0.5 = antiphase
+  LF  lag  0 steps   phase 0.00
+  LH  lag 13 steps   phase 0.48
+  RF  lag 13 steps   phase 0.48
+  RH  lag  0 steps   phase 0.00
+
+stance / swing bout lengths
+  LF  stance 14.22 steps (0.284 s)   swing 12.80 steps (0.256 s)   370 stance bouts
+  LH  stance 14.94 steps (0.299 s)   swing 12.57 steps (0.251 s)   363 stance bouts
+  RF  stance 15.37 steps (0.307 s)   swing 12.48 steps (0.250 s)   359 stance bouts
+  RH  stance 14.53 steps (0.291 s)   swing 12.72 steps (0.254 s)   367 stance bouts
+
+==============================================================================
+ACTION vs JOINT POSITION
+==============================================================================
+cols 45-56 are the raw policy output. No action scale exists anywhere in
+this repository, so they are not joint targets in radians -- the scale and
+default-pose offset live in the upstream IsaacLab env and are not recorded.
+Fitting  q[t+k] ~ s*a[t] + b  per joint, over the best lag k:
+
+  joint      lag k   lag [ms]    gain s   intercept    r
+  LF_HAA       4        80      0.3534    -0.0829   0.816
+  LH_HAA       4        80      0.3666    -0.0770   0.778
+  RF_HAA       4        80      0.3177     0.1002   0.739
+  RH_HAA       4        80      0.4058     0.0716   0.846
+  LF_HFE       5       100      0.3471    -0.0068   0.749
+  LH_HFE       4        80      0.4278     0.0124   0.842
+  RF_HFE       4        80      0.4149    -0.0148   0.793
+  RH_HFE       4        80      0.4466    -0.0226   0.840
+  LF_KFE       2        40      0.2469     0.0464   0.861
+  LH_KFE       3        60      0.2533    -0.0750   0.824
+  RF_KFE       3        60      0.2566     0.0703   0.814
+  RH_KFE       2        40      0.2654    -0.0348   0.842
+
+  action leads position by 4 steps (80 ms) -- ordinary PD tracking lag.
+  median gain 0.350: the action swings roughly 2.9x
+  wider than the joint excursion it produces.
+
+==============================================================================
+PLOTS
+==============================================================================
+  wrote $HOME/Downloads/PDM/rwm_analysis/figures/01_base_linear_velocity.png
+  wrote $HOME/Downloads/PDM/rwm_analysis/figures/02_joint_tracking.png
+  wrote $HOME/Downloads/PDM/rwm_analysis/figures/03_contact_raster.png
+  wrote $HOME/Downloads/PDM/rwm_analysis/figures/04_state_group_histograms.png
+
+==============================================================================
+SUMMARY
+==============================================================================
+  PASS  [1] gravity vector is unit length  -> column mapping is correct
+  PASS  [2] cols 57-65 are strictly binary
+  FAIL  [3] continuity, taken literally over all adjacent rows
+  PASS  [3] continuity within episodes  -> the file is 11 continuous episodes, not shuffled
+
+  Assertions 1 and 2 pass outright. Assertion 3 passes once the file's
+  episode structure is honoured, and fails if it is not -- which is the
+  useful result: it is what exposed the 10 unmarked resets.
